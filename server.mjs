@@ -2852,16 +2852,17 @@ function footer(route) {
 
 function seoHeaderLinks(lang) {
   const labels = {
-    en: ["Interiors", "Collections", "Journal", "Contact"],
-    es: ["Interiores", "Colecciones", "Journal", "Contacto"],
-    fr: ["Intérieurs", "Collections", "Journal", "Contact"],
-    ru: ["Интерьеры", "Коллекции", "Журнал", "Контакты"],
+    en: ["Interiors", "Collections", "Journal", "Contact", "Partner Login"],
+    es: ["Interiores", "Colecciones", "Journal", "Contacto", "Acceso Partners"],
+    fr: ["Intérieurs", "Collections", "Journal", "Contact", "Accès Partenaire"],
+    ru: ["Интерьеры", "Коллекции", "Журнал", "Контакты", "Вход партнера"],
   }[lang] || {};
   return [
     { href: `/${lang}/interiors`, label: labels[0] },
     { href: urlFor(lang, "collections"), label: labels[1] },
     { href: `/${lang}/journal`, label: labels[2] },
     { href: urlFor(lang, "contact"), label: labels[3] },
+    { href: "/crm-app", label: labels[4] },
   ];
 }
 

@@ -68,6 +68,18 @@ if (!partnersPage.body.includes("data-partner-form") || !partnersPage.body.inclu
 }
 console.log("/partners form ok");
 
+const homePage = await read("/");
+if (!homePage.body.includes('<a href="/crm-app">Partner Login</a>')) {
+  server.kill();
+  throw new Error("header should expose Partner Login");
+}
+const ruHomePage = await read("/ru/premium-stenovye-paneli");
+if (!ruHomePage.body.includes('<a href="/crm-app">Вход партнера</a>')) {
+  server.kill();
+  throw new Error("Russian header should expose localized partner login");
+}
+console.log("partner login header ok");
+
 const privacyPage = await read("/privacy-policy");
 if (!privacyPage.body.includes('<a class="stealth-admin-link" href="/admin">contact CAS AURUM</a>')) {
   server.kill();
