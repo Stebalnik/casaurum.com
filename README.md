@@ -4,6 +4,8 @@ Production-oriented multilingual website for `casaurum.com`.
 
 CAS AURUM is positioned as a luxury architectural interiors brand for custom wall panels, bespoke furniture, premium architectural millwork and custom interior elements across the United States, Canada and Mexico.
 
+For AI-agent handoffs and interrupted work recovery, read [AGENT_EXECUTION_JOURNAL.md](/var/www/casaurum.com/AGENT_EXECUTION_JOURNAL.md) before changing code.
+
 ## Stack
 
 - Zero-build Node.js HTTP server
