@@ -144,27 +144,30 @@ const cityMarketBriefs = {
     sections: [
       ["Atlanta project fit", "The strongest Atlanta inquiries usually involve Buckhead residences, Sandy Springs and Alpharetta homes, developer interiors, boutique hospitality, restaurants, offices or high-end remodels where standard cabinetry would look too thin. CAS AURUM reviews drawings, room photos, measurements, material direction and budget range before recommending a practical custom path."],
       ["What matters locally", "Atlanta projects often need durable luxury: finishes that survive daily use, storage that feels architectural, and warm materials that do not turn a refined home into a cold showroom. Walnut, oak, natural stone, textured panels, concealed lighting and restrained champagne metal details tend to work well when the proportions are controlled."],
-      ["Useful brief for designers", "A valuable Atlanta design brief should include the property area, room dimensions, ceiling height, appliance or AV requirements, desired storage, inspiration images, and whether the scope is cabinetry, a TV wall, wall panels, closets, vanities, a kitchen or a full millwork package."],
-    ],
-  },
+	      ["Useful brief for designers", "A valuable Atlanta design brief should include the property area, room dimensions, ceiling height, appliance or AV requirements, desired storage, inspiration images, and whether the scope is cabinetry, a TV wall, wall panels, closets, vanities, a kitchen or a full millwork package."],
+	      ["High-intent Atlanta scopes", "The strongest organic landing paths for Atlanta should connect luxury interior design searches to custom media walls, custom built-ins, luxury closets, wall panels and architectural millwork. These are the scopes most likely to turn style research into a project inquiry."],
+	    ],
+	  },
   miami: {
     intro: "Miami interiors reward clean drama: stone, glass, dark wood, integrated lighting and custom storage that can feel glamorous without becoming loud. The climate, daylight and entertainment lifestyle make material selection and lighting control especially important.",
     direct: "Miami inquiries are best suited to villas, condos, penthouses, dressing rooms, TV walls, kitchens and hospitality-inspired interiors where custom surfaces and built-ins create a polished technical scope.",
     sections: [
       ["Miami project fit", "A Miami project brief should clarify whether the space is a waterfront residence, condo, villa, private lounge, dressing room, kitchen, media wall or hospitality interior. Humidity, daylight, reflection, maintenance and evening lighting scenes should be discussed before choosing high-gloss, stone, veneer or glass-heavy directions."],
       ["Design value", "The best Miami interiors usually avoid generic white-box luxury. A stronger direction uses custom wall composition, concealed storage, integrated LEDs, glass display zones, stone back panels and technical hardware decisions that make the room feel designed rather than simply decorated."],
-      ["What to send", "Send plan dimensions, wall photos, ceiling height, condo or building constraints, desired storage, lighting intent, stone or veneer references, and a target budget range. That lets CAS AURUM respond with a realistic concept path instead of a vague moodboard."],
-    ],
-  },
+	      ["What to send", "Send plan dimensions, wall photos, ceiling height, condo or building constraints, desired storage, lighting intent, stone or veneer references, and a target budget range. That lets CAS AURUM respond with a realistic concept path instead of a vague moodboard."],
+	      ["High-intent Miami scopes", "Miami pages should route qualified visitors toward custom media walls, dressing galleries, walk-in closets, hospitality wall panels and custom built-ins. Those searches usually indicate a client is thinking about a real room, not only browsing inspiration."],
+	    ],
+	  },
   "new-york": {
     intro: "New York interiors depend on precision: small tolerances, vertical storage, quiet luxury materials and built-ins that make apartments, townhouses and penthouses feel composed rather than crowded.",
     direct: "New York is a strong concept and coordination market for custom built-ins, wall systems, closets, media walls and refined cabinetry where every inch needs a clear purpose.",
     sections: [
       ["New York project fit", "The most useful New York scopes are usually apartments, townhouses, penthouses, private offices, wardrobes, libraries and living rooms where storage, wall composition and lighting need to work inside tight architectural limits."],
       ["Planning priorities", "Before finishes are discussed, the technical brief should settle wall length, elevator or access constraints, ceiling height, radiator or HVAC conflicts, AV locations, door swings and whether the goal is concealed storage, display, acoustic comfort or a stronger architectural focal wall."],
-      ["Material direction", "New York quiet luxury often works best with limestone, walnut, smoked oak, warm lacquer, fabric panels and very restrained metal lines. The value is not excess decoration; it is proportion, joinery logic, lighting discipline and fewer visible compromises."],
-    ],
-  },
+	      ["Material direction", "New York quiet luxury often works best with limestone, walnut, smoked oak, warm lacquer, fabric panels and very restrained metal lines. The value is not excess decoration; it is proportion, joinery logic, lighting discipline and fewer visible compromises."],
+	      ["High-intent New York scopes", "New York demand should be connected to built-ins, wardrobes, media walls, libraries, storage walls and wall systems. These are practical high-value searches because space constraints make custom work easier to justify."],
+	    ],
+	  },
   chicago: {
     intro: "Chicago interiors can carry stronger architectural rhythm: panel grids, dining room symmetry, office millwork, built-in storage and subtle Art Deco references translated into a calmer contemporary language.",
     direct: "Chicago inquiries are a good fit for architectural wall panels, dining rooms, home offices, libraries, custom furniture and millwork packages that need structure, warmth and long-term durability.",
@@ -173,21 +176,166 @@ const cityMarketBriefs = {
       ["What matters locally", "A good Chicago concept should consider winter light, layered evening lighting, durable finishes, strong proportions and whether the interior should lean modern, Art Deco, quiet luxury or warm contemporary. The result should feel substantial, not trendy."],
       ["Useful brief", "Send photos of the existing trim and openings, wall measurements, ceiling height, preferred wood tone, lighting goals, room function and any historic details that should be preserved or simplified. This helps avoid a design that fights the architecture."],
     ],
+	  },
+	  "beverly-hills": {
+	    intro: "Beverly Hills luxury interiors need privacy, exact finish quality and a one-of-one feeling: dressing rooms, salon walls, custom vanities, bespoke furniture and private office millwork should feel tailored rather than catalog-selected.",
+	    direct: "Beverly Hills is a strong CAS AURUM concept market for bespoke furniture, luxury custom closets, dressing rooms, salon wall panels, media walls and private residence millwork.",
+	    sections: [
+	      ["Beverly Hills project fit", "The strongest Beverly Hills inquiries usually involve estate homes, private dressing rooms, formal salons, luxury bedroom suites and private offices where finish quality, symmetry, concealed storage and visual restraint matter as much as the headline style."],
+	      ["What matters locally", "A Beverly Hills concept should protect privacy, avoid overexposed luxury cliches and specify materials carefully. Limestone, champagne brass, walnut, leather, lacquer, glass and integrated lighting can work well when the palette stays edited and the detailing feels quiet."],
+	      ["High-intent Beverly Hills scopes", "The best commercial SEO paths are luxury custom closets, bespoke furniture, custom media walls, salon wall panels, custom vanities and private office built-ins. These scopes match affluent residential search behavior better than generic interior inspiration alone."],
+	      ["What to send", "Send room photos or plans, rough dimensions, property type, privacy requirements, desired materials, storage needs, target timeline and investment range. For designer-led projects, elevations and finish schedules are especially useful."],
+	    ],
+	  },
+	  "palm-beach": {
+	    intro: "Palm Beach luxury interiors need elegance without coastal cliche: bright rooms, restrained color, durable finishes, custom furniture, wall panels, closets and hospitality-grade millwork that survive sun, humidity and entertaining.",
+	    direct: "Palm Beach is a strong CAS AURUM concept market for wall panels, custom furniture, closets, guest suites, media walls and boutique hospitality millwork.",
+	    sections: [
+	      ["Palm Beach project fit", "The strongest Palm Beach inquiries usually involve coastal estates, villas, formal living rooms, guest suites, boutique hospitality spaces and refined remodels where light, humidity, maintenance and entertaining shape the custom scope."],
+	      ["What matters locally", "Palm Beach projects should balance brightness with material discipline. Light oak, limestone, woven textures, stone-look panels, brass details and soft lacquer can feel elevated when the palette avoids generic beach-house styling."],
+	      ["High-intent Palm Beach scopes", "The best organic paths should point toward custom wall panels, luxury closets, custom furniture, guest suite built-ins, media walls and hospitality millwork. These terms carry stronger project intent than broad decor searches."],
+	      ["What to send", "Send photos, dimensions, ceiling height, property type, sun exposure notes, material references, storage needs, hospitality or guest-suite requirements, timeline and budget range."],
+	    ],
+	  },
+};
+
+const cityProfiles = {
+  atlanta: {
+    propertyMix: "Buckhead residences, Sandy Springs remodels, Alpharetta family homes, boutique hospitality and developer interiors",
+    designMood: "warm, substantial and quietly polished",
+    constraints: "daily family use, mixed traditional and contemporary architecture, remodel phasing and the need for durable luxury",
+    materials: ["walnut", "white oak", "natural stone", "textured panels", "champagne metal"],
+    scopes: ["custom kitchens", "built-ins", "TV walls", "closets", "wall panels", "developer packages"],
+  },
+  miami: {
+    propertyMix: "waterfront condos, villas, penthouses, dressing rooms, private lounges and hospitality interiors",
+    designMood: "clean, glamorous and evening-ready without becoming loud",
+    constraints: "humidity, strong daylight, reflective surfaces, condo access rules and entertainment-focused layouts",
+    materials: ["stone slabs", "glass", "dark wood", "lacquer", "integrated LED lighting"],
+    scopes: ["media walls", "dressing galleries", "kitchens", "hospitality panels", "custom storage"],
+  },
+  "new-york": {
+    propertyMix: "apartments, townhouses, penthouses, private offices, libraries and compact luxury residences",
+    designMood: "precise, edited and storage-smart",
+    constraints: "tight dimensions, elevator access, radiator or HVAC conflicts, strict tolerances and the value of every inch",
+    materials: ["limestone", "walnut", "smoked oak", "warm lacquer", "fabric panels"],
+    scopes: ["built-ins", "wardrobes", "libraries", "media walls", "wall systems"],
+  },
+  chicago: {
+    propertyMix: "historic homes, dining rooms, home offices, libraries, condos and premium commercial interiors",
+    designMood: "architectural, structured and warm",
+    constraints: "winter light, older architectural bones, stronger proportions and long-term durability",
+    materials: ["oak", "walnut", "stone", "dark metal", "upholstered panels"],
+    scopes: ["panel grids", "office millwork", "dining storage", "libraries", "media walls"],
+  },
+  charlotte: {
+    propertyMix: "new-build residences, family homes, golf-community houses, offices and refined remodels",
+    designMood: "fresh, livable and tailored",
+    constraints: "balancing resale-friendly luxury with enough custom detail to avoid builder-grade sameness",
+    materials: ["white oak", "walnut", "soft stone", "matte lacquer", "linen textures"],
+    scopes: ["custom built-ins", "kitchens", "closets", "living room panels", "office storage"],
+  },
+  nashville: {
+    propertyMix: "modern farmhouses, music-industry homes, entertaining spaces, restaurants and boutique hospitality",
+    designMood: "warm, social and material-rich",
+    constraints: "keeping hospitality energy refined rather than themed, with acoustic comfort and durable surfaces",
+    materials: ["walnut", "oak", "leather", "textured acoustic panels", "dark metal"],
+    scopes: ["restaurant panels", "home bars", "media rooms", "built-ins", "hospitality millwork"],
+  },
+  houston: {
+    propertyMix: "large family homes, estate remodels, executive offices, luxury kitchens and developer interiors",
+    designMood: "generous, practical and quietly expensive",
+    constraints: "large room scale, heat, maintenance, storage expectations and broad open-plan layouts",
+    materials: ["stone", "walnut", "oak veneer", "matte lacquer", "brass details"],
+    scopes: ["kitchens", "wall panels", "closets", "office interiors", "built-in storage"],
+  },
+  dallas: {
+    propertyMix: "luxury residences, formal dining rooms, executive offices, high-end remodels and commercial lobbies",
+    designMood: "crisp, confident and polished",
+    constraints: "avoiding over-decoration while giving large rooms enough architectural weight",
+    materials: ["dark oak", "marble-look surfaces", "walnut", "matte black", "champagne brass"],
+    scopes: ["custom furniture", "office millwork", "dining walls", "media walls", "premium cabinetry"],
+  },
+  "los-angeles": {
+    propertyMix: "hillside homes, modern villas, entertainment residences, kitchens, closets and gallery-like living rooms",
+    designMood: "soft, cinematic and indoor-outdoor aware",
+    constraints: "daylight control, open plans, view corridors, seismic or remodel constraints and a high visual bar",
+    materials: ["pale oak", "travertine", "limestone", "warm lacquer", "soft upholstery"],
+    scopes: ["custom closets", "media walls", "kitchens", "bedroom suites", "built-ins"],
+  },
+  "beverly-hills": {
+    propertyMix: "estate homes, private dressing rooms, formal salons, luxury bedroom suites and one-of-one residences",
+    designMood: "refined, private and jewel-like",
+    constraints: "high expectations for finish quality, privacy, symmetry, hidden storage and quiet material drama",
+    materials: ["limestone", "champagne brass", "walnut", "leather", "high-end lacquer"],
+    scopes: ["bespoke furniture", "dressing rooms", "salon walls", "custom vanities", "private office millwork"],
+  },
+  "palm-beach": {
+    propertyMix: "coastal estates, villas, formal living rooms, guest suites and boutique hospitality spaces",
+    designMood: "bright, elegant and coastal without cliche",
+    constraints: "humidity, sunlight, entertaining, maintenance and the need for restrained color discipline",
+    materials: ["limestone", "light oak", "woven textures", "brass", "stone-look panels"],
+    scopes: ["wall panels", "custom furniture", "closets", "guest suites", "hospitality millwork"],
+  },
+  scottsdale: {
+    propertyMix: "desert villas, golf homes, spa rooms, outdoor-connected living areas and luxury remodels",
+    designMood: "mineral, warm and sculptural",
+    constraints: "strong sun, dust, indoor-outdoor transitions, stone-heavy architecture and evening lighting scenes",
+    materials: ["travertine", "warm oak", "matte plaster", "bronze metal", "textured panels"],
+    scopes: ["spa rooms", "living room panels", "custom vanities", "closets", "entry walls"],
+  },
+  seattle: {
+    propertyMix: "modern homes, lake houses, offices, libraries, kitchens and compact urban residences",
+    designMood: "calm, functional and natural",
+    constraints: "grey daylight, storage needs, moisture awareness and making modern rooms feel warm",
+    materials: ["oak", "walnut", "matte stone", "acoustic panels", "soft black metal"],
+    scopes: ["office built-ins", "kitchens", "libraries", "media walls", "wood panels"],
+  },
+  "san-francisco": {
+    propertyMix: "city homes, condos, townhouses, tech executive residences and compact premium remodels",
+    designMood: "edited, intelligent and material-conscious",
+    constraints: "narrow footprints, strict access, storage efficiency, daylight shifts and avoiding visual clutter",
+    materials: ["oak veneer", "limestone", "matte lacquer", "fabric panels", "brushed metal"],
+    scopes: ["built-ins", "closets", "home offices", "kitchens", "wall systems"],
+  },
+  toronto: {
+    propertyMix: "condos, townhomes, custom homes, executive lounges, kitchens and boutique commercial interiors",
+    designMood: "cosmopolitan, warm and restrained",
+    constraints: "winter light, condo logistics, mixed modern-traditional architecture and the need for durable finishes",
+    materials: ["walnut", "stone", "taupe lacquer", "glass", "warm metal"],
+    scopes: ["custom furniture", "wall panels", "kitchens", "closets", "executive lounges"],
+  },
+  vancouver: {
+    propertyMix: "view condos, mountain homes, waterfront residences, home offices and calm luxury remodels",
+    designMood: "natural, serene and quietly technical",
+    constraints: "cloudy daylight, view preservation, moisture-aware materials and calm storage-heavy spaces",
+    materials: ["oak", "stone", "soft lacquer", "linen texture", "warm integrated lighting"],
+    scopes: ["home offices", "closets", "media walls", "kitchens", "bedroom suites"],
+  },
+  "mexico-city": {
+    propertyMix: "historic residences, contemporary apartments, private lounges, dining rooms and hospitality interiors",
+    designMood: "layered, artistic and warm",
+    constraints: "balancing historic character with contemporary custom surfaces, lighting atmosphere and artisanal texture",
+    materials: ["warm stone", "dark wood", "plaster", "brass", "textured upholstery"],
+    scopes: ["salon walls", "dining rooms", "private lounges", "custom furniture", "hospitality millwork"],
   },
 };
 
 export const cities = [
   ["atlanta", "Atlanta", "United States"], ["miami", "Miami", "United States"], ["new-york", "New York", "United States"], ["chicago", "Chicago", "United States"], ["charlotte", "Charlotte", "United States"], ["nashville", "Nashville", "United States"], ["houston", "Houston", "United States"], ["dallas", "Dallas", "United States"], ["los-angeles", "Los Angeles", "United States"], ["beverly-hills", "Beverly Hills", "United States"], ["palm-beach", "Palm Beach", "United States"], ["scottsdale", "Scottsdale", "United States"], ["seattle", "Seattle", "United States"], ["san-francisco", "San Francisco", "United States"], ["toronto", "Toronto", "Canada"], ["vancouver", "Vancouver", "Canada"], ["mexico-city", "Mexico City", "Mexico"],
-].map(([slug, cityName, country]) => ({
-  slug, cityName, country,
-  title: tx(`${cityName} Interiors`, `Interiores en ${cityName}`, `Intérieurs à ${cityName}`, `Интерьеры ${cityName}`),
-  luxuryContext: tx(cityMarketBriefs[slug]?.intro || `${cityName} projects often reward interiors that feel precise, material-rich and tailored to the property rather than copied from a trend board.`, `Los proyectos en ${cityName} funcionan mejor con interiores precisos, materiales premium y soluciones adaptadas a la propiedad.`, `Les projets à ${cityName} gagnent avec des intérieurs précis, riches en matériaux et adaptés à la propriété.`, `Для ${cityName} особенно важны точность, материалы и решения под конкретную недвижимость.`),
-  directSummary: cityMarketBriefs[slug]?.direct,
-  marketSections: cityMarketBriefs[slug]?.sections,
-  localDesignSignals: ["premium residential demand", "global design references", "custom furniture and lighting"],
-  popularPropertyTypes: ["villa", "penthouse", "private-residence", "luxury-condo"],
-  relatedCities: relatedFrom(slug, ["atlanta", "miami", "new-york", "chicago", "charlotte", "nashville", "houston", "toronto"], 3),
-}));
+].map(([slug, cityName, country]) => {
+  const profile = cityProfiles[slug];
+  return {
+    slug, cityName, country, profile,
+    title: tx(`${cityName} Interiors`, `Interiores en ${cityName}`, `Intérieurs à ${cityName}`, `Интерьеры ${cityName}`),
+    luxuryContext: tx(cityMarketBriefs[slug]?.intro || `${cityName} projects often reward interiors that feel ${profile.designMood}, with custom details tailored to ${profile.propertyMix} rather than copied from a trend board.`, `Los proyectos en ${cityName} funcionan mejor con interiores precisos, materiales premium y soluciones adaptadas a la propiedad.`, `Les projets à ${cityName} gagnent avec des intérieurs précis, riches en matériaux et adaptés à la propriété.`, `Для ${cityName} особенно важны точность, материалы и решения под конкретную недвижимость.`),
+    directSummary: cityMarketBriefs[slug]?.direct,
+    marketSections: cityMarketBriefs[slug]?.sections,
+    localDesignSignals: [profile.designMood, profile.constraints, profile.scopes.slice(0, 3).join(", ")],
+    popularPropertyTypes: ["villa", "penthouse", "private-residence", "luxury-condo"],
+    relatedCities: relatedFrom(slug, ["atlanta", "miami", "new-york", "chicago", "charlotte", "nashville", "houston", "toronto"], 3),
+  };
+});
 
 export const collections = [
   { slug: "aurum", name: "Aurum Collection", philosophy: "champagne brass refinement, warm stone and quiet luxury", materials: ["limestone", "champagne brass", "taupe lacquer"], relatedStyles: ["quiet-luxury", "contemporary", "italian-inspired", "luxury"], imagePath: "/images/collections/aurum-01-champagne-gallery-residence.webp" },
@@ -222,10 +370,44 @@ export function getRelatedCasaurumLinks(params) {
     seoLink(locale, "/collections", l(locale, "collections")),
     seoLink(locale, "/contact", l(locale, "contact")),
   ];
+  if (params.citySlug || String(params.pageType || "").startsWith("city")) {
+    links.push(...cityCommercialServiceLinks(locale, params.citySlug));
+  }
   for (const slug of (params.relatedStyles || []).slice(0, 3)) links.push(seoLink(locale, `/styles/${slug}`, entityLabel(styles, slug, locale)));
   for (const slug of (params.relatedRooms || []).slice(0, 3)) links.push(seoLink(locale, `/rooms/${slug}`, entityLabel(rooms, slug, locale)));
   for (const slug of (params.relatedCollections || []).slice(0, 2)) links.push(seoLink(locale, `/collections/${slug}`, collectionName(slug)));
   return dedupeLinks(links);
+}
+
+function cityCommercialServiceLinks(locale, citySlug) {
+  const profile = cityProfiles[citySlug] || {};
+  const scopes = (profile.scopes || []).join(" ").toLowerCase();
+  const keys = [];
+  const add = (key) => { if (!keys.includes(key)) keys.push(key); };
+  if (/media|tv/.test(scopes)) add("mediaWalls");
+  if (/built|librar|office|storage|wall systems|wall system/.test(scopes)) add("builtIns");
+  if (/closet|wardrobe|dressing/.test(scopes)) add("customClosets");
+  if (/wall|panel|salon/.test(scopes)) add("wallPanels");
+  if (/furniture|bespoke/.test(scopes)) add("customFurniture");
+  if (/millwork|hospitality|developer|office/.test(scopes)) add("millwork");
+  ["mediaWalls", "builtIns", "customClosets"].forEach(add);
+  return keys.slice(0, 5).map((key) => coreServiceLink(locale, key));
+}
+
+function coreServiceLink(locale, key) {
+  const paths = {
+    en: { mediaWalls: "/custom-media-walls", builtIns: "/custom-built-ins", customClosets: "/luxury-custom-closets", wallPanels: "/luxury-wall-panels", customFurniture: "/custom-furniture", millwork: "/architectural-millwork" },
+    es: { mediaWalls: "/es/muros-media-a-medida", builtIns: "/es/muebles-integrados-a-medida", customClosets: "/es/closets-de-lujo-a-medida", wallPanels: "/es/paneles-de-pared-de-lujo", customFurniture: "/es/muebles-a-medida", millwork: "/es/carpinteria-arquitectonica" },
+    fr: { mediaWalls: "/fr/murs-media-sur-mesure", builtIns: "/fr/rangements-integres-sur-mesure", customClosets: "/fr/dressings-de-luxe-sur-mesure", wallPanels: "/fr/panneaux-muraux-de-luxe", customFurniture: "/fr/meubles-sur-mesure", millwork: "/fr/menuiserie-architecturale" },
+    ru: { mediaWalls: "/ru/media-steny-na-zakaz", builtIns: "/ru/vstroennaya-mebel-na-zakaz", customClosets: "/ru/lyuksovye-garderobnye-na-zakaz", wallPanels: "/ru/premium-stenovye-paneli", customFurniture: "/ru/mebel-na-zakaz", millwork: "/ru/arhitekturnaya-stolyarka" },
+  };
+  const labels = {
+    en: { mediaWalls: "Custom Media Walls", builtIns: "Custom Built-Ins", customClosets: "Luxury Custom Closets", wallPanels: "Luxury Wall Panels", customFurniture: "Custom Furniture", millwork: "Architectural Millwork" },
+    es: { mediaWalls: "Muros media a medida", builtIns: "Muebles integrados", customClosets: "Closets de lujo", wallPanels: "Paneles de lujo", customFurniture: "Muebles a medida", millwork: "Carpinteria arquitectonica" },
+    fr: { mediaWalls: "Murs media sur mesure", builtIns: "Rangements integres", customClosets: "Dressings de luxe", wallPanels: "Panneaux de luxe", customFurniture: "Meubles sur mesure", millwork: "Menuiserie architecturale" },
+    ru: { mediaWalls: "Media стены на заказ", builtIns: "Встроенная мебель", customClosets: "Люксовые гардеробные", wallPanels: "Люксовые панели", customFurniture: "Мебель на заказ", millwork: "Архитектурная столярка" },
+  };
+  return { href: paths[locale]?.[key] || paths.en[key], label: labels[locale]?.[key] || labels.en[key] };
 }
 
 export function getSeoQualityStatus(pageSpec) {
@@ -340,14 +522,15 @@ function cityPage(locale, city) {
   const customSections = locale === "en" && city.marketSections ? city.marketSections.map(([heading, body]) => ({ heading, body })) : null;
   const intro = local(city.luxuryContext, locale);
   const directSummary = locale === "en" && city.directSummary ? city.directSummary : directFor(locale, city.cityName, "city");
+  const sections = customSections ? [...customSections, ...cityCommercialSections(locale, city)] : standardSections(locale, city.cityName, null, null, null, city);
   return makePage({
     pageType: "city", locale, path: `/cities/${city.slug}`, h1: local(city.title, locale), eyebrow: l(locale, "cities"),
     metaTitle: `${city.cityName} Interior Design Ideas | ${BRAND}`, metaDescription: local(city.luxuryContext, locale),
     intro, directSummary,
-    sections: customSections || standardSections(locale, city.cityName, null, null, null, city),
+    sections,
     faq: faqFor(locale, city.cityName), breadcrumbs: crumb(locale, [[l(locale, "cities"), "/cities"], [city.cityName, `/cities/${city.slug}`]]),
     relatedCities: city.relatedCities, relatedStyles: ["modern", "luxury", "quiet-luxury"], relatedCollections: ["aurum", "signature"],
-    imagePath: cityImage(city.slug), allowlisted: true,
+    imagePath: cityImage(city.slug), allowlisted: true, citySlug: city.slug,
   });
 }
 
@@ -420,16 +603,104 @@ function cityCombinationPage(locale, combo) {
   if (combo.type === "city-style") { path = `/cities/${combo.city.slug}/styles/${combo.style.slug}`; h1 = `${local(combo.style.shortTitle, locale)} in ${combo.city.cityName}`; }
   if (combo.type === "city-room") { path = `/cities/${combo.city.slug}/rooms/${combo.room.slug}`; h1 = `${local(combo.room.title, locale)} in ${combo.city.cityName}`; }
   if (combo.type === "city-property") { path = `/cities/${combo.city.slug}/properties/${combo.property.slug}`; h1 = `${local(combo.property.title, locale)} in ${combo.city.cityName}`; }
+  const profile = combo.city.profile;
+  const focus = cityCombinationFocus(combo, locale);
+  const materialList = cityMaterialsFor(combo).join(", ");
   return makePage({
     pageType: combo.type, locale, path, h1, eyebrow: l(locale, "cities"),
-    metaTitle: `${h1} | ${BRAND}`, metaDescription: `${BRAND} explores ${h1.toLowerCase()} through premium materials, curated rooms, custom furniture and architectural interior concepts.`,
-    intro: `${h1} should reflect local lifestyle, property type, light, climate and global design expectations. CAS AURUM uses careful wording: design direction, custom concepts and coordination can be discussed without claiming a local office or completed projects in every city.`,
-    directSummary: `${h1} benefits from honest local planning: understand property type, select materials for durability, coordinate lighting and avoid generic city-name-only design pages.`,
-    sections: standardSections(locale, h1, combo.style, combo.room, combo.property, combo.city),
-    faq: faqFor(locale, h1), breadcrumbs: crumb(locale, [[l(locale, "cities"), "/cities"], [combo.city.cityName, `/cities/${combo.city.slug}`], [h1, path]]),
+    metaTitle: `${h1} | ${BRAND}`, metaDescription: `${BRAND} explores ${h1.toLowerCase()} for ${profile.propertyMix}, with ${materialList}, custom furniture, wall panels and architectural planning notes.`,
+    intro: `${h1} should respond to ${combo.city.cityName}'s real project context: ${profile.propertyMix}. The useful brief is not just a style label; it should connect ${focus.toLowerCase()}, materials, lighting, storage, access constraints and budget range.`,
+    directSummary: `${h1} works best when the concept feels ${profile.designMood}, uses materials such as ${materialList}, and solves local constraints like ${profile.constraints}.`,
+    sections: cityCombinationSections(locale, h1, combo),
+    faq: cityCombinationFaq(locale, h1, combo), breadcrumbs: crumb(locale, [[l(locale, "cities"), "/cities"], [combo.city.cityName, `/cities/${combo.city.slug}`], [h1, path]]),
     relatedCities: combo.city.relatedCities, relatedStyles: combo.style ? combo.style.relatedStyles : ["modern", "luxury", "quiet-luxury"], relatedRooms: combo.room ? combo.room.relatedRooms : ["living-room", "kitchen"], relatedPropertyTypes: combo.property ? combo.property.relatedPropertyTypes : ["villa", "penthouse"], relatedCollections: ["aurum", "forma", "signature"],
-    imagePath: cityImage(combo.city.slug), allowlisted: true, combination: true,
+    imagePath: cityImage(combo.city.slug), allowlisted: true, combination: true, citySlug: combo.city.slug,
   });
+}
+
+function cityCombinationFocus(combo, locale) {
+  if (combo.style) return `${local(combo.style.shortTitle, locale)} detailing`;
+  if (combo.room) return `${local(combo.room.shortTitle, locale)} function`;
+  if (combo.property) return `${local(combo.property.shortTitle, locale)} expectations`;
+  return "luxury interior design direction";
+}
+
+function cityMaterialsFor(combo) {
+  const materials = [
+    ...(combo.style?.materials || []),
+    ...(combo.room?.premiumMaterials || []),
+    ...(combo.city.profile?.materials || []),
+    "integrated lighting",
+  ];
+  return [...new Set(materials)].slice(0, 7);
+}
+
+function cityCombinationSections(locale, subject, combo) {
+  const profile = combo.city.profile;
+  const focus = cityCombinationFocus(combo, locale);
+  const materials = cityMaterialsFor(combo).join(", ");
+  const scopes = profile.scopes.join(", ");
+  const base = standardSections(locale, subject, combo.style, combo.room, combo.property, combo.city);
+  if (locale !== "en") return base;
+  return [
+    {
+      heading: `${combo.city.cityName} project fit`,
+      body: `${subject} is strongest for ${profile.propertyMix}. A useful concept should feel ${profile.designMood}, then translate that mood into specific decisions about surfaces, storage, furniture scale and lighting scenes.`,
+    },
+    {
+      heading: "Local planning constraints",
+      body: `The planning brief should account for ${profile.constraints}. These details change the best panel thickness, finish durability, hardware choice, lighting placement and how much built-in storage belongs in the room.`,
+    },
+	    {
+	      heading: "Best-fit custom scopes",
+	      body: `The most relevant CAS AURUM scopes for this market include ${scopes}. The page is written as planning guidance, not as a claim of a local showroom, local office or completed project in every city.`,
+	    },
+	    {
+	      heading: "Commercial project paths",
+	      body: `${combo.city.cityName} visitors with real project intent should be routed toward concrete scopes such as custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork. These pages help move broad design research into a consultation brief with photos, dimensions, budget range and timeline.`,
+	    },
+	    {
+	      heading: "Material strategy",
+      body: `${subject} can use ${materials}, but the palette should be edited. The goal is a material story that fits ${combo.city.cityName}, supports ${focus.toLowerCase()} and avoids a generic luxury look that could belong anywhere.`,
+    },
+    {
+      heading: "What to send before a concept",
+      body: `Send room photos, wall dimensions, ceiling height, property type, city or ZIP code, inspiration images, target materials, budget range, timeline and whether the scope is furniture, panels, cabinetry, closets, kitchen work or a larger millwork package.`,
+    },
+    {
+      heading: "What to avoid",
+      body: `Avoid treating ${combo.city.cityName} as a keyword swap. A better page and a better project both need local context: property mix, light, logistics, maintenance, storage needs and the architectural role of custom elements.`,
+    },
+    ...base.slice(2, 5),
+	  ];
+	}
+
+function cityCommercialSections(locale, city) {
+  if (locale !== "en") return [];
+  const scopes = city.profile?.scopes || [];
+  const scopeText = scopes.join(", ");
+  return [
+    {
+      heading: `${city.cityName} custom scope priorities`,
+      body: `For organic traffic, ${city.cityName} should not only rank for broad luxury interior design terms. The page should guide qualified visitors toward concrete CAS AURUM scopes: ${scopeText}, custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork.`,
+    },
+    {
+      heading: "From search query to consultation brief",
+      body: `A useful ${city.cityName} inquiry should include room photos, rough dimensions, ceiling height, property type, city or ZIP code, desired service, material references, budget range and timeline. This helps separate serious project leads from general inspiration browsing.`,
+    },
+  ];
+}
+
+function cityCombinationFaq(locale, subject, combo) {
+  const profile = combo.city.profile;
+  if (locale !== "en") return faqFor(locale, subject);
+  return [
+    { q: `What makes ${subject} different from a generic city page?`, a: `It connects the design direction to ${combo.city.cityName}'s property mix, constraints and best-fit scopes instead of only replacing the city name in a template.` },
+    { q: `Which materials work well for ${subject}?`, a: `Good starting points include ${cityMaterialsFor(combo).join(", ")}. The final palette should depend on measurements, maintenance needs, lighting and budget range.` },
+    { q: `What project types fit ${combo.city.cityName}?`, a: `Relevant scopes include ${profile.scopes.join(", ")} for ${profile.propertyMix}.` },
+    { q: "Does CAS AURUM claim a local office or completed project in every city?", a: "No. City pages are planning and concept guidance unless a page explicitly states a local office, showroom, license or completed project." },
+    { q: "What should I send before requesting a concept?", a: "Send room photos, plans or rough measurements, city or ZIP code, desired scope, material references, budget range, timeline and decision-maker context." },
+  ];
 }
 
 function makePage(input) {

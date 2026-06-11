@@ -15,9 +15,11 @@ import {
   initCrmDb,
   insertActivity,
   isTelegramUserAuthorized,
+  listPartners,
   markLeadContacted,
   markLeadNotFit,
   setLeadFollowUpAt,
+  updatePartnerStatus,
   updateLeadStatus,
   upsertNotification,
 } from "./crm-db.mjs";
@@ -43,7 +45,7 @@ console.log("CAS AURUM local CRM Telegram bot started");
 
 while (running) {
   try {
-    await Promise.all([pollTelegramUpdates(), scanNewLeads(), sendFollowUpReminders()]);
+    await Promise.all([pollTelegramUpdates(), scanNewLeads(), scanPartnerApplications(), sendFollowUpReminders()]);
   } catch (error) {
     console.error("Bot loop error:", error.message);
   }
@@ -87,6 +89,30 @@ async function notifyLead(lead) {
   });
   upsertNotification({ leadId: lead.id, chatId: TELEGRAM_CHAT_ID, messageId: sent.message_id, payload: sent });
   updateLeadStatus(lead.id, "notified");
+}
+
+async function scanPartnerApplications() {
+  const partners = listPartners({ status: "prospect", limit: 20 }).filter((partner) => partner.agreementStatus === "application_received");
+  for (const partner of partners) {
+    await notifyPartnerApplication(partner);
+  }
+}
+
+async function notifyPartnerApplication(partner) {
+  await telegram("sendMessage", {
+    chat_id: TELEGRAM_CHAT_ID,
+    text: partnerApplicationMessage(partner),
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+    reply_markup: {
+      inline_keyboard: [
+        [webAppButton("🧩 CRM App")],
+        [button("✅ Approve partner", `papprove:${partner.id}`), button("❌ Reject", `preject:${partner.id}`)],
+        [button("📇 Partner card", `pcard:${partner.id}`)],
+      ],
+    },
+  });
+  updatePartnerStatus(partner.id, "prospect", "notified");
 }
 
 async function pollTelegramUpdates() {
@@ -184,6 +210,7 @@ async function sendAuthorizedWelcome(chatId) {
 async function handleCallback(query) {
   const [action, leadId] = String(query.data || "").split(":");
   if (!action || !leadId) return answerCallback(query.id, "Unknown action");
+  if (action === "papprove" || action === "preject" || action === "pcard") return handlePartnerCallback(query, action, leadId);
   if (!getLead(leadId)) return answerCallback(query.id, "Лид не найден или уже удален из CRM");
 
   if (action === "contacted") {
@@ -240,6 +267,40 @@ async function handleCallback(query) {
       reply_to_message_id: query.message.message_id,
     });
   }
+}
+
+async function handlePartnerCallback(query, action, partnerId) {
+  if (action === "papprove") {
+    const partner = updatePartnerStatus(partnerId, "active", "approved");
+    await answerCallback(query.id, partner ? "Partner approved" : "Partner not found");
+    if (partner) return sendPartnerCard(query.message.chat.id, partner.id);
+    return;
+  }
+  if (action === "preject") {
+    const partner = updatePartnerStatus(partnerId, "rejected", "rejected");
+    await answerCallback(query.id, partner ? "Partner rejected" : "Partner not found");
+    if (partner) return sendPartnerCard(query.message.chat.id, partner.id);
+    return;
+  }
+  await answerCallback(query.id, "Partner card");
+  return sendPartnerCard(query.message.chat.id, partnerId);
+}
+
+async function sendPartnerCard(chatId, partnerId) {
+  const partner = listPartners({ status: "all", limit: 200 }).find((item) => item.id === partnerId);
+  if (!partner) return telegram("sendMessage", { chat_id: chatId, text: "Partner not found." });
+  return telegram("sendMessage", {
+    chat_id: chatId,
+    text: partnerApplicationMessage(partner),
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+    reply_markup: {
+      inline_keyboard: [
+        [webAppButton("🧩 CRM App")],
+        [button("✅ Approve partner", `papprove:${partner.id}`), button("❌ Reject", `preject:${partner.id}`)],
+      ],
+    },
+  });
 }
 
 async function handleReplyNote(message) {
@@ -387,6 +448,26 @@ function leadMessage(lead) {
   ].filter(Boolean).join("\n");
 }
 
+function partnerApplicationMessage(partner) {
+  const portalUrl = partner.portalToken ? `${CRM_APP_URL.replace(/\/crm-app$/, "")}/partner-portal?partner=${encodeURIComponent(partner.id)}&token=${encodeURIComponent(partner.portalToken)}` : "";
+  return [
+    "🤝 <b>Новая партнерская заявка CAS AURUM</b>",
+    `<b>Partner ID:</b> <code>${escapeTg(partner.id)}</code>`,
+    "",
+    `<b>Имя:</b> ${escapeTg(partner.displayName || partner.name || "-")}`,
+    `<b>Юрлицо / компания:</b> ${escapeTg(partner.company || "-")}`,
+    `<b>Тип:</b> ${escapeTg(partner.role || "-")}`,
+    `<b>Email:</b> ${escapeTg(partner.email || "-")}`,
+    `<b>Тел:</b> ${escapeTg(partner.phone || "-")}`,
+    `<b>Рынок:</b> ${escapeTg([partner.market, partner.city, partner.country].filter(Boolean).join(", ") || "-")}`,
+    "",
+    `<b>Status:</b> ${escapeTg(partner.status || "-")} · <b>Agreement:</b> ${escapeTg(partner.agreementStatus || "-")}`,
+    `<b>Level:</b> ${escapeTg(partner.programLabel || "-")} · <b>Discount:</b> ${escapeTg(partner.discountPercent || 0)}%`,
+    partner.notes ? `<b>Заметка:</b>\n${escapeTg(partner.notes).slice(0, 1200)}` : "",
+    portalUrl ? `<b>Portal:</b> ${escapeTg(portalUrl)}` : "",
+  ].filter(Boolean).join("\n");
+}
+
 function crmCardMessage(summary) {
   const { lead, contact, deal, activities = [] } = summary;
   const notes = activities.filter((activity) => activity.type === "note" && activity.notes).slice(0, 3);
@@ -400,6 +481,8 @@ function crmCardMessage(summary) {
     `<b>Контакт:</b> ${escapeTg([contact?.first_name, contact?.last_name].filter(Boolean).join(" ") || fullName(lead) || "-")}`,
     `<b>Тел:</b> ${escapeTg(contact?.phone || lead.phone || "-")}`,
     `<b>Email:</b> ${escapeTg(contact?.email || lead.email || "-")}`,
+    contact?.phones?.length > 1 ? `<b>Другие телефоны:</b> ${escapeTg(contact.phones.filter((item) => item !== contact.phone).join(", ") || "-")}` : "",
+    contact?.emails?.length > 1 ? `<b>Другие email:</b> ${escapeTg(contact.emails.filter((item) => item !== contact.email).join(", ") || "-")}` : "",
     `<b>ZIP:</b> ${escapeTg(contact?.zip_code || zipCode(lead) || "-")}`,
     "",
     `<b>Project type:</b> ${escapeTg(lead.projectType || deal?.project_type || "-")}`,

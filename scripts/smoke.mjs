@@ -16,6 +16,10 @@ const paths = [
   "/architectural-millwork",
   "/interior-design-solutions",
   "/for-designers-builders",
+  "/partners",
+  "/es/programa-partners",
+  "/fr/programme-partenaires",
+  "/ru/partnerskaya-programma",
   "/technical-millwork-planner",
   "/request-consultation",
   "/request-measurement",
@@ -56,6 +60,24 @@ if (seoIndex.status !== 401) {
   throw new Error(`/seo-index should require auth, returned ${seoIndex.status}`);
 }
 console.log("/seo-index auth ok");
+
+const partnersPage = await read("/partners");
+if (!partnersPage.body.includes("data-partner-form") || !partnersPage.body.includes("Partnership")) {
+  server.kill();
+  throw new Error("/partners should render partner application form and footer partnership links");
+}
+console.log("/partners form ok");
+
+const privacyPage = await read("/privacy-policy");
+if (!privacyPage.body.includes('<a class="stealth-admin-link" href="/admin">contact CAS AURUM</a>')) {
+  server.kill();
+  throw new Error("/privacy-policy should expose admin entry through the Contact text");
+}
+if (privacyPage.body.includes('aria-label="CAS AURUM admin"') || privacyPage.body.includes(">Admin</a>")) {
+  server.kill();
+  throw new Error("/privacy-policy should not expose a visible admin entry");
+}
+console.log("/privacy-policy stealth admin entry ok");
 
 const lead = await post("/api/lead", {
   website: "smoke-test-honeypot",
