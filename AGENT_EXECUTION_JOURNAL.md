@@ -13,7 +13,7 @@ This file is the working handoff log for AI agents between commits and between c
 
 ## Current State
 
-Last verified commit: `14511c4` (`Add agent execution journal`)
+Last verified commit: current `Add agent execution journal` commit
 
 Production processes:
 
@@ -144,7 +144,7 @@ Remaining:
 
 ### 2026-06-11 UTC - Agent Execution Journal Added
 
-Commit: `14511c4`
+Commit: current `Add agent execution journal` commit
 
 Done:
 
