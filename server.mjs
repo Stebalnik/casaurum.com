@@ -484,6 +484,121 @@ const copy = {
   },
 };
 
+const homepagePositioning = {
+  en: {
+    h1: "Custom Furniture & Architectural Millwork for Refined Interiors",
+    sub: "CAS AURUM creates bespoke furniture, media walls, closets, built-ins, wall panels and cabinetry for premium residential and commercial spaces.",
+    primaryCta: "Request Estimate",
+    secondaryCta: "Explore Selected Work",
+    microcopy: "Send room photos, measurements, drawings or inspiration references. We’ll review the scope and suggest the right next step.",
+    scopeTitle: "Best-fit custom scopes",
+    scopeIntro: "CAS AURUM is best suited for focused, high-detail scopes where furniture, storage, materials and architectural surfaces need to feel intentionally built into the room.",
+    scopes: [
+      "Custom media walls and floating TV units",
+      "Bespoke bedroom furniture",
+      "Luxury closets and wardrobe walls",
+      "Built-in offices, libraries and storage walls",
+      "Architectural wall panels and feature surfaces",
+      "Custom vanities, laundry cabinetry and cabinetry upgrades",
+      "Commercial millwork for hospitality, offices and boutiques",
+    ],
+    inlineCtaTitle: "Have a room, wall or furniture idea in mind?",
+    inlineCtaText: "Send photos, measurements, drawings or inspiration references and CAS AURUM will review the right custom furniture or millwork direction.",
+    why: [
+      ["Bespoke design", "Every scope begins with the room itself: dimensions, circulation, storage needs, lighting and the architectural character of the space."],
+      ["Premium materials", "Walnut, oak, veneer, stone, leather, glass, matte metal and refined hardware are selected for durability, texture and long-term visual calm."],
+      ["Architectural precision", "Furniture, panels, cabinetry and lighting are planned as one composition, so the finished room feels built-in rather than assembled."],
+      ["North American project review", "CAS AURUM reviews premium residential, hospitality and commercial inquiries across North America, with priority review available for Atlanta and Georgia."],
+      ["From concept to installation coordination", "The process can move from photos and drawings to measurements, material direction, estimate review, fabrication planning and installation coordination."],
+      ["Collaboration with designers and builders", "Trade professionals can submit elevations, drawings, finish schedules and client references for a more organized path from design intent to custom millwork."],
+    ],
+  },
+  es: {
+    h1: "Muebles a medida y carpintería arquitectónica para interiores refinados",
+    sub: "CAS AURUM crea muebles a medida, muros TV, closets, muebles integrados, paneles de pared y cabinetry para espacios residenciales y comerciales premium.",
+    primaryCta: "Solicitar presupuesto",
+    secondaryCta: "Ver trabajos seleccionados",
+    microcopy: "Envíe fotos del espacio, medidas, planos o referencias. Revisaremos el alcance y sugeriremos el siguiente paso adecuado.",
+    scopeTitle: "Alcances a medida ideales",
+    scopeIntro: "CAS AURUM funciona mejor en proyectos enfocados y de alto detalle, donde mobiliario, almacenamiento, materiales y superficies arquitectónicas deben sentirse integrados al espacio.",
+    scopes: [
+      "Muros TV y consolas flotantes",
+      "Muebles de dormitorio a medida",
+      "Closets premium y paredes de armarios",
+      "Oficinas integradas, bibliotecas y paredes de almacenamiento",
+      "Paneles arquitectónicos y superficies decorativas",
+      "Vanities, laundry cabinetry y mejoras de cabinetry",
+      "Carpintería comercial para hospitality, oficinas y boutiques",
+    ],
+    inlineCtaTitle: "¿Tiene una habitación, pared o idea de mobiliario en mente?",
+    inlineCtaText: "Envíe fotos, medidas, planos o referencias y CAS AURUM revisará la dirección adecuada de muebles a medida o millwork.",
+    why: [
+      ["Diseño a medida", "Cada proyecto comienza con la habitación: dimensiones, circulación, necesidades de almacenamiento, luz y carácter arquitectónico del espacio."],
+      ["Materiales premium", "Nogal, roble, chapa natural, piedra, cuero, vidrio, metal mate y herrajes refinados se seleccionan por durabilidad, textura y calma visual a largo plazo."],
+      ["Precisión arquitectónica", "Mobiliario, paneles, cabinetry e iluminación se planifican como una sola composición, para que el espacio se sienta integrado y no ensamblado."],
+      ["Revisión de proyectos en Norteamérica", "CAS AURUM revisa solicitudes residenciales, hospitality y comerciales premium en Norteamérica, con revisión prioritaria para Atlanta y Georgia."],
+      ["Del concepto a la coordinación de instalación", "El proceso puede avanzar de fotos y planos a mediciones, dirección de materiales, revisión de presupuesto, planificación de fabricación y coordinación de instalación."],
+      ["Colaboración con diseñadores y constructores", "Los profesionales trade pueden enviar elevaciones, planos, especificaciones de acabados y referencias del cliente para organizar mejor el camino desde la intención de diseño hasta el millwork a medida."],
+    ],
+  },
+  fr: {
+    h1: "Mobilier sur mesure et menuiserie architecturale pour intérieurs raffinés",
+    sub: "CAS AURUM crée du mobilier sur mesure, des murs TV, des dressings, du mobilier intégré, des panneaux muraux et des solutions de cabinetry pour espaces résidentiels et commerciaux premium.",
+    primaryCta: "Demander une estimation",
+    secondaryCta: "Voir les réalisations sélectionnées",
+    microcopy: "Envoyez des photos de la pièce, des mesures, des plans ou des références. Nous examinerons le périmètre et proposerons la bonne étape suivante.",
+    scopeTitle: "Projets sur mesure les plus adaptés",
+    scopeIntro: "CAS AURUM convient le mieux aux projets ciblés et très détaillés, où mobilier, rangement, matériaux et surfaces architecturales doivent sembler intégrés à la pièce.",
+    scopes: [
+      "Murs TV et consoles suspendues",
+      "Mobilier de chambre sur mesure",
+      "Dressings premium et murs d’armoires",
+      "Bureaux intégrés, bibliothèques et murs de rangement",
+      "Panneaux muraux architecturaux et surfaces décoratives",
+      "Meubles vasques, laundry cabinetry et améliorations de cabinetry",
+      "Menuiserie commerciale pour hospitality, bureaux et boutiques",
+    ],
+    inlineCtaTitle: "Vous avez une pièce, un mur ou une idée de mobilier en tête ?",
+    inlineCtaText: "Envoyez photos, mesures, plans ou références, et CAS AURUM examinera la bonne direction de mobilier ou menuiserie sur mesure.",
+    why: [
+      ["Design sur mesure", "Chaque projet commence par la pièce elle-même : dimensions, circulation, besoins de rangement, lumière et caractère architectural de l’espace."],
+      ["Matériaux premium", "Noyer, chêne, placage, pierre, cuir, verre, métal mat et quincaillerie raffinée sont choisis pour leur durabilité, leur texture et leur calme visuel durable."],
+      ["Précision architecturale", "Mobilier, panneaux, cabinetry et éclairage sont pensés comme une seule composition, afin que l’espace paraisse intégré plutôt qu’assemblé."],
+      ["Revue de projets en Amérique du Nord", "CAS AURUM examine les demandes résidentielles, hospitality et commerciales premium en Amérique du Nord, avec une revue prioritaire pour Atlanta et Georgia."],
+      ["Du concept à la coordination d’installation", "Le processus peut aller des photos et plans aux mesures, à la direction matériaux, à l’estimation, à la planification de fabrication et à la coordination d’installation."],
+      ["Collaboration avec designers et constructeurs", "Les professionnels trade peuvent envoyer élévations, plans, cahiers de finitions et références client pour structurer le passage de l’intention design au millwork sur mesure."],
+    ],
+  },
+  ru: {
+    h1: "Мебель на заказ и архитектурная столярка для премиальных интерьеров",
+    sub: "CAS AURUM создает мебель на заказ, ТВ-стены, гардеробные, встроенную мебель, стеновые панели и корпусные решения для жилых и коммерческих пространств премиального уровня.",
+    primaryCta: "Запросить расчет",
+    secondaryCta: "Смотреть избранные работы",
+    microcopy: "Отправьте фото комнаты, размеры, чертежи или референсы. Мы оценим задачу и предложим правильный следующий шаг.",
+    scopeTitle: "Лучшие форматы custom-проектов",
+    scopeIntro: "CAS AURUM лучше всего подходит для точных премиальных задач, где мебель, хранение, материалы и архитектурные поверхности должны выглядеть встроенными в пространство.",
+    scopes: [
+      "ТВ-стены и подвесные media-консоли",
+      "Мебель для спальни на заказ",
+      "Премиальные гардеробные и шкафы",
+      "Встроенные кабинеты, библиотеки и стены хранения",
+      "Архитектурные стеновые панели и акцентные поверхности",
+      "Тумбы, laundry cabinetry и корпусные обновления",
+      "Коммерческая столярка для hospitality, офисов и бутиков",
+    ],
+    inlineCtaTitle: "Есть комната, стена или идея мебели?",
+    inlineCtaText: "Отправьте фото, размеры, чертежи или референсы, и CAS AURUM предложит подходящее направление мебели или столярки на заказ.",
+    why: [
+      ["Индивидуальный дизайн", "Каждый проект начинается с самой комнаты: размеров, движения, хранения, света и архитектурного характера пространства."],
+      ["Премиальные материалы", "Орех, дуб, шпон, камень, кожа, стекло, матовый металл и утонченная фурнитура подбираются ради долговечности, фактуры и спокойного визуального эффекта."],
+      ["Архитектурная точность", "Мебель, панели, корпусные решения и свет планируются как единая композиция, чтобы интерьер выглядел встроенным, а не собранным из отдельных элементов."],
+      ["Проекты по Северной Америке", "CAS AURUM рассматривает премиальные жилые, hospitality и коммерческие запросы по Северной Америке, с приоритетным рассмотрением для Atlanta и Georgia."],
+      ["От концепции до координации установки", "Процесс может пройти от фото и чертежей к замерам, подбору материалов, расчету, производственному планированию и координации установки."],
+      ["Работа с дизайнерами и строителями", "Trade-партнеры могут отправлять фасады, чертежи, спецификации отделок и клиентские референсы, чтобы быстрее перейти от дизайн-идеи к custom millwork."],
+    ],
+  },
+};
+
 const faqs = {
   wallPanels: [
     ["What are luxury wall panels?", "Luxury wall panels are custom architectural surfaces designed around proportion, finish, lighting and use. They can create feature walls, TV walls, bedroom backdrops, lobbies and hospitality interiors."],
@@ -1461,17 +1576,18 @@ function renderPage(route) {
 
 function home(route) {
   const t = copy[route.lang];
+  const hp = homepagePositioning[route.lang] || homepagePositioning.en;
   return `
     <section class="hero">
       ${heroVideoMedia(route.lang)}
       <div class="hero-copy">
         <p class="eyebrow">${escapeHtml(localized("Luxury interiors across North America", route.lang))}</p>
-        <h1>${escapeHtml(t.home.h1)}</h1>
-        <h2>${escapeHtml(t.home.sub)}</h2>
-        <p class="lede">${escapeHtml(t.home.hero)}</p>
+        <h1>${escapeHtml(hp.h1)}</h1>
+        <h2>${escapeHtml(hp.sub)}</h2>
+        <p class="lede">${escapeHtml(hp.microcopy)}</p>
         <div class="actions">
-          <a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(t.cta.consult)}</a>
-          <a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "collections")}">${escapeHtml(t.cta.collections)}</a>
+          <a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(hp.primaryCta)}</a>
+          <a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "projects")}">${escapeHtml(hp.secondaryCta)}</a>
         </div>
       </div>
     </section>
@@ -1479,6 +1595,7 @@ function home(route) {
 	    <section class="intro"><p class="eyebrow">CAS AURUM</p><h2>${escapeHtml(localized("Custom Architectural Surfaces", route.lang))}</h2><p>${escapeHtml(t.home.intro)}</p></section>
 	    ${serviceCards(route)}
 	    ${moneyScopeCards(route)}
+      ${homeInlineCta(route)}
 	    ${collectionsBand(route)}
     ${whySection(route)}
     ${tradeBand(route)}
@@ -2978,18 +3095,16 @@ function trustStrip(lang) {
 
 function serviceCards(route) {
   const t = copy[route.lang];
-  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localized("Signature Services", route.lang))}</p><h2>${escapeHtml(localized("Tailored architectural interiors for premium spaces", route.lang))}</h2></section><section class="cards">${["wallPanels", "customFurniture", "millwork", "solutions", "trade"].map((key) => {
+  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localized("Signature Services", route.lang))}</p><h2>${escapeHtml(localized("Tailored architectural interiors for premium spaces", route.lang))}</h2></section><section class="cards">${["customFurniture", "mediaWalls", "customClosets", "builtIns", "wallPanels", "millwork", "trade"].map((key) => {
     const s = serviceContent(route.lang, key);
-    return `<a class="card" href="${urlFor(route.lang, key)}"><span>${escapeHtml(t.nav[key] || localized("Partnerships", route.lang))}</span><h3>${escapeHtml(s.h1)}</h3><p>${escapeHtml(s.intro)}</p></a>`;
+    return `<a class="card" href="${urlFor(route.lang, key)}"><span>${escapeHtml(t.nav[key] || pageLabel(key, route.lang) || localized("Partnerships", route.lang))}</span><h3>${escapeHtml(s.h1)}</h3><p>${escapeHtml(s.intro)}</p></a>`;
   }).join("")}</section>`;
 }
 
 function moneyScopeCards(route) {
-  const keys = ["mediaWalls", "builtIns", "customClosets"];
-  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localized("High-intent project scopes", route.lang))}</p><h2>${escapeHtml(localized("Popular custom requests with clear commercial intent", route.lang))}</h2></section><section class="cards">${keys.map((key) => {
-    const s = serviceContent(route.lang, key);
-    return `<a class="card" href="${urlFor(route.lang, key)}"><span>${escapeHtml(pageLabel(key, route.lang))}</span><h3>${escapeHtml(s.h1)}</h3><p>${escapeHtml(s.desc)}</p></a>`;
-  }).join("")}</section>`;
+  const hp = homepagePositioning[route.lang] || homepagePositioning.en;
+  const links = ["mediaWalls", "customFurniture", "customClosets", "builtIns", "wallPanels", "millwork", "trade"];
+  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localized("High-intent project scopes", route.lang))}</p><h2>${escapeHtml(hp.scopeTitle)}</h2><p>${escapeHtml(hp.scopeIntro)}</p></section><section class="cards">${hp.scopes.map((scope, index) => `<a class="card" href="${urlFor(route.lang, links[index] || "consultation")}"><span>${escapeHtml(pageLabel(links[index] || "consultation", route.lang))}</span><h3>${escapeHtml(scope)}</h3></a>`).join("")}</section>`;
 }
 
 function collectionsBand(route) {
@@ -2998,8 +3113,13 @@ function collectionsBand(route) {
 }
 
 function whySection(route) {
-  const items = ["Bespoke design", "Premium materials", "Architectural precision", "North American reach", "From concept to installation", "Collaboration with designers, builders and developers"];
-  return `<section class="why"><div><p class="eyebrow">${escapeHtml(localized("Why CAS AURUM", route.lang))}</p><h2>${escapeHtml(localized("Quiet luxury, measured detail and custom-built execution", route.lang))}</h2></div><div class="why-grid">${items.map((x) => `<article><h3>${escapeHtml(localized(x, route.lang))}</h3><p>${escapeHtml(localized(`CAS AURUM shapes each project around dimensions, materials, function and the architectural character of the space.`, route.lang))}</p></article>`).join("")}</div></section>`;
+  const hp = homepagePositioning[route.lang] || homepagePositioning.en;
+  return `<section class="why"><div><p class="eyebrow">${escapeHtml(localized("Why CAS AURUM", route.lang))}</p><h2>${escapeHtml(localized("Quiet luxury, measured detail and custom-built execution", route.lang))}</h2></div><div class="why-grid">${hp.why.map(([title, text]) => `<article><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></article>`).join("")}</div></section>`;
+}
+
+function homeInlineCta(route) {
+  const hp = homepagePositioning[route.lang] || homepagePositioning.en;
+  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(hp.inlineCtaTitle)}</h2><p>${escapeHtml(hp.inlineCtaText)}</p><a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(hp.primaryCta)}</a></section>`;
 }
 
 function tradeBand(route) {
