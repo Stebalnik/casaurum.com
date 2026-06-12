@@ -456,7 +456,7 @@ export function listPartners({ status = "active", search = "", limit = 80 } = {}
   return rows
     .filter((partner) => {
       if (status && status !== "all" && status !== "active" && partner.status !== status) return false;
-      if (status === "active" && ["inactive", "rejected"].includes(partner.status)) return false;
+      if (status === "active" && partner.status !== "active") return false;
       if (!normalizedSearch) return true;
       return [partner.displayName, partner.company, partner.role, partner.market, partner.city, partner.email, partner.phone].filter(Boolean).join(" ").toLowerCase().includes(normalizedSearch);
     })
