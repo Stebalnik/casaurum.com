@@ -119,6 +119,29 @@ const assets = [
   src: `/images/${filename.replace(/\.webp$/, "-1280.webp")}`,
 }));
 
+const completedProjectItems = [
+  { file: "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp", categoryKey: "bath", title: { en: "Luxury Marble Bathroom with Freestanding Tub", ru: "Премиальная мраморная ванная с отдельно стоящей ванной", es: "Baño de mármol premium con bañera exenta", fr: "Salle de bain en marbre premium avec baignoire îlot" } },
+  { file: "cas-aurum-modern-black-house-exterior-wood-deck.webp", categoryKey: "exterior", title: { en: "Modern Black Exterior with Wood Deck", ru: "Современный черный экстерьер с деревянной террасой", es: "Exterior moderno negro con deck de madera", fr: "Extérieur moderne noir avec terrasse en bois" } },
+  { file: "cas-aurum-vaulted-great-room-timber-trusses-stone-fireplace.webp", categoryKey: "millwork", title: { en: "Vaulted Great Room with Timber Trusses and Stone Fireplace", ru: "Гостиная с высоким потолком, деревянными фермами и каменным камином", es: "Gran salón abovedado con vigas de madera y chimenea de piedra", fr: "Grand salon voûté avec fermes bois et cheminée en pierre" } },
+  { file: "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp", categoryKey: "kitchen", title: { en: "White Custom Kitchen Cabinetry with Wood Beams", ru: "Белая кухня на заказ с деревянными балками", es: "Cocina blanca a medida con vigas de madera", fr: "Cuisine blanche sur mesure avec poutres en bois" } },
+  { file: "cas-aurum-floating-oak-staircase-black-steel-stringer.webp", categoryKey: "stairs", title: { en: "Floating Oak Staircase with Black Steel Stringer", ru: "Парящая дубовая лестница с черным металлическим косоуром", es: "Escalera flotante de roble con estructura de acero negro", fr: "Escalier flottant en chêne avec limon en acier noir" } },
+  { file: "cas-aurum-dark-wood-deck-white-railing-privacy-lattice.webp", categoryKey: "exterior", title: { en: "Dark Wood Deck with White Railing and Privacy Lattice", ru: "Темная деревянная терраса с белыми перилами и privacy lattice", es: "Deck de madera oscura con baranda blanca y celosía", fr: "Terrasse en bois foncé avec garde-corps blanc et treillis" } },
+  { file: "cas-aurum-gray-double-bathroom-vanity-marble-countertop.webp", categoryKey: "bath", title: { en: "Gray Double Bathroom Vanity with Marble Countertop", ru: "Серая двойная тумба для ванной с мраморной столешницей", es: "Vanity doble gris con cubierta de mármol", fr: "Meuble vasque double gris avec plan en marbre" } },
+  { file: "cas-aurum-custom-laundry-room-stacked-washer-cabinetry.webp", categoryKey: "laundry", title: { en: "Custom Laundry Room with Stacked Washer Cabinetry", ru: "Laundry room на заказ со встроенной техникой и шкафами", es: "Laundry room a medida con lavadora apilada y cabinetry", fr: "Buanderie sur mesure avec lave-linge empilé et cabinetry" } },
+  { file: "cas-aurum-brick-home-custom-deck-white-railings.webp", categoryKey: "exterior", title: { en: "Brick Home Custom Deck with White Railings", ru: "Кастомная терраса у кирпичного дома с белыми перилами", es: "Deck a medida para casa de ladrillo con barandas blancas", fr: "Terrasse sur mesure pour maison en brique avec garde-corps blancs" } },
+  { file: "cas-aurum-luxury-stone-estate-exterior.webp", categoryKey: "exterior", title: { en: "Luxury Stone Estate Exterior", ru: "Премиальный экстерьер каменного estate-дома", es: "Exterior de residencia premium en piedra", fr: "Extérieur de résidence premium en pierre" } },
+  { file: "cas-aurum-luxury-kitchen-marble-island-skylight.webp", categoryKey: "kitchen", title: { en: "Luxury Kitchen with Marble Island and Skylight", ru: "Премиальная кухня с мраморным островом и стеклянным потолком", es: "Cocina premium con isla de mármol y tragaluz", fr: "Cuisine premium avec îlot en marbre et verrière" } },
+  { file: "cas-aurum-modern-tray-ceiling-cove-lighting.webp", categoryKey: "ceiling", title: { en: "Modern Tray Ceiling with Cove Lighting", ru: "Современный многоуровневый потолок со скрытой подсветкой", es: "Cielo raso moderno con iluminación indirecta", fr: "Plafond à caissons moderne avec éclairage indirect" } },
+  { file: "cas-aurum-built-in-window-bench-wall-paneling.webp", categoryKey: "millwork", title: { en: "Built-In Window Bench with Wall Paneling", ru: "Встроенная скамья у окна со стеновыми панелями", es: "Banco integrado junto a ventana con paneles de pared", fr: "Banquette intégrée sous fenêtre avec panneaux muraux" } },
+  { file: "cas-aurum-reclaimed-wood-plank-ceiling-recessed-lights.webp", categoryKey: "ceiling", title: { en: "Reclaimed Wood Plank Ceiling with Recessed Lights", ru: "Потолок из деревянных планок со встроенными светильниками", es: "Techo de madera recuperada con luces empotradas", fr: "Plafond en bois récupéré avec spots encastrés" } },
+  { file: "cas-aurum-oak-staircase-black-metal-balusters.webp", categoryKey: "stairs", title: { en: "Oak Staircase with Black Metal Balusters", ru: "Дубовая лестница с черными металлическими балясинами", es: "Escalera de roble con balaustres negros", fr: "Escalier en chêne avec balustres noirs" } },
+  { file: "cas-aurum-vaulted-living-room-built-ins-fireplace.webp", categoryKey: "millwork", title: { en: "Vaulted Living Room with Built-Ins and Fireplace", ru: "Гостиная с высоким потолком, built-ins и камином", es: "Sala con techo abovedado, built-ins y chimenea", fr: "Salon voûté avec mobilier intégré et cheminée" } },
+  { file: "cas-aurum-farmhouse-laundry-room-custom-cabinetry.webp", categoryKey: "laundry", title: { en: "Farmhouse Laundry Room with Custom Cabinetry", ru: "Farmhouse laundry room с корпусной мебелью на заказ", es: "Laundry room farmhouse con cabinetry a medida", fr: "Buanderie farmhouse avec cabinetry sur mesure" } },
+  { file: "cas-aurum-rustic-vaulted-great-room-timber-beams.webp", categoryKey: "millwork", title: { en: "Rustic Vaulted Great Room with Timber Beams", ru: "Гостиная с высоким потолком и темными деревянными балками", es: "Gran sala rústica abovedada con vigas de madera", fr: "Grand salon rustique voûté avec poutres en bois" } },
+];
+
+const completedProjectCategoryKeys = ["bath", "exterior", "kitchen", "millwork", "stairs", "laundry", "ceiling"];
+
 const assetDimensions = {
   "hero-luxury-wall-panels-living-room": [1280, 960],
   "custom-furniture-bedroom-suite": [1280, 1280],
@@ -601,91 +624,91 @@ const homepagePositioning = {
 
 const projectsGalleryCopy = {
   en: {
-    title: "Selected Work & Design Concepts",
-    desc: "Custom furniture, media walls, closets, built-ins, wall panels, cabinetry and millwork directions for refined residential and commercial interiors.",
-    metaTitle: `Selected Work & Design Concepts | ${BRAND}`,
-    metaDesc: "Explore CAS AURUM custom furniture, media walls, closets, built-ins, wall panels, cabinetry and millwork concepts for refined residential and commercial interiors.",
+    title: "Completed Projects & Custom Interior Work",
+    desc: "Explore completed Cas Aurum work across architectural millwork, bespoke furniture, premium finish carpentry, custom cabinetry, bathrooms, kitchens, ceilings, stairs, decks, built-ins, and refined residential interiors.",
+    metaTitle: `Completed Projects | ${BRAND}`,
+    metaDesc: "Explore completed custom interior projects by Cas Aurum, including architectural millwork, bespoke furniture, media walls, closets, wall panels, bathrooms, ceilings, stairs, decks, cabinetry, and premium finish work.",
     primaryCta: "Request Estimate",
     secondaryCta: "Explore Collections",
-    noteTitle: "How to read this gallery",
-    microcopy: "Images labeled as Design Concept or Project Visualization show material direction, proportions and room planning ideas. Only items specifically labeled Completed Project represent completed work.",
-    categories: ["All", "Custom Furniture", "Media Walls", "Closets & Wardrobes", "Built-Ins", "Wall Panels", "Cabinetry", "Vanities", "Commercial Millwork", "Finish Carpentry"],
-    cardCta: "Request a Similar Direction",
+    noteTitle: "Built for real homes",
+    microcopy: "Each project reflects custom planning, material selection, fabrication, finishing, and installation details shaped around the home, the room, and the client’s lifestyle.",
+    categories: ["All", "Bathroom / Vanity", "Exterior / Deck", "Kitchen / Cabinetry", "Architectural Millwork / Living Rooms", "Stairs / Finish Carpentry", "Laundry / Utility", "Ceilings"],
+    cardCta: "Request a Similar Project",
     requestTitle: "What you can request from this gallery",
-    requestText: "Use these directions as a starting point for custom furniture, media walls, closets, built-ins, wall panels, cabinetry, vanities or commercial millwork. Send room photos, dimensions, drawings or inspiration references and CAS AURUM will review the right custom direction.",
-    linksTitle: "Continue exploring custom scopes",
+    requestText: "Send room photos, dimensions, drawings or inspiration references and CAS AURUM will review the right custom furniture, cabinetry, millwork or finish carpentry direction for your home.",
+    linksTitle: "Continue exploring custom work",
     faqs: [
-      ["Are all gallery images completed projects?", "No. CAS AURUM uses clear labels. Design Concept and Project Visualization images show material direction, proportions and room planning ideas. Only items specifically labeled Completed Project represent completed work."],
-      ["What should I send for a similar project?", "Send room photos, rough dimensions, ceiling height, drawings or elevations if available, inspiration references, project location, budget range and timeline."],
-      ["Can CAS AURUM create custom furniture from an inspiration image?", "Yes. Inspiration images can help define proportion, material direction and function. Final dimensions, materials, details and feasibility are reviewed during the project scope process."],
-      ["Can designers and builders submit drawings?", "Yes. Designers, architects, builders and developers can submit elevations, plans, finish schedules and client references through the consultation or partner path."],
-      ["Does CAS AURUM handle full remodeling?", "CAS AURUM focuses on custom furniture, architectural millwork, cabinetry, wall panels, built-ins, closets and finish carpentry. Broader remodeling is positioned as millwork-led coordination when appropriate."],
+      ["Can you build something similar for my home?", "Yes. Share room photos, rough dimensions, inspiration references, location, timeline and budget range so CAS AURUM can review the right custom direction."],
+      ["Do you copy previous projects exactly?", "No. Completed projects are useful references, but each new scope is adapted to the room, dimensions, materials, storage needs and architectural character of the home."],
+      ["Can you adapt a completed project to my room size and materials?", "Yes. CAS AURUM can reinterpret cabinetry, millwork, stairs, ceilings, decks, vanities or built-ins around your measurements, finishes and site conditions."],
+      ["Do you work with designers, builders, and architects?", "Yes. Trade professionals can submit elevations, plans, finish schedules and client references through the consultation or partner path."],
+      ["How do I request an estimate?", "Use the consultation form and send photos, measurements, drawings if available, preferred materials, project location, budget range and timeline."],
     ],
   },
   es: {
-    title: "Trabajos seleccionados y conceptos de diseño",
-    desc: "Muebles a medida, muros TV, closets, muebles integrados, paneles de pared, cabinetry y millwork para interiores residenciales y comerciales refinados.",
-    metaTitle: `Trabajos seleccionados y conceptos de diseño | ${BRAND}`,
-    metaDesc: "Explore conceptos CAS AURUM de muebles a medida, muros TV, closets, muebles integrados, paneles de pared, cabinetry y millwork para interiores residenciales y comerciales refinados.",
+    title: "Proyectos completados y trabajos interiores a medida",
+    desc: "Explore trabajos completados de Cas Aurum en millwork arquitectónico, mobiliario bespoke, carpintería de acabado premium, cabinetry a medida, baños, cocinas, techos, escaleras, decks, built-ins e interiores residenciales refinados.",
+    metaTitle: `Proyectos completados | ${BRAND}`,
+    metaDesc: "Explore proyectos interiores completados por Cas Aurum, incluidos millwork arquitectónico, muebles a medida, media walls, closets, paneles, baños, techos, escaleras, decks, cabinetry y acabados premium.",
     primaryCta: "Solicitar presupuesto",
     secondaryCta: "Explorar colecciones",
-    noteTitle: "Cómo leer esta galería",
-    microcopy: "Las imágenes marcadas como Concepto de diseño o Visualización de proyecto muestran dirección de materiales, proporciones e ideas de planificación. Solo los elementos marcados como Proyecto realizado representan trabajos completados.",
-    categories: ["Todo", "Muebles a medida", "Muros TV y media walls", "Closets y vestidores", "Muebles integrados", "Paneles de pared", "Cabinetry", "Vanities", "Carpintería comercial", "Carpintería de acabado"],
-    cardCta: "Solicitar una dirección similar",
+    noteTitle: "Construido para hogares reales",
+    microcopy: "Cada proyecto refleja planificación a medida, selección de materiales, fabricación, acabado e instalación adaptados a la casa, la habitación y el estilo de vida del cliente.",
+    categories: ["Todo", "Baño / Vanity", "Exterior / Deck", "Cocina / Cabinetry", "Millwork arquitectónico / Salas", "Escaleras / Carpintería de acabado", "Lavandería / Utility", "Techos"],
+    cardCta: "Solicitar un proyecto similar",
     requestTitle: "Qué puede solicitar desde esta galería",
-    requestText: "Use estas direcciones como punto de partida para muebles a medida, muros TV, closets, muebles integrados, paneles de pared, cabinetry, vanities o carpintería comercial. Envíe fotos del espacio, medidas, planos o referencias y CAS AURUM revisará la dirección a medida adecuada.",
-    linksTitle: "Seguir explorando alcances a medida",
+    requestText: "Envíe fotos del espacio, medidas, planos o referencias y CAS AURUM revisará la dirección adecuada de muebles a medida, cabinetry, millwork o carpintería de acabado para su hogar.",
+    linksTitle: "Seguir explorando trabajos a medida",
     faqs: [
-      ["¿Todas las imágenes de la galería son proyectos realizados?", "No. CAS AURUM utiliza etiquetas claras. Concepto de diseño y Visualización de proyecto muestran dirección de materiales, proporciones e ideas de planificación. Solo los elementos marcados como Proyecto realizado representan trabajos completados."],
-      ["¿Qué debo enviar para un proyecto similar?", "Envíe fotos del espacio, medidas aproximadas, altura del techo, planos o elevaciones si están disponibles, referencias, ubicación del proyecto, rango de presupuesto y plazo deseado."],
-      ["¿CAS AURUM puede crear muebles a medida a partir de una imagen de referencia?", "Sí. Las referencias ayudan a definir proporción, dirección de materiales y función. Dimensiones finales, materiales, detalles y viabilidad se revisan durante el proceso de alcance."],
-      ["¿Diseñadores y constructores pueden enviar planos?", "Sí. Diseñadores, arquitectos, constructores y desarrolladores pueden enviar elevaciones, planos, especificaciones de acabados y referencias del cliente mediante la consulta o el flujo de partners."],
-      ["¿CAS AURUM realiza remodelaciones completas?", "CAS AURUM se enfoca en muebles a medida, carpintería arquitectónica, cabinetry, paneles de pared, muebles integrados, closets y carpintería de acabado. Remodelaciones más amplias se posicionan como coordinación centrada en millwork cuando corresponde."],
+      ["¿Pueden construir algo similar para mi casa?", "Sí. Comparta fotos del espacio, medidas aproximadas, referencias, ubicación, plazo y rango de presupuesto para que CAS AURUM revise la dirección adecuada."],
+      ["¿Copian proyectos anteriores exactamente?", "No. Los proyectos completados sirven como referencia, pero cada nuevo alcance se adapta a la habitación, medidas, materiales, almacenamiento y carácter arquitectónico de la casa."],
+      ["¿Pueden adaptar un proyecto completado al tamaño y materiales de mi espacio?", "Sí. CAS AURUM puede reinterpretar cabinetry, millwork, escaleras, techos, decks, vanities o built-ins según sus medidas, acabados y condiciones del sitio."],
+      ["¿Trabajan con diseñadores, constructores y arquitectos?", "Sí. Los profesionales trade pueden enviar elevaciones, planos, schedules de acabados y referencias del cliente mediante la consulta o el flujo de partners."],
+      ["¿Cómo solicito un presupuesto?", "Use el formulario de consulta y envíe fotos, medidas, planos si los tiene, materiales preferidos, ubicación, rango de presupuesto y plazo."],
     ],
   },
   fr: {
-    title: "Réalisations sélectionnées et concepts design",
-    desc: "Mobilier sur mesure, murs TV, dressings, mobilier intégré, panneaux muraux, cabinetry et millwork pour intérieurs résidentiels et commerciaux raffinés.",
-    metaTitle: `Réalisations sélectionnées et concepts design | ${BRAND}`,
-    metaDesc: "Explorez les concepts CAS AURUM de mobilier sur mesure, murs TV, dressings, mobilier intégré, panneaux muraux, cabinetry et millwork pour intérieurs résidentiels et commerciaux raffinés.",
+    title: "Projets réalisés et travaux intérieurs sur mesure",
+    desc: "Explorez les réalisations Cas Aurum en menuiserie architecturale, mobilier bespoke, menuiserie de finition premium, cabinetry sur mesure, salles de bain, cuisines, plafonds, escaliers, terrasses, built-ins et intérieurs résidentiels raffinés.",
+    metaTitle: `Projets réalisés | ${BRAND}`,
+    metaDesc: "Explorez les projets intérieurs réalisés par Cas Aurum, incluant menuiserie architecturale, mobilier sur mesure, media walls, dressings, panneaux, salles de bain, plafonds, escaliers, terrasses, cabinetry et finitions premium.",
     primaryCta: "Demander une estimation",
     secondaryCta: "Explorer les collections",
-    noteTitle: "Comment lire cette galerie",
-    microcopy: "Les images marquées Concept design ou Visualisation de projet montrent une direction matériaux, des proportions et des idées d’aménagement. Seuls les éléments marqués Projet réalisé représentent des travaux réalisés.",
-    categories: ["Tout", "Mobilier sur mesure", "Murs TV et media walls", "Dressings et armoires", "Mobilier intégré", "Panneaux muraux", "Cabinetry", "Meubles vasques", "Menuiserie commerciale", "Menuiserie de finition"],
-    cardCta: "Demander une direction similaire",
+    noteTitle: "Conçu pour de vrais intérieurs",
+    microcopy: "Chaque projet reflète une planification sur mesure, le choix des matériaux, la fabrication, la finition et les détails d’installation adaptés à la maison, à la pièce et au mode de vie du client.",
+    categories: ["Tout", "Salle de bain / Meuble vasque", "Extérieur / Terrasse", "Cuisine / Cabinetry", "Menuiserie architecturale / Salons", "Escaliers / Menuiserie de finition", "Buanderie / pièce utilitaire", "Plafonds"],
+    cardCta: "Demander un projet similaire",
     requestTitle: "Ce que vous pouvez demander depuis cette galerie",
-    requestText: "Utilisez ces directions comme point de départ pour mobilier sur mesure, murs TV, dressings, mobilier intégré, panneaux muraux, cabinetry, meubles vasques ou menuiserie commerciale. Envoyez photos, mesures, plans ou références, et CAS AURUM examinera la bonne direction sur mesure.",
-    linksTitle: "Continuer avec les portées sur mesure",
+    requestText: "Envoyez photos, mesures, plans ou références, et CAS AURUM examinera la bonne direction de mobilier sur mesure, cabinetry, millwork ou menuiserie de finition pour votre maison.",
+    linksTitle: "Continuer avec les travaux sur mesure",
     faqs: [
-      ["Toutes les images de la galerie sont-elles des projets réalisés ?", "Non. CAS AURUM utilise des libellés clairs. Concept design et Visualisation de projet montrent une direction matériaux, des proportions et des idées d’aménagement. Seuls les éléments marqués Projet réalisé représentent des travaux réalisés."],
-      ["Que faut-il envoyer pour un projet similaire ?", "Envoyez des photos de la pièce, dimensions approximatives, hauteur sous plafond, plans ou élévations si disponibles, références, localisation du projet, fourchette de budget et calendrier souhaité."],
-      ["CAS AURUM peut-il créer du mobilier sur mesure à partir d’une image de référence ?", "Oui. Les références aident à définir les proportions, la direction matériaux et la fonction. Dimensions finales, matériaux, détails et faisabilité sont examinés pendant le cadrage du projet."],
-      ["Les designers et constructeurs peuvent-ils soumettre des plans ?", "Oui. Designers, architectes, constructeurs et développeurs peuvent envoyer élévations, plans, cahiers de finitions et références client via la consultation ou le parcours partenaire."],
-      ["CAS AURUM réalise-t-il des rénovations complètes ?", "CAS AURUM se concentre sur mobilier sur mesure, menuiserie architecturale, cabinetry, panneaux muraux, mobilier intégré, dressings et menuiserie de finition. Les rénovations plus larges sont positionnées comme une coordination centrée sur le millwork lorsque cela convient."],
+      ["Pouvez-vous réaliser quelque chose de similaire pour ma maison ?", "Oui. Envoyez photos, dimensions approximatives, références, localisation, calendrier et fourchette de budget afin que CAS AURUM examine la bonne direction sur mesure."],
+      ["Copiez-vous exactement les projets précédents ?", "Non. Les projets réalisés servent de références, mais chaque nouveau périmètre est adapté à la pièce, aux dimensions, aux matériaux, aux besoins de rangement et au caractère architectural de la maison."],
+      ["Pouvez-vous adapter un projet réalisé aux dimensions et matériaux de ma pièce ?", "Oui. CAS AURUM peut réinterpréter cabinetry, millwork, escaliers, plafonds, terrasses, meubles vasques ou built-ins selon vos mesures, finitions et conditions du site."],
+      ["Travaillez-vous avec designers, constructeurs et architectes ?", "Oui. Les professionnels trade peuvent envoyer élévations, plans, cahiers de finitions et références client via la consultation ou le parcours partenaire."],
+      ["Comment demander une estimation ?", "Utilisez le formulaire de consultation et envoyez photos, mesures, plans si disponibles, matériaux souhaités, localisation, fourchette de budget et calendrier."],
     ],
   },
   ru: {
-    title: "Избранные работы и дизайн-концепты",
-    desc: "Мебель на заказ, ТВ-стены, гардеробные, встроенные решения, стеновые панели, корпусная мебель и столярка для премиальных жилых и коммерческих интерьеров.",
-    metaTitle: `Избранные работы и дизайн-концепты | ${BRAND}`,
-    metaDesc: "Смотрите направления CAS AURUM для мебели на заказ, ТВ-стен, гардеробных, встроенных решений, стеновых панелей, корпусной мебели и столярки для премиальных интерьеров.",
+    title: "Выполненные проекты и интерьерные работы на заказ",
+    desc: "Посмотрите выполненные работы Cas Aurum: архитектурная столярка, мебель на заказ, премиальная отделка, корпусная мебель, ванные, кухни, потолки, лестницы, террасы, встроенные решения и продуманные жилые интерьеры.",
+    metaTitle: `Выполненные проекты | ${BRAND}`,
+    metaDesc: "Смотрите выполненные интерьерные проекты Cas Aurum: архитектурная столярка, мебель на заказ, media walls, гардеробные, панели, ванные, потолки, лестницы, террасы, корпусная мебель и премиальная отделка.",
     primaryCta: "Запросить расчет",
     secondaryCta: "Смотреть коллекции",
-    noteTitle: "Как читать эту галерею",
-    microcopy: "Изображения с отметкой «Дизайн-концепт» или «Проектная визуализация» показывают направление материалов, пропорции и идеи планировки. Только материалы с отметкой «Выполненный проект» относятся к выполненным работам.",
-    categories: ["Все", "Мебель на заказ", "ТВ-стены и media walls", "Гардеробные и шкафы", "Встроенная мебель", "Стеновые панели", "Корпусная мебель", "Vanities / тумбы", "Коммерческая столярка", "Финишная столярка"],
-    cardCta: "Запросить похожее решение",
+    noteTitle: "Создано для реальных домов",
+    microcopy: "Каждый проект отражает индивидуальное планирование, подбор материалов, изготовление, отделку и монтажные детали, адаптированные под дом, помещение и образ жизни клиента.",
+    categories: ["Все", "Ванные / тумбы", "Экстерьер / террасы", "Кухни / корпусная мебель", "Архитектурная столярка / гостиные", "Лестницы / финишная столярка", "Прачечная / utility", "Потолки"],
+    cardCta: "Запросить похожий проект",
     requestTitle: "Что можно запросить по этой галерее",
-    requestText: "Используйте эти направления как отправную точку для мебели на заказ, ТВ-стен, гардеробных, встроенной мебели, стеновых панелей, корпусных решений, тумб или коммерческой столярки. Отправьте фото комнаты, размеры, чертежи или референсы, и CAS AURUM предложит подходящее custom-направление.",
-    linksTitle: "Продолжить просмотр custom-направлений",
+    requestText: "Отправьте фото комнаты, размеры, чертежи или референсы, и CAS AURUM предложит подходящее направление мебели на заказ, корпусных решений, millwork или финишной столярки для вашего дома.",
+    linksTitle: "Продолжить просмотр работ на заказ",
     faqs: [
-      ["Все изображения в галерее — выполненные проекты?", "Нет. CAS AURUM использует понятные отметки. «Дизайн-концепт» и «Проектная визуализация» показывают направление материалов, пропорции и идеи планировки. Только материалы с отметкой «Выполненный проект» относятся к выполненным работам."],
-      ["Что отправить для похожего проекта?", "Отправьте фото комнаты, примерные размеры, высоту потолка, чертежи или фасады при наличии, референсы, локацию проекта, бюджетный диапазон и желаемые сроки."],
-      ["Может ли CAS AURUM создать мебель на заказ по референсу?", "Да. Референсы помогают определить пропорции, материалы и функцию. Финальные размеры, материалы, детали и реализуемость уточняются во время разбора проекта."],
-      ["Могут ли дизайнеры и строители отправлять чертежи?", "Да. Дизайнеры, архитекторы, строители и девелоперы могут отправлять фасады, планы, спецификации отделок и клиентские референсы через консультацию или партнерский путь."],
-      ["CAS AURUM делает полный remodeling?", "CAS AURUM фокусируется на мебели на заказ, архитектурной столярке, корпусных решениях, стеновых панелях, встроенной мебели, гардеробных и финишной столярке. Более широкий remodeling рассматривается как coordination вокруг millwork, когда это уместно."],
+      ["Можете сделать похожее для моего дома?", "Да. Отправьте фото помещения, примерные размеры, референсы, локацию, сроки и бюджетный диапазон, чтобы CAS AURUM оценил подходящее направление."],
+      ["Вы копируете предыдущие проекты точно?", "Нет. Выполненные проекты помогают как референсы, но каждый новый scope адаптируется под комнату, размеры, материалы, хранение и архитектурный характер дома."],
+      ["Можно адаптировать выполненный проект под мои размеры и материалы?", "Да. CAS AURUM может переосмыслить cabinetry, millwork, лестницы, потолки, террасы, тумбы или built-ins под ваши замеры, отделки и условия объекта."],
+      ["Вы работаете с дизайнерами, строителями и архитекторами?", "Да. Trade-профессионалы могут отправлять фасады, планы, спецификации отделок и клиентские референсы через консультацию или партнерский путь."],
+      ["Как запросить расчет?", "Используйте форму консультации и отправьте фото, размеры, чертежи при наличии, желаемые материалы, локацию, бюджетный диапазон и сроки."],
     ],
   },
 };
@@ -943,7 +966,7 @@ function galleryStatusLabel(lang, status = "concept") {
   const labels = {
     en: { concept: "Design Concept", visualization: "Project Visualization", completed: "Completed Project", workshop: "Workshop Detail", beforeAfter: "Before / After" },
     ru: { concept: "Дизайн-концепт", visualization: "Проектная визуализация", completed: "Выполненный проект", workshop: "Деталь мастерской", beforeAfter: "До / после" },
-    es: { concept: "Concepto de diseño", visualization: "Visualización de proyecto", completed: "Proyecto realizado", workshop: "Detalle de taller", beforeAfter: "Antes / después" },
+    es: { concept: "Concepto de diseño", visualization: "Visualización de proyecto", completed: "Proyecto completado", workshop: "Detalle de taller", beforeAfter: "Antes / después" },
     fr: { concept: "Concept design", visualization: "Visualisation de projet", completed: "Projet réalisé", workshop: "Détail d’atelier", beforeAfter: "Avant / après" },
   };
   return labels[lang]?.[status] || labels.en[status] || labels.en.concept;
@@ -2804,17 +2827,15 @@ function simplePage(route, kicker, h1, body, asset) {
 
 function projectsPage(route) {
   const gallery = projectsGalleryText(route.lang);
-  const featured = collectionsData.flatMap((collection) => collection.projects.slice(0, 3).map((project, index) => ({ ...project, collection, collectionName: collection.name, collectionIndex: index }))).slice(0, 12);
   return `
     ${projectsHero(route, gallery)}
     <section class="seo-copy wide">
-      <p class="eyebrow">${escapeHtml(localized("Portfolio note", route.lang))}</p>
+      <p class="eyebrow">${escapeHtml(galleryStatusLabel(route.lang, "completed"))}</p>
       <h2>${escapeHtml(gallery.noteTitle)}</h2>
       <p>${escapeHtml(gallery.microcopy)}</p>
-      <p>${escapeHtml(conceptTransparencyCopy(route.lang))}</p>
     </section>
     ${projectCategoryChips(route, gallery)}
-    <section class="concept-grid" id="selected-work">${featured.map((project, index) => projectGalleryCard(route, project, index, gallery)).join("")}</section>
+    <section class="concept-grid" id="selected-work">${completedProjectItems.map((project, index) => projectGalleryCard(route, project, index, gallery)).join("")}</section>
     <section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(gallery.requestTitle)}</h2><p>${escapeHtml(gallery.requestText)}</p><a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(gallery.primaryCta)}</a></section>
     ${projectsInternalLinks(route, gallery)}
     ${projectsFaqBlock(route, gallery)}
@@ -2830,29 +2851,49 @@ function projectsHero(route, gallery) {
 }
 
 function projectCategoryChips(route, gallery) {
-  return `<section class="chip-row" aria-label="${escapeHtml(localized("Best project-fit scopes", route.lang))}">${gallery.categories.map((category, index) => `<a href="${index === 0 ? "#selected-work" : `#gallery-category-${index}`}" class="chip">${escapeHtml(category)}</a>`).join("")}</section>`;
+  return `<section class="chip-row" aria-label="${escapeHtml(localized("Best project-fit scopes", route.lang))}">${gallery.categories.map((category, index) => `<a href="${index === 0 ? "#selected-work" : `#completed-category-${completedProjectCategoryKeys[index - 1]}`}" class="chip">${escapeHtml(category)}</a>`).join("")}</section>`;
 }
 
 function projectGalleryCard(route, project, index, gallery) {
-  const status = project.status || project.collection?.status || "concept";
-  const categoryIndex = (index % (gallery.categories.length - 1)) + 1;
-  const category = gallery.categories[categoryIndex];
-  const href = project.collection ? collectionUrlFor(route.lang, project.collection) : urlFor(route.lang, "consultation");
-  const id = index < gallery.categories.length - 1 ? `gallery-category-${categoryIndex}` : `project-card-${index}`;
+  const categoryIndex = completedProjectCategoryKeys.indexOf(project.categoryKey) + 1;
+  const category = gallery.categories[categoryIndex] || gallery.categories[0];
+  const title = localizedText(project.title, route.lang);
+  const href = urlFor(route.lang, "consultation");
+  const firstInCategory = completedProjectItems.findIndex((item) => item.categoryKey === project.categoryKey) === index;
+  const id = firstInCategory ? `completed-category-${project.categoryKey}` : `project-card-${index + 1}`;
   return `<article class="concept-card" id="${id}">
     <figure class="concept-media">
-      <img src="${project.imageSrc}" alt="${escapeHtml(localizedText(project.imageAlt, route.lang))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1536" height="1024">
-      <figcaption class="project-caption"><strong>${escapeHtml(project.collectionName)}</strong>${galleryStatusPill(route.lang, status)}<span>${escapeHtml(project.location)}</span></figcaption>
+      <img src="/images/projects/${escapeHtml(project.file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, category))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1536" height="1024">
+      <figcaption class="project-caption"><strong>${escapeHtml(category)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption>
     </figure>
     <div>
-      ${galleryStatusPill(route.lang, status)}
+      ${galleryStatusPill(route.lang, "completed")}
       <span>${escapeHtml(category)}</span>
-      <h3>${escapeHtml(project.projectName)}</h3>
-      <p>${escapeHtml(localizedText(project.concept, route.lang))}</p>
-      <p class="inspired">${escapeHtml(project.location)}</p>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(completedProjectCaption(route.lang, category))}</p>
       <a class="button secondary card-cta" href="${href}">${escapeHtml(gallery.cardCta)}</a>
     </div>
   </article>`;
+}
+
+function completedProjectAlt(lang, title, category) {
+  const text = {
+    en: `${title}, completed Cas Aurum ${category} project.`,
+    es: `${title}: proyecto completado de Cas Aurum en ${category}.`,
+    fr: `${title} : projet réalisé Cas Aurum, ${category}.`,
+    ru: `${title}: выполненный проект Cas Aurum, категория ${category}.`,
+  };
+  return text[lang] || text.en;
+}
+
+function completedProjectCaption(lang, category) {
+  const text = {
+    en: `Completed custom work in ${category}, planned around materials, proportions, fabrication details and site conditions.`,
+    es: `Trabajo a medida completado en ${category}, planificado según materiales, proporciones, detalles de fabricación y condiciones del sitio.`,
+    fr: `Travail sur mesure réalisé en ${category}, pensé selon matériaux, proportions, détails de fabrication et conditions du site.`,
+    ru: `Выполненная работа в категории ${category}: материалы, пропорции, детали изготовления и условия объекта учтены в проекте.`,
+  };
+  return text[lang] || text.en;
 }
 
 function projectsInternalLinks(route, gallery) {
@@ -4620,7 +4661,7 @@ function caption(id, lang) {
 function pageLabel(key, lang) {
   const t = copy[lang];
   if (key === "planner") return localized("Technical Millwork Planner", lang);
-  if (key === "projects") return localized("Project concepts and private references", lang);
+  if (key === "projects") return projectsGalleryText(lang).title;
   if (servicePageKeys.includes(key)) return t.nav[key] || serviceContent(lang, key).h1;
   return t.nav[key] || t.cta[key === "consultation" ? "consult" : key === "measurement" ? "measure" : "consult"] || regionLabel(key, lang) || key;
 }
