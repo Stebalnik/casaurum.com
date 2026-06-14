@@ -89,6 +89,13 @@ export const styles = [
 
 const roomProfiles = {
   bedroom: {
+    h1Title: tx("Luxury Bedroom Interiors", "Dormitorios de lujo", "Chambres de luxe", "Люксовые спальни"),
+    metaTitleOverride: tx(
+      "Luxury Bedroom Interiors | Custom Headboard Walls & Storage | CAS AURUM",
+      "Dormitorios de lujo | Cabeceros y almacenamiento a medida | CAS AURUM",
+      "Chambres de luxe | Têtes de lit et rangement sur mesure | CAS AURUM",
+      "Люксовые спальни | Изголовья и хранение на заказ | CAS AURUM"
+    ),
     intro: tx(
       "Bedroom interiors by CAS AURUM are planned as private architectural suites: calm storage, a composed headboard wall, layered lighting, soft materials and the quiet discipline that makes rest feel intentional.",
       "Los dormitorios CAS AURUM se planifican como suites privadas: almacenamiento sereno, muro de cabecera compuesto, iluminación por capas, materiales suaves y una disciplina tranquila que favorece el descanso.",
@@ -176,6 +183,13 @@ const roomProfiles = {
     },
   },
   bathroom: {
+    h1Title: tx("Luxury Bathroom Interiors & Custom Vanities", "Baños de lujo y vanities a medida", "Salles de bain de luxe et meubles vasques", "Люксовые ванные и тумбы на заказ"),
+    metaTitleOverride: tx(
+      "Luxury Bathroom Interiors | Custom Vanities & Marble Details | CAS AURUM",
+      "Baños de lujo | Vanities a medida y detalles de mármol | CAS AURUM",
+      "Salles de bain de luxe | Meubles vasques et détails marbre | CAS AURUM",
+      "Люксовые ванные | Тумбы на заказ и мраморные детали | CAS AURUM"
+    ),
     intro: tx(
       "Bathroom interiors by CAS AURUM focus on the daily ritual: stone, vanity design, mirrors, wet areas, lighting, storage, ventilation awareness and durable finishes that still feel refined.",
       "Los baños CAS AURUM se centran en el ritual diario: piedra, vanity, espejos, zonas húmedas, iluminación, almacenamiento, ventilación y acabados durables con presencia refinada.",
@@ -202,6 +216,13 @@ const roomProfiles = {
     relatedProjectsTitle: tx("Related Completed Bathroom Work", "Baños completados relacionados", "Salles de bain réalisées liées", "Связанные выполненные ванные"),
   },
   "living-room": {
+    h1Title: tx("Luxury Living Room Interiors", "Salas de lujo", "Salons de luxe", "Люксовые гостиные"),
+    metaTitleOverride: tx(
+      "Luxury Living Room Interiors | Custom Media Walls & Built-Ins | CAS AURUM",
+      "Salas de lujo | Media walls y built-ins a medida | CAS AURUM",
+      "Salons de luxe | Media walls et intégrés sur mesure | CAS AURUM",
+      "Люксовые гостиные | Media walls и built-ins на заказ | CAS AURUM"
+    ),
     intro: tx(
       "Living room interiors by CAS AURUM are treated as the main architectural statement of the home: focal wall, fireplace or media wall, built-ins, seating layout, acoustic balance and evening atmosphere.",
       "Las salas CAS AURUM se tratan como la declaración arquitectónica principal: muro focal, chimenea o media wall, built-ins, distribución de asientos, equilibrio acústico y atmósfera nocturna.",
@@ -225,10 +246,19 @@ const roomProfiles = {
       "cas-aurum-vaulted-great-room-timber-trusses-stone-fireplace.webp",
       "cas-aurum-vaulted-living-room-built-ins-fireplace.webp",
       "cas-aurum-rustic-vaulted-great-room-timber-beams.webp",
+      "cas-aurum-built-in-window-bench-wall-paneling.webp",
+      "cas-aurum-reclaimed-wood-plank-ceiling-recessed-lights.webp",
     ],
     relatedProjectsTitle: tx("Related Completed Living Room Work", "Salas completadas relacionadas", "Salons réalisés liés", "Связанные выполненные гостиные"),
   },
   kitchen: {
+    h1Title: tx("Luxury Kitchen Interiors & Custom Cabinetry", "Cocinas de lujo y cabinetry a medida", "Cuisines de luxe et cabinetry sur mesure", "Люксовые кухни и корпусная мебель на заказ"),
+    metaTitleOverride: tx(
+      "Luxury Kitchen Interiors | Custom Cabinetry & Millwork | CAS AURUM",
+      "Cocinas de lujo | Cabinetry y millwork a medida | CAS AURUM",
+      "Cuisines de luxe | Cabinetry et menuiserie sur mesure | CAS AURUM",
+      "Люксовые кухни | Корпусная мебель и millwork | CAS AURUM"
+    ),
     intro: tx(
       "Kitchen interiors by CAS AURUM focus on premium custom cabinetry, islands, panels, storage, finish carpentry and material coordination around the kitchen as a functional architectural centerpiece.",
       "Las cocinas CAS AURUM se enfocan en cabinetry premium a medida, islas, paneles, almacenamiento, carpintería de acabado y coordinación material alrededor de la cocina como centro funcional.",
@@ -251,10 +281,18 @@ const roomProfiles = {
     relatedProjects: [
       "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp",
       "cas-aurum-luxury-kitchen-marble-island-skylight.webp",
+      "cas-aurum-farmhouse-laundry-room-custom-cabinetry.webp",
     ],
     relatedProjectsTitle: tx("Related Completed Kitchen Work", "Cocinas completadas relacionadas", "Cuisines réalisées liées", "Связанные выполненные кухни"),
   },
   "walk-in-closet": {
+    h1Title: tx("Luxury Walk-In Closets & Dressing Rooms", "Vestidores de lujo y dressing rooms", "Dressings de luxe et pièces dressing", "Люксовые гардеробные и dressing rooms"),
+    metaTitleOverride: tx(
+      "Luxury Walk-In Closets | Custom Dressing Rooms | CAS AURUM",
+      "Vestidores de lujo | Dressing rooms a medida | CAS AURUM",
+      "Dressings de luxe | Pièces dressing sur mesure | CAS AURUM",
+      "Люксовые гардеробные | Dressing rooms на заказ | CAS AURUM"
+    ),
     intro: tx(
       "Walk-in closet interiors by CAS AURUM are planned like private boutiques: wardrobe systems, lighting, drawers, glass doors, accessories, mirrors, seating, island storage and a polished daily ritual.",
       "Los vestidores CAS AURUM se planifican como boutiques privadas: sistemas de wardrobe, iluminación, cajones, puertas de vidrio, accesorios, espejos, asiento, isla y ritual diario cuidado.",
@@ -279,6 +317,40 @@ const roomProfiles = {
       "cas-aurum-custom-laundry-room-stacked-washer-cabinetry.webp",
     ],
     relatedProjectsTitle: tx("Related Custom Storage & Millwork", "Almacenamiento y millwork relacionados", "Rangement et menuiserie liés", "Связанное хранение и millwork"),
+  },
+  "master-suite": {
+    h1Title: tx("Luxury Master Suite Interiors", "Master suites de lujo", "Suites parentales de luxe", "Люксовые мастер-сьюты"),
+    metaTitleOverride: tx(
+      "Luxury Master Suite Interiors | Bedroom Closet & Bath Planning | CAS AURUM",
+      "Master suites de lujo | Dormitorio, vestidor y baño | CAS AURUM",
+      "Suites parentales de luxe | Chambre, dressing et bain | CAS AURUM",
+      "Люксовые мастер-сьюты | Спальня, гардеробная и ванная | CAS AURUM"
+    ),
+    intro: tx(
+      "CAS AURUM master suites connect bedroom, bathroom, closet, lighting, storage and material direction into one private residential experience rather than treating each room separately.",
+      "Las master suites CAS AURUM conectan dormitorio, baño, vestidor, iluminación, almacenamiento y materiales en una experiencia privada en lugar de tratar cada espacio por separado.",
+      "Les suites parentales CAS AURUM relient chambre, salle de bain, dressing, lumière, rangement et matières en une expérience privée cohérente.",
+      "Мастер-сьюты CAS AURUM связывают спальню, ванную, гардеробную, свет, хранение и материалы в единый приватный сценарий, а не в набор отдельных комнат."
+    ),
+    metaDescription: tx(
+      "Luxury master suite interiors by CAS AURUM with bedroom, dressing room, bathroom, wardrobe planning, vanities, lighting, storage and premium material coordination.",
+      "Master suites de lujo CAS AURUM con dormitorio, vestidor, baño, wardrobes, vanities, iluminación, almacenamiento y coordinación de materiales premium.",
+      "Suites parentales de luxe CAS AURUM avec chambre, dressing, salle de bain, rangement, vasques, lumière et coordination matières premium.",
+      "Люксовые мастер-сьюты CAS AURUM: спальня, гардеробная, ванная, хранение, тумбы, свет и согласование премиальных материалов."
+    ),
+    directSummary: tx(
+      "A premium master suite should be planned as a connected sequence: bedroom, dressing, bathing, storage, lighting and circulation.",
+      "Una master suite premium debe planificarse como una secuencia conectada: dormitorio, vestidor, baño, almacenamiento, luz y circulación.",
+      "Une suite parentale premium se planifie comme une séquence connectée : chambre, dressing, bain, rangement, lumière et circulation.",
+      "Премиальный мастер-сьют планируется как связанная последовательность: спальня, dressing, ванная, хранение, свет и движение."
+    ),
+    materials: ["walnut", "oak", "soft stone", "linen textures", "smoked glass", "brushed metal"],
+    relatedProjects: [
+      "cas-aurum-built-in-window-bench-wall-paneling.webp",
+      "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp",
+      "cas-aurum-modern-tray-ceiling-cove-lighting.webp",
+    ],
+    relatedProjectsTitle: tx("Related Completed Suite Work", "Trabajos de suite relacionados", "Travaux de suite réalisés liés", "Связанные выполненные работы для suite"),
   },
 };
 
@@ -566,6 +638,7 @@ export function getRelatedCasaurumLinks(params) {
     seoLink(locale, "/interiors", l(locale, "interiors")),
     seoLink(locale, "/styles", l(locale, "styles")),
     seoLink(locale, "/rooms", l(locale, "rooms")),
+    projectsSeoLink(locale),
     seoLink(locale, "/collections", l(locale, "collections")),
     seoLink(locale, "/contact", l(locale, "contact")),
   ];
@@ -694,12 +767,13 @@ function stylePage(locale, style) {
 }
 
 function roomPage(locale, room) {
+  const h1 = local(room.h1Title, locale) || local(room.title, locale);
   return makePage({
-    pageType: "room", locale, path: `/rooms/${room.slug}`, h1: local(room.title, locale), eyebrow: l(locale, "rooms"),
-    metaTitle: `${local(room.title, locale)} | Premium Room Ideas | ${BRAND}`, metaDescription: local(room.metaDescription, locale),
+    pageType: "room", locale, path: `/rooms/${room.slug}`, h1, eyebrow: l(locale, "rooms"),
+    metaTitle: local(room.metaTitleOverride, locale) || `${h1} | Premium Room Ideas | ${BRAND}`, metaDescription: local(room.metaDescription, locale),
     intro: local(room.intro, locale), directSummary: local(room.directSummary, locale) || directFor(locale, local(room.title, locale), "room"),
     sections: roomSectionsFor(locale, room),
-    faq: roomFaqFor(locale, room), breadcrumbs: crumb(locale, [[l(locale, "rooms"), "/rooms"], [local(room.title, locale), `/rooms/${room.slug}`]]),
+    faq: roomFaqFor(locale, room), breadcrumbs: crumb(locale, [[l(locale, "rooms"), "/rooms"], [h1, `/rooms/${room.slug}`]]),
     relatedRooms: room.relatedRooms, relatedStyles: ["modern", "quiet-luxury", "organic-modern"], relatedCollections: ["forma", "madera"],
     imagePath: roomImage(room.slug), relatedProjects: room.relatedProjects || [], relatedProjectsTitle: local(room.relatedProjectsTitle, locale), allowlisted: true,
   });
@@ -891,7 +965,7 @@ function cityCommercialSections(locale, city) {
 }
 
 function roomSectionsFor(locale, room) {
-  if (room.sections?.[locale]) return room.sections[locale].map(([heading, body]) => ({ heading, body }));
+  if (room.sections?.[locale]) return withRoomSupplementSections(locale, room, room.sections[locale].map(([heading, body]) => ({ heading, body })));
   const subject = local(room.title, locale);
   const materials = dedupeMaterials(room.premiumMaterials || roomMaterials(room.slug)).join(", ");
   const content = {
@@ -1031,13 +1105,127 @@ function roomSectionsFor(locale, room) {
         ["Частые ошибки", "Не планируйте полки до инвентаря, избегайте слабого света, отсутствия сезонного хранения, плохих разделителей и стекла, показывающего беспорядок."],
       ],
     },
+    "master-suite": {
+      en: [
+        ["The master suite as a private sequence", "A strong master suite connects sleeping, dressing and bathing as one private rhythm, with each threshold, door swing and lighting scene planned deliberately."],
+        ["Best project types", "The best inquiries include bedroom headboard walls, dressing rooms, custom wardrobes, bathroom vanities, linen storage, wall panels and connected material palettes."],
+        ["Materials and finishes", `Materials such as ${materials} can connect the suite when the palette shifts subtly from bedroom softness to closet display and bathroom durability.`],
+        ["Lighting strategy", "Suite lighting should support reading, nighttime movement, wardrobe selection, mirror use and bathing without making the private rooms feel like a showroom."],
+        ["Storage, millwork and furniture", "Wardrobes, vanities, nightstands, benches and built-ins should share a logic of proportion, hardware and finish so the suite feels designed as one experience."],
+        ["Planning notes", "Plan privacy, circulation, door swings, two-person routines, closet inventory, vanity use, blackout control and the transition between soft bedroom materials and wet-zone durability."],
+        ["Investment signals", "Investment rises with the number of connected rooms, custom wardrobes, stone, vanities, lighting control, wall paneling, finish continuity and trade coordination."],
+        ["Common mistakes", "Avoid designing the bedroom, closet and bathroom separately, using unrelated materials, underplanning storage, ignoring night movement or treating the suite as only a larger bedroom."],
+      ],
+      es: [
+        ["La master suite como secuencia privada", "Una master suite fuerte conecta dormir, vestirse y bañarse con umbrales, puertas y escenas de luz planificados."],
+        ["Mejores tipos de proyecto", "Encajan cabeceros, vestidores, wardrobes a medida, vanities, linen storage, paneles y paletas conectadas."],
+        ["Materiales y acabados", `Materiales como ${materials} conectan la suite cuando la paleta cambia con sutileza entre dormitorio, vestidor y baño.`],
+        ["Estrategia de iluminación", "La luz debe apoyar lectura, movimiento nocturno, wardrobe, espejo y baño sin convertir los espacios privados en showroom."],
+        ["Storage, millwork y mobiliario", "Wardrobes, vanities, mesas, bancos y built-ins deben compartir proporción, herrajes y acabado."],
+        ["Notas de planificación", "Planifique privacidad, circulación, puertas, rutinas de dos personas, inventario, vanity, blackout y transición a zonas húmedas."],
+        ["Señales de inversión", "La inversión sube con habitaciones conectadas, wardrobes, piedra, vanities, control de luz, paneles, continuidad y coordinación trade."],
+        ["Errores comunes", "Evite diseñar dormitorio, vestidor y baño por separado, usar materiales inconexos, poca storage o ignorar movimiento nocturno."],
+      ],
+      fr: [
+        ["La suite parentale comme séquence privée", "Une suite forte relie dormir, s'habiller et se baigner avec seuils, portes et scénarios lumineux planifiés."],
+        ["Meilleurs types de projet", "Têtes de lit, dressings, wardrobes, vasques, linge, panneaux et palettes connectées conviennent bien."],
+        ["Matières et finitions", `Des matières comme ${materials} relient la suite lorsque la palette évolue subtilement de la chambre au dressing puis au bain.`],
+        ["Stratégie lumière", "La lumière soutient lecture, circulation nocturne, wardrobe, miroir et bain sans transformer l'espace privé en showroom."],
+        ["Rangement, menuiserie et mobilier", "Dressings, vasques, chevets, bancs et intégrés doivent partager proportions, quincaillerie et finition."],
+        ["Notes de planification", "Planifiez intimité, circulation, portes, routines à deux, inventaire, vasque, blackout et transition vers zones humides."],
+        ["Signaux d'investissement", "L'investissement augmente avec pièces connectées, dressings, pierre, vasques, contrôle lumière, panneaux, continuité et coordination."],
+        ["Erreurs fréquentes", "Évitez de concevoir chambre, dressing et bain séparément, matériaux sans lien, rangement faible ou circulation nocturne oubliée."],
+      ],
+      ru: [
+        ["Мастер-сьют как приватная последовательность", "Сильный master suite связывает сон, dressing и bathing через продуманные переходы, двери и световые сценарии."],
+        ["Лучшие типы проектов", "Подходят изголовья, dressing rooms, wardrobes, тумбы для ванной, хранение белья, панели и связанная материальная палитра."],
+        ["Материалы и отделки", `Материалы вроде ${materials} связывают suite, когда палитра тонко меняется от спальни к гардеробной и ванной.`],
+        ["Стратегия света", "Свет поддерживает чтение, ночное движение, выбор одежды, зеркало и ванную, не превращая приватные комнаты в showroom."],
+        ["Хранение, millwork и мебель", "Wardrobes, vanities, тумбы, банкетки и built-ins должны иметь общую логику пропорций, фурнитуры и отделки."],
+        ["Заметки по планированию", "Планируйте приватность, движение, двери, сценарии двух людей, инвентарь, vanity, blackout и переход к влажным зонам."],
+        ["Инвестиционные факторы", "Бюджет растет от количества связанных комнат, wardrobes, камня, vanities, управления светом, панелей, непрерывности отделок и координации."],
+        ["Частые ошибки", "Не проектируйте спальню, гардеробную и ванную отдельно; избегайте несвязанных материалов, слабого хранения и игнорирования ночного движения."],
+      ],
+    },
   };
   const rows = content[room.slug]?.[locale];
-  return rows ? rows.map(([heading, body]) => ({ heading, body })) : standardSections(locale, subject, null, room);
+  return rows ? withRoomSupplementSections(locale, room, rows.map(([heading, body]) => ({ heading, body }))) : withRoomSupplementSections(locale, room, standardSections(locale, subject, null, room));
+}
+
+function withRoomSupplementSections(locale, room, sections) {
+  const headingText = sections.map((section) => section.heading).join(" ").toLowerCase();
+  if (/best|mejor|meilleur|лучш/.test(headingText) && /planning|planific|планирован/.test(headingText) && /investment|inversi|investissement|инвестицион/.test(headingText)) return sections;
+  const supplements = roomSupplementSections(locale, room);
+  if (!supplements.length) return sections;
+  const mistakeIndex = sections.findIndex((section) => /mistakes|errores|erreurs|ошиб/i.test(section.heading));
+  if (mistakeIndex === -1) return [...sections, ...supplements];
+  return [...sections.slice(0, mistakeIndex), ...supplements, ...sections.slice(mistakeIndex)];
+}
+
+function roomSupplementSections(locale, room) {
+  const content = {
+    en: {
+      "living-room": [
+        ["Best project types", "Living room inquiries are strongest when they involve a custom media wall, fireplace wall, floating console, display shelving, acoustic paneling, built-in storage or a full wall-panel composition."],
+        ["Planning notes", "Before furniture is selected, settle TV size, fireplace clearances, speaker locations, wiring paths, seating orientation, children or family use, and whether the room is for formal entertaining, daily life or both."],
+        ["Investment signals", "Living room investment rises with wall length, stone or veneer selection, hidden AV work, integrated lighting, cabinet interiors, finish complexity and installation coordination."],
+      ],
+      kitchen: [
+        ["Best project types", "Kitchen inquiries fit CAS AURUM best when they involve custom cabinetry, island detailing, appliance panels, pantry integration, drawer organization, premium refacing or a coordinated millwork package."],
+        ["Planning notes", "Workflow, appliance locations, island overhangs, drawer clearances, pantry access, ventilation, outlet placement and contractor responsibilities should be clarified before finish samples are chosen."],
+        ["Investment signals", "Kitchen investment is shaped by cabinet volume, door style, stone slabs, appliance integration, hardware, lighting, finishing method, site access and whether CAS AURUM is coordinating selected scopes or a larger package."],
+      ],
+      bedroom: [
+        ["Best project types", "Bedroom inquiries are strongest for custom headboard walls, upholstered or wood wall panels, floating nightstands, wardrobes, storage walls, vanity niches and bespoke bedroom furniture."],
+        ["Planning notes", "Start with bed size, wall width, closet inventory, blackout needs, outlet locations, rug scale, reading habits and whether the room should feel like a quiet residence or a tailored hotel suite."],
+        ["Investment signals", "Bedroom investment changes with panel area, upholstery, veneer selection, integrated lighting, wardrobe complexity, drawer interiors, hardware and the amount of site fitting required."],
+      ],
+      bathroom: [
+        ["Best project types", "Bathroom inquiries are strongest for custom vanities, double vanity upgrades, stone or stone-look surfaces, mirror walls, linen storage, premium bath details and coordination with renovation contractors."],
+        ["Planning notes", "Confirm plumbing locations, wet-zone dimensions, shower glass, mirror height, ventilation, towel access, storage needs, grout exposure and fixture finish logic before the decorative palette is finalized."],
+        ["Investment signals", "Bathroom investment depends on vanity size, stone selection, slab or tile complexity, moisture-resistant construction, mirror lighting, hardware, installation coordination and site conditions."],
+      ],
+      "walk-in-closet": [
+        ["Best project types", "Closet inquiries are strongest for full dressing rooms, illuminated wardrobe walls, shoe storage, accessory drawers, glass doors, closet islands, mirrors and boutique-style cabinetry."],
+        ["Planning notes", "Inventory comes before design: count hanging lengths, shoes, bags, folded items, jewelry, watches, luggage and seasonal storage, then plan circulation and lighting around daily dressing."],
+        ["Investment signals", "Closet investment rises with cabinet volume, glass, LED channels, drawer interiors, island storage, leather or fabric inserts, hardware quality and the precision of installation."],
+      ],
+      "master-suite": [
+        ["Best project types", "Master suite inquiries fit best when bedroom, dressing room and bathroom scopes need one connected material story, shared storage logic and coordinated lighting scenes."],
+        ["Planning notes", "Plan the sequence from sleeping to dressing to bathing: privacy, door swings, wardrobe access, vanity use, night lighting, blackout control and the way two people move through the suite."],
+        ["Investment signals", "Suite-level investment reflects multiple rooms, matched materials, custom wardrobes, vanities, headboard walls, lighting control, finish continuity and coordination across trades."],
+      ],
+    },
+    es: {
+      "living-room": [["Mejores tipos de proyecto", "Los mejores alcances incluyen media wall, chimenea, consola flotante, display, paneles acústicos, built-ins o composición completa de pared."], ["Notas de planificación", "Defina TV, chimenea, speakers, cableado, orientación de asientos, uso familiar y si la sala será formal, diaria o ambas."], ["Señales de inversión", "La inversión crece con largo de muro, piedra o chapa, AV oculto, iluminación, interiores de gabinete, acabado e instalación."]],
+      kitchen: [["Mejores tipos de proyecto", "Encajan cabinetry a medida, isla, paneles de electrodomésticos, pantry, organización de cajones, refacing premium o paquete de millwork."], ["Notas de planificación", "Flujo, appliances, isla, cajones, pantry, ventilación, tomas y responsabilidades del contratista se aclaran antes de acabados."], ["Señales de inversión", "Influyen volumen de cabinetry, puertas, piedra, integración de appliances, herrajes, iluminación, acabado, acceso y coordinación."]],
+      bedroom: [["Mejores tipos de proyecto", "Funcionan cabeceros a medida, paneles tapizados o de madera, mesas flotantes, wardrobes, storage walls, nichos y muebles bespoke."], ["Notas de planificación", "Empiece por cama, ancho de muro, inventario, blackout, tomas, alfombra, lectura y si busca calma residencial o suite hotelera."], ["Señales de inversión", "Cambian por área de panel, tapicería, chapa, luz integrada, wardrobes, interiores, herrajes y ajuste en sitio."]],
+      bathroom: [["Mejores tipos de proyecto", "Encajan vanities a medida, doble vanity, superficies de piedra, espejos, linen storage, detalles premium y coordinación con contratistas."], ["Notas de planificación", "Confirme plumbing, wet zone, vidrio, espejo, ventilación, toallas, storage, grout y lógica de fixtures antes de la paleta."], ["Señales de inversión", "Depende de vanity, piedra, slab o tile, construcción resistente, luz de espejo, herrajes, coordinación y condiciones del sitio."]],
+      "walk-in-closet": [["Mejores tipos de proyecto", "Vestidores completos, wardrobes iluminados, zapatos, accesorios, puertas de vidrio, islas, espejos y cabinetry boutique."], ["Notas de planificación", "El inventario va primero: colgado, zapatos, bolsas, doblado, joyería, relojes, maletas y temporada; luego circulación y luz."], ["Señales de inversión", "Sube con volumen, vidrio, LEDs, interiores, isla, inserts, herrajes y precisión de instalación."]],
+      "master-suite": [["Mejores tipos de proyecto", "Encaja cuando dormitorio, vestidor y baño necesitan una historia material, storage y escenas de luz conectadas."], ["Notas de planificación", "Planifique dormir, vestir y bañarse: privacidad, puertas, wardrobe, vanity, luz nocturna, blackout y circulación de dos personas."], ["Señales de inversión", "Refleja varias habitaciones, materiales coordinados, wardrobes, vanities, cabeceros, control de luz y coordinación trade."]],
+    },
+    fr: {
+      "living-room": [["Meilleurs types de projet", "Les demandes fortes incluent media wall, cheminée, console flottante, exposition, panneaux acoustiques, intégrés ou mur complet."], ["Notes de planification", "Définissez TV, cheminée, speakers, câbles, assises, usage familial et caractère formel ou quotidien."], ["Signaux d'investissement", "L'investissement augmente avec longueur du mur, pierre ou placage, AV caché, lumière, intérieurs, finition et pose."]],
+      kitchen: [["Meilleurs types de projet", "Cabinetry, îlot, panneaux d'électroménager, pantry, tiroirs, refacing premium ou package millwork conviennent bien."], ["Notes de planification", "Flux, électroménager, îlot, tiroirs, pantry, ventilation, prises et responsabilités se clarifient avant finitions."], ["Signaux d'investissement", "Volume, portes, pierre, intégration, quincaillerie, lumière, finition, accès et coordination influencent le budget."]],
+      bedroom: [["Meilleurs types de projet", "Têtes de lit, panneaux tapissés ou bois, chevets flottants, dressings, murs de rangement, niches et mobilier bespoke."], ["Notes de planification", "Commencez par lit, mur, inventaire, blackout, prises, tapis, lecture et calme résidentiel ou suite hôtelière."], ["Signaux d'investissement", "Surface de panneaux, textile, placage, lumière intégrée, dressings, intérieurs, quincaillerie et ajustement site comptent."]],
+      bathroom: [["Meilleurs types de projet", "Meubles vasques, double vasque, pierre, miroirs, rangement linge, détails premium et coordination chantier."], ["Notes de planification", "Confirmez plomberie, zone humide, verre, miroir, ventilation, serviettes, rangement, joints et logique des fixtures."], ["Signaux d'investissement", "Vasque, pierre, dalle ou carrelage, construction résistante, lumière miroir, quincaillerie, coordination et site comptent."]],
+      "walk-in-closet": [["Meilleurs types de projet", "Dressings complets, wardrobes éclairés, chaussures, accessoires, portes vitrées, îlots, miroirs et cabinetry boutique."], ["Notes de planification", "Inventaire d'abord : penderie, chaussures, sacs, plié, bijoux, montres, bagages et saisonnier; puis circulation et lumière."], ["Signaux d'investissement", "Volume, verre, LED, intérieurs, îlot, inserts, quincaillerie et précision de pose augmentent l'investissement."]],
+      "master-suite": [["Meilleurs types de projet", "Convient quand chambre, dressing et bain demandent une même histoire matière, rangement et lumière."], ["Notes de planification", "Planifiez dormir, s'habiller, se baigner : intimité, portes, wardrobe, vasque, nuit, blackout et circulation à deux."], ["Signaux d'investissement", "Plusieurs pièces, matières coordonnées, dressings, vasques, têtes de lit, contrôle lumière et coordination trade comptent."]],
+    },
+    ru: {
+      "living-room": [["Лучшие типы проектов", "Сильные запросы: media wall, каминная стена, подвесная консоль, display, акустические панели, built-ins или полная композиция стены."], ["Заметки по планированию", "Сначала определите TV, камин, speakers, кабели, посадку, семейное использование и формат: формальный, ежедневный или оба."], ["Инвестиционные факторы", "Бюджет растет от длины стены, камня или шпона, скрытого AV, света, наполнения шкафов, отделки и монтажа."]],
+      kitchen: [["Лучшие типы проектов", "Подходят cabinetry, остров, панели техники, pantry, организация ящиков, премиальный refacing или coordinated millwork package."], ["Заметки по планированию", "Workflow, техника, остров, ящики, pantry, вентиляция, розетки и ответственность подрядчиков уточняются до отделок."], ["Инвестиционные факторы", "Влияют объем cabinetry, фасады, камень, интеграция техники, фурнитура, свет, отделка, доступ и координация."]],
+      bedroom: [["Лучшие типы проектов", "Подходят изголовья, мягкие или деревянные панели, парящие тумбы, wardrobes, стены хранения, ниши и bespoke мебель."], ["Заметки по планированию", "Начните с кровати, ширины стены, инвентаря, blackout, розеток, ковра, чтения и нужного ощущения: дом или hotel suite."], ["Инвестиционные факторы", "Влияют площадь панелей, текстиль, шпон, встроенный свет, wardrobes, наполнения, фурнитура и подгонка на объекте."]],
+      bathroom: [["Лучшие типы проектов", "Подходят тумбы, double vanity, каменные поверхности, зеркала, хранение полотенец, premium детали и координация с подрядчиками."], ["Заметки по планированию", "Подтвердите plumbing, wet zone, стекло, зеркало, вентиляцию, полотенца, хранение, затирку и логику fixtures."], ["Инвестиционные факторы", "Зависят от тумбы, камня, slab или плитки, влагостойкой конструкции, света у зеркала, фурнитуры, координации и объекта."]],
+      "walk-in-closet": [["Лучшие типы проектов", "Полные dressing rooms, подсвеченные wardrobes, обувь, аксессуары, стеклянные двери, острова, зеркала и boutique cabinetry."], ["Заметки по планированию", "Сначала инвентарь: подвес, обувь, сумки, сложенные вещи, украшения, часы, чемоданы и сезонное хранение; потом движение и свет."], ["Инвестиционные факторы", "Бюджет растет от объема, стекла, LED, наполнений, острова, inserts, фурнитуры и точности монтажа."]],
+      "master-suite": [["Лучшие типы проектов", "Подходит, когда спальня, dressing и ванная требуют единой материальной истории, хранения и световых сценариев."], ["Заметки по планированию", "Планируйте сон, dressing и bathing: приватность, двери, wardrobe, vanity, ночной свет, blackout и движение двух людей."], ["Инвестиционные факторы", "Влияют несколько комнат, согласованные материалы, wardrobes, тумбы, изголовья, управление светом и trade-координация."]],
+    },
+  };
+  return (content[locale]?.[room.slug] || []).map(([heading, body]) => ({ heading, body }));
 }
 
 function roomFaqFor(locale, room) {
-  if (room.faq?.[locale]) return room.faq[locale].map(([q, a]) => ({ q, a }));
+  if (room.faq?.[locale]) return withRoomSupplementFaq(locale, room, room.faq[locale].map(([q, a]) => ({ q, a })));
   const content = {
     bathroom: {
       en: [["Can CAS AURUM create a custom bathroom vanity?", "Yes. Vanities can be planned around drawers, stone tops, mirror scale, outlets, towels and the room's proportions."], ["Do you work with stone, tile and moisture-resistant finishes?", "Yes. Material direction can include stone, porcelain slabs, wood accents, brushed metal and moisture-aware construction details."], ["Can you coordinate lighting, mirrors and storage?", "Yes. These elements should be coordinated together because mirror use, storage and glare control shape daily comfort."], ["Can you adapt a completed bathroom project to my space?", "Yes. Completed work can guide proportion and material direction, then the scope is adjusted to your room dimensions and site conditions."]],
@@ -1065,7 +1253,47 @@ function roomFaqFor(locale, room) {
     },
   };
   const rows = content[room.slug]?.[locale];
-  return rows ? rows.map(([q, a]) => ({ q, a })) : faqFor(locale, local(room.title, locale));
+  return rows ? withRoomSupplementFaq(locale, room, rows.map(([q, a]) => ({ q, a }))) : withRoomSupplementFaq(locale, room, faqFor(locale, local(room.title, locale)));
+}
+
+function withRoomSupplementFaq(locale, room, faqs) {
+  if (faqs.length >= 5) return faqs;
+  const supplement = {
+    en: {
+      "living-room": ["Do you work from photos, plans or designer drawings?", "Yes. Photos, plans, elevations, AV notes and designer drawings all help define the wall, storage, lighting and installation scope."],
+      kitchen: ["Can you coordinate with my contractor or designer?", "Yes. CAS AURUM can coordinate selected cabinetry, millwork, materials and finish details with the professionals responsible for the broader kitchen work."],
+      bedroom: ["Can a completed bedroom direction be adapted to my room?", "Yes. Completed work can guide proportions, materials and lighting, then the details are adapted to your dimensions and storage needs."],
+      bathroom: ["Do you coordinate with installers or contractors?", "Yes. Bathroom work often requires contractor coordination for plumbing, waterproofing, electrical, stone, glass and installation responsibilities."],
+      "walk-in-closet": ["Can you adapt a completed closet direction to my home?", "Yes. The storage logic, material palette and lighting approach can be adapted to your inventory, room size and site conditions."],
+      "master-suite": ["Can CAS AURUM plan the bedroom, closet and bathroom together?", "Yes. A master suite inquiry can connect bedroom walls, wardrobes, vanities, lighting and materials into one coordinated private sequence."],
+    },
+    es: {
+      "living-room": ["¿Trabajan desde fotos, planos o dibujos de diseñador?", "Sí. Fotos, planos, elevaciones y notas AV ayudan a definir muro, storage, luz e instalación."],
+      kitchen: ["¿Pueden coordinar con mi contratista o diseñador?", "Sí. CAS AURUM puede coordinar cabinetry, millwork, materiales y detalles con los profesionales del proyecto."],
+      bedroom: ["¿Puede adaptarse una dirección de dormitorio completada?", "Sí. Una obra completada guía proporciones, materiales y luz, y se adapta a sus medidas y storage."],
+      bathroom: ["¿Coordinan con instaladores o contratistas?", "Sí. El baño suele requerir coordinación de plumbing, waterproofing, electricidad, piedra, vidrio e instalación."],
+      "walk-in-closet": ["¿Pueden adaptar una dirección de closet completada?", "Sí. Storage, materiales y luz se adaptan a inventario, tamaño y condiciones del sitio."],
+      "master-suite": ["¿CAS AURUM puede planificar dormitorio, vestidor y baño juntos?", "Sí. Una master suite puede conectar paredes, wardrobes, vanities, luz y materiales."],
+    },
+    fr: {
+      "living-room": ["Travaillez-vous depuis photos, plans ou dessins designer ?", "Oui. Photos, plans, élévations et notes AV aident à définir mur, rangement, lumière et pose."],
+      kitchen: ["Pouvez-vous coordonner avec mon entrepreneur ou designer ?", "Oui. CAS AURUM peut coordonner cabinetry, millwork, matières et détails avec les professionnels du projet."],
+      bedroom: ["Une direction chambre réalisée peut-elle être adaptée ?", "Oui. Un réalisé guide proportions, matières et lumière, puis s'adapte à vos dimensions et rangements."],
+      bathroom: ["Coordonnez-vous avec installateurs ou entrepreneurs ?", "Oui. Une salle de bain demande souvent coordination plomberie, étanchéité, électricité, pierre, verre et pose."],
+      "walk-in-closet": ["Pouvez-vous adapter une direction dressing réalisée ?", "Oui. Rangement, matières et lumière s'adaptent à votre inventaire, dimensions et conditions du site."],
+      "master-suite": ["CAS AURUM peut-il planifier chambre, dressing et bain ensemble ?", "Oui. Une suite parentale peut relier murs, dressings, vasques, lumière et matières."],
+    },
+    ru: {
+      "living-room": ["Вы работаете по фото, планам или чертежам дизайнера?", "Да. Фото, планы, фасады и AV-заметки помогают определить стену, хранение, свет и монтажный scope."],
+      kitchen: ["Можно координироваться с моим подрядчиком или дизайнером?", "Да. CAS AURUM может согласовать cabinetry, millwork, материалы и детали с профессионалами проекта."],
+      bedroom: ["Можно адаптировать выполненное bedroom-направление?", "Да. Выполненная работа задает пропорции, материалы и свет, а детали адаптируются под размеры и хранение."],
+      bathroom: ["Вы координируетесь с установщиками или подрядчиками?", "Да. Ванная часто требует координации plumbing, waterproofing, электрики, камня, стекла и установки."],
+      "walk-in-closet": ["Можно адаптировать выполненное closet-направление?", "Да. Логика хранения, материалы и свет адаптируются под инвентарь, размер комнаты и условия объекта."],
+      "master-suite": ["CAS AURUM может планировать спальню, гардеробную и ванную вместе?", "Да. Master suite может связать стены спальни, wardrobes, vanities, свет и материалы в один сценарий."],
+    },
+  };
+  const row = supplement[locale]?.[room.slug];
+  return row ? [...faqs, { q: row[0], a: row[1] }] : faqs;
 }
 
 function cityCombinationFaq(locale, subject, combo) {
@@ -1112,7 +1340,7 @@ function standardSections(locale, subject, style, room, property, city) {
       `Lighting should combine daylight control, warm ambient layers, concealed linear light and focused accents. A premium room should be comfortable at noon and cinematic in the evening.`,
       `Furniture direction should support the room rather than compete with it: custom proportions, calm upholstery, thoughtful storage and materials that echo the walls, floors and millwork.`,
       cityBody || "Spatial planning should keep circulation clear, locate the primary focal point early and use built-ins where they make the architecture feel more resolved.",
-      `Investment depends on scope, measurements, materials, fabrication complexity, logistics and installation coordination. CAS AURUM avoids false fixed promises and uses the inquiry to understand what level of design concept is appropriate.`,
+      `Investment depends on scope, measurements, materials, fabrication complexity, logistics and installation coordination. CAS AURUM avoids false fixed promises and uses the inquiry to define the right custom project path.`,
       `Common mistakes include mixing too many finishes, using lighting as an afterthought, copying inspiration without adapting scale, and choosing furniture before the architectural surfaces are planned.`,
     ],
     es: [
@@ -1122,7 +1350,7 @@ function standardSections(locale, subject, style, room, property, city) {
       `La iluminación debe combinar control de luz natural, capas cálidas, luz lineal oculta y acentos precisos. Un espacio premium debe funcionar al mediodía y sentirse cinematográfico por la noche.`,
       `La dirección de mobiliario debe apoyar el espacio, no competir con él: proporciones a medida, tapicería sobria, almacenamiento pensado y materiales conectados con paredes, pisos y carpintería.`,
       cityBody || "La planificación espacial debe mantener circulación clara, definir pronto el punto focal y usar elementos integrados cuando ayudan a resolver la arquitectura.",
-      `La inversión depende del alcance, medidas, materiales, complejidad de fabricación, logística y coordinación de instalación. CAS AURUM evita promesas fijas falsas y usa la consulta para entender el nivel adecuado de concepto.`,
+      `La inversión depende del alcance, medidas, materiales, complejidad de fabricación, logística y coordinación de instalación. CAS AURUM evita promesas fijas falsas y usa la consulta para definir el camino adecuado del proyecto a medida.`,
       `Errores comunes: demasiados acabados, iluminación como idea tardía, copiar inspiración sin adaptar escala y elegir muebles antes de planificar las superficies arquitectónicas.`,
     ],
     fr: [
@@ -1132,7 +1360,7 @@ function standardSections(locale, subject, style, room, property, city) {
       `La lumière doit combiner contrôle du jour, couches chaleureuses, éclairage linéaire dissimulé et accents précis. Une pièce premium doit être confortable à midi et cinématographique le soir.`,
       `Le mobilier doit soutenir la pièce plutôt que rivaliser avec elle : proportions sur mesure, textiles calmes, rangement réfléchi et matériaux liés aux murs, sols et menuiseries.`,
       cityBody || "La planification spatiale doit garder une circulation claire, placer tôt le point focal principal et utiliser les intégrés quand ils rendent l'architecture plus aboutie.",
-      `L'investissement dépend de la portée, des mesures, des matériaux, de la complexité de fabrication, de la logistique et de la coordination d'installation. CAS AURUM évite les promesses fixes trompeuses.`,
+      `L'investissement dépend de la portée, des mesures, des matériaux, de la complexité de fabrication, de la logistique et de la coordination d'installation. CAS AURUM évite les promesses fixes trompeuses et définit le bon parcours de projet sur mesure.`,
       `Les erreurs fréquentes incluent trop de finis, la lumière pensée trop tard, la copie d'inspiration sans adaptation d'échelle et le choix du mobilier avant les surfaces architecturales.`,
     ],
     ru: [
@@ -1142,7 +1370,7 @@ function standardSections(locale, subject, style, room, property, city) {
       `Свет должен объединять контроль дневного света, теплые сценарии, скрытую линейную подсветку и акцентный свет. Премиальная комната должна быть удобной днем и атмосферной вечером.`,
       `Мебель должна поддерживать пространство, а не спорить с ним: кастомные пропорции, спокойная обивка, продуманное хранение и материалы, связанные со стенами, полом и millwork.`,
       cityBody || "Планировка должна сохранять чистую циркуляцию, рано определять главный фокус и использовать встроенные элементы там, где они делают архитектуру завершенной.",
-      `Инвестиция зависит от объема, замеров, материалов, сложности изготовления, логистики и координации установки. CAS AURUM не дает ложных фиксированных обещаний и сначала уточняет уровень концепта.`,
+      `Инвестиция зависит от объема, замеров, материалов, сложности изготовления, логистики и координации установки. CAS AURUM не дает ложных фиксированных обещаний и уточняет подходящий путь проекта на заказ.`,
       `Частые ошибки: слишком много отделок, свет как второстепенная мысль, копирование референса без адаптации масштаба и выбор мебели до планирования архитектурных поверхностей.`,
     ],
   }[locale] || [];
@@ -1286,6 +1514,20 @@ function fill(pattern, locale, values) {
 
 function seoLink(locale, path, label) {
   return { href: `/${locale}${path}`, label };
+}
+
+function projectsSeoLink(locale) {
+  const path = locale === "en" ? "/projects" : locale === "es" ? "/es/proyectos" : locale === "fr" ? "/fr/projets" : "/ru/proekty";
+  return { href: path, label: completedProjectsLabel(locale) };
+}
+
+function completedProjectsLabel(locale) {
+  return {
+    en: "Completed Projects",
+    es: "Proyectos realizados",
+    fr: "Projets réalisés",
+    ru: "Выполненные проекты",
+  }[locale] || "Completed Projects";
 }
 
 function dedupeLinks(links) {
@@ -1466,7 +1708,7 @@ function intentBySlug(slug) {
 
 function directFor(locale, subject, type) {
   const base = {
-    en: `${subject} should be planned as a complete interior system: style, room function, materials, lighting, furniture and storage need to support one another from the first concept.`,
+    en: `${subject} should be planned as a complete interior system: style, room function, materials, lighting, furniture and storage need to support one another from the first project conversation.`,
     es: `${subject} debe planificarse como un sistema interior completo: estilo, función, materiales, iluminación, mobiliario y almacenamiento deben trabajar juntos.`,
     fr: `${subject} doit être planifié comme un système intérieur complet : style, fonction, matériaux, lumière, mobilier et rangement doivent se répondre.`,
     ru: `${subject} стоит планировать как единую интерьерную систему: стиль, функция, материалы, свет, мебель и хранение должны работать вместе.`,

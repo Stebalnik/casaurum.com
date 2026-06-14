@@ -624,7 +624,7 @@ const homepagePositioning = {
 
 const projectsGalleryCopy = {
   en: {
-    title: "Completed Projects & Custom Interior Work",
+    title: "Completed Projects",
     desc: "Explore completed Cas Aurum work across architectural millwork, bespoke furniture, premium finish carpentry, custom cabinetry, bathrooms, kitchens, ceilings, stairs, decks, built-ins, and refined residential interiors.",
     metaTitle: `Completed Projects | ${BRAND}`,
     metaDesc: "Explore completed custom interior projects by Cas Aurum, including architectural millwork, bespoke furniture, media walls, closets, wall panels, bathrooms, ceilings, stairs, decks, cabinetry, and premium finish work.",
@@ -646,9 +646,9 @@ const projectsGalleryCopy = {
     ],
   },
   es: {
-    title: "Proyectos completados y trabajos interiores a medida",
+    title: "Proyectos realizados",
     desc: "Explore trabajos completados de Cas Aurum en millwork arquitectónico, mobiliario bespoke, carpintería de acabado premium, cabinetry a medida, baños, cocinas, techos, escaleras, decks, built-ins e interiores residenciales refinados.",
-    metaTitle: `Proyectos completados | ${BRAND}`,
+    metaTitle: `Proyectos realizados | ${BRAND}`,
     metaDesc: "Explore proyectos interiores completados por Cas Aurum, incluidos millwork arquitectónico, muebles a medida, media walls, closets, paneles, baños, techos, escaleras, decks, cabinetry y acabados premium.",
     primaryCta: "Solicitar presupuesto",
     secondaryCta: "Explorar colecciones",
@@ -668,7 +668,7 @@ const projectsGalleryCopy = {
     ],
   },
   fr: {
-    title: "Projets réalisés et travaux intérieurs sur mesure",
+    title: "Projets réalisés",
     desc: "Explorez les réalisations Cas Aurum en menuiserie architecturale, mobilier bespoke, menuiserie de finition premium, cabinetry sur mesure, salles de bain, cuisines, plafonds, escaliers, terrasses, built-ins et intérieurs résidentiels raffinés.",
     metaTitle: `Projets réalisés | ${BRAND}`,
     metaDesc: "Explorez les projets intérieurs réalisés par Cas Aurum, incluant menuiserie architecturale, mobilier sur mesure, media walls, dressings, panneaux, salles de bain, plafonds, escaliers, terrasses, cabinetry et finitions premium.",
@@ -690,7 +690,7 @@ const projectsGalleryCopy = {
     ],
   },
   ru: {
-    title: "Выполненные проекты и интерьерные работы на заказ",
+    title: "Выполненные проекты",
     desc: "Посмотрите выполненные работы Cas Aurum: архитектурная столярка, мебель на заказ, премиальная отделка, корпусная мебель, ванные, кухни, потолки, лестницы, террасы, встроенные решения и продуманные жилые интерьеры.",
     metaTitle: `Выполненные проекты | ${BRAND}`,
     metaDesc: "Смотрите выполненные интерьерные проекты Cas Aurum: архитектурная столярка, мебель на заказ, media walls, гардеробные, панели, ванные, потолки, лестницы, террасы, корпусная мебель и премиальная отделка.",
@@ -966,7 +966,7 @@ function galleryStatusLabel(lang, status = "concept") {
   const labels = {
     en: { concept: "Collection Direction", visualization: "Material Direction", completed: "Completed Project", workshop: "Craft Detail", beforeAfter: "Before / After" },
     ru: { concept: "Направление коллекции", visualization: "Направление материалов", completed: "Выполненный проект", workshop: "Деталь исполнения", beforeAfter: "До / после" },
-    es: { concept: "Dirección de colección", visualization: "Dirección material", completed: "Proyecto completado", workshop: "Detalle de ejecución", beforeAfter: "Antes / después" },
+    es: { concept: "Dirección de colección", visualization: "Dirección material", completed: "Proyecto realizado", workshop: "Detalle de ejecución", beforeAfter: "Antes / después" },
     fr: { concept: "Direction de collection", visualization: "Direction matière", completed: "Projet réalisé", workshop: "Détail d'exécution", beforeAfter: "Avant / après" },
   };
   return labels[lang]?.[status] || labels.en[status] || labels.en.concept;
@@ -1726,6 +1726,7 @@ function home(route) {
     ${trustStrip(route.lang)}
 	    <section class="intro"><p class="eyebrow">CAS AURUM</p><h2>${escapeHtml(localized("Custom Architectural Surfaces", route.lang))}</h2><p>${escapeHtml(t.home.intro)}</p></section>
 	    ${serviceCards(route)}
+      ${homeCompletedProjects(route)}
 	    ${moneyScopeCards(route)}
       ${homeInlineCta(route)}
 	    ${collectionsBand(route)}
@@ -1735,6 +1736,38 @@ function home(route) {
     <section class="seo-copy"><h2>${escapeHtml(localized("Luxury wall panels, custom furniture and premium millwork across North America", route.lang))}</h2><p>${escapeHtml(t.home.seo)}</p></section>
     ${faqBlock(route.lang, "wallPanels", true)}
   `;
+}
+
+function homeCompletedProjects(route) {
+  const gallery = projectsGalleryText(route.lang);
+  const projects = [
+    "cas-aurum-vaulted-living-room-built-ins-fireplace.webp",
+    "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp",
+    "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp",
+    "cas-aurum-built-in-window-bench-wall-paneling.webp",
+  ].map((file) => completedProjectItems.find((item) => item.file === file)).filter(Boolean);
+  const cards = projects.map((project, index) => {
+    const title = localizedText(project.title, route.lang);
+    const category = gallery.categories[completedProjectCategoryKeys.indexOf(project.categoryKey) + 1] || gallery.categories[0];
+    return `<article class="concept-card">
+      <figure class="concept-media">
+        <img src="/images/projects/${escapeHtml(project.file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, category))}" loading="lazy" decoding="async" width="1536" height="1024">
+        <figcaption class="project-caption"><strong>${escapeHtml(category)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption>
+      </figure>
+      <div>
+        ${galleryStatusPill(route.lang, "completed")}
+        <span>${escapeHtml(category)}</span>
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(completedProjectCaption(route.lang, category))}</p>
+      </div>
+    </article>`;
+  }).join("");
+  return `<section class="seo-copy wide">
+    <p class="eyebrow">${escapeHtml(localized("Completed Work", route.lang))}</p>
+    <h2>${escapeHtml(localized("A closer look at finished CAS AURUM interiors", route.lang))}</h2>
+    <p>${escapeHtml(localized("Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.", route.lang))}</p>
+    <div class="actions"><a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("View Completed Projects", route.lang))}</a></div>
+  </section><section class="concept-grid home-project-preview">${cards}</section>`;
 }
 
 function heroVideoMedia(lang) {
@@ -3226,10 +3259,10 @@ function footer(route) {
 
 function seoHeaderLinks(lang) {
   const labels = {
-    en: ["Interiors", "Projects", "Collections", "Journal", "Contact", "Partner Login"],
-    es: ["Interiores", "Proyectos", "Colecciones", "Revista", "Contacto", "Acceso Partners"],
-    fr: ["Intérieurs", "Projets", "Collections", "Journal", "Contact", "Accès Partenaire"],
-    ru: ["Интерьеры", "Проекты", "Коллекции", "Журнал", "Контакты", "Вход партнера"],
+    en: ["Interiors", "Completed Projects", "Collections", "Journal", "Contact", "Partner Login"],
+    es: ["Interiores", "Proyectos realizados", "Colecciones", "Revista", "Contacto", "Acceso Partners"],
+    fr: ["Intérieurs", "Projets réalisés", "Collections", "Journal", "Contact", "Accès Partenaire"],
+    ru: ["Интерьеры", "Выполненные проекты", "Коллекции", "Журнал", "Контакты", "Вход партнера"],
   }[lang] || {};
   return [
     { href: `/${lang}/interiors`, label: labels[0] },
@@ -4582,7 +4615,7 @@ function llmsTxt() {
 	    ["/luxury-custom-closets", "Luxury custom closets and walk-in wardrobes"],
 	    ["/collections", "Material and design collections"],
 	    ["/for-designers-builders", "Designer, builder and developer partnerships"],
-	    ["/projects", "Project concepts and portfolio-style references"],
+	    ["/projects", "Completed projects and custom interior work"],
 	    ["/request-consultation", "Consultation request"],
 	    ["/request-measurement", "Measurement request"],
 	    ["/en/interiors", "Premium interior design hub"],
@@ -4829,6 +4862,10 @@ function localized(value, lang) {
       "Explore Completed Projects by Room": "Explorar proyectos completados por espacio",
       "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Las imágenes de proyectos completados conectan la planificación del espacio con trabajo real a medida, materiales y detalles ejecutados en sitio.",
       "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Comparta el espacio, tipo de propiedad, ubicación, dirección material, tiempos y rango de inversión. CAS AURUM responderá con el siguiente paso adecuado para una consulta interior premium a medida.",
+      "Completed Work": "Trabajo realizado",
+      "A closer look at finished CAS AURUM interiors": "Una mirada cercana a interiores realizados por CAS AURUM",
+      "Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.": "Explore trabajos residenciales realizados en cabinetry a medida, millwork arquitectónico, baños, cocinas, detalles de escaleras, techos, built-ins, decks y acabados interiores refinados.",
+      "View Completed Projects": "Ver proyectos realizados",
     },
     fr: {
       "Luxury interiors across North America": "Intérieurs de luxe en Amérique du Nord",
@@ -4904,6 +4941,10 @@ function localized(value, lang) {
       "Explore Completed Projects by Room": "Explorer les projets réalisés par pièce",
       "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Les images de projets réalisés relient la planification de la pièce à un travail sur mesure réel, aux matériaux et aux détails exécutés sur site.",
       "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Partagez la pièce, le type de propriété, le lieu, la direction matière, le calendrier et la fourchette d'investissement. CAS AURUM répondra avec la prochaine étape adaptée à une consultation intérieure premium sur mesure.",
+      "Completed Work": "Travaux réalisés",
+      "A closer look at finished CAS AURUM interiors": "Un regard plus précis sur les intérieurs réalisés CAS AURUM",
+      "Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.": "Explorez des réalisations résidentielles en cabinetry sur mesure, menuiserie architecturale, salles de bain, cuisines, escaliers, plafonds, intégrés, terrasses et finitions raffinées.",
+      "View Completed Projects": "Voir les projets réalisés",
     },
     ru: {
       "Luxury interiors across North America": "Люксовые интерьеры в Северной Америке",
@@ -4979,6 +5020,10 @@ function localized(value, lang) {
       "Explore Completed Projects by Room": "Смотреть выполненные проекты по комнатам",
       "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Изображения выполненных проектов связывают планирование комнаты с реальной кастомной работой, материалами и деталями на объекте.",
       "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Укажите комнату, тип объекта, локацию, направление материалов, сроки и инвестиционный диапазон. CAS AURUM предложит подходящий следующий шаг для премиальной консультации по интерьеру на заказ.",
+      "Completed Work": "Выполненные работы",
+      "A closer look at finished CAS AURUM interiors": "Ближе к выполненным интерьерам CAS AURUM",
+      "Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.": "Посмотрите выполненные жилые работы: корпусная мебель на заказ, архитектурная столярка, ванные, кухни, детали лестниц, потолки, built-ins, террасы и утонченные интерьерные отделки.",
+      "View Completed Projects": "Смотреть выполненные проекты",
     },
   };
   return dictionary[lang]?.[value] || value;
