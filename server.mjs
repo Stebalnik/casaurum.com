@@ -964,10 +964,10 @@ function collectionDescription(collection, lang) {
 
 function galleryStatusLabel(lang, status = "concept") {
   const labels = {
-    en: { concept: "Design Concept", visualization: "Project Visualization", completed: "Completed Project", workshop: "Workshop Detail", beforeAfter: "Before / After" },
-    ru: { concept: "Дизайн-концепт", visualization: "Проектная визуализация", completed: "Выполненный проект", workshop: "Деталь мастерской", beforeAfter: "До / после" },
-    es: { concept: "Concepto de diseño", visualization: "Visualización de proyecto", completed: "Proyecto completado", workshop: "Detalle de taller", beforeAfter: "Antes / después" },
-    fr: { concept: "Concept design", visualization: "Visualisation de projet", completed: "Projet réalisé", workshop: "Détail d’atelier", beforeAfter: "Avant / après" },
+    en: { concept: "Collection Direction", visualization: "Material Direction", completed: "Completed Project", workshop: "Craft Detail", beforeAfter: "Before / After" },
+    ru: { concept: "Направление коллекции", visualization: "Направление материалов", completed: "Выполненный проект", workshop: "Деталь исполнения", beforeAfter: "До / после" },
+    es: { concept: "Dirección de colección", visualization: "Dirección material", completed: "Proyecto completado", workshop: "Detalle de ejecución", beforeAfter: "Antes / después" },
+    fr: { concept: "Direction de collection", visualization: "Direction matière", completed: "Projet réalisé", workshop: "Détail d'exécution", beforeAfter: "Avant / après" },
   };
   return labels[lang]?.[status] || labels.en[status] || labels.en.concept;
 }
@@ -978,10 +978,10 @@ function galleryStatusPill(lang, status = "concept") {
 
 function conceptTransparencyCopy(lang) {
   const copy = {
-    en: "Images labeled as Design Concept or Project Visualization are intended to show material direction, proportions and room planning ideas. Only items specifically labeled Completed Project represent completed work.",
-    ru: "Изображения с отметкой «Дизайн-концепт» или «Проектная визуализация» показывают направление материалов, пропорции и идеи планировки. Только материалы с отметкой «Выполненный проект» относятся к выполненным работам.",
-    es: "Las imágenes marcadas como Concepto de diseño o Visualización de proyecto muestran dirección de materiales, proporciones e ideas de planificación. Solo los elementos marcados como Proyecto realizado representan trabajos completados.",
-    fr: "Les images marquées Concept design ou Visualisation de projet montrent une direction matériaux, des proportions et des idées d’aménagement. Seuls les éléments marqués Projet réalisé représentent des travaux réalisés.",
+    en: "Collection images show material direction, proportions and room planning ideas. Items specifically labeled Completed Project represent completed work.",
+    ru: "Изображения коллекций показывают направление материалов, пропорции и идеи планировки. Материалы с отметкой «Выполненный проект» относятся к выполненным работам.",
+    es: "Las imágenes de colección muestran dirección material, proporciones e ideas de planificación. Los elementos marcados como Proyecto completado representan trabajos completados.",
+    fr: "Les images de collection montrent une direction matière, des proportions et des idées d'aménagement. Les éléments marqués Projet réalisé représentent des travaux réalisés.",
   };
   return copy[lang] || copy.en;
 }
@@ -1600,6 +1600,9 @@ function resolveRoute(path) {
   const seoAliasRoute = resolveSeoAliasRoute(path);
   if (seoAliasRoute) return seoAliasRoute;
 
+  const roomAliasRoute = resolveRoomAliasRoute(path);
+  if (roomAliasRoute) return roomAliasRoute;
+
   const collectionAliasRoute = resolveCollectionAliasRoute(path);
   if (collectionAliasRoute) return collectionAliasRoute;
 
@@ -1630,6 +1633,21 @@ function resolveSeoAliasRoute(path) {
   if (!match) return null;
   const [, lang, alias] = match;
   return { lang, key: alias === "contact" ? "contact" : "consultation", path, seoAlias: alias };
+}
+
+function resolveRoomAliasRoute(path) {
+  const aliases = {
+    "/rooms": "/en/rooms",
+    "/rooms/bedroom-interiors": "/en/rooms/bedroom",
+    "/rooms/bathroom-interiors": "/en/rooms/bathroom",
+    "/rooms/living-room-interiors": "/en/rooms/living-room",
+    "/rooms/kitchen-interiors": "/en/rooms/kitchen",
+    "/rooms/walk-in-closet-interiors": "/en/rooms/walk-in-closet",
+  };
+  const target = aliases[path];
+  if (!target) return null;
+  const casaurumSeoPage = casaurumSeoPagesByPath.get(target);
+  return casaurumSeoPage ? { lang: casaurumSeoPage.locale, key: `casaurum:${casaurumSeoPage.pageId}`, path, casaurumSeoPage } : null;
 }
 
 function resolveCollectionAliasRoute(path) {
@@ -2586,7 +2604,7 @@ function casaurumSeoPageTemplate(route, page) {
         <p class="lede">${escapeHtml(page.intro)}</p>
         <div class="actions">
           <a class="button primary track" data-event="cta_clicked" href="${urlFor(lang, "consultation")}">${escapeHtml(page.cta.primary)}</a>
-          <a class="button secondary track" data-event="cta_clicked" href="${urlFor(lang, "collections")}">${escapeHtml(page.cta.secondary)}</a>
+          <a class="button secondary track" data-event="cta_clicked" href="${urlFor(lang, page.pageType === "room" ? "projects" : "collections")}">${escapeHtml(page.cta.secondary)}</a>
         </div>
       </div>
       <figure>${seoImage(page)}<figcaption>${escapeHtml(page.directSummary)}</figcaption></figure>
@@ -2599,17 +2617,79 @@ function casaurumSeoPageTemplate(route, page) {
     <section class="seo-sections">
       ${page.sections.map((section) => `<article><h2>${escapeHtml(section.heading)}</h2><p>${escapeHtml(section.body)}</p></article>`).join("")}
     </section>
+    ${page.pageType === "room" ? relatedCompletedWorkSection(route, page) : ""}
+    ${page.pageType === "hub" && page.path === "/rooms" ? roomsCompletedProjectsSection(route) : ""}
     ${relatedCasaurumSection(route, page)}
     <section class="faq"><h2>${escapeHtml(localized("Frequently Asked Questions", lang))}</h2>${page.faq.map((item) => `<details><summary>${escapeHtml(item.q)}</summary><p>${escapeHtml(item.a)}</p></details>`).join("")}</section>
     <section class="two-col">
       <div>
         <p class="eyebrow">${escapeHtml(BRAND)}</p>
         <h2>${escapeHtml(page.cta.primary)}</h2>
-        <p>${escapeHtml(localized("Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium interior concept.", lang))}</p>
+        <p>${escapeHtml(localized("Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.", lang))}</p>
       </div>
       <div class="panel">${leadForm(route, "general_consultation")}</div>
     </section>
   `;
+}
+
+function relatedCompletedWorkSection(route, page) {
+  const files = (page.relatedProjects || []).filter(Boolean);
+  if (!files.length) return "";
+  const gallery = projectsGalleryText(route.lang);
+  const heading = page.relatedProjectsTitle || localized("Related Completed Work", route.lang);
+  const cards = files.map((file, index) => relatedProjectCard(route, file, index, gallery)).join("");
+  return `<section class="seo-copy wide"><p class="eyebrow">${escapeHtml(galleryStatusLabel(route.lang, "completed"))}</p><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(localized("Completed project images are shown here to connect room planning with real custom work, materials and site-built details.", route.lang))}</p></section><section class="concept-grid related-projects">${cards}</section>`;
+}
+
+function relatedProjectCard(route, file, index, gallery) {
+  const project = completedProjectItems.find((item) => item.file === file);
+  const title = project ? localizedText(project.title, route.lang) : file.replace(/^cas-aurum-/, "").replace(/\.webp$/, "").replaceAll("-", " ");
+  const categoryIndex = project ? completedProjectCategoryKeys.indexOf(project.categoryKey) + 1 : 0;
+  const category = gallery.categories[categoryIndex] || gallery.categories[0];
+  return `<article class="concept-card">
+    <figure class="concept-media">
+      <img src="/images/projects/${escapeHtml(file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, category))}" loading="${index === 0 ? "eager" : "lazy"}" decoding="async" width="1536" height="1024">
+      <figcaption class="project-caption"><strong>${escapeHtml(category)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption>
+    </figure>
+    <div>
+      ${galleryStatusPill(route.lang, "completed")}
+      <span>${escapeHtml(category)}</span>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(completedProjectCaption(route.lang, category))}</p>
+      <a class="button secondary card-cta" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("View Related Projects", route.lang))}</a>
+    </div>
+  </article>`;
+}
+
+function roomsCompletedProjectsSection(route) {
+  const gallery = projectsGalleryText(route.lang);
+  const groups = [
+    ["bathroom", "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp"],
+    ["kitchen", "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp"],
+    ["livingRoom", "cas-aurum-vaulted-living-room-built-ins-fireplace.webp"],
+    ["bedroom", "cas-aurum-built-in-window-bench-wall-paneling.webp"],
+    ["walkInCloset", "cas-aurum-custom-laundry-room-stacked-washer-cabinetry.webp"],
+  ];
+  const cards = groups.map(([labelKey, file], index) => {
+    const project = completedProjectItems.find((item) => item.file === file);
+    const title = project ? localizedText(project.title, route.lang) : labelKey;
+    const roomLabel = roomProjectLabel(route.lang, labelKey);
+    return `<article class="concept-card">
+      <figure class="concept-media"><img src="/images/projects/${escapeHtml(file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, roomLabel))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1536" height="1024"><figcaption class="project-caption"><strong>${escapeHtml(roomLabel)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption></figure>
+      <div>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(roomLabel)}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(completedProjectCaption(route.lang, roomLabel))}</p><a class="button secondary card-cta" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("Explore Completed Work", route.lang))}</a></div>
+    </article>`;
+  }).join("");
+  return `<section class="seo-copy wide"><p class="eyebrow">${escapeHtml(galleryStatusLabel(route.lang, "completed"))}</p><h2>${escapeHtml(localized("Explore Completed Projects by Room", route.lang))}</h2><p>${escapeHtml(gallery.microcopy)}</p></section><section class="concept-grid related-projects">${cards}</section>`;
+}
+
+function roomProjectLabel(lang, key) {
+  const labels = {
+    en: { bathroom: "Bathroom", kitchen: "Kitchen", livingRoom: "Living Room", bedroom: "Bedroom", walkInCloset: "Walk-In Closet" },
+    es: { bathroom: "Baño", kitchen: "Cocina", livingRoom: "Sala", bedroom: "Dormitorio", walkInCloset: "Vestidor" },
+    fr: { bathroom: "Salle de bain", kitchen: "Cuisine", livingRoom: "Salon", bedroom: "Chambre", walkInCloset: "Dressing" },
+    ru: { bathroom: "Ванная", kitchen: "Кухня", livingRoom: "Гостиная", bedroom: "Спальня", walkInCloset: "Гардеробная" },
+  };
+  return labels[lang]?.[key] || labels.en[key] || key;
 }
 
 function seoImage(page) {
@@ -3146,17 +3226,18 @@ function footer(route) {
 
 function seoHeaderLinks(lang) {
   const labels = {
-    en: ["Interiors", "Collections", "Journal", "Contact", "Partner Login"],
-    es: ["Interiores", "Colecciones", "Revista", "Contacto", "Acceso Partners"],
-    fr: ["Intérieurs", "Collections", "Journal", "Contact", "Accès Partenaire"],
-    ru: ["Интерьеры", "Коллекции", "Журнал", "Контакты", "Вход партнера"],
+    en: ["Interiors", "Projects", "Collections", "Journal", "Contact", "Partner Login"],
+    es: ["Interiores", "Proyectos", "Colecciones", "Revista", "Contacto", "Acceso Partners"],
+    fr: ["Intérieurs", "Projets", "Collections", "Journal", "Contact", "Accès Partenaire"],
+    ru: ["Интерьеры", "Проекты", "Коллекции", "Журнал", "Контакты", "Вход партнера"],
   }[lang] || {};
   return [
     { href: `/${lang}/interiors`, label: labels[0] },
-    { href: urlFor(lang, "collections"), label: labels[1] },
-    { href: `/${lang}/journal`, label: labels[2] },
-    { href: urlFor(lang, "contact"), label: labels[3] },
-    { href: "/crm-app", label: labels[4] },
+    { href: urlFor(lang, "projects"), label: labels[1] },
+    { href: urlFor(lang, "collections"), label: labels[2] },
+    { href: `/${lang}/journal`, label: labels[3] },
+    { href: urlFor(lang, "contact"), label: labels[4] },
+    { href: "/crm-app", label: labels[5] },
   ];
 }
 
@@ -3204,7 +3285,7 @@ function seoFooterColumns(lang, route = { key: "usa", path: "/" }) {
 	    { title: labels[1], links: [link("/styles/modern", footerLabel("modern")), link("/styles/quiet-luxury", footerLabel("quietLuxury")), link("/styles/organic-modern", footerLabel("organicModern")), link("/styles/luxury", footerLabel("luxury"))] },
 	    { title: labels[2], links: [link("/rooms/living-room", footerLabel("livingRoom")), link("/rooms/kitchen", footerLabel("kitchen")), link("/rooms/bedroom", footerLabel("bedroom")), link("/rooms/walk-in-closet", footerLabel("walkInCloset"))] },
     { title: labels[3], links: cityLinks },
-    { title: labels[4], links: collectionsData.slice(0, 4).map((collection) => ({ href: collectionUrlFor(lang, collection), label: collection.name.replace(" Collection", "") })) },
+    { title: labels[4], links: [{ href: urlFor(lang, "projects"), label: pageLabel("projects", lang) }, ...collectionsData.slice(0, 3).map((collection) => ({ href: collectionUrlFor(lang, collection), label: collection.name.replace(" Collection", "") }))] },
     { title: labels[5], links: [{ href: urlFor(lang, "planner"), label: footerLabel("planner") }, link("/journal/modern-interior-design-ideas", footerLabel("modernIdeas")), link("/journal/quiet-luxury-interior-design", footerLabel("quietLuxuryJournal")), link("/journal/luxury-kitchen-design-ideas", footerLabel("luxuryKitchens")), link("/journal/best-materials-for-premium-interiors", footerLabel("premiumMaterials"))] },
     { title: labels[6], links: [{ href: urlFor(lang, "partners"), label: footerLabel("partnerProgram") }, { href: `${urlFor(lang, "partners")}#apply`, label: footerLabel("applyPartner") }, { href: urlFor(lang, "trade"), label: footerLabel("trade") }, { href: urlFor(lang, "planner"), label: footerLabel("planner") }] },
   ];
@@ -4742,6 +4823,12 @@ function localized(value, lang) {
       "Collection visuals show design direction, material mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Las visuales de colección muestran dirección de diseño, atmósfera material e ideas de planificación. Las proporciones, acabados y detalles técnicos finales se confirman durante la revisión del proyecto.",
       "Explore other collections": "Explorar otras colecciones",
       "Inspired by": "Inspirado en",
+      "Related Completed Work": "Trabajos completados relacionados",
+      "View Related Projects": "Ver proyectos relacionados",
+      "Explore Completed Work": "Explorar trabajos completados",
+      "Explore Completed Projects by Room": "Explorar proyectos completados por espacio",
+      "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Las imágenes de proyectos completados conectan la planificación del espacio con trabajo real a medida, materiales y detalles ejecutados en sitio.",
+      "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Comparta el espacio, tipo de propiedad, ubicación, dirección material, tiempos y rango de inversión. CAS AURUM responderá con el siguiente paso adecuado para una consulta interior premium a medida.",
     },
     fr: {
       "Luxury interiors across North America": "Intérieurs de luxe en Amérique du Nord",
@@ -4811,6 +4898,12 @@ function localized(value, lang) {
       "Collection visuals show design direction, material mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Les visuels de collection montrent une direction design, une ambiance matière et des idées de planification. Les proportions, finitions et détails techniques finaux sont confirmés pendant la revue du projet.",
       "Explore other collections": "Explorer d'autres collections",
       "Inspired by": "Inspiré par",
+      "Related Completed Work": "Projets réalisés liés",
+      "View Related Projects": "Voir les projets liés",
+      "Explore Completed Work": "Explorer les projets réalisés",
+      "Explore Completed Projects by Room": "Explorer les projets réalisés par pièce",
+      "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Les images de projets réalisés relient la planification de la pièce à un travail sur mesure réel, aux matériaux et aux détails exécutés sur site.",
+      "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Partagez la pièce, le type de propriété, le lieu, la direction matière, le calendrier et la fourchette d'investissement. CAS AURUM répondra avec la prochaine étape adaptée à une consultation intérieure premium sur mesure.",
     },
     ru: {
       "Luxury interiors across North America": "Люксовые интерьеры в Северной Америке",
@@ -4880,6 +4973,12 @@ function localized(value, lang) {
       "Collection visuals show design direction, material mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Визуалы коллекций показывают направление дизайна, настроение материалов и идеи планировки. Финальные пропорции, отделки и технические детали подтверждаются при разборе проекта.",
       "Explore other collections": "Смотреть другие коллекции",
       "Inspired by": "Вдохновлено",
+      "Related Completed Work": "Связанные выполненные работы",
+      "View Related Projects": "Смотреть связанные проекты",
+      "Explore Completed Work": "Смотреть выполненные работы",
+      "Explore Completed Projects by Room": "Смотреть выполненные проекты по комнатам",
+      "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Изображения выполненных проектов связывают планирование комнаты с реальной кастомной работой, материалами и деталями на объекте.",
+      "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Укажите комнату, тип объекта, локацию, направление материалов, сроки и инвестиционный диапазон. CAS AURUM предложит подходящий следующий шаг для премиальной консультации по интерьеру на заказ.",
     },
   };
   return dictionary[lang]?.[value] || value;

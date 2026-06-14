@@ -10,23 +10,23 @@ const BRAND = "CAS AURUM";
 const ui = {
   en: {
     interiors: "Interiors", styles: "Styles", rooms: "Rooms", properties: "Properties", cities: "Cities", collections: "Collections", journal: "Journal",
-    eyebrow: "Casaurum Interiors", ctaPrimary: "Request a Design Concept", ctaSecondary: "Explore Collections", contact: "Contact", request: "Request Concept",
-    direct: "Direct answer", defines: "What defines this direction", elements: "Key design elements", materials: "Materials and finishes", lighting: "Lighting and atmosphere", furniture: "Furniture and decor direction", layout: "Layout and spatial planning", investment: "Investment signals", mistakes: "Common mistakes", related: "Related Casaurum pages", faq: "Frequently Asked Questions", finalCta: "Start a curated interior concept"
+    eyebrow: "Casaurum Interiors", ctaPrimary: "Request a Consultation", ctaSecondary: "Explore Completed Work", contact: "Contact", request: "Request Consultation",
+    direct: "Direct answer", defines: "What defines this direction", elements: "Key design elements", materials: "Materials and finishes", lighting: "Lighting and atmosphere", furniture: "Furniture and decor direction", layout: "Layout and spatial planning", investment: "Investment signals", mistakes: "Common mistakes", related: "Related Casaurum pages", faq: "Frequently Asked Questions", finalCta: "Request a consultation"
   },
   es: {
     interiors: "Interiores", styles: "Estilos", rooms: "Espacios", properties: "Propiedades", cities: "Ciudades", collections: "Colecciones", journal: "Journal",
-    eyebrow: "Interiores Casaurum", ctaPrimary: "Solicitar un Concepto de Diseño", ctaSecondary: "Explorar Colecciones", contact: "Contacto", request: "Solicitar Concepto",
-    direct: "Respuesta directa", defines: "Qué define esta dirección", elements: "Elementos clave", materials: "Materiales y acabados", lighting: "Iluminación y atmósfera", furniture: "Mobiliario y decoración", layout: "Distribución espacial", investment: "Señales de inversión", mistakes: "Errores comunes", related: "Páginas relacionadas", faq: "Preguntas frecuentes", finalCta: "Iniciar un concepto interior curado"
+    eyebrow: "Interiores Casaurum", ctaPrimary: "Solicitar una consulta", ctaSecondary: "Explorar trabajos completados", contact: "Contacto", request: "Solicitar consulta",
+    direct: "Respuesta directa", defines: "Qué define esta dirección", elements: "Elementos clave", materials: "Materiales y acabados", lighting: "Iluminación y atmósfera", furniture: "Mobiliario y decoración", layout: "Distribución espacial", investment: "Señales de inversión", mistakes: "Errores comunes", related: "Páginas relacionadas", faq: "Preguntas frecuentes", finalCta: "Solicitar una consulta"
   },
   fr: {
     interiors: "Intérieurs", styles: "Styles", rooms: "Pièces", properties: "Propriétés", cities: "Villes", collections: "Collections", journal: "Journal",
-    eyebrow: "Intérieurs Casaurum", ctaPrimary: "Demander un Concept Design", ctaSecondary: "Explorer les Collections", contact: "Contact", request: "Demander un Concept",
-    direct: "Réponse directe", defines: "Ce qui définit cette direction", elements: "Éléments clés", materials: "Matériaux et finis", lighting: "Lumière et atmosphère", furniture: "Mobilier et décor", layout: "Planification spatiale", investment: "Signaux d'investissement", mistakes: "Erreurs fréquentes", related: "Pages liées", faq: "Questions fréquentes", finalCta: "Démarrer un concept intérieur curé"
+    eyebrow: "Intérieurs Casaurum", ctaPrimary: "Demander une consultation", ctaSecondary: "Explorer les projets réalisés", contact: "Contact", request: "Demander une consultation",
+    direct: "Réponse directe", defines: "Ce qui définit cette direction", elements: "Éléments clés", materials: "Matériaux et finis", lighting: "Lumière et atmosphère", furniture: "Mobilier et décor", layout: "Planification spatiale", investment: "Signaux d'investissement", mistakes: "Erreurs fréquentes", related: "Pages liées", faq: "Questions fréquentes", finalCta: "Demander une consultation"
   },
   ru: {
     interiors: "Интерьеры", styles: "Стили", rooms: "Комнаты", properties: "Недвижимость", cities: "Города", collections: "Коллекции", journal: "Журнал",
-    eyebrow: "Casaurum Interiors", ctaPrimary: "Запросить Дизайн-Концепт", ctaSecondary: "Смотреть Коллекции", contact: "Контакты", request: "Запросить Концепт",
-    direct: "Короткий ответ", defines: "Что формирует направление", elements: "Ключевые элементы", materials: "Материалы и отделки", lighting: "Свет и атмосфера", furniture: "Мебель и декор", layout: "Планировка и пространство", investment: "Сигналы инвестиции", mistakes: "Частые ошибки", related: "Связанные страницы", faq: "Частые вопросы", finalCta: "Начать curated interior concept"
+    eyebrow: "Casaurum Interiors", ctaPrimary: "Запросить консультацию", ctaSecondary: "Смотреть выполненные проекты", contact: "Контакты", request: "Запросить консультацию",
+    direct: "Короткий ответ", defines: "Что формирует направление", elements: "Ключевые элементы", materials: "Материалы и отделки", lighting: "Свет и атмосфера", furniture: "Мебель и декор", layout: "Планировка и пространство", investment: "Инвестиционные факторы", mistakes: "Частые ошибки", related: "Связанные страницы", faq: "Частые вопросы", finalCta: "Запросить консультацию"
   },
 };
 
@@ -87,18 +87,217 @@ export const styles = [
   relatedCollections: styleCollections(slug),
 }));
 
+const roomProfiles = {
+  bedroom: {
+    intro: tx(
+      "Bedroom interiors by CAS AURUM are planned as private architectural suites: calm storage, a composed headboard wall, layered lighting, soft materials and the quiet discipline that makes rest feel intentional.",
+      "Los dormitorios CAS AURUM se planifican como suites privadas: almacenamiento sereno, muro de cabecera compuesto, iluminación por capas, materiales suaves y una disciplina tranquila que favorece el descanso.",
+      "Les chambres CAS AURUM sont pensées comme des suites privées : rangement calme, mur de tête de lit composé, lumière en couches, matières douces et discipline discrète au service du repos.",
+      "Спальни CAS AURUM планируются как приватные архитектурные сьюты: спокойное хранение, продуманная стена изголовья, многослойный свет, мягкие материалы и атмосфера отдыха без визуального шума."
+    ),
+    metaDescription: tx(
+      "Bedroom interior ideas by CAS AURUM with custom headboard walls, wardrobes, integrated storage, warm lighting, premium materials and related completed interior work.",
+      "Ideas de dormitorios CAS AURUM con cabeceros a medida, wardrobes, almacenamiento integrado, luz cálida, materiales premium y trabajos interiores completados relacionados.",
+      "Idées de chambre CAS AURUM avec têtes de lit sur mesure, dressings, rangement intégré, lumière chaleureuse, matériaux premium et projets réalisés liés.",
+      "Идеи интерьера спальни CAS AURUM: кастомные изголовья, гардеробные решения, встроенное хранение, теплый свет, премиальные материалы и связанные выполненные работы."
+    ),
+    directSummary: tx(
+      "A premium bedroom should feel restful first, then reveal the custom work: headboard wall, wardrobes, nightstands, textile softness, acoustic comfort and lighting scenes that support morning, evening and night routines.",
+      "Un dormitorio premium debe sentirse reparador primero y después revelar el trabajo a medida: cabecero, wardrobes, mesas de noche, textiles suaves, confort acústico y escenas de luz para mañana, tarde y noche.",
+      "Une chambre premium doit d'abord apaiser, puis révéler le sur mesure : tête de lit, dressings, chevets, douceur textile, confort acoustique et scénarios lumineux du matin au soir.",
+      "Премиальная спальня сначала должна давать отдых, а уже потом показывать кастомную работу: изголовье, шкафы, тумбы, мягкие ткани, акустический комфорт и световые сценарии для утра, вечера и ночи."
+    ),
+    materials: ["oak", "walnut", "linen textures", "leather details", "soft stone", "matte finishes"],
+    relatedProjects: [
+      "cas-aurum-built-in-window-bench-wall-paneling.webp",
+      "cas-aurum-modern-tray-ceiling-cove-lighting.webp",
+      "cas-aurum-reclaimed-wood-plank-ceiling-recessed-lights.webp",
+    ],
+    relatedProjectsTitle: tx("Related Interior Work", "Trabajos interiores relacionados", "Travaux intérieurs liés", "Связанные интерьерные работы"),
+    sections: {
+      en: [
+        ["The bedroom as a private architectural suite", "The strongest bedroom is not overdecorated. It uses proportion, storage, wall composition and soft texture to make the room feel protected, quiet and resolved."],
+        ["Custom headboard walls and integrated storage", "A full-wall headboard can carry lighting, bedside niches, upholstered panels, wood veneer, stone ledges or concealed wiring so the bed wall feels built into the architecture."],
+        ["Wardrobes, vanities and concealed organization", "Bedroom storage should be planned around daily use: hanging lengths, drawers, accessories, linens, luggage, vanity needs and the way doors or drawers move around the bed."],
+        ["Lighting for morning, evening and nighttime comfort", "Good bedroom lighting separates reading light, closet light, ambient glow, low nighttime guidance and daylight control instead of relying on one ceiling fixture."],
+        ["Materials with softness and weight", "Oak, walnut, linen textures, leather details, soft stone and matte finishes create calm luxury when the palette stays edited and tactile."],
+        ["Common mistakes", "Avoid overdecorating the bed wall, undersizing the bed or rug, planning the closet too late, using cold lighting, or choosing nightstands before the headboard and storage logic are settled."],
+      ],
+      es: [
+        ["El dormitorio como suite privada", "El mejor dormitorio no está sobredecorado. Usa proporción, almacenamiento, composición de pared y textura suave para sentirse protegido, sereno y resuelto."],
+        ["Cabeceros a medida y almacenamiento integrado", "Un cabecero de pared completa puede integrar luz, nichos, paneles tapizados, chapa de madera, repisas de piedra o cableado oculto para que la cama pertenezca a la arquitectura."],
+        ["Wardrobes, tocadores y organización oculta", "El almacenamiento debe planificarse según el uso diario: largos de colgado, cajones, accesorios, ropa blanca, maletas, tocador y recorridos alrededor de la cama."],
+        ["Luz para mañana, tarde y noche", "La buena iluminación separa lectura, closet, ambiente, guía nocturna y control de luz natural en lugar de depender de una sola lámpara de techo."],
+        ["Materiales suaves y con peso", "Roble, nogal, texturas de lino, detalles de cuero, piedra suave y acabados mate crean lujo tranquilo cuando la paleta se mantiene editada y táctil."],
+        ["Errores comunes", "Evite sobredecorar la pared de la cama, elegir una cama o alfombra pequeña, planificar tarde el closet, usar luz fría o escoger mesas antes de resolver cabecero y almacenamiento."],
+      ],
+      fr: [
+        ["La chambre comme suite privée", "La meilleure chambre n'est pas surdécorée. Elle utilise proportion, rangement, composition murale et texture douce pour créer une sensation protégée, calme et aboutie."],
+        ["Têtes de lit sur mesure et rangement intégré", "Une tête de lit pleine largeur peut intégrer lumière, niches, panneaux tapissés, placage bois, tablette pierre ou câblage dissimulé pour ancrer le lit dans l'architecture."],
+        ["Dressings, coiffeuses et organisation cachée", "Le rangement doit suivre l'usage quotidien : penderies, tiroirs, accessoires, linge, bagages, coin coiffeuse et circulation autour du lit."],
+        ["Lumière du matin, du soir et de la nuit", "Une bonne lumière sépare lecture, dressing, ambiance, repère nocturne et contrôle du jour au lieu de dépendre d'un seul plafonnier."],
+        ["Matières douces et présentes", "Chêne, noyer, textures de lin, détails cuir, pierre douce et finitions mates créent un luxe calme lorsque la palette reste éditée et tactile."],
+        ["Erreurs fréquentes", "Évitez de surcharger le mur du lit, de sous-dimensionner lit ou tapis, de planifier le dressing trop tard, d'utiliser une lumière froide ou de choisir les chevets avant la logique de rangement."],
+      ],
+      ru: [
+        ["Спальня как приватный архитектурный сьют", "Сильная спальня не перегружена декором. Она строится на пропорциях, хранении, композиции стены и мягких фактурах, чтобы пространство ощущалось защищенным и спокойным."],
+        ["Кастомная стена изголовья и встроенное хранение", "Стена изголовья может объединять подсветку, ниши, мягкие панели, шпон, каменную полку или скрытую проводку, чтобы кровать стала частью архитектуры."],
+        ["Шкафы, туалетные зоны и скрытая организация", "Хранение планируется под ежедневные сценарии: длинная одежда, ящики, аксессуары, белье, чемоданы, vanity-зона и движение дверей вокруг кровати."],
+        ["Свет для утра, вечера и ночи", "Хороший свет разделяет чтение, шкафы, мягкий фоновый сценарий, ночную навигацию и контроль дневного света, а не держится на одной потолочной точке."],
+        ["Материалы с мягкостью и весом", "Дуб, орех, льняные фактуры, кожа, мягкий камень и матовые отделки создают спокойную роскошь, если палитра остается собранной и тактильной."],
+        ["Частые ошибки", "Не перегружайте стену кровати, не ошибайтесь с масштабом кровати и ковра, не оставляйте шкафы на последний этап, избегайте холодного света и выбора тумб до логики изголовья."],
+      ],
+    },
+    faq: {
+      en: [
+        ["Can CAS AURUM design a complete bedroom suite?", "Yes. A bedroom scope can include a custom headboard wall, wardrobes, nightstands, vanities, panels, lighting direction and material coordination."],
+        ["Can you integrate wardrobes and a custom headboard wall?", "Yes. The strongest bedrooms usually connect the bed wall and storage so the room feels architectural rather than furnished in separate pieces."],
+        ["Do you help with lighting and material selection?", "Yes. Lighting scenes and materials are reviewed together because bedroom comfort depends on warmth, glare control, texture and nighttime use."],
+        ["Can you adapt the design to an existing home?", "Yes. Photos, dimensions, ceiling height, outlet locations and existing finishes help adapt the scope to the home."],
+      ],
+      es: [
+        ["¿CAS AURUM puede diseñar una suite completa de dormitorio?", "Sí. El alcance puede incluir cabecero a medida, wardrobes, mesas, tocador, paneles, dirección de iluminación y coordinación de materiales."],
+        ["¿Pueden integrar wardrobes y un cabecero a medida?", "Sí. Los mejores dormitorios conectan pared de cama y almacenamiento para que el espacio se sienta arquitectónico."],
+        ["¿Ayudan con iluminación y materiales?", "Sí. Luz y materiales se revisan juntos porque el confort depende de calidez, control de brillo, textura y uso nocturno."],
+        ["¿Pueden adaptar el diseño a una casa existente?", "Sí. Fotos, medidas, altura, tomas eléctricas y acabados existentes ayudan a adaptar el alcance."],
+      ],
+      fr: [
+        ["CAS AURUM peut-il concevoir une suite chambre complète ?", "Oui. Le périmètre peut inclure tête de lit, dressings, chevets, coiffeuse, panneaux, lumière et coordination matières."],
+        ["Pouvez-vous intégrer dressings et tête de lit sur mesure ?", "Oui. Les meilleures chambres relient mur du lit et rangement pour donner une vraie architecture à la pièce."],
+        ["Aidez-vous pour la lumière et les matériaux ?", "Oui. Lumière et matières sont étudiées ensemble car le confort dépend de la chaleur, de l'éblouissement, des textures et de l'usage nocturne."],
+        ["Pouvez-vous adapter le design à une maison existante ?", "Oui. Photos, mesures, hauteur, prises et finitions existantes aident à adapter le périmètre."],
+      ],
+      ru: [
+        ["Может ли CAS AURUM спроектировать полный bedroom suite?", "Да. Объем может включать изголовье, шкафы, тумбы, vanity-зону, панели, свет и согласование материалов."],
+        ["Можно интегрировать шкафы и кастомную стену изголовья?", "Да. Лучшие спальни связывают стену кровати и хранение, чтобы комната выглядела архитектурно, а не набором предметов."],
+        ["Вы помогаете со светом и материалами?", "Да. Свет и материалы рассматриваются вместе: комфорт спальни зависит от теплоты, контроля бликов, фактур и ночных сценариев."],
+        ["Можно адаптировать решение к существующему дому?", "Да. Фото, размеры, высота потолка, розетки и существующие отделки помогают адаптировать scope."],
+      ],
+    },
+  },
+  bathroom: {
+    intro: tx(
+      "Bathroom interiors by CAS AURUM focus on the daily ritual: stone, vanity design, mirrors, wet areas, lighting, storage, ventilation awareness and durable finishes that still feel refined.",
+      "Los baños CAS AURUM se centran en el ritual diario: piedra, vanity, espejos, zonas húmedas, iluminación, almacenamiento, ventilación y acabados durables con presencia refinada.",
+      "Les salles de bain CAS AURUM se concentrent sur le rituel quotidien : pierre, meuble vasque, miroirs, zones humides, lumière, rangement, ventilation et finitions durables.",
+      "Ванные CAS AURUM строятся вокруг ежедневного ритуала: камень, тумба, зеркала, влажные зоны, свет, хранение, вентиляция и долговечные отделки без потери премиальности."
+    ),
+    metaDescription: tx(
+      "Bathroom interior ideas with custom vanities, stone, tile, mirrors, lighting, storage, durable finishes and related completed bathroom projects by CAS AURUM.",
+      "Ideas de baños con vanities a medida, piedra, tile, espejos, iluminación, almacenamiento, acabados durables y proyectos completados relacionados.",
+      "Idées de salle de bain avec meubles vasques, pierre, carrelage, miroirs, lumière, rangement, finitions durables et projets réalisés liés.",
+      "Идеи ванной: тумбы на заказ, камень, плитка, зеркала, свет, хранение, долговечные отделки и связанные выполненные проекты CAS AURUM."
+    ),
+    directSummary: tx(
+      "A premium bathroom needs more than stone: the vanity, mirror, wet zone, lighting, storage and ventilation must work together so the room feels spa-like and practical every day.",
+      "Un baño premium necesita más que piedra: vanity, espejo, zona húmeda, luz, almacenamiento y ventilación deben trabajar juntos para sentirse tipo spa y funcionar cada día.",
+      "Une salle de bain premium demande plus que de la pierre : vasque, miroir, zone humide, lumière, rangement et ventilation doivent fonctionner ensemble au quotidien.",
+      "Премиальной ванной недостаточно одного камня: тумба, зеркало, wet zone, свет, хранение и вентиляция должны работать вместе, чтобы комната была и spa-like, и практичной."
+    ),
+    materials: ["marble", "limestone", "travertine", "porcelain slabs", "walnut accents", "brushed metal"],
+    relatedProjects: [
+      "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp",
+      "cas-aurum-gray-double-bathroom-vanity-marble-countertop.webp",
+    ],
+    relatedProjectsTitle: tx("Related Completed Bathroom Work", "Baños completados relacionados", "Salles de bain réalisées liées", "Связанные выполненные ванные"),
+  },
+  "living-room": {
+    intro: tx(
+      "Living room interiors by CAS AURUM are treated as the main architectural statement of the home: focal wall, fireplace or media wall, built-ins, seating layout, acoustic balance and evening atmosphere.",
+      "Las salas CAS AURUM se tratan como la declaración arquitectónica principal: muro focal, chimenea o media wall, built-ins, distribución de asientos, equilibrio acústico y atmósfera nocturna.",
+      "Les salons CAS AURUM sont traités comme la déclaration architecturale principale : mur focal, cheminée ou media wall, intégrés, assises, équilibre acoustique et ambiance du soir.",
+      "Гостиные CAS AURUM рассматриваются как главный архитектурный акцент дома: фокусная стена, камин или media wall, built-ins, посадка, акустический баланс и вечерняя атмосфера."
+    ),
+    metaDescription: tx(
+      "Living room interior ideas with media walls, fireplaces, built-ins, seating layouts, premium materials, lighting and related completed living room work by CAS AURUM.",
+      "Ideas de salas con media walls, chimeneas, built-ins, distribución, materiales premium, iluminación y trabajos completados relacionados.",
+      "Idées de salon avec media walls, cheminées, intégrés, implantation, matières premium, lumière et projets réalisés liés.",
+      "Идеи гостиной: media walls, камины, встроенные решения, планировка посадки, премиальные материалы, свет и связанные выполненные работы."
+    ),
+    directSummary: tx(
+      "A strong living room starts with the focal architecture: media wall, fireplace, built-ins or display storage, then seating, circulation, lighting and materials are aligned around that center of gravity.",
+      "Una sala fuerte empieza con la arquitectura focal: media wall, chimenea, built-ins o almacenamiento de exhibición; después se alinean asientos, circulación, luz y materiales.",
+      "Un salon fort commence par son architecture focale : media wall, cheminée, intégrés ou rangement d'exposition, puis assises, circulation, lumière et matières s'alignent autour d'elle.",
+      "Сильная гостиная начинается с фокусной архитектуры: media wall, камина, built-ins или витринного хранения. Затем вокруг этого выстраиваются посадка, движение, свет и материалы."
+    ),
+    materials: ["walnut", "oak", "stone", "plaster", "fluted panels", "bronze metal"],
+    relatedProjects: [
+      "cas-aurum-vaulted-great-room-timber-trusses-stone-fireplace.webp",
+      "cas-aurum-vaulted-living-room-built-ins-fireplace.webp",
+      "cas-aurum-rustic-vaulted-great-room-timber-beams.webp",
+    ],
+    relatedProjectsTitle: tx("Related Completed Living Room Work", "Salas completadas relacionadas", "Salons réalisés liés", "Связанные выполненные гостиные"),
+  },
+  kitchen: {
+    intro: tx(
+      "Kitchen interiors by CAS AURUM focus on premium custom cabinetry, islands, panels, storage, finish carpentry and material coordination around the kitchen as a functional architectural centerpiece.",
+      "Las cocinas CAS AURUM se enfocan en cabinetry premium a medida, islas, paneles, almacenamiento, carpintería de acabado y coordinación material alrededor de la cocina como centro funcional.",
+      "Les cuisines CAS AURUM se concentrent sur cabinetry premium, îlots, panneaux, rangement, menuiserie de finition et coordination matières autour d'une pièce centrale fonctionnelle.",
+      "Кухни CAS AURUM фокусируются на премиальной корпусной мебели, островах, панелях, хранении, финишной столярке и согласовании материалов вокруг кухни как функционального центра дома."
+    ),
+    metaDescription: tx(
+      "Kitchen interior ideas with custom cabinetry, islands, panels, storage, stone, wood, lighting coordination and related completed kitchen projects by CAS AURUM.",
+      "Ideas de cocinas con cabinetry a medida, islas, paneles, almacenamiento, piedra, madera, coordinación de luz y proyectos completados relacionados.",
+      "Idées de cuisine avec cabinetry, îlots, panneaux, rangement, pierre, bois, coordination lumière et projets réalisés liés.",
+      "Идеи кухни: корпусная мебель на заказ, острова, панели, хранение, камень, дерево, согласование света и связанные выполненные кухни CAS AURUM."
+    ),
+    directSummary: tx(
+      "CAS AURUM can support kitchens through premium cabinetry, islands, finish panels, storage and material direction, while full construction scope and trade responsibilities should be confirmed for each project.",
+      "CAS AURUM puede apoyar cocinas con cabinetry premium, islas, paneles de acabado, almacenamiento y dirección material; el alcance constructivo completo y responsabilidades trade se confirman por proyecto.",
+      "CAS AURUM peut accompagner les cuisines par cabinetry premium, îlots, panneaux, rangement et direction matières; la portée chantier et les responsabilités trade se confirment par projet.",
+      "CAS AURUM может поддержать кухонный проект через премиальную корпусную мебель, острова, панели, хранение и материалы; полный строительный scope и trade-ответственность уточняются по каждому проекту."
+    ),
+    materials: ["walnut", "rift oak", "matte lacquer", "stone slabs", "integrated lighting", "metal accents"],
+    relatedProjects: [
+      "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp",
+      "cas-aurum-luxury-kitchen-marble-island-skylight.webp",
+    ],
+    relatedProjectsTitle: tx("Related Completed Kitchen Work", "Cocinas completadas relacionadas", "Cuisines réalisées liées", "Связанные выполненные кухни"),
+  },
+  "walk-in-closet": {
+    intro: tx(
+      "Walk-in closet interiors by CAS AURUM are planned like private boutiques: wardrobe systems, lighting, drawers, glass doors, accessories, mirrors, seating, island storage and a polished daily ritual.",
+      "Los vestidores CAS AURUM se planifican como boutiques privadas: sistemas de wardrobe, iluminación, cajones, puertas de vidrio, accesorios, espejos, asiento, isla y ritual diario cuidado.",
+      "Les dressings CAS AURUM sont pensés comme des boutiques privées : systèmes de rangement, lumière, tiroirs, portes vitrées, accessoires, miroirs, assise, îlot et rituel quotidien.",
+      "Гардеробные CAS AURUM планируются как приватные бутики: системы хранения, свет, ящики, стеклянные двери, аксессуары, зеркала, посадка, остров и продуманный ежедневный ритуал."
+    ),
+    metaDescription: tx(
+      "Walk-in closet ideas with custom wardrobe systems, lighting, drawers, glass doors, island storage, mirrors, hardware and related custom storage work by CAS AURUM.",
+      "Ideas de vestidor con wardrobes a medida, iluminación, cajones, puertas de vidrio, isla, espejos, herrajes y trabajos de almacenamiento relacionados.",
+      "Idées de dressing avec systèmes sur mesure, lumière, tiroirs, portes vitrées, îlot, miroirs, quincaillerie et travaux de rangement liés.",
+      "Идеи гардеробной: системы хранения на заказ, свет, ящики, стеклянные двери, остров, зеркала, фурнитура и связанные работы по хранению."
+    ),
+    directSummary: tx(
+      "A luxury walk-in closet should be planned around the wardrobe inventory first, then lighting, display, drawers, seasonal storage, mirrors and hardware create the boutique atmosphere.",
+      "Un vestidor de lujo debe planificarse primero según el inventario de ropa; después luz, exhibición, cajones, almacenamiento estacional, espejos y herrajes crean la atmósfera boutique.",
+      "Un dressing luxe se planifie d'abord selon l'inventaire; ensuite lumière, exposition, tiroirs, rangement saisonnier, miroirs et quincaillerie créent l'ambiance boutique.",
+      "Люксовая гардеробная сначала планируется вокруг состава гардероба; затем свет, витрины, ящики, сезонное хранение, зеркала и фурнитура создают boutique-атмосферу."
+    ),
+    materials: ["walnut", "oak", "smoked glass", "leather inserts", "bronze hardware", "LED lighting"],
+    relatedProjects: [
+      "cas-aurum-built-in-window-bench-wall-paneling.webp",
+      "cas-aurum-custom-laundry-room-stacked-washer-cabinetry.webp",
+    ],
+    relatedProjectsTitle: tx("Related Custom Storage & Millwork", "Almacenamiento y millwork relacionados", "Rangement et menuiserie liés", "Связанное хранение и millwork"),
+  },
+};
+
 export const rooms = [
   "living-room", "kitchen", "bathroom", "bedroom", "master-suite", "dining-room", "home-office", "walk-in-closet", "wine-cellar", "home-theater", "entryway", "outdoor-living", "terrace", "spa-room", "kids-room", "guest-room", "library", "wellness-room", "gym", "pool-area",
-].map((slug) => localizedEntity(slug, roomTitle(slug), {
+].map((slug) => {
+  const profile = roomProfiles[slug] || {};
+  return localizedEntity(slug, roomTitle(slug), {
   shortTitle: shortRoomTitle(slug),
   layoutIdeas: ["clear focal wall", "balanced circulation", "built-in storage where it improves proportion"],
   keyFeatures: ["custom furniture", "premium surfaces", "architectural lighting"],
-  premiumMaterials: roomMaterials(slug),
+  premiumMaterials: profile.materials || roomMaterials(slug),
   lightingNotes: ["combine daylight control with warm evening scenes", "avoid flat overhead-only lighting"],
   furnitureDirection: ["scaled pieces", "tailored storage", "quiet luxury upholstery"],
   commonMistakes: ["using too many finishes", "undersizing furniture", "ignoring lighting layers"],
   relatedRooms: relatedFrom(slug, ["living-room", "kitchen", "bedroom", "master-suite", "home-office", "walk-in-closet", "bathroom", "dining-room"], 3),
-}));
+  ...profile,
+});
+});
 
 export const propertyTypes = [
   "villa", "penthouse", "mansion", "apartment", "townhouse", "beach-house", "mountain-house", "lake-house", "city-apartment", "family-home", "luxury-condo", "boutique-hotel", "private-residence", "vacation-home", "estate",
@@ -498,11 +697,11 @@ function roomPage(locale, room) {
   return makePage({
     pageType: "room", locale, path: `/rooms/${room.slug}`, h1: local(room.title, locale), eyebrow: l(locale, "rooms"),
     metaTitle: `${local(room.title, locale)} | Premium Room Ideas | ${BRAND}`, metaDescription: local(room.metaDescription, locale),
-    intro: local(room.intro, locale), directSummary: directFor(locale, local(room.title, locale), "room"),
-    sections: standardSections(locale, local(room.title, locale), null, room),
-    faq: faqFor(locale, local(room.title, locale)), breadcrumbs: crumb(locale, [[l(locale, "rooms"), "/rooms"], [local(room.title, locale), `/rooms/${room.slug}`]]),
+    intro: local(room.intro, locale), directSummary: local(room.directSummary, locale) || directFor(locale, local(room.title, locale), "room"),
+    sections: roomSectionsFor(locale, room),
+    faq: roomFaqFor(locale, room), breadcrumbs: crumb(locale, [[l(locale, "rooms"), "/rooms"], [local(room.title, locale), `/rooms/${room.slug}`]]),
     relatedRooms: room.relatedRooms, relatedStyles: ["modern", "quiet-luxury", "organic-modern"], relatedCollections: ["forma", "madera"],
-    imagePath: roomImage(room.slug), allowlisted: true,
+    imagePath: roomImage(room.slug), relatedProjects: room.relatedProjects || [], relatedProjectsTitle: local(room.relatedProjectsTitle, locale), allowlisted: true,
   });
 }
 
@@ -691,6 +890,184 @@ function cityCommercialSections(locale, city) {
   ];
 }
 
+function roomSectionsFor(locale, room) {
+  if (room.sections?.[locale]) return room.sections[locale].map(([heading, body]) => ({ heading, body }));
+  const subject = local(room.title, locale);
+  const materials = dedupeMaterials(room.premiumMaterials || roomMaterials(room.slug)).join(", ");
+  const content = {
+    bathroom: {
+      en: [
+        ["The bathroom as a daily ritual space", "A refined bathroom should make daily routines feel calm: dry and wet zones, towel access, mirror use, storage and cleaning all need to be planned before finishes are selected."],
+        ["Stone, tile, vanity and mirror composition", "Stone slabs, tile rhythm, vanity proportions and mirror scale should read as one composition rather than separate purchases."],
+        ["Custom vanities and concealed storage", "A strong vanity solves drawers, outlets, grooming tools, towels and cleaning items without making the room feel visually heavy."],
+        ["Lighting, moisture and durability", "Mirror lighting, ambient light, ventilation awareness, moisture-resistant substrates and durable surfaces matter as much as the visible stone."],
+        ["Materials that hold up", `Useful directions include ${materials}. The right palette should balance mineral depth, warmth, grip, maintenance and water exposure.`],
+        ["Common mistakes", "Avoid weak mirror lighting, fragile grout choices, no closed storage, ignoring ventilation, or choosing stone before the vanity and wet-zone details are understood."],
+      ],
+      es: [
+        ["El baño como ritual diario", "Un baño refinado debe ordenar rutinas: zonas seca y húmeda, toallas, espejo, almacenamiento y limpieza se planifican antes de elegir acabados."],
+        ["Composición de piedra, tile, vanity y espejo", "Losas, ritmo de tile, proporción del vanity y escala del espejo deben leerse como una sola composición."],
+        ["Vanities a medida y almacenamiento oculto", "Un buen vanity resuelve cajones, tomas, herramientas de grooming, toallas y limpieza sin verse pesado."],
+        ["Iluminación, humedad y durabilidad", "Luz en espejo, ambiente, ventilación, sustratos resistentes y superficies durables importan tanto como la piedra visible."],
+        ["Materiales resistentes", `Direcciones útiles incluyen ${materials}. La paleta debe equilibrar profundidad mineral, calidez, agarre, mantenimiento y exposición al agua.`],
+        ["Errores comunes", "Evite luz débil en espejo, grout frágil, falta de almacenamiento cerrado, ignorar ventilación o elegir piedra antes de resolver vanity y zona húmeda."],
+      ],
+      fr: [
+        ["La salle de bain comme rituel quotidien", "Une salle de bain raffinée organise les routines : zones sèche et humide, serviettes, miroir, rangement et entretien avant les finitions."],
+        ["Composition pierre, carrelage, vasque et miroir", "Dalles, rythme du carrelage, proportions du meuble vasque et échelle du miroir doivent former une seule composition."],
+        ["Meubles vasques et rangement caché", "Un bon meuble résout tiroirs, prises, accessoires, serviettes et entretien sans alourdir la pièce."],
+        ["Lumière, humidité et durabilité", "Lumière du miroir, ambiance, ventilation, supports résistants et surfaces durables comptent autant que la pierre visible."],
+        ["Matières durables", `Les directions utiles incluent ${materials}. La palette doit équilibrer profondeur minérale, chaleur, adhérence, entretien et eau.`],
+        ["Erreurs fréquentes", "Évitez une lumière miroir faible, des joints fragiles, aucun rangement fermé, la ventilation oubliée ou la pierre choisie avant la logique de vasque."],
+      ],
+      ru: [
+        ["Ванная как ежедневный ритуал", "Хорошая ванная упорядочивает рутину: сухая и влажная зоны, полотенца, зеркало, хранение и уборка планируются до выбора отделок."],
+        ["Композиция камня, плитки, тумбы и зеркала", "Слэбы, ритм плитки, пропорции тумбы и масштаб зеркала должны читаться как единая композиция."],
+        ["Тумбы на заказ и скрытое хранение", "Сильная тумба решает ящики, розетки, grooming-предметы, полотенца и бытовую химию без визуальной тяжести."],
+        ["Свет, влажность и долговечность", "Свет у зеркала, фоновый сценарий, вентиляция, влагостойкие основы и прочные поверхности важны не меньше видимого камня."],
+        ["Материалы для ежедневной нагрузки", `Подходящие направления: ${materials}. Палитра должна учитывать глубину камня, тепло, сцепление, уход и контакт с водой.`],
+        ["Частые ошибки", "Избегайте слабого света у зеркала, неудачной затирки, отсутствия закрытого хранения, игнорирования вентиляции и выбора камня до логики тумбы."],
+      ],
+    },
+    "living-room": {
+      en: [
+        ["The living room as the main architectural statement", "The living room often carries the clearest public identity of the home, so the focal wall, seating and lighting should be planned as one room-wide composition."],
+        ["Media walls, fireplaces and built-ins", "A TV wall or fireplace wall needs architecture around it: storage, reveals, panels, stone, display zones, cable planning and enough restraint."],
+        ["Seating, circulation and focal points", "Sofas, lounge chairs and tables should support conversation, view lines and movement instead of being pushed flat against every wall."],
+        ["Materials and lighting for daily life", `Materials such as ${materials} can create depth when paired with dimmable ambient light, accents and evening scenes.`],
+        ["Display and acoustic balance", "Open shelves, closed cabinets, fabric, panels and rugs help balance display, storage and sound so the room does not feel hollow."],
+        ["Common mistakes", "Avoid a TV wall without architecture, furniture pushed to the perimeter, too many finishes, no dimming, and storage that arrives after the room is furnished."],
+      ],
+      es: [
+        ["La sala como declaración arquitectónica", "La sala suele expresar la identidad pública de la casa; muro focal, asientos y luz deben planificarse como una composición completa."],
+        ["Media walls, chimeneas y built-ins", "Un muro de TV o chimenea necesita arquitectura: almacenamiento, juntas, paneles, piedra, zonas de exhibición, cables y contención."],
+        ["Asientos, circulación y focos", "Sofás, butacas y mesas deben apoyar conversación, vistas y movimiento, no quedar pegados a todas las paredes."],
+        ["Materiales y luz para uso diario", `Materiales como ${materials} dan profundidad con luz ambiental regulable, acentos y escenas nocturnas.`],
+        ["Exhibición y acústica", "Estantes, puertas cerradas, textiles, paneles y alfombras equilibran display, almacenamiento y sonido."],
+        ["Errores comunes", "Evite TV wall sin arquitectura, muebles en el perímetro, demasiados acabados, falta de dimming y almacenamiento planeado tarde."],
+      ],
+      fr: [
+        ["Le salon comme déclaration architecturale", "Le salon porte souvent l'identité publique de la maison; mur focal, assises et lumière doivent former une composition d'ensemble."],
+        ["Media walls, cheminées et intégrés", "Un mur TV ou cheminée demande une architecture : rangement, joints, panneaux, pierre, zones d'exposition, câbles et retenue."],
+        ["Assises, circulation et focales", "Canapés, fauteuils et tables doivent soutenir conversation, vues et mouvement plutôt que longer tous les murs."],
+        ["Matières et lumière du quotidien", `Des matières comme ${materials} créent de la profondeur avec lumière graduable, accents et scènes du soir.`],
+        ["Exposition et acoustique", "Étagères, portes fermées, textiles, panneaux et tapis équilibrent exposition, rangement et son."],
+        ["Erreurs fréquentes", "Évitez un mur TV sans architecture, mobilier repoussé aux murs, trop de finitions, aucune gradation et rangement pensé trop tard."],
+      ],
+      ru: [
+        ["Гостиная как главный архитектурный акцент", "Гостиная часто задает публичное лицо дома, поэтому фокусная стена, посадка и свет должны планироваться как единая композиция."],
+        ["Media walls, камины и встроенные решения", "TV-стене или каминной стене нужна архитектура: хранение, стыки, панели, камень, витрины, кабели и сдержанность."],
+        ["Посадка, движение и фокусные точки", "Диваны, кресла и столы должны поддерживать разговор, виды и проходы, а не просто стоять вдоль стен."],
+        ["Материалы и свет для жизни", `Материалы вроде ${materials} дают глубину вместе с диммируемым фоновым светом, акцентами и вечерними сценариями.`],
+        ["Витрины, хранение и акустика", "Открытые полки, закрытые шкафы, ткани, панели и ковры помогают сбалансировать display, хранение и звук."],
+        ["Частые ошибки", "Избегайте TV-стены без архитектуры, мебели по периметру, слишком многих отделок, отсутствия диммирования и позднего планирования хранения."],
+      ],
+    },
+    kitchen: {
+      en: [
+        ["The kitchen as a functional architectural centerpiece", "A premium kitchen should coordinate cooking, storage, movement and visual weight before the finish palette is finalized."],
+        ["Custom cabinetry, islands, panels and storage", "CAS AURUM is best suited to cabinetry, islands, panels, storage logic and finish carpentry that make the kitchen feel integrated."],
+        ["Stone, wood, hardware and lighting coordination", `Materials such as ${materials} need to be selected together so counters, doors, panels, pulls and light temperature do not fight each other.`],
+        ["How CAS AURUM supports kitchen environments", "Kitchen support may include custom cabinetry direction, finish panels, island detailing, storage planning and coordination with designers, builders or kitchen contractors."],
+        ["Planning priorities", "Appliance clearances, drawer access, island size, pantry needs, outlets, task light and maintenance should be settled before decorative decisions."],
+        ["Common mistakes", "Avoid choosing finishes separately, oversized islands, poor appliance planning, cold lighting and storage that ignores how the household actually cooks."],
+      ],
+      es: [
+        ["La cocina como centro funcional", "Una cocina premium coordina cocina, almacenamiento, movimiento y peso visual antes de cerrar acabados."],
+        ["Cabinetry, islas, paneles y almacenamiento", "CAS AURUM encaja mejor en cabinetry, islas, paneles, lógica de storage y carpintería de acabado integrada."],
+        ["Piedra, madera, herrajes y luz", `Materiales como ${materials} se eligen juntos para que cubiertas, puertas, paneles, pulls y temperatura de luz no compitan.`],
+        ["Cómo CAS AURUM apoya cocinas", "El soporte puede incluir dirección de cabinetry, paneles, detalle de isla, storage y coordinación con diseñadores, builders o contratistas de cocina."],
+        ["Prioridades de planificación", "Electrodomésticos, cajones, tamaño de isla, pantry, tomas, task light y mantenimiento se definen antes de lo decorativo."],
+        ["Errores comunes", "Evite elegir acabados separados, islas sobredimensionadas, mala planificación de appliances, luz fría y almacenamiento que ignora el uso real."],
+      ],
+      fr: [
+        ["La cuisine comme centre fonctionnel", "Une cuisine premium coordonne cuisson, rangement, mouvement et poids visuel avant de figer les finitions."],
+        ["Cabinetry, îlots, panneaux et rangement", "CAS AURUM convient surtout à la cabinetry, aux îlots, panneaux, logique de rangement et menuiserie de finition intégrée."],
+        ["Pierre, bois, quincaillerie et lumière", `Des matières comme ${materials} se choisissent ensemble pour éviter les conflits entre plans, portes, panneaux, poignées et température de lumière.`],
+        ["Comment CAS AURUM accompagne les cuisines", "L'accompagnement peut inclure cabinetry, panneaux, détail d'îlot, rangement et coordination avec designers, constructeurs ou cuisinistes."],
+        ["Priorités de planification", "Électroménager, tiroirs, taille de l'îlot, pantry, prises, task light et entretien se règlent avant le décor."],
+        ["Erreurs fréquentes", "Évitez les finitions choisies séparément, îlots trop grands, électroménager mal prévu, lumière froide et rangement déconnecté de l'usage."],
+      ],
+      ru: [
+        ["Кухня как функциональный архитектурный центр", "Премиальная кухня согласует готовку, хранение, движение и визуальный вес до финального выбора отделок."],
+        ["Корпусная мебель, острова, панели и хранение", "CAS AURUM лучше всего подходит для cabinetry, островов, панелей, логики хранения и финишной столярки, которые интегрируют кухню в дом."],
+        ["Камень, дерево, фурнитура и свет", `Материалы вроде ${materials} выбираются вместе, чтобы столешницы, фасады, панели, ручки и температура света не спорили.`],
+        ["Как CAS AURUM поддерживает кухни", "Поддержка может включать направление cabinetry, панели, деталировку острова, хранение и координацию с дизайнерами, строителями или кухонными подрядчиками."],
+        ["Приоритеты планирования", "Техника, доступ к ящикам, размер острова, pantry, розетки, рабочий свет и уход решаются до декоративных решений."],
+        ["Частые ошибки", "Избегайте раздельного выбора отделок, слишком больших островов, слабого планирования техники, холодного света и хранения без связи с реальной готовкой."],
+      ],
+    },
+    "walk-in-closet": {
+      en: [
+        ["The walk-in closet as a private boutique", "A luxury closet should feel composed and easy to use, with display, closed storage and daily routines planned around the actual wardrobe."],
+        ["Custom wardrobe systems and storage logic", "Inventory comes first: long hanging, short hanging, shoes, bags, jewelry, watches, seasonal storage, drawers and luggage all need a place."],
+        ["Lighting, mirrors, glass and display zones", "LED lighting, mirror placement, glass doors, open display and task light help the closet feel like a boutique without losing function."],
+        ["Materials and hardware", `Directions such as ${materials} work well when hardware, drawer interiors, glass tone and light temperature are coordinated.`],
+        ["Island storage and seating", "Where space allows, an island or bench can organize accessories, folding, packing and the transition between dressing and bedroom."],
+        ["Common mistakes", "Avoid planning shelves before inventory, weak lighting, no seasonal storage, poor drawer divisions and glass display that exposes clutter."],
+      ],
+      es: [
+        ["El vestidor como boutique privada", "Un closet de lujo debe sentirse compuesto y fácil de usar, con display, almacenamiento cerrado y rutinas basadas en el guardarropa real."],
+        ["Sistemas wardrobe y lógica de storage", "Primero va el inventario: colgado largo y corto, zapatos, bolsas, joyería, relojes, temporada, cajones y maletas."],
+        ["Luz, espejos, vidrio y display", "LED, espejos, puertas de vidrio, display abierto y task light crean atmósfera boutique sin perder función."],
+        ["Materiales y herrajes", `Direcciones como ${materials} funcionan cuando herrajes, interiores de cajón, tono de vidrio y temperatura de luz se coordinan.`],
+        ["Isla y asiento", "Si hay espacio, una isla o banco organiza accesorios, doblado, empaque y transición entre vestidor y dormitorio."],
+        ["Errores comunes", "Evite planear repisas antes del inventario, luz débil, sin storage de temporada, divisiones pobres y vidrio que muestra desorden."],
+      ],
+      fr: [
+        ["Le dressing comme boutique privée", "Un dressing luxe doit être composé et facile à utiliser, avec exposition, rangement fermé et routines pensées selon la garde-robe réelle."],
+        ["Systèmes de rangement et logique d'usage", "L'inventaire d'abord : penderie longue et courte, chaussures, sacs, bijoux, montres, saisonnier, tiroirs et bagages."],
+        ["Lumière, miroirs, verre et exposition", "LED, miroirs, portes vitrées, exposition ouverte et lumière de tâche créent l'esprit boutique sans perdre la fonction."],
+        ["Matières et quincaillerie", `Des directions comme ${materials} fonctionnent si quincaillerie, intérieurs de tiroirs, teinte du verre et lumière sont coordonnés.`],
+        ["Îlot et assise", "Si l'espace le permet, un îlot ou banc organise accessoires, pliage, valises et transition avec la chambre."],
+        ["Erreurs fréquentes", "Évitez les étagères avant l'inventaire, lumière faible, aucun rangement saisonnier, tiroirs mal divisés et verre qui expose le désordre."],
+      ],
+      ru: [
+        ["Гардеробная как приватный бутик", "Люксовая гардеробная должна быть собранной и удобной: витрины, закрытое хранение и ежедневные сценарии строятся вокруг реального гардероба."],
+        ["Системы хранения и логика инвентаря", "Сначала инвентарь: длинное и короткое хранение, обувь, сумки, украшения, часы, сезонные вещи, ящики и чемоданы."],
+        ["Свет, зеркала, стекло и display-зоны", "LED-подсветка, зеркала, стеклянные двери, открытые зоны и рабочий свет создают boutique-ощущение без потери функции."],
+        ["Материалы и фурнитура", `Направления вроде ${materials} работают, когда фурнитура, внутренности ящиков, тон стекла и температура света согласованы.`],
+        ["Остров и посадка", "Если площадь позволяет, остров или банкетка помогают с аксессуарами, складыванием, упаковкой и переходом между гардеробной и спальней."],
+        ["Частые ошибки", "Не планируйте полки до инвентаря, избегайте слабого света, отсутствия сезонного хранения, плохих разделителей и стекла, показывающего беспорядок."],
+      ],
+    },
+  };
+  const rows = content[room.slug]?.[locale];
+  return rows ? rows.map(([heading, body]) => ({ heading, body })) : standardSections(locale, subject, null, room);
+}
+
+function roomFaqFor(locale, room) {
+  if (room.faq?.[locale]) return room.faq[locale].map(([q, a]) => ({ q, a }));
+  const content = {
+    bathroom: {
+      en: [["Can CAS AURUM create a custom bathroom vanity?", "Yes. Vanities can be planned around drawers, stone tops, mirror scale, outlets, towels and the room's proportions."], ["Do you work with stone, tile and moisture-resistant finishes?", "Yes. Material direction can include stone, porcelain slabs, wood accents, brushed metal and moisture-aware construction details."], ["Can you coordinate lighting, mirrors and storage?", "Yes. These elements should be coordinated together because mirror use, storage and glare control shape daily comfort."], ["Can you adapt a completed bathroom project to my space?", "Yes. Completed work can guide proportion and material direction, then the scope is adjusted to your room dimensions and site conditions."]],
+      es: [["¿CAS AURUM puede crear un vanity de baño a medida?", "Sí. Se planifica según cajones, cubierta, espejo, tomas, toallas y proporciones."], ["¿Trabajan con piedra, tile y acabados resistentes a humedad?", "Sí. La dirección puede incluir piedra, porcelánico, madera, metal y detalles adecuados para humedad."], ["¿Pueden coordinar iluminación, espejos y almacenamiento?", "Sí. Deben coordinarse juntos porque uso del espejo, storage y brillo definen el confort."], ["¿Pueden adaptar un baño completado a mi espacio?", "Sí. La obra completada guía proporción y materiales, y el alcance se ajusta a sus medidas y condiciones."]],
+      fr: [["CAS AURUM peut-il créer un meuble vasque sur mesure ?", "Oui. Il se planifie selon tiroirs, plan, miroir, prises, serviettes et proportions."], ["Travaillez-vous avec pierre, carrelage et finitions résistantes à l'humidité ?", "Oui. La direction peut inclure pierre, grès, bois, métal et détails adaptés à l'humidité."], ["Pouvez-vous coordonner lumière, miroirs et rangement ?", "Oui. Ces éléments se coordonnent car miroir, rangement et éblouissement définissent le confort."], ["Pouvez-vous adapter une salle de bain réalisée à mon espace ?", "Oui. Le projet réalisé guide proportions et matières, puis le périmètre s'adapte à vos mesures."]],
+      ru: [["Может ли CAS AURUM сделать тумбу для ванной на заказ?", "Да. Тумба планируется вокруг ящиков, столешницы, зеркала, розеток, полотенец и пропорций комнаты."], ["Вы работаете с камнем, плиткой и влагостойкими отделками?", "Да. Направление может включать камень, porcelain slabs, дерево, металл и детали, рассчитанные на влажность."], ["Можно согласовать свет, зеркала и хранение?", "Да. Эти элементы планируются вместе, потому что зеркало, хранение и блики определяют ежедневный комфорт."], ["Можно адаптировать выполненную ванную под мое пространство?", "Да. Выполненная работа может задать пропорции и материалы, а scope адаптируется под размеры и условия объекта."]],
+    },
+    "living-room": {
+      en: [["Can CAS AURUM build a custom media wall or fireplace wall?", "Yes. Media walls and fireplace walls can include panels, stone, built-ins, storage, display zones, lighting and cable planning."], ["Can built-ins be designed around an existing TV or fireplace?", "Yes. Existing dimensions, heat clearances, AV equipment and wall conditions should be reviewed first."], ["Do you work with designers and builders?", "Yes. Drawings, elevations, finish schedules and site photos are useful for trade-led living room scopes."], ["Can you create a similar living room project for my home?", "Yes. Completed work can be adapted around your wall length, ceiling height, materials and seating layout."]],
+      es: [["¿CAS AURUM puede crear un media wall o muro de chimenea?", "Sí. Puede incluir paneles, piedra, built-ins, storage, display, luz y cableado."], ["¿Los built-ins pueden adaptarse a TV o chimenea existente?", "Sí. Se revisan dimensiones, calor, AV y condiciones del muro."], ["¿Trabajan con diseñadores y builders?", "Sí. Planos, elevaciones, schedules y fotos ayudan al alcance trade."], ["¿Pueden crear una sala similar para mi casa?", "Sí. El trabajo completado se adapta a largo de muro, altura, materiales y seating."]],
+      fr: [["CAS AURUM peut-il créer un media wall ou mur cheminée ?", "Oui. Il peut inclure panneaux, pierre, intégrés, rangement, exposition, lumière et câbles."], ["Les intégrés peuvent-ils entourer une TV ou cheminée existante ?", "Oui. Dimensions, dégagements, AV et conditions du mur sont vérifiés."], ["Travaillez-vous avec designers et constructeurs ?", "Oui. Plans, élévations, finitions et photos aident le périmètre."], ["Pouvez-vous créer un salon similaire chez moi ?", "Oui. Le réalisé s'adapte à votre mur, hauteur, matières et assises."]],
+      ru: [["Может ли CAS AURUM сделать media wall или каминную стену?", "Да. Media wall может включать панели, камень, built-ins, хранение, display-зоны, свет и кабели."], ["Можно встроить решения вокруг существующего TV или камина?", "Да. Сначала проверяются размеры, зазоры по теплу, AV-оборудование и состояние стены."], ["Вы работаете с дизайнерами и строителями?", "Да. Чертежи, фасады, спецификации и фото объекта полезны для trade-led задач."], ["Можно создать похожую гостиную для моего дома?", "Да. Выполненная работа адаптируется под длину стены, высоту потолка, материалы и посадку."]],
+    },
+    kitchen: {
+      en: [["Does CAS AURUM build full kitchens or selected custom elements?", "CAS AURUM is best suited to premium custom cabinetry, islands, panels, storage and finish carpentry; full construction responsibilities are confirmed per project."], ["Can you create custom cabinetry, panels, islands or storage?", "Yes. These are relevant kitchen scopes when dimensions, appliances, materials and budget range are clear."], ["Can you coordinate materials with an existing kitchen contractor?", "Yes. CAS AURUM can review finish direction, cabinetry details and coordination needs with project professionals."], ["Can you adapt a kitchen project to my home?", "Yes. Completed kitchen work can guide the request, then the details are adjusted to your layout and site conditions."]],
+      es: [["¿CAS AURUM hace cocinas completas o elementos seleccionados?", "CAS AURUM encaja mejor en cabinetry, islas, paneles, storage y finish carpentry; responsabilidades completas se confirman por proyecto."], ["¿Pueden crear cabinetry, paneles, islas o almacenamiento?", "Sí, cuando medidas, appliances, materiales y presupuesto están claros."], ["¿Pueden coordinar materiales con un contratista de cocina?", "Sí. Puede revisar acabados, detalles de cabinetry y coordinación."], ["¿Pueden adaptar una cocina a mi casa?", "Sí. Una cocina completada guía el pedido y se ajusta a su layout."]],
+      fr: [["CAS AURUM réalise-t-il des cuisines complètes ou des éléments choisis ?", "CAS AURUM convient surtout à cabinetry, îlots, panneaux, rangement et finition; les responsabilités chantier se confirment par projet."], ["Pouvez-vous créer cabinetry, panneaux, îlots ou rangement ?", "Oui, si mesures, électroménager, matières et budget sont clairs."], ["Pouvez-vous coordonner avec un cuisiniste existant ?", "Oui. CAS AURUM peut revoir finitions, détails et coordination."], ["Pouvez-vous adapter une cuisine à ma maison ?", "Oui. Une cuisine réalisée peut guider la demande puis s'adapter à votre plan."]],
+      ru: [["CAS AURUM делает кухни полностью или отдельные элементы?", "CAS AURUM лучше всего подходит для cabinetry, островов, панелей, хранения и финишной столярки; полный строительный scope подтверждается по проекту."], ["Можно сделать корпусную мебель, панели, остров или хранение?", "Да, если понятны размеры, техника, материалы и бюджетный диапазон."], ["Можно согласовать материалы с кухонным подрядчиком?", "Да. CAS AURUM может рассмотреть отделки, детали cabinetry и координацию."], ["Можно адаптировать кухню под мой дом?", "Да. Выполненная кухня может быть референсом, затем детали адаптируются под layout и условия объекта."]],
+    },
+    "walk-in-closet": {
+      en: [["Can CAS AURUM create a full custom walk-in closet?", "Yes. A closet scope can include wardrobe systems, lighting, drawers, glass doors, island storage, mirrors, seating and hardware."], ["Can you include lighting, drawers, glass doors and island storage?", "Yes. These elements should be planned together around inventory, access and daily dressing routines."], ["How is a closet planned around my wardrobe?", "Start with counts and categories: long hanging, short hanging, shoes, bags, accessories, seasonal items, luggage and folded storage."], ["Can you work from designer drawings?", "Yes. Elevations, plans, finish schedules, hardware notes and site dimensions are useful for closet work."]],
+      es: [["¿CAS AURUM puede crear un walk-in closet completo?", "Sí. Puede incluir sistemas wardrobe, luz, cajones, vidrio, isla, espejos, asiento y herrajes."], ["¿Pueden incluir luz, cajones, vidrio e isla?", "Sí. Se planifican juntos según inventario, acceso y rutina."], ["¿Cómo se planifica según mi guardarropa?", "Con conteos y categorías: colgado largo/corto, zapatos, bolsas, accesorios, temporada, maletas y doblado."], ["¿Pueden trabajar con dibujos de diseñador?", "Sí. Elevaciones, planos, acabados, herrajes y medidas son útiles."]],
+      fr: [["CAS AURUM peut-il créer un dressing complet ?", "Oui. Il peut inclure systèmes, lumière, tiroirs, portes vitrées, îlot, miroirs, assise et quincaillerie."], ["Pouvez-vous inclure lumière, tiroirs, verre et îlot ?", "Oui. Ces éléments se planifient selon inventaire, accès et routine."], ["Comment planifier selon ma garde-robe ?", "Avec catégories : penderie longue/courte, chaussures, sacs, accessoires, saisonnier, bagages et plié."], ["Pouvez-vous travailler depuis dessins designer ?", "Oui. Élévations, plans, finitions, quincaillerie et mesures sont utiles."]],
+      ru: [["Может ли CAS AURUM сделать полную walk-in гардеробную?", "Да. Scope может включать системы хранения, свет, ящики, стеклянные двери, остров, зеркала, посадку и фурнитуру."], ["Можно включить свет, ящики, стекло и остров?", "Да. Эти элементы планируются вместе вокруг инвентаря, доступа и ежедневных сценариев."], ["Как гардеробная планируется под мой гардероб?", "Сначала считаются категории: длинное/короткое хранение, обувь, сумки, аксессуары, сезонные вещи, чемоданы и сложенная одежда."], ["Можно работать по чертежам дизайнера?", "Да. Фасады, планы, спецификации, фурнитура и размеры объекта очень полезны."]],
+    },
+  };
+  const rows = content[room.slug]?.[locale];
+  return rows ? rows.map(([q, a]) => ({ q, a })) : faqFor(locale, local(room.title, locale));
+}
+
 function cityCombinationFaq(locale, subject, combo) {
   const profile = combo.city.profile;
   if (locale !== "en") return faqFor(locale, subject);
@@ -725,7 +1102,7 @@ function finalizePage(page) {
 }
 
 function standardSections(locale, subject, style, room, property, city) {
-  const materials = [...(style?.materials || []), ...(room?.premiumMaterials || []), "natural stone", "walnut", "oak"].slice(0, 8).join(", ");
+  const materials = dedupeMaterials([...(style?.materials || []), ...(room?.premiumMaterials || []), "natural stone", "walnut", "oak"]).slice(0, 8).join(", ");
   const cityBody = city ? local(city.luxuryContext, locale) : null;
   const bodies = {
     en: [
@@ -779,6 +1156,16 @@ function standardSections(locale, subject, style, room, property, city) {
     { heading: l(locale, "investment"), body: bodies[6] },
     { heading: l(locale, "mistakes"), body: bodies[7] },
   ];
+}
+
+function dedupeMaterials(items) {
+  const seen = new Set();
+  return (items || []).filter((item) => {
+    const key = String(item || "").trim().toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function collectionIntro(locale, collection) {
@@ -854,26 +1241,26 @@ function faqFor(locale, subject) {
     en: [
       [`What defines ${subject}?`, `${subject} is defined by proportion, materials, lighting, furniture scale and how well the design supports the room's function.`],
       [`Which materials work best for ${subject}?`, "Walnut, oak, natural stone, plaster, matte metal, textured fabric and restrained brass details are common premium directions."],
-      [`Can CAS AURUM create a custom concept for ${subject}?`, "Yes. A useful inquiry includes location, project type, room photos or plans, desired style, budget range and timeline."],
-      ["Are the visuals final project photos?", "Collection visuals are used as design direction and material inspiration unless a project is specifically identified as completed work."],
+      [`Can CAS AURUM consult on ${subject}?`, "Yes. A useful inquiry includes location, project type, room photos or plans, desired style, budget range and timeline."],
+      ["What should I send before requesting an estimate?", "Send room photos, rough dimensions, drawings if available, desired materials, project location, timeline and investment range."],
     ],
     es: [
       [`¿Qué define ${subject}?`, `${subject} se define por proporción, materiales, iluminación, escala del mobiliario y qué tan bien el diseño apoya la función del espacio.`],
       [`¿Qué materiales funcionan mejor para ${subject}?`, "Nogal, roble, piedra natural, yeso, metal mate, textiles con textura y detalles de latón contenido son direcciones premium habituales."],
-      [`¿CAS AURUM puede crear un concepto a medida para ${subject}?`, "Sí. Una consulta útil incluye ubicación, tipo de proyecto, fotos o planos, estilo deseado, rango de presupuesto y tiempos."],
-      ["¿Las visuales son fotos finales de proyectos?", "Las visuales de colección se usan como dirección de diseño e inspiración material salvo que un proyecto se identifique específicamente como trabajo realizado."],
+      [`¿CAS AURUM puede asesorar sobre ${subject}?`, "Sí. Una consulta útil incluye ubicación, tipo de proyecto, fotos o planos, estilo deseado, rango de presupuesto y tiempos."],
+      ["¿Qué debo enviar antes de solicitar un presupuesto?", "Envíe fotos, medidas aproximadas, planos si existen, materiales deseados, ubicación, plazo y rango de inversión."],
     ],
     fr: [
       [`Qu'est-ce qui définit ${subject} ?`, `${subject} se définit par les proportions, les matériaux, la lumière, l'échelle du mobilier et la manière dont le design soutient la fonction de la pièce.`],
       [`Quels matériaux conviennent le mieux à ${subject} ?`, "Le noyer, le chêne, la pierre naturelle, le plâtre, le métal mat, les textiles texturés et les détails laiton retenus sont des directions premium courantes."],
-      [`CAS AURUM peut-il créer un concept sur mesure pour ${subject} ?`, "Oui. Une demande utile inclut le lieu, le type de projet, des photos ou plans, le style souhaité, une fourchette de budget et le calendrier."],
-      ["Les visuels sont-ils des photos finales de projets ?", "Les visuels de collection servent de direction design et d'inspiration matière, sauf si un projet est clairement identifié comme réalisé."],
+      [`CAS AURUM peut-il conseiller sur ${subject} ?`, "Oui. Une demande utile inclut le lieu, le type de projet, des photos ou plans, le style souhaité, une fourchette de budget et le calendrier."],
+      ["Que faut-il envoyer avant de demander une estimation ?", "Envoyez photos, mesures approximatives, plans si disponibles, matériaux souhaités, lieu, calendrier et fourchette d'investissement."],
     ],
     ru: [
       [`Что определяет ${subject}?`, `${subject} определяется пропорциями, материалами, светом, масштабом мебели и тем, насколько дизайн поддерживает функцию комнаты.`],
       [`Какие материалы лучше подходят для ${subject}?`, "Орех, дуб, натуральный камень, штукатурка, матовый металл, фактурный текстиль и сдержанные латунные детали часто подходят для премиального направления."],
-      [`Может ли CAS AURUM создать кастомную концепцию для ${subject}?`, "Да. Полезный запрос включает локацию, тип проекта, фото или планы, желаемый стиль, бюджетный диапазон и сроки."],
-      ["Визуалы являются финальными фото проектов?", "Визуалы коллекций используются как направление дизайна и вдохновение по материалам, если конкретный проект отдельно не обозначен как выполненная работа."],
+      [`Может ли CAS AURUM проконсультировать по ${subject}?`, "Да. Полезный запрос включает локацию, тип проекта, фото или планы, желаемый стиль, бюджетный диапазон и сроки."],
+      ["Что отправить перед запросом расчета?", "Отправьте фото, примерные размеры, чертежи при наличии, желаемые материалы, локацию, сроки и инвестиционный диапазон."],
     ],
   }[locale] || [];
   return content.map(([q, a]) => ({ q, a }));
