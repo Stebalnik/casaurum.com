@@ -425,6 +425,7 @@ async function sendEscalations() {
 }
 
 function leadMessage(lead) {
+  if (lead.leadType === "design_concept_flow" || lead.formType === "design_concept_flow") return designConceptLeadMessage(lead);
   return [
     "🟡 <b>Новая заявка CAS AURUM</b>",
     `<b>ID:</b> <code>${escapeTg(lead.id)}</code>`,
@@ -445,6 +446,37 @@ function leadMessage(lead) {
     `<b>Источник:</b> ${escapeTg(lead.sourceUrl || "-")}`,
     "",
     lead.message ? `<b>Сообщение:</b>\n${escapeTg(lead.message).slice(0, 1500)}` : "",
+  ].filter(Boolean).join("\n");
+}
+
+function designConceptLeadMessage(lead) {
+  const files = Array.isArray(lead.uploadedFiles) ? lead.uploadedFiles : [];
+  const photos = files.filter((file) => !file.field || file.field === "project_photos");
+  const inspiration = files.filter((file) => file.field === "inspiration_images");
+  return [
+    "🟡 <b>New CAS AURUM Design Concept Lead</b>",
+    `<b>ID:</b> <code>${escapeTg(lead.id)}</code>`,
+    "",
+    `<b>Package:</b> ${escapeTg(lead.packageLabel || lead.package_type || lead.packageType || "-")}`,
+    `<b>Project type:</b> ${escapeTg(lead.projectType || lead.project_type || "-")}`,
+    `<b>Desired style:</b> ${escapeTg(lead.desiredStyleLabel || lead.desired_style || "-")}`,
+    `<b>Selected price:</b> ${escapeTg(lead.exact_price || "-")}`,
+    `<b>Execution time:</b> ${escapeTg(lead.quoted_timeline || "-")}`,
+    lead.payment_url ? `<b>Payment link:</b> ${escapeTg(lead.payment_url)}` : `<b>Payment link:</b> not configured`,
+    "",
+    `<b>Name:</b> ${escapeTg(fullName(lead) || lead.client_name || "No name")}`,
+    `<b>Email:</b> ${escapeTg(lead.email || "-")}`,
+    `<b>Phone:</b> ${escapeTg(lead.phone || "-")}`,
+    `<b>Location:</b> ${escapeTg(lead.projectLocation || lead.project_location || locationLine(lead) || "-")}`,
+    "",
+    `<b>Budget:</b> ${escapeTg(lead.budget || lead.budget_range || "-")}`,
+    `<b>Timeline:</b> ${escapeTg(lead.timeline || lead.timeline_value || "-")}`,
+    `<b>Dimensions provided:</b> ${lead.dimensionsProvided ? "yes" : "no"}`,
+    `<b>Files:</b> ${escapeTg(files.length)} total · ${escapeTg(photos.length)} photos · ${escapeTg(inspiration.length)} inspiration`,
+    "",
+    `<b>Source:</b> ${escapeTg(lead.sourceUrl || lead.source_page || "-")}`,
+    "",
+    lead.project_description ? `<b>Description:</b>\n${escapeTg(lead.project_description).slice(0, 1200)}` : lead.message ? `<b>Description:</b>\n${escapeTg(lead.message).slice(0, 1200)}` : "",
   ].filter(Boolean).join("\n");
 }
 

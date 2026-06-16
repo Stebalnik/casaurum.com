@@ -11,6 +11,7 @@ await waitForServer();
 
 const paths = [
   "/",
+  "/design-concept",
   "/luxury-wall-panels",
   "/custom-furniture",
   "/architectural-millwork",
@@ -18,8 +19,11 @@ const paths = [
   "/for-designers-builders",
   "/partners",
   "/es/programa-partners",
+  "/es/concepto-de-diseno",
   "/fr/programme-partenaires",
+  "/fr/concept-design-interieur",
   "/ru/partnerskaya-programma",
+  "/ru/dizayn-koncept",
   "/technical-millwork-planner",
   "/request-consultation",
   "/request-measurement",
@@ -80,6 +84,32 @@ if (!ruHomePage.body.includes('<a href="/crm-app">Вход партнера</a>'
 }
 console.log("partner login header ok");
 
+const designConceptPage = await read("/design-concept");
+for (const requiredText of [
+  "Get a Premium Interior Design Concept Before You Commit to Fabrication",
+  "Transparent Starting Prices",
+  "Submit Project for Review",
+  "Online checkout for fixed-price concept packages can be added in the next step.",
+  "data-design-concept-form",
+  "FAQPage",
+]) {
+  if (!designConceptPage.body.includes(requiredText)) {
+    server.kill();
+    throw new Error(`/design-concept missing required text: ${requiredText}`);
+  }
+}
+const startConceptRedirect = await request("/start-design-concept");
+if (startConceptRedirect.status !== 302) {
+  server.kill();
+  throw new Error(`/start-design-concept should redirect to /design-concept, returned ${startConceptRedirect.status}`);
+}
+const kitchenPage = await read("/kitchens");
+if (!kitchenPage.body.includes("/design-concept") || !kitchenPage.body.includes("Start with a Design Concept")) {
+  server.kill();
+  throw new Error("/kitchens should link into the Design Concept flow");
+}
+console.log("/design-concept sales flow ok");
+
 const privacyPage = await read("/privacy-policy");
 if (!privacyPage.body.includes('<a class="stealth-admin-link" href="/admin">contact CAS AURUM</a>')) {
   server.kill();
@@ -108,6 +138,75 @@ if (lead.status !== 200) {
 }
 console.log("/api/lead ok");
 
+const designConceptLead = await postMultipart("/api/design-concept-lead", {
+  leadType: "design_concept_flow",
+  formType: "design_concept_flow",
+  package_type: "design_concept",
+  project_type: "media_wall",
+  language: "en",
+  client_name: "Smoke Concept",
+  email: "smoke-concept@example.com",
+  project_location: "Atlanta, GA",
+  project_description: "Smoke test design concept.",
+  desired_style: "quiet_luxury",
+  timeline: "planning_only",
+  budget_range: "not_sure",
+  consent: "on",
+}, [{ field: "project_photos", filename: "room.jpg", type: "image/jpeg", content: "fake image bytes" }]);
+if (designConceptLead.status !== 200) {
+  server.kill();
+  throw new Error(`/api/design-concept-lead returned ${designConceptLead.status}`);
+}
+const designConceptLeadJson = JSON.parse(designConceptLead.body || "{}");
+const uploadedConceptFile = await request(`/uploads/design-concepts/${designConceptLeadJson.id}/01-room.jpg`);
+if (uploadedConceptFile.status !== 200) {
+  server.kill();
+  throw new Error(`/uploads/design-concepts/${designConceptLeadJson.id}/01-room.jpg returned ${uploadedConceptFile.status}`);
+}
+console.log("/api/design-concept-lead ok");
+
+const invalidTechnicalConceptLead = await postMultipart("/api/design-concept-lead", {
+  leadType: "design_concept_flow",
+  formType: "design_concept_flow",
+  package_type: "design_technical",
+  project_type: "media_wall",
+  language: "en",
+  client_name: "Smoke Technical Concept",
+  email: "smoke-technical@example.com",
+  project_location: "Atlanta, GA",
+  project_description: "Smoke test technical package without dimensions.",
+  desired_style: "quiet_luxury",
+  timeline: "planning_only",
+  budget_range: "not_sure",
+  consent: "on",
+}, [{ field: "project_photos", filename: "room.jpg", type: "image/jpeg", content: "fake image bytes" }]);
+if (invalidTechnicalConceptLead.status !== 400 || !invalidTechnicalConceptLead.body.includes("dimension_length")) {
+  server.kill();
+  throw new Error(`/api/design-concept-lead technical package without dimensions should return 400 with dimension fields, returned ${invalidTechnicalConceptLead.status}`);
+}
+console.log("/api/design-concept-lead technical validation ok");
+
+const invalidDesignConceptLead = await post("/api/design-concept-lead", {
+  leadType: "design_concept_flow",
+  formType: "design_concept_flow",
+  package_type: "design_concept",
+  project_type: "media_wall",
+  language: "en",
+  client_name: "Smoke Concept",
+  email: "smoke-concept@example.com",
+  project_location: "Atlanta, GA",
+  project_description: "Smoke test design concept without photos.",
+  desired_style: "quiet_luxury",
+  timeline: "planning_only",
+  budget_range: "not_sure",
+  consent: "on",
+});
+if (invalidDesignConceptLead.status !== 400) {
+  server.kill();
+  throw new Error(`/api/design-concept-lead without photos should return 400, returned ${invalidDesignConceptLead.status}`);
+}
+console.log("/api/design-concept-lead validation ok");
+
 const sitemap = await read("/sitemap.xml");
 if (!sitemap.body.includes("<sitemapindex")) {
   server.kill();
@@ -124,6 +223,11 @@ if (!sitemap.body.includes("/sitemaps/legacy-programmatic.xml")) {
 if (!sitemap.body.includes("/sitemaps/casaurum-combinations-1.xml")) {
   server.kill();
   throw new Error("casaurum combination sitemap missing from sitemap index");
+}
+const coreSitemap = await read("/sitemaps/core.xml");
+if (!coreSitemap.body.includes("/design-concept")) {
+  server.kill();
+  throw new Error("design concept page missing from core sitemap");
 }
 
 const legacyProgrammaticSitemap = await read("/sitemaps/legacy-programmatic.xml");
@@ -202,6 +306,44 @@ function post(path, body) {
       (res) => {
         res.resume();
         res.on("end", () => resolve({ status: res.statusCode }));
+      },
+    );
+    req.on("error", reject);
+    req.setTimeout(5000, () => req.destroy(new Error("timeout")));
+    req.end(payload);
+  });
+}
+
+function postMultipart(path, fields, files) {
+  const boundary = `----cas-aurum-smoke-${Date.now()}`;
+  const chunks = [];
+  for (const [name, value] of Object.entries(fields)) {
+    chunks.push(Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="${name}"\r\n\r\n${value}\r\n`));
+  }
+  for (const file of files) {
+    chunks.push(Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="${file.field}"; filename="${file.filename}"\r\nContent-Type: ${file.type}\r\n\r\n`));
+    chunks.push(Buffer.from(file.content));
+    chunks.push(Buffer.from("\r\n"));
+  }
+  chunks.push(Buffer.from(`--${boundary}--\r\n`));
+  const payload = Buffer.concat(chunks);
+  return new Promise((resolve, reject) => {
+    const req = http.request(
+      {
+        hostname: "127.0.0.1",
+        port,
+        path,
+        method: "POST",
+        headers: {
+          "content-type": `multipart/form-data; boundary=${boundary}`,
+          "content-length": payload.length,
+        },
+      },
+      (res) => {
+        let body = "";
+        res.setEncoding("utf8");
+        res.on("data", (chunk) => (body += chunk));
+        res.on("end", () => resolve({ status: res.statusCode, body }));
       },
     );
     req.on("error", reject);

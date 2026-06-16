@@ -48,7 +48,7 @@ function localizedEntity(slug, title, extras = {}) {
       `${BRAND} раскрывает ${local(title, "ru").toLowerCase()} через премиальные материалы, curated rooms и архитектурные детали.`
     ),
     intro: extras.intro || tx(
-      `${readable} at CAS AURUM is treated as a material-driven design language: proportion, light, furniture, surfaces and storage are considered together rather than as separate decorative choices.`,
+      `${readable} at CAS AURUM is planned as a project-specific interior direction: proportion, light, furniture, surfaces and storage are considered together rather than as separate decorative choices.`,
       `${local(title, "es")} en CAS AURUM se entiende como un lenguaje de diseño guiado por materiales, proporción, luz, mobiliario y superficies.`,
       `${local(title, "fr")} chez CAS AURUM est abordé comme un langage guidé par les matériaux, les proportions, la lumière, le mobilier et les surfaces.`,
       `${local(title, "ru")} в CAS AURUM рассматривается как материально-архитектурный язык: пропорции, свет, мебель, поверхности и хранение работают вместе.`
@@ -97,7 +97,7 @@ const roomProfiles = {
       "Люксовые спальни | Изголовья и хранение на заказ | CAS AURUM"
     ),
     intro: tx(
-      "Bedroom interiors by CAS AURUM are planned as private architectural suites: calm storage, a composed headboard wall, layered lighting, soft materials and the quiet discipline that makes rest feel intentional.",
+      "CAS AURUM bedrooms are shaped around calm proportion, a strong headboard wall, integrated lighting, custom storage, warm materials and furniture that makes the room feel private, quiet and resolved.",
       "Los dormitorios CAS AURUM se planifican como suites privadas: almacenamiento sereno, muro de cabecera compuesto, iluminación por capas, materiales suaves y una disciplina tranquila que favorece el descanso.",
       "Les chambres CAS AURUM sont pensées comme des suites privées : rangement calme, mur de tête de lit composé, lumière en couches, matières douces et discipline discrète au service du repos.",
       "Спальни CAS AURUM планируются как приватные архитектурные сьюты: спокойное хранение, продуманная стена изголовья, многослойный свет, мягкие материалы и атмосфера отдыха без визуального шума."
@@ -109,18 +109,24 @@ const roomProfiles = {
       "Идеи интерьера спальни CAS AURUM: кастомные изголовья, гардеробные решения, встроенное хранение, теплый свет, премиальные материалы и связанные выполненные работы."
     ),
     directSummary: tx(
-      "A premium bedroom should feel restful first, then reveal the custom work: headboard wall, wardrobes, nightstands, textile softness, acoustic comfort and lighting scenes that support morning, evening and night routines.",
+      "A premium bedroom should start with the bed wall, lighting layers, storage requirements and the level of softness or architectural detail the room needs.",
       "Un dormitorio premium debe sentirse reparador primero y después revelar el trabajo a medida: cabecero, wardrobes, mesas de noche, textiles suaves, confort acústico y escenas de luz para mañana, tarde y noche.",
       "Une chambre premium doit d'abord apaiser, puis révéler le sur mesure : tête de lit, dressings, chevets, douceur textile, confort acoustique et scénarios lumineux du matin au soir.",
       "Премиальная спальня сначала должна давать отдых, а уже потом показывать кастомную работу: изголовье, шкафы, тумбы, мягкие ткани, акустический комфорт и световые сценарии для утра, вечера и ночи."
     ),
     materials: ["oak", "walnut", "linen textures", "leather details", "soft stone", "matte finishes"],
     relatedProjects: [
-      "cas-aurum-built-in-window-bench-wall-paneling.webp",
-      "cas-aurum-modern-tray-ceiling-cove-lighting.webp",
-      "cas-aurum-reclaimed-wood-plank-ceiling-recessed-lights.webp",
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+      "cas-aurum-premium-live-edge-designer-table-office.webp",
+      "cas-aurum-premium-walnut-glass-bar-cabinet.webp",
     ],
-    relatedProjectsTitle: tx("Related Interior Work", "Trabajos interiores relacionados", "Travaux intérieurs liés", "Связанные интерьерные работы"),
+    relatedProjectsTitle: tx("Related completed projects", "Proyectos realizados relacionados", "Projets réalisés associés", "Похожие выполненные проекты"),
+    relatedProjectsBody: tx(
+      "Explore completed CAS AURUM work related to private rooms, including walnut built-ins, designer furniture and refined storage details that can inform a bedroom suite.",
+      "Explore trabajos realizados de CAS AURUM relacionados con espacios privados: built-ins en nogal, mobiliario de diseño y detalles de almacenamiento refinados.",
+      "Découvrez des projets réalisés CAS AURUM liés aux pièces privées : intégrés en noyer, mobilier design et détails de rangement raffinés.",
+      "Посмотрите выполненные работы CAS AURUM для приватных помещений: встроенные решения из ореха, дизайнерская мебель и утонченные детали хранения."
+    ),
     sections: {
       en: [
         ["The bedroom as a private architectural suite", "The strongest bedroom is not overdecorated. It uses proportion, storage, wall composition and soft texture to make the room feel protected, quiet and resolved."],
@@ -191,7 +197,7 @@ const roomProfiles = {
       "Люксовые ванные | Тумбы на заказ и мраморные детали | CAS AURUM"
     ),
     intro: tx(
-      "Bathroom interiors by CAS AURUM focus on the daily ritual: stone, vanity design, mirrors, wet areas, lighting, storage, ventilation awareness and durable finishes that still feel refined.",
+      "CAS AURUM bathrooms are planned around stone, proportion, vanity design, mirror and lighting placement, shower details, storage and the calm atmosphere expected from a premium residential suite.",
       "Los baños CAS AURUM se centran en el ritual diario: piedra, vanity, espejos, zonas húmedas, iluminación, almacenamiento, ventilación y acabados durables con presencia refinada.",
       "Les salles de bain CAS AURUM se concentrent sur le rituel quotidien : pierre, meuble vasque, miroirs, zones humides, lumière, rangement, ventilation et finitions durables.",
       "Ванные CAS AURUM строятся вокруг ежедневного ритуала: камень, тумба, зеркала, влажные зоны, свет, хранение, вентиляция и долговечные отделки без потери премиальности."
@@ -203,17 +209,22 @@ const roomProfiles = {
       "Идеи ванной: тумбы на заказ, камень, плитка, зеркала, свет, хранение, долговечные отделки и связанные выполненные проекты CAS AURUM."
     ),
     directSummary: tx(
-      "A premium bathroom needs more than stone: the vanity, mirror, wet zone, lighting, storage and ventilation must work together so the room feels spa-like and practical every day.",
+      "A luxury bathroom should balance stone, water exposure, lighting, storage and daily function before decorative finishes are chosen.",
       "Un baño premium necesita más que piedra: vanity, espejo, zona húmeda, luz, almacenamiento y ventilación deben trabajar juntos para sentirse tipo spa y funcionar cada día.",
       "Une salle de bain premium demande plus que de la pierre : vasque, miroir, zone humide, lumière, rangement et ventilation doivent fonctionner ensemble au quotidien.",
       "Премиальной ванной недостаточно одного камня: тумба, зеркало, wet zone, свет, хранение и вентиляция должны работать вместе, чтобы комната была и spa-like, и практичной."
     ),
     materials: ["marble", "limestone", "travertine", "porcelain slabs", "walnut accents", "brushed metal"],
     relatedProjects: [
-      "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp",
-      "cas-aurum-gray-double-bathroom-vanity-marble-countertop.webp",
+      "cas-aurum-premium-fluted-stone-bathroom-vanity.webp",
     ],
-    relatedProjectsTitle: tx("Related Completed Bathroom Work", "Baños completados relacionados", "Salles de bain réalisées liées", "Связанные выполненные ванные"),
+    relatedProjectsTitle: tx("Related completed projects", "Proyectos realizados relacionados", "Projets réalisés associés", "Похожие выполненные проекты"),
+    relatedProjectsBody: tx(
+      "Explore completed CAS AURUM bathroom work with a fluted stone vanity, backlit mirror, brass fixtures and warm luxury lighting.",
+      "Explore trabajos realizados de baño con vanity acanalado, piedra, espejo retroiluminado, grifería de latón y luz cálida premium.",
+      "Découvrez un projet de salle de bain réalisé avec meuble vasque cannelé, pierre, miroir rétroéclairé, robinetterie laiton et lumière chaude.",
+      "Посмотрите выполненную ванную CAS AURUM: рифленая тумба, камень, зеркало с подсветкой, латунная сантехника и теплый свет."
+    ),
   },
   "living-room": {
     h1Title: tx("Luxury Living Room Interiors", "Salas de lujo", "Salons de luxe", "Люксовые гостиные"),
@@ -224,7 +235,7 @@ const roomProfiles = {
       "Люксовые гостиные | Media walls и built-ins на заказ | CAS AURUM"
     ),
     intro: tx(
-      "Living room interiors by CAS AURUM are treated as the main architectural statement of the home: focal wall, fireplace or media wall, built-ins, seating layout, acoustic balance and evening atmosphere.",
+      "CAS AURUM living rooms are planned around the room's strongest architectural moment: a media wall, fireplace wall, custom built-ins, panel rhythm, lighting, storage and furniture scaled as one composition.",
       "Las salas CAS AURUM se tratan como la declaración arquitectónica principal: muro focal, chimenea o media wall, built-ins, distribución de asientos, equilibrio acústico y atmósfera nocturna.",
       "Les salons CAS AURUM sont traités comme la déclaration architecturale principale : mur focal, cheminée ou media wall, intégrés, assises, équilibre acoustique et ambiance du soir.",
       "Гостиные CAS AURUM рассматриваются как главный архитектурный акцент дома: фокусная стена, камин или media wall, built-ins, посадка, акустический баланс и вечерняя атмосфера."
@@ -236,20 +247,25 @@ const roomProfiles = {
       "Идеи гостиной: media walls, камины, встроенные решения, планировка посадки, премиальные материалы, свет и связанные выполненные работы."
     ),
     directSummary: tx(
-      "A strong living room starts with the focal architecture: media wall, fireplace, built-ins or display storage, then seating, circulation, lighting and materials are aligned around that center of gravity.",
+      "A premium living room should begin with the focal wall, circulation, storage and lighting strategy before furniture and decor are selected.",
       "Una sala fuerte empieza con la arquitectura focal: media wall, chimenea, built-ins o almacenamiento de exhibición; después se alinean asientos, circulación, luz y materiales.",
       "Un salon fort commence par son architecture focale : media wall, cheminée, intégrés ou rangement d'exposition, puis assises, circulation, lumière et matières s'alignent autour d'elle.",
       "Сильная гостиная начинается с фокусной архитектуры: media wall, камина, built-ins или витринного хранения. Затем вокруг этого выстраиваются посадка, движение, свет и материалы."
     ),
     materials: ["walnut", "oak", "stone", "plaster", "fluted panels", "bronze metal"],
     relatedProjects: [
-      "cas-aurum-vaulted-great-room-timber-trusses-stone-fireplace.webp",
-      "cas-aurum-vaulted-living-room-built-ins-fireplace.webp",
-      "cas-aurum-rustic-vaulted-great-room-timber-beams.webp",
-      "cas-aurum-built-in-window-bench-wall-paneling.webp",
-      "cas-aurum-reclaimed-wood-plank-ceiling-recessed-lights.webp",
+      "cas-aurum-premium-wood-stone-tv-wall-unit-led-lighting.webp",
+      "cas-aurum-premium-slatted-media-console-living-room.webp",
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+      "cas-aurum-premium-executive-office-lounge-wall-millwork.webp",
     ],
-    relatedProjectsTitle: tx("Related Completed Living Room Work", "Salas completadas relacionadas", "Salons réalisés liés", "Связанные выполненные гостиные"),
+    relatedProjectsTitle: tx("Related completed projects", "Proyectos realizados relacionados", "Projets réalisés associés", "Похожие выполненные проекты"),
+    relatedProjectsBody: tx(
+      "Explore completed CAS AURUM living room and media wall work, including wood-and-stone TV walls, slatted consoles, walnut built-ins and warm architectural lighting.",
+      "Explore proyectos realizados para salas y media walls: muros TV en madera y piedra, consolas ranuradas, built-ins en nogal e iluminación arquitectónica cálida.",
+      "Découvrez des projets réalisés pour salons et murs média : bois et pierre, consoles à lattes, intégrés en noyer et lumière architecturale chaude.",
+      "Посмотрите выполненные работы для гостиных и медиа-стен: дерево и камень, реечные консоли, встроенные решения из ореха и теплый архитектурный свет."
+    ),
   },
   kitchen: {
     h1Title: tx("Luxury Kitchen Interiors & Custom Cabinetry", "Cocinas de lujo y cabinetry a medida", "Cuisines de luxe et cabinetry sur mesure", "Люксовые кухни и корпусная мебель на заказ"),
@@ -260,7 +276,7 @@ const roomProfiles = {
       "Люксовые кухни | Корпусная мебель и millwork | CAS AURUM"
     ),
     intro: tx(
-      "Kitchen interiors by CAS AURUM focus on premium custom cabinetry, islands, panels, storage, finish carpentry and material coordination around the kitchen as a functional architectural centerpiece.",
+      "CAS AURUM kitchens focus on cabinetry proportion, island presence, stone, lighting, storage, appliance integration and finish details that make the kitchen feel built into the architecture of the home.",
       "Las cocinas CAS AURUM se enfocan en cabinetry premium a medida, islas, paneles, almacenamiento, carpintería de acabado y coordinación material alrededor de la cocina como centro funcional.",
       "Les cuisines CAS AURUM se concentrent sur cabinetry premium, îlots, panneaux, rangement, menuiserie de finition et coordination matières autour d'une pièce centrale fonctionnelle.",
       "Кухни CAS AURUM фокусируются на премиальной корпусной мебели, островах, панелях, хранении, финишной столярке и согласовании материалов вокруг кухни как функционального центра дома."
@@ -272,18 +288,22 @@ const roomProfiles = {
       "Идеи кухни: корпусная мебель на заказ, острова, панели, хранение, камень, дерево, согласование света и связанные выполненные кухни CAS AURUM."
     ),
     directSummary: tx(
-      "CAS AURUM can support kitchens through premium cabinetry, islands, finish panels, storage and material direction, while full construction scope and trade responsibilities should be confirmed for each project.",
+      "A luxury kitchen should be planned around workflow, cabinetry lines, island scale, lighting and material transitions before finishes are selected.",
       "CAS AURUM puede apoyar cocinas con cabinetry premium, islas, paneles de acabado, almacenamiento y dirección material; el alcance constructivo completo y responsabilidades trade se confirman por proyecto.",
       "CAS AURUM peut accompagner les cuisines par cabinetry premium, îlots, panneaux, rangement et direction matières; la portée chantier et les responsabilités trade se confirment par projet.",
       "CAS AURUM может поддержать кухонный проект через премиальную корпусную мебель, острова, панели, хранение и материалы; полный строительный scope и trade-ответственность уточняются по каждому проекту."
     ),
     materials: ["walnut", "rift oak", "matte lacquer", "stone slabs", "integrated lighting", "metal accents"],
     relatedProjects: [
-      "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp",
-      "cas-aurum-luxury-kitchen-marble-island-skylight.webp",
-      "cas-aurum-farmhouse-laundry-room-custom-cabinetry.webp",
+      "cas-aurum-premium-ivory-kitchen-cabinetry-brass-hardware.webp",
     ],
-    relatedProjectsTitle: tx("Related Completed Kitchen Work", "Cocinas completadas relacionadas", "Cuisines réalisées liées", "Связанные выполненные кухни"),
+    relatedProjectsTitle: tx("Related completed projects", "Proyectos realizados relacionados", "Projets réalisés associés", "Похожие выполненные проекты"),
+    relatedProjectsBody: tx(
+      "Explore completed CAS AURUM kitchen cabinetry with ivory fronts, brass hardware, stone surfaces and warm under-cabinet lighting.",
+      "Explore una cocina realizada por CAS AURUM con cabinetry color marfil, herrajes de latón, piedra e iluminación cálida bajo muebles.",
+      "Découvrez une cuisine réalisée par CAS AURUM avec cabinetry ivoire, quincaillerie laiton, pierre et éclairage chaud sous meubles.",
+      "Посмотрите выполненную кухню CAS AURUM: ivory-фасады, латунная фурнитура, камень и теплая подсветка."
+    ),
   },
   "walk-in-closet": {
     h1Title: tx("Luxury Walk-In Closets & Dressing Rooms", "Vestidores de lujo y dressing rooms", "Dressings de luxe et pièces dressing", "Люксовые гардеробные и dressing rooms"),
@@ -294,7 +314,7 @@ const roomProfiles = {
       "Люксовые гардеробные | Dressing rooms на заказ | CAS AURUM"
     ),
     intro: tx(
-      "Walk-in closet interiors by CAS AURUM are planned like private boutiques: wardrobe systems, lighting, drawers, glass doors, accessories, mirrors, seating, island storage and a polished daily ritual.",
+      "CAS AURUM walk-in closets are designed as private dressing rooms with custom cabinetry, illuminated storage, wardrobe planning, drawers, glass, hardware, seating and materials that feel closer to a boutique than a basic closet system.",
       "Los vestidores CAS AURUM se planifican como boutiques privadas: sistemas de wardrobe, iluminación, cajones, puertas de vidrio, accesorios, espejos, asiento, isla y ritual diario cuidado.",
       "Les dressings CAS AURUM sont pensés comme des boutiques privées : systèmes de rangement, lumière, tiroirs, portes vitrées, accessoires, miroirs, assise, îlot et rituel quotidien.",
       "Гардеробные CAS AURUM планируются как приватные бутики: системы хранения, свет, ящики, стеклянные двери, аксессуары, зеркала, посадка, остров и продуманный ежедневный ритуал."
@@ -306,17 +326,23 @@ const roomProfiles = {
       "Идеи гардеробной: системы хранения на заказ, свет, ящики, стеклянные двери, остров, зеркала, фурнитура и связанные работы по хранению."
     ),
     directSummary: tx(
-      "A luxury walk-in closet should be planned around the wardrobe inventory first, then lighting, display, drawers, seasonal storage, mirrors and hardware create the boutique atmosphere.",
+      "A luxury walk-in closet should begin with wardrobe inventory, circulation, lighting and storage hierarchy before cabinet finishes are selected.",
       "Un vestidor de lujo debe planificarse primero según el inventario de ropa; después luz, exhibición, cajones, almacenamiento estacional, espejos y herrajes crean la atmósfera boutique.",
       "Un dressing luxe se planifie d'abord selon l'inventaire; ensuite lumière, exposition, tiroirs, rangement saisonnier, miroirs et quincaillerie créent l'ambiance boutique.",
       "Люксовая гардеробная сначала планируется вокруг состава гардероба; затем свет, витрины, ящики, сезонное хранение, зеркала и фурнитура создают boutique-атмосферу."
     ),
     materials: ["walnut", "oak", "smoked glass", "leather inserts", "bronze hardware", "LED lighting"],
     relatedProjects: [
-      "cas-aurum-built-in-window-bench-wall-paneling.webp",
-      "cas-aurum-custom-laundry-room-stacked-washer-cabinetry.webp",
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+      "cas-aurum-premium-walnut-glass-bar-cabinet.webp",
     ],
-    relatedProjectsTitle: tx("Related Custom Storage & Millwork", "Almacenamiento y millwork relacionados", "Rangement et menuiserie liés", "Связанное хранение и millwork"),
+    relatedProjectsTitle: tx("Related completed projects", "Proyectos realizados relacionados", "Projets réalisés associés", "Похожие выполненные проекты"),
+    relatedProjectsBody: tx(
+      "Explore completed CAS AURUM storage and display work with illuminated walnut built-ins and glass-front cabinetry that can inform a dressing-room or private storage scope.",
+      "Explore trabajos realizados de almacenamiento y display con built-ins iluminados en nogal y cabinetry con vidrio para orientar un vestidor o almacenamiento privado.",
+      "Découvrez des réalisations de rangement et d'exposition avec intégrés en noyer éclairés et cabinetry vitré pour orienter un dressing ou rangement privé.",
+      "Посмотрите выполненные решения хранения и витрин: подсвеченные built-ins из ореха и cabinetry со стеклом для гардеробной или приватного хранения."
+    ),
   },
   "master-suite": {
     h1Title: tx("Luxury Master Suite Interiors", "Master suites de lujo", "Suites parentales de luxe", "Люксовые мастер-сьюты"),
@@ -346,11 +372,17 @@ const roomProfiles = {
     ),
     materials: ["walnut", "oak", "soft stone", "linen textures", "smoked glass", "brushed metal"],
     relatedProjects: [
-      "cas-aurum-built-in-window-bench-wall-paneling.webp",
-      "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp",
-      "cas-aurum-modern-tray-ceiling-cove-lighting.webp",
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+      "cas-aurum-premium-fluted-stone-bathroom-vanity.webp",
+      "cas-aurum-premium-walnut-glass-bar-cabinet.webp",
     ],
-    relatedProjectsTitle: tx("Related Completed Suite Work", "Trabajos de suite relacionados", "Travaux de suite réalisés liés", "Связанные выполненные работы для suite"),
+    relatedProjectsTitle: tx("Related completed projects", "Proyectos realizados relacionados", "Projets réalisés associés", "Похожие выполненные проекты"),
+    relatedProjectsBody: tx(
+      "Explore completed CAS AURUM work related to master suites, including walnut storage, fluted stone vanity details and refined bar or lounge cabinetry.",
+      "Explore trabajos realizados relacionados con master suites: almacenamiento en nogal, vanity acanalado de piedra y cabinetry refinada para bar o lounge.",
+      "Découvrez des projets réalisés liés aux suites parentales : rangement en noyer, meuble vasque cannelé en pierre et cabinetry raffinée pour bar ou lounge.",
+      "Посмотрите выполненные работы для master suite: хранение из ореха, рифленая каменная тумба и утонченная cabinetry для бара или lounge."
+    ),
   },
 };
 
@@ -425,7 +457,7 @@ const cityMarketBriefs = {
     sections: [
       ["Miami project fit", "A Miami project brief should clarify whether the space is a waterfront residence, condo, villa, private lounge, dressing room, kitchen, media wall or hospitality interior. Humidity, daylight, reflection, maintenance and evening lighting scenes should be discussed before choosing high-gloss, stone, veneer or glass-heavy directions."],
       ["Design value", "The best Miami interiors usually avoid generic white-box luxury. A stronger direction uses custom wall composition, concealed storage, integrated LEDs, glass display zones, stone back panels and technical hardware decisions that make the room feel designed rather than simply decorated."],
-	      ["What to send", "Send plan dimensions, wall photos, ceiling height, condo or building constraints, desired storage, lighting intent, stone or veneer references, and a target budget range. That lets CAS AURUM respond with a realistic concept path instead of a vague moodboard."],
+	      ["What to send", "Send plan dimensions, wall photos, ceiling height, condo or building constraints, desired storage, lighting intent, stone or veneer references, and a target budget range. That lets CAS AURUM respond with a realistic project path instead of a vague moodboard."],
 	      ["High-intent Miami scopes", "Miami pages should route qualified visitors toward custom media walls, dressing galleries, walk-in closets, hospitality wall panels and custom built-ins. Those searches usually indicate a client is thinking about a real room, not only browsing inspiration."],
 	    ],
 	  },
@@ -775,7 +807,7 @@ function roomPage(locale, room) {
     sections: roomSectionsFor(locale, room),
     faq: roomFaqFor(locale, room), breadcrumbs: crumb(locale, [[l(locale, "rooms"), "/rooms"], [h1, `/rooms/${room.slug}`]]),
     relatedRooms: room.relatedRooms, relatedStyles: ["modern", "quiet-luxury", "organic-modern"], relatedCollections: ["forma", "madera"],
-    imagePath: roomImage(room.slug), relatedProjects: room.relatedProjects || [], relatedProjectsTitle: local(room.relatedProjectsTitle, locale), allowlisted: true,
+    imagePath: roomImage(room.slug), relatedProjects: room.relatedProjects || [], relatedProjectsTitle: local(room.relatedProjectsTitle, locale), relatedProjectsBody: local(room.relatedProjectsBody, locale), allowlisted: true,
   });
 }
 
@@ -1228,25 +1260,25 @@ function roomFaqFor(locale, room) {
   if (room.faq?.[locale]) return withRoomSupplementFaq(locale, room, room.faq[locale].map(([q, a]) => ({ q, a })));
   const content = {
     bathroom: {
-      en: [["Can CAS AURUM create a custom bathroom vanity?", "Yes. Vanities can be planned around drawers, stone tops, mirror scale, outlets, towels and the room's proportions."], ["Do you work with stone, tile and moisture-resistant finishes?", "Yes. Material direction can include stone, porcelain slabs, wood accents, brushed metal and moisture-aware construction details."], ["Can you coordinate lighting, mirrors and storage?", "Yes. These elements should be coordinated together because mirror use, storage and glare control shape daily comfort."], ["Can you adapt a completed bathroom project to my space?", "Yes. Completed work can guide proportion and material direction, then the scope is adjusted to your room dimensions and site conditions."]],
+      en: [["Can CAS AURUM build a custom bathroom vanity?", "Yes. Vanities can be planned around drawers, stone tops, double vanity proportions, mirror scale, outlets, towels and daily storage."], ["What materials work best for luxury bathroom vanities?", "Stone, porcelain slabs, moisture-resistant cabinet construction, wood accents, brushed metal and durable finishes can work when water exposure and cleaning are planned early."], ["Can lighting, mirrors and shower glass be coordinated?", "Yes. Mirror lighting, recessed lighting, shower glass, fixture finish logic and storage should be coordinated so the bathroom feels calm and practical."], ["Can you adapt a completed bathroom project to my home?", "Yes. Completed bathroom work can guide proportion, stone and vanity direction, then the scope is adjusted to your room dimensions and site conditions."], ["Do you work from photos, plans or designer drawings?", "Yes. Photos, plans, elevations, plumbing notes, fixture schedules and designer drawings help define the bathroom scope."]],
       es: [["¿CAS AURUM puede crear un vanity de baño a medida?", "Sí. Se planifica según cajones, cubierta, espejo, tomas, toallas y proporciones."], ["¿Trabajan con piedra, tile y acabados resistentes a humedad?", "Sí. La dirección puede incluir piedra, porcelánico, madera, metal y detalles adecuados para humedad."], ["¿Pueden coordinar iluminación, espejos y almacenamiento?", "Sí. Deben coordinarse juntos porque uso del espejo, storage y brillo definen el confort."], ["¿Pueden adaptar un baño completado a mi espacio?", "Sí. La obra completada guía proporción y materiales, y el alcance se ajusta a sus medidas y condiciones."]],
       fr: [["CAS AURUM peut-il créer un meuble vasque sur mesure ?", "Oui. Il se planifie selon tiroirs, plan, miroir, prises, serviettes et proportions."], ["Travaillez-vous avec pierre, carrelage et finitions résistantes à l'humidité ?", "Oui. La direction peut inclure pierre, grès, bois, métal et détails adaptés à l'humidité."], ["Pouvez-vous coordonner lumière, miroirs et rangement ?", "Oui. Ces éléments se coordonnent car miroir, rangement et éblouissement définissent le confort."], ["Pouvez-vous adapter une salle de bain réalisée à mon espace ?", "Oui. Le projet réalisé guide proportions et matières, puis le périmètre s'adapte à vos mesures."]],
       ru: [["Может ли CAS AURUM сделать тумбу для ванной на заказ?", "Да. Тумба планируется вокруг ящиков, столешницы, зеркала, розеток, полотенец и пропорций комнаты."], ["Вы работаете с камнем, плиткой и влагостойкими отделками?", "Да. Направление может включать камень, porcelain slabs, дерево, металл и детали, рассчитанные на влажность."], ["Можно согласовать свет, зеркала и хранение?", "Да. Эти элементы планируются вместе, потому что зеркало, хранение и блики определяют ежедневный комфорт."], ["Можно адаптировать выполненную ванную под мое пространство?", "Да. Выполненная работа может задать пропорции и материалы, а scope адаптируется под размеры и условия объекта."]],
     },
     "living-room": {
-      en: [["Can CAS AURUM build a custom media wall or fireplace wall?", "Yes. Media walls and fireplace walls can include panels, stone, built-ins, storage, display zones, lighting and cable planning."], ["Can built-ins be designed around an existing TV or fireplace?", "Yes. Existing dimensions, heat clearances, AV equipment and wall conditions should be reviewed first."], ["Do you work with designers and builders?", "Yes. Drawings, elevations, finish schedules and site photos are useful for trade-led living room scopes."], ["Can you create a similar living room project for my home?", "Yes. Completed work can be adapted around your wall length, ceiling height, materials and seating layout."]],
+      en: [["Can CAS AURUM build a custom media wall for a living room?", "Yes. A media wall can include panels, floating consoles, concealed wiring, display shelving, storage, lighting and acoustic comfort planning."], ["Can a fireplace wall include storage and lighting?", "Yes. Fireplace walls can combine stone or paneling, built-ins, storage, display zones, lighting and heat-clearance review."], ["What materials work best for luxury living room wall panels?", "Walnut, oak, stone, plaster, fluted panels, textile panels and restrained metal details can work when the panel rhythm and seating orientation are planned together."], ["Can you adapt a completed living room project to my home?", "Yes. Completed living room work can guide the focal wall, materials and proportions, then adapt to your ceiling height, wall length and family or entertaining use."], ["Do you work from photos, plans or designer drawings?", "Yes. Photos, plans, elevations, AV notes and designer drawings all help define the wall, storage, lighting and installation scope."]],
       es: [["¿CAS AURUM puede crear un media wall o muro de chimenea?", "Sí. Puede incluir paneles, piedra, built-ins, storage, display, luz y cableado."], ["¿Los built-ins pueden adaptarse a TV o chimenea existente?", "Sí. Se revisan dimensiones, calor, AV y condiciones del muro."], ["¿Trabajan con diseñadores y builders?", "Sí. Planos, elevaciones, schedules y fotos ayudan al alcance trade."], ["¿Pueden crear una sala similar para mi casa?", "Sí. El trabajo completado se adapta a largo de muro, altura, materiales y seating."]],
       fr: [["CAS AURUM peut-il créer un media wall ou mur cheminée ?", "Oui. Il peut inclure panneaux, pierre, intégrés, rangement, exposition, lumière et câbles."], ["Les intégrés peuvent-ils entourer une TV ou cheminée existante ?", "Oui. Dimensions, dégagements, AV et conditions du mur sont vérifiés."], ["Travaillez-vous avec designers et constructeurs ?", "Oui. Plans, élévations, finitions et photos aident le périmètre."], ["Pouvez-vous créer un salon similaire chez moi ?", "Oui. Le réalisé s'adapte à votre mur, hauteur, matières et assises."]],
       ru: [["Может ли CAS AURUM сделать media wall или каминную стену?", "Да. Media wall может включать панели, камень, built-ins, хранение, display-зоны, свет и кабели."], ["Можно встроить решения вокруг существующего TV или камина?", "Да. Сначала проверяются размеры, зазоры по теплу, AV-оборудование и состояние стены."], ["Вы работаете с дизайнерами и строителями?", "Да. Чертежи, фасады, спецификации и фото объекта полезны для trade-led задач."], ["Можно создать похожую гостиную для моего дома?", "Да. Выполненная работа адаптируется под длину стены, высоту потолка, материалы и посадку."]],
     },
     kitchen: {
-      en: [["Does CAS AURUM build full kitchens or selected custom elements?", "CAS AURUM is best suited to premium custom cabinetry, islands, panels, storage and finish carpentry; full construction responsibilities are confirmed per project."], ["Can you create custom cabinetry, panels, islands or storage?", "Yes. These are relevant kitchen scopes when dimensions, appliances, materials and budget range are clear."], ["Can you coordinate materials with an existing kitchen contractor?", "Yes. CAS AURUM can review finish direction, cabinetry details and coordination needs with project professionals."], ["Can you adapt a kitchen project to my home?", "Yes. Completed kitchen work can guide the request, then the details are adjusted to your layout and site conditions."]],
+      en: [["Can CAS AURUM create custom kitchen cabinetry?", "Yes. Kitchen scopes can include custom cabinetry, appliance panels, pantry integration, drawer organization, island detailing and finish coordination."], ["Can a kitchen island be planned as a focal point?", "Yes. Island scale, stone slabs, seating, storage, lighting over the island and circulation should be planned together."], ["Do you coordinate with contractors or designers?", "Yes. CAS AURUM can review cabinetry details, appliance integration, finish logic and coordination needs with the project team."], ["What finishes work best for a luxury kitchen?", "Durable finishes, stone slabs, rift oak, walnut, matte lacquer, integrated lighting and refined hardware work best when workflow and material transitions are settled first."], ["Can you adapt a completed kitchen project to my home?", "Yes. Completed kitchen work can guide the request, then the details are adjusted to your layout, appliance package and site conditions."]],
       es: [["¿CAS AURUM hace cocinas completas o elementos seleccionados?", "CAS AURUM encaja mejor en cabinetry, islas, paneles, storage y finish carpentry; responsabilidades completas se confirman por proyecto."], ["¿Pueden crear cabinetry, paneles, islas o almacenamiento?", "Sí, cuando medidas, appliances, materiales y presupuesto están claros."], ["¿Pueden coordinar materiales con un contratista de cocina?", "Sí. Puede revisar acabados, detalles de cabinetry y coordinación."], ["¿Pueden adaptar una cocina a mi casa?", "Sí. Una cocina completada guía el pedido y se ajusta a su layout."]],
       fr: [["CAS AURUM réalise-t-il des cuisines complètes ou des éléments choisis ?", "CAS AURUM convient surtout à cabinetry, îlots, panneaux, rangement et finition; les responsabilités chantier se confirment par projet."], ["Pouvez-vous créer cabinetry, panneaux, îlots ou rangement ?", "Oui, si mesures, électroménager, matières et budget sont clairs."], ["Pouvez-vous coordonner avec un cuisiniste existant ?", "Oui. CAS AURUM peut revoir finitions, détails et coordination."], ["Pouvez-vous adapter une cuisine à ma maison ?", "Oui. Une cuisine réalisée peut guider la demande puis s'adapter à votre plan."]],
       ru: [["CAS AURUM делает кухни полностью или отдельные элементы?", "CAS AURUM лучше всего подходит для cabinetry, островов, панелей, хранения и финишной столярки; полный строительный scope подтверждается по проекту."], ["Можно сделать корпусную мебель, панели, остров или хранение?", "Да, если понятны размеры, техника, материалы и бюджетный диапазон."], ["Можно согласовать материалы с кухонным подрядчиком?", "Да. CAS AURUM может рассмотреть отделки, детали cabinetry и координацию."], ["Можно адаптировать кухню под мой дом?", "Да. Выполненная кухня может быть референсом, затем детали адаптируются под layout и условия объекта."]],
     },
     "walk-in-closet": {
-      en: [["Can CAS AURUM create a full custom walk-in closet?", "Yes. A closet scope can include wardrobe systems, lighting, drawers, glass doors, island storage, mirrors, seating and hardware."], ["Can you include lighting, drawers, glass doors and island storage?", "Yes. These elements should be planned together around inventory, access and daily dressing routines."], ["How is a closet planned around my wardrobe?", "Start with counts and categories: long hanging, short hanging, shoes, bags, accessories, seasonal items, luggage and folded storage."], ["Can you work from designer drawings?", "Yes. Elevations, plans, finish schedules, hardware notes and site dimensions are useful for closet work."]],
+      en: [["Can CAS AURUM create a full custom walk-in closet?", "Yes. A closet scope can include hanging zones, shoe walls, drawers, glass doors, island storage, mirrors, jewelry storage, seating and hardware."], ["Can lighting be integrated inside closet cabinetry?", "Yes. Interior cabinet lighting, display lighting, mirror lighting and ambient light should be planned around wardrobe visibility and daily usability."], ["How is a closet planned around my wardrobe?", "Start with wardrobe inventory: long hanging, short hanging, shoes, bags, accessories, jewelry, watches, seasonal items, luggage and folded storage."], ["Can a closet include an island, glass doors and seating?", "Yes. Those details can create a boutique atmosphere when circulation, drawer clearance and material durability are resolved."], ["Can you work from designer drawings?", "Yes. Elevations, plans, finish schedules, hardware notes and site dimensions are useful for closet work."]],
       es: [["¿CAS AURUM puede crear un walk-in closet completo?", "Sí. Puede incluir sistemas wardrobe, luz, cajones, vidrio, isla, espejos, asiento y herrajes."], ["¿Pueden incluir luz, cajones, vidrio e isla?", "Sí. Se planifican juntos según inventario, acceso y rutina."], ["¿Cómo se planifica según mi guardarropa?", "Con conteos y categorías: colgado largo/corto, zapatos, bolsas, accesorios, temporada, maletas y doblado."], ["¿Pueden trabajar con dibujos de diseñador?", "Sí. Elevaciones, planos, acabados, herrajes y medidas son útiles."]],
       fr: [["CAS AURUM peut-il créer un dressing complet ?", "Oui. Il peut inclure systèmes, lumière, tiroirs, portes vitrées, îlot, miroirs, assise et quincaillerie."], ["Pouvez-vous inclure lumière, tiroirs, verre et îlot ?", "Oui. Ces éléments se planifient selon inventaire, accès et routine."], ["Comment planifier selon ma garde-robe ?", "Avec catégories : penderie longue/courte, chaussures, sacs, accessoires, saisonnier, bagages et plié."], ["Pouvez-vous travailler depuis dessins designer ?", "Oui. Élévations, plans, finitions, quincaillerie et mesures sont utiles."]],
       ru: [["Может ли CAS AURUM сделать полную walk-in гардеробную?", "Да. Scope может включать системы хранения, свет, ящики, стеклянные двери, остров, зеркала, посадку и фурнитуру."], ["Можно включить свет, ящики, стекло и остров?", "Да. Эти элементы планируются вместе вокруг инвентаря, доступа и ежедневных сценариев."], ["Как гардеробная планируется под мой гардероб?", "Сначала считаются категории: длинное/короткое хранение, обувь, сумки, аксессуары, сезонные вещи, чемоданы и сложенная одежда."], ["Можно работать по чертежам дизайнера?", "Да. Фасады, планы, спецификации, фурнитура и размеры объекта очень полезны."]],
@@ -1303,8 +1335,8 @@ function cityCombinationFaq(locale, subject, combo) {
     { q: `What makes ${subject} different from a generic city page?`, a: `It connects the design direction to ${combo.city.cityName}'s property mix, constraints and best-fit scopes instead of only replacing the city name in a template.` },
     { q: `Which materials work well for ${subject}?`, a: `Good starting points include ${cityMaterialsFor(combo).join(", ")}. The final palette should depend on measurements, maintenance needs, lighting and budget range.` },
     { q: `What project types fit ${combo.city.cityName}?`, a: `Relevant scopes include ${profile.scopes.join(", ")} for ${profile.propertyMix}.` },
-    { q: "Does CAS AURUM claim a local office or completed project in every city?", a: "No. City pages are planning and concept guidance unless a page explicitly states a local office, showroom, license or completed project." },
-    { q: "What should I send before requesting a concept?", a: "Send room photos, plans or rough measurements, city or ZIP code, desired scope, material references, budget range, timeline and decision-maker context." },
+    { q: "Does CAS AURUM claim a local office or completed project in every city?", a: "No. City pages are planning guidance unless a page explicitly states a local office, showroom, license or completed project." },
+    { q: "What should I send before requesting a consultation?", a: "Send room photos, plans or rough measurements, city or ZIP code, desired scope, material references, budget range, timeline and decision-maker context." },
   ];
 }
 
@@ -1708,7 +1740,7 @@ function intentBySlug(slug) {
 
 function directFor(locale, subject, type) {
   const base = {
-    en: `${subject} should be planned as a complete interior system: style, room function, materials, lighting, furniture and storage need to support one another from the first project conversation.`,
+    en: `${subject} should be planned as a connected custom project: style, room function, materials, lighting, furniture and storage need to support one another from the first project brief.`,
     es: `${subject} debe planificarse como un sistema interior completo: estilo, función, materiales, iluminación, mobiliario y almacenamiento deben trabajar juntos.`,
     fr: `${subject} doit être planifié comme un système intérieur complet : style, fonction, matériaux, lumière, mobilier et rangement doivent se répondre.`,
     ru: `${subject} стоит планировать как единую интерьерную систему: стиль, функция, материалы, свет, мебель и хранение должны работать вместе.`,

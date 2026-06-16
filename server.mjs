@@ -1,6 +1,6 @@
 import http from "node:http";
 import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
-import { createReadStream, existsSync, readFileSync } from "node:fs";
+import { createReadStream, existsSync, readdirSync, readFileSync } from "node:fs";
 import { appendFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
@@ -53,9 +53,12 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 const TELEGRAM_CRM_APP_URL = (process.env.TELEGRAM_CRM_APP_URL || `${BASE_URL}/crm-app`).replace(/\/$/, "");
 const PUBLIC_DIR = "/var/www/casaurum.com/public";
+const COMPLETED_PROJECT_MANIFEST_PATH = "/var/www/casaurum.com/data/casaurum-premium-gallery-seo-manifest.json";
 const SEO_PERFORMANCE_CACHE_PATH = "/var/www/casaurum.com/data/seo-performance-cache.json";
 const SEO_PERFORMANCE_CACHE_TTL_MS = Number(process.env.SEO_PERFORMANCE_CACHE_TTL_MS || 6 * 60 * 60 * 1000);
-const STATIC_ASSET_VERSION = "20260610c";
+const MAX_DESIGN_CONCEPT_UPLOAD_BYTES = Number(process.env.MAX_DESIGN_CONCEPT_UPLOAD_MB || 35) * 1024 * 1024;
+const MAX_DESIGN_CONCEPT_FILES = Number(process.env.MAX_DESIGN_CONCEPT_FILES || 12);
+const STATIC_ASSET_VERSION = "20260616b";
 const SITE_CSS_PATH = `/site-${STATIC_ASSET_VERSION}.css`;
 const CLIENT_JS_PATH = `/client-${STATIC_ASSET_VERSION}.js`;
 const PLANNER_JS_PATH = `/planner-${STATIC_ASSET_VERSION}.js`;
@@ -69,33 +72,33 @@ const langs = {
   ru: { label: "RU", name: "Русский", prefix: "/ru", locale: "ru_RU" },
 };
 
-const navKeys = ["wallPanels", "customFurniture", "millwork", "solutions", "collections", "trade", "about", "contact"];
+const navKeys = ["wallPanels", "customFurniture", "millwork", "solutions", "projects", "collections", "trade", "about", "contact"];
 const servicePageKeys = ["wallPanels", "customFurniture", "millwork", "solutions", "mediaWalls", "builtIns", "customClosets", "trade"];
-const pageOrder = ["home", "wallPanels", "customFurniture", "millwork", "solutions", "mediaWalls", "builtIns", "customClosets", "collections", "trade", "partners", "planner", "projects", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
+const pageOrder = ["home", "designConcept", "wallPanels", "customFurniture", "millwork", "solutions", "mediaWalls", "builtIns", "customClosets", "collections", "trade", "partners", "planner", "projects", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
 const programmaticIndexStatuses = new Set(["approved"]);
 
 const slugs = {
 	  en: {
 	    home: "", wallPanels: "luxury-wall-panels", customFurniture: "custom-furniture", millwork: "architectural-millwork",
-	    solutions: "interior-design-solutions", mediaWalls: "custom-media-walls", builtIns: "custom-built-ins", customClosets: "luxury-custom-closets", collections: "collections", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", projects: "projects",
+		    designConcept: "design-concept", solutions: "interior-design-solutions", mediaWalls: "custom-media-walls", builtIns: "custom-built-ins", customClosets: "luxury-custom-closets", collections: "collections", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", projects: "projects",
     about: "about", contact: "contact", consultation: "request-consultation", measurement: "request-measurement",
     usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use",
   },
 	  es: {
 	    home: "", wallPanels: "paneles-de-pared-de-lujo", customFurniture: "muebles-a-medida", millwork: "carpinteria-arquitectonica",
-	    solutions: "soluciones-de-diseno-interior", mediaWalls: "muros-media-a-medida", builtIns: "muebles-integrados-a-medida", customClosets: "closets-de-lujo-a-medida", collections: "colecciones", trade: "para-disenadores-y-constructores", partners: "programa-partners", planner: "planificador-tecnico-de-carpinteria", projects: "proyectos",
+		    designConcept: "concepto-de-diseno", solutions: "soluciones-de-diseno-interior", mediaWalls: "muros-media-a-medida", builtIns: "muebles-integrados-a-medida", customClosets: "closets-de-lujo-a-medida", collections: "colecciones", trade: "para-disenadores-y-constructores", partners: "programa-partners", planner: "planificador-tecnico-de-carpinteria", projects: "proyectos",
     about: "sobre-nosotros", contact: "contacto", consultation: "solicitar-consulta", measurement: "solicitar-medicion",
     usa: "estados-unidos", canada: "canada", mexico: "mexico", privacy: "politica-de-privacidad", terms: "terminos-de-uso",
   },
 	  fr: {
 	    home: "", wallPanels: "panneaux-muraux-de-luxe", customFurniture: "meubles-sur-mesure", millwork: "menuiserie-architecturale",
-	    solutions: "solutions-design-interieur", mediaWalls: "murs-media-sur-mesure", builtIns: "rangements-integres-sur-mesure", customClosets: "dressings-de-luxe-sur-mesure", collections: "collections", trade: "pour-designers-constructeurs", partners: "programme-partenaires", planner: "planificateur-technique-menuiserie", projects: "projets",
+		    designConcept: "concept-design-interieur", solutions: "solutions-design-interieur", mediaWalls: "murs-media-sur-mesure", builtIns: "rangements-integres-sur-mesure", customClosets: "dressings-de-luxe-sur-mesure", collections: "collections", trade: "pour-designers-constructeurs", partners: "programme-partenaires", planner: "planificateur-technique-menuiserie", projects: "projets",
     about: "a-propos", contact: "contact", consultation: "demander-consultation", measurement: "demander-mesure",
     usa: "etats-unis", canada: "canada", mexico: "mexique", privacy: "politique-confidentialite", terms: "conditions-utilisation",
   },
 	  ru: {
 	    home: "", wallPanels: "premium-stenovye-paneli", customFurniture: "mebel-na-zakaz", millwork: "arhitekturnaya-stolyarka",
-	    solutions: "dizayn-resheniya-interera", mediaWalls: "media-steny-na-zakaz", builtIns: "vstroennaya-mebel-na-zakaz", customClosets: "lyuksovye-garderobnye-na-zakaz", collections: "kollekcii", trade: "dlya-dizaynerov-i-zastroyschikov", partners: "partnerskaya-programma", planner: "tehnicheskiy-konstruktor-mebeli", projects: "proekty",
+		    designConcept: "dizayn-koncept", solutions: "dizayn-resheniya-interera", mediaWalls: "media-steny-na-zakaz", builtIns: "vstroennaya-mebel-na-zakaz", customClosets: "lyuksovye-garderobnye-na-zakaz", collections: "kollekcii", trade: "dlya-dizaynerov-i-zastroyschikov", partners: "partnerskaya-programma", planner: "tehnicheskiy-konstruktor-mebeli", projects: "proekty",
     about: "o-kompanii", contact: "kontakty", consultation: "zaprosit-konsultaciyu", measurement: "zaprosit-zamer",
     usa: "ssha", canada: "kanada", mexico: "meksika", privacy: "politika-konfidencialnosti", terms: "usloviya-ispolzovaniya",
   },
@@ -119,28 +122,8 @@ const assets = [
   src: `/images/${filename.replace(/\.webp$/, "-1280.webp")}`,
 }));
 
-const completedProjectItems = [
-  { file: "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp", categoryKey: "bath", title: { en: "Luxury Marble Bathroom with Freestanding Tub", ru: "Премиальная мраморная ванная с отдельно стоящей ванной", es: "Baño de mármol premium con bañera exenta", fr: "Salle de bain en marbre premium avec baignoire îlot" } },
-  { file: "cas-aurum-modern-black-house-exterior-wood-deck.webp", categoryKey: "exterior", title: { en: "Modern Black Exterior with Wood Deck", ru: "Современный черный экстерьер с деревянной террасой", es: "Exterior moderno negro con deck de madera", fr: "Extérieur moderne noir avec terrasse en bois" } },
-  { file: "cas-aurum-vaulted-great-room-timber-trusses-stone-fireplace.webp", categoryKey: "millwork", title: { en: "Vaulted Great Room with Timber Trusses and Stone Fireplace", ru: "Гостиная с высоким потолком, деревянными фермами и каменным камином", es: "Gran salón abovedado con vigas de madera y chimenea de piedra", fr: "Grand salon voûté avec fermes bois et cheminée en pierre" } },
-  { file: "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp", categoryKey: "kitchen", title: { en: "White Custom Kitchen Cabinetry with Wood Beams", ru: "Белая кухня на заказ с деревянными балками", es: "Cocina blanca a medida con vigas de madera", fr: "Cuisine blanche sur mesure avec poutres en bois" } },
-  { file: "cas-aurum-floating-oak-staircase-black-steel-stringer.webp", categoryKey: "stairs", title: { en: "Floating Oak Staircase with Black Steel Stringer", ru: "Парящая дубовая лестница с черным металлическим косоуром", es: "Escalera flotante de roble con estructura de acero negro", fr: "Escalier flottant en chêne avec limon en acier noir" } },
-  { file: "cas-aurum-dark-wood-deck-white-railing-privacy-lattice.webp", categoryKey: "exterior", title: { en: "Dark Wood Deck with White Railing and Privacy Lattice", ru: "Темная деревянная терраса с белыми перилами и privacy lattice", es: "Deck de madera oscura con baranda blanca y celosía", fr: "Terrasse en bois foncé avec garde-corps blanc et treillis" } },
-  { file: "cas-aurum-gray-double-bathroom-vanity-marble-countertop.webp", categoryKey: "bath", title: { en: "Gray Double Bathroom Vanity with Marble Countertop", ru: "Серая двойная тумба для ванной с мраморной столешницей", es: "Vanity doble gris con cubierta de mármol", fr: "Meuble vasque double gris avec plan en marbre" } },
-  { file: "cas-aurum-custom-laundry-room-stacked-washer-cabinetry.webp", categoryKey: "laundry", title: { en: "Custom Laundry Room with Stacked Washer Cabinetry", ru: "Laundry room на заказ со встроенной техникой и шкафами", es: "Laundry room a medida con lavadora apilada y cabinetry", fr: "Buanderie sur mesure avec lave-linge empilé et cabinetry" } },
-  { file: "cas-aurum-brick-home-custom-deck-white-railings.webp", categoryKey: "exterior", title: { en: "Brick Home Custom Deck with White Railings", ru: "Кастомная терраса у кирпичного дома с белыми перилами", es: "Deck a medida para casa de ladrillo con barandas blancas", fr: "Terrasse sur mesure pour maison en brique avec garde-corps blancs" } },
-  { file: "cas-aurum-luxury-stone-estate-exterior.webp", categoryKey: "exterior", title: { en: "Luxury Stone Estate Exterior", ru: "Премиальный экстерьер каменного estate-дома", es: "Exterior de residencia premium en piedra", fr: "Extérieur de résidence premium en pierre" } },
-  { file: "cas-aurum-luxury-kitchen-marble-island-skylight.webp", categoryKey: "kitchen", title: { en: "Luxury Kitchen with Marble Island and Skylight", ru: "Премиальная кухня с мраморным островом и стеклянным потолком", es: "Cocina premium con isla de mármol y tragaluz", fr: "Cuisine premium avec îlot en marbre et verrière" } },
-  { file: "cas-aurum-modern-tray-ceiling-cove-lighting.webp", categoryKey: "ceiling", title: { en: "Modern Tray Ceiling with Cove Lighting", ru: "Современный многоуровневый потолок со скрытой подсветкой", es: "Cielo raso moderno con iluminación indirecta", fr: "Plafond à caissons moderne avec éclairage indirect" } },
-  { file: "cas-aurum-built-in-window-bench-wall-paneling.webp", categoryKey: "millwork", title: { en: "Built-In Window Bench with Wall Paneling", ru: "Встроенная скамья у окна со стеновыми панелями", es: "Banco integrado junto a ventana con paneles de pared", fr: "Banquette intégrée sous fenêtre avec panneaux muraux" } },
-  { file: "cas-aurum-reclaimed-wood-plank-ceiling-recessed-lights.webp", categoryKey: "ceiling", title: { en: "Reclaimed Wood Plank Ceiling with Recessed Lights", ru: "Потолок из деревянных планок со встроенными светильниками", es: "Techo de madera recuperada con luces empotradas", fr: "Plafond en bois récupéré avec spots encastrés" } },
-  { file: "cas-aurum-oak-staircase-black-metal-balusters.webp", categoryKey: "stairs", title: { en: "Oak Staircase with Black Metal Balusters", ru: "Дубовая лестница с черными металлическими балясинами", es: "Escalera de roble con balaustres negros", fr: "Escalier en chêne avec balustres noirs" } },
-  { file: "cas-aurum-vaulted-living-room-built-ins-fireplace.webp", categoryKey: "millwork", title: { en: "Vaulted Living Room with Built-Ins and Fireplace", ru: "Гостиная с высоким потолком, built-ins и камином", es: "Sala con techo abovedado, built-ins y chimenea", fr: "Salon voûté avec mobilier intégré et cheminée" } },
-  { file: "cas-aurum-farmhouse-laundry-room-custom-cabinetry.webp", categoryKey: "laundry", title: { en: "Farmhouse Laundry Room with Custom Cabinetry", ru: "Farmhouse laundry room с корпусной мебелью на заказ", es: "Laundry room farmhouse con cabinetry a medida", fr: "Buanderie farmhouse avec cabinetry sur mesure" } },
-  { file: "cas-aurum-rustic-vaulted-great-room-timber-beams.webp", categoryKey: "millwork", title: { en: "Rustic Vaulted Great Room with Timber Beams", ru: "Гостиная с высоким потолком и темными деревянными балками", es: "Gran sala rústica abovedada con vigas de madera", fr: "Grand salon rustique voûté avec poutres en bois" } },
-];
-
-const completedProjectCategoryKeys = ["bath", "exterior", "kitchen", "millwork", "stairs", "laundry", "ceiling"];
+const completedProjectItems = loadCompletedProjectManifest();
+const completedProjectCategoryKeys = [...new Set(completedProjectItems.map((item) => item.categoryKey))];
 
 const assetDimensions = {
   "hero-luxury-wall-panels-living-room": [1280, 960],
@@ -386,7 +369,7 @@ const collectionsBySlug = new Map(collectionsData.map((item) => [item.slug, item
 
 const copy = {
   en: {
-    nav: { wallPanels: "Wall Panels", customFurniture: "Custom Furniture", millwork: "Millwork", solutions: "Interior Solutions", collections: "Collections", trade: "For Designers & Builders", about: "About", contact: "Contact" },
+    nav: { designConcept: "Design Concept", wallPanels: "Wall Panels", customFurniture: "Custom Furniture", millwork: "Millwork", solutions: "Interior Solutions", projects: "Completed Projects", collections: "Collections", trade: "For Designers & Builders", about: "About", contact: "Contact" },
     cta: { consult: "Talk to a Design Specialist", measure: "Request a Measurement", collections: "Explore Gallery", project: "Submit Project Details", discuss: "Discuss Your Project", start: "Start a Custom Interior Project" },
     form: formCopy("en"),
     home: {
@@ -421,7 +404,7 @@ const copy = {
     legal: { privacy: ["Privacy Policy", "This page summarizes how CAS AURUM handles information submitted through this website, including project inquiries, consultation requests and partner applications. For questions about privacy or data handling, contact CAS AURUM directly through the contact page."], terms: ["Terms of Use", "Website content is provided for general information about CAS AURUM services. Project details, availability, pricing and scope are confirmed only through written communication."] },
   },
   es: {
-    nav: { wallPanels: "Paneles", customFurniture: "Muebles a Medida", millwork: "Carpintería", solutions: "Soluciones Interior", collections: "Colecciones", trade: "Diseñadores y Constructores", about: "Sobre Nosotros", contact: "Contacto" },
+    nav: { designConcept: "Concepto de diseño", wallPanels: "Paneles", customFurniture: "Muebles a Medida", millwork: "Carpintería", solutions: "Soluciones Interior", projects: "Proyectos realizados", collections: "Colecciones", trade: "Diseñadores y Constructores", about: "Sobre Nosotros", contact: "Contacto" },
     cta: { consult: "Hablar con un especialista de diseño", measure: "Solicitar Medición", collections: "Explorar galería", project: "Enviar Detalles del Proyecto", discuss: "Hablar del Proyecto", start: "Iniciar un Proyecto a Medida" },
     form: formCopy("es"),
     home: {
@@ -452,7 +435,7 @@ const copy = {
     legal: { privacy: ["Política de Privacidad", "Esta página resume cómo CAS AURUM gestiona la información enviada a través del sitio, incluidas solicitudes de proyecto, consultas y aplicaciones de partners. Para preguntas sobre privacidad o gestión de datos, contacte directamente con CAS AURUM desde la página de contacto."], terms: ["Términos de Uso", "El contenido del sitio es informativo. Alcance, disponibilidad y condiciones se confirman por escrito."] },
   },
   fr: {
-    nav: { wallPanels: "Panneaux Muraux", customFurniture: "Mobilier Sur Mesure", millwork: "Menuiserie", solutions: "Solutions Intérieures", collections: "Collections", trade: "Designers et Constructeurs", about: "À Propos", contact: "Contact" },
+    nav: { designConcept: "Concept design", wallPanels: "Panneaux Muraux", customFurniture: "Mobilier Sur Mesure", millwork: "Menuiserie", solutions: "Solutions Intérieures", projects: "Projets réalisés", collections: "Collections", trade: "Designers et Constructeurs", about: "À Propos", contact: "Contact" },
     cta: { consult: "Parler à un spécialiste design", measure: "Demander une Prise de Mesures", collections: "Explorer la galerie", project: "Envoyer les Détails du Projet", discuss: "Discuter du Projet", start: "Démarrer un Projet Sur Mesure" },
     form: formCopy("fr"),
     home: {
@@ -479,7 +462,7 @@ const copy = {
     legal: { privacy: ["Politique de Confidentialité", "Cette page résume la manière dont CAS AURUM traite les informations envoyées via le site, y compris les demandes de projet, les demandes de consultation et les candidatures partenaires. Pour toute question sur la confidentialité ou le traitement des données, contactez CAS AURUM via la page de contact."], terms: ["Conditions d'Utilisation", "Le contenu est informatif. Portée, disponibilité et conditions sont confirmées par écrit."] },
   },
   ru: {
-    nav: { wallPanels: "Стеновые Панели", customFurniture: "Мебель На Заказ", millwork: "Столярка", solutions: "Интерьерные Решения", collections: "Коллекции", trade: "Для Дизайнеров", about: "О Компании", contact: "Контакты" },
+    nav: { designConcept: "Дизайн-концепт", wallPanels: "Стеновые Панели", customFurniture: "Мебель На Заказ", millwork: "Столярка", solutions: "Интерьерные Решения", projects: "Выполненные проекты", collections: "Коллекции", trade: "Для Дизайнеров", about: "О Компании", contact: "Контакты" },
     cta: { consult: "Проконсультироваться с дизайн-специалистом", measure: "Запросить Замер", collections: "Смотреть галерею", project: "Отправить Детали Проекта", discuss: "Обсудить Проект", start: "Начать Интерьерный Проект" },
     form: formCopy("ru"),
     home: {
@@ -528,12 +511,12 @@ const homepagePositioning = {
     inlineCtaTitle: "Have a room, wall or furniture idea in mind?",
     inlineCtaText: "Send photos, measurements, drawings or inspiration references and CAS AURUM will review the right custom furniture or millwork direction.",
     why: [
-      ["Bespoke design", "Every scope begins with the room itself: dimensions, circulation, storage needs, lighting and the architectural character of the space."],
-      ["Premium materials", "Walnut, oak, veneer, stone, leather, glass, matte metal and refined hardware are selected for durability, texture and long-term visual calm."],
-      ["Architectural precision", "Furniture, panels, cabinetry and lighting are planned as one composition, so the finished room feels built-in rather than assembled."],
-      ["North American project review", "CAS AURUM reviews premium residential, hospitality and commercial inquiries across North America, with priority review available for Atlanta and Georgia."],
-      ["From concept to installation coordination", "The process can move from photos and drawings to measurements, material direction, estimate review, fabrication planning and installation coordination."],
-      ["Collaboration with designers and builders", "Trade professionals can submit elevations, drawings, finish schedules and client references for a more organized path from design intent to custom millwork."],
+      ["Bespoke design", "Each scope begins with the room, measurements, lifestyle and architectural context rather than a catalog selection."],
+      ["Premium materials", "Wood, stone, veneer, metal, glass, leather and textile details are selected for proportion, durability and visual restraint."],
+      ["Architectural precision", "Panel rhythm, reveal lines, built-in dimensions, lighting placement and hardware details are planned before production."],
+      ["North American reach", "CAS AURUM reviews residential and trade inquiries across North America and clarifies the right path for design, fabrication, delivery and installation."],
+      ["From consultation to installation", "The process can move from photos and plans to measurements, material direction, technical scope, production coordination and installation planning."],
+      ["Collaboration with designers, builders and developers", "Trade partners can share drawings, elevations, finish schedules and project constraints for custom millwork, furniture and wall panel packages."],
     ],
   },
   es: {
@@ -556,12 +539,12 @@ const homepagePositioning = {
     inlineCtaTitle: "¿Tiene una habitación, pared o idea de mobiliario en mente?",
     inlineCtaText: "Envíe fotos, medidas, planos o referencias y CAS AURUM revisará la dirección adecuada de muebles a medida o millwork.",
     why: [
-      ["Diseño a medida", "Cada proyecto comienza con la habitación: dimensiones, circulación, necesidades de almacenamiento, luz y carácter arquitectónico del espacio."],
-      ["Materiales premium", "Nogal, roble, chapa natural, piedra, cuero, vidrio, metal mate y herrajes refinados se seleccionan por durabilidad, textura y calma visual a largo plazo."],
-      ["Precisión arquitectónica", "Mobiliario, paneles, cabinetry e iluminación se planifican como una sola composición, para que el espacio se sienta integrado y no ensamblado."],
-      ["Revisión de proyectos en Norteamérica", "CAS AURUM revisa solicitudes residenciales, hospitality y comerciales premium en Norteamérica, con revisión prioritaria para Atlanta y Georgia."],
-      ["Del concepto a la coordinación de instalación", "El proceso puede avanzar de fotos y planos a mediciones, dirección de materiales, revisión de presupuesto, planificación de fabricación y coordinación de instalación."],
-      ["Colaboración con diseñadores y constructores", "Los profesionales trade pueden enviar elevaciones, planos, especificaciones de acabados y referencias del cliente para organizar mejor el camino desde la intención de diseño hasta el millwork a medida."],
+      ["Diseño a medida", "Cada alcance empieza con la habitación, medidas, estilo de vida y contexto arquitectónico, no con una selección de catálogo."],
+      ["Materiales premium", "Madera, piedra, chapa, metal, vidrio, cuero y textiles se eligen por proporción, durabilidad y contención visual."],
+      ["Precisión arquitectónica", "Ritmo de paneles, juntas, dimensiones integradas, luz y herrajes se planifican antes de producción."],
+      ["Alcance en Norteamérica", "CAS AURUM revisa solicitudes residenciales y trade en Norteamérica y aclara el camino correcto para diseño, fabricación, entrega e instalación."],
+      ["De consulta a instalación", "El proceso puede avanzar de fotos y planos a mediciones, materiales, alcance técnico, coordinación de producción e instalación."],
+      ["Colaboración con diseñadores, constructores y developers", "Los partners trade pueden compartir elevaciones, planos, acabados y restricciones para paquetes de millwork, mobiliario y paneles."],
     ],
   },
   fr: {
@@ -584,12 +567,12 @@ const homepagePositioning = {
     inlineCtaTitle: "Vous avez une pièce, un mur ou une idée de mobilier en tête ?",
     inlineCtaText: "Envoyez photos, mesures, plans ou références, et CAS AURUM examinera la bonne direction de mobilier ou menuiserie sur mesure.",
     why: [
-      ["Design sur mesure", "Chaque projet commence par la pièce elle-même : dimensions, circulation, besoins de rangement, lumière et caractère architectural de l’espace."],
-      ["Matériaux premium", "Noyer, chêne, placage, pierre, cuir, verre, métal mat et quincaillerie raffinée sont choisis pour leur durabilité, leur texture et leur calme visuel durable."],
-      ["Précision architecturale", "Mobilier, panneaux, cabinetry et éclairage sont pensés comme une seule composition, afin que l’espace paraisse intégré plutôt qu’assemblé."],
-      ["Revue de projets en Amérique du Nord", "CAS AURUM examine les demandes résidentielles, hospitality et commerciales premium en Amérique du Nord, avec une revue prioritaire pour Atlanta et Georgia."],
-      ["Du concept à la coordination d’installation", "Le processus peut aller des photos et plans aux mesures, à la direction matériaux, à l’estimation, à la planification de fabrication et à la coordination d’installation."],
-      ["Collaboration avec designers et constructeurs", "Les professionnels trade peuvent envoyer élévations, plans, cahiers de finitions et références client pour structurer le passage de l’intention design au millwork sur mesure."],
+      ["Design sur mesure", "Chaque portée commence par la pièce, les mesures, le mode de vie et le contexte architectural plutôt qu'un choix catalogue."],
+      ["Matériaux premium", "Bois, pierre, placage, métal, verre, cuir et textiles sont choisis pour proportion, durabilité et retenue visuelle."],
+      ["Précision architecturale", "Rythme des panneaux, lignes de joints, dimensions intégrées, lumière et quincaillerie sont planifiés avant production."],
+      ["Présence nord-américaine", "CAS AURUM examine les demandes résidentielles et trade en Amérique du Nord et clarifie le bon parcours design, fabrication, livraison et installation."],
+      ["De la consultation à l'installation", "Le processus peut passer des photos et plans aux mesures, matières, portée technique, coordination production et installation."],
+      ["Collaboration avec designers, constructeurs et promoteurs", "Les partenaires trade peuvent partager élévations, plans, finitions et contraintes pour millwork, mobilier et panneaux sur mesure."],
     ],
   },
   ru: {
@@ -612,12 +595,12 @@ const homepagePositioning = {
     inlineCtaTitle: "Есть комната, стена или идея мебели?",
     inlineCtaText: "Отправьте фото, размеры, чертежи или референсы, и CAS AURUM предложит подходящее направление мебели или столярки на заказ.",
     why: [
-      ["Индивидуальный дизайн", "Каждый проект начинается с самой комнаты: размеров, движения, хранения, света и архитектурного характера пространства."],
-      ["Премиальные материалы", "Орех, дуб, шпон, камень, кожа, стекло, матовый металл и утонченная фурнитура подбираются ради долговечности, фактуры и спокойного визуального эффекта."],
-      ["Архитектурная точность", "Мебель, панели, корпусные решения и свет планируются как единая композиция, чтобы интерьер выглядел встроенным, а не собранным из отдельных элементов."],
-      ["Проекты по Северной Америке", "CAS AURUM рассматривает премиальные жилые, hospitality и коммерческие запросы по Северной Америке, с приоритетным рассмотрением для Atlanta и Georgia."],
-      ["От концепции до координации установки", "Процесс может пройти от фото и чертежей к замерам, подбору материалов, расчету, производственному планированию и координации установки."],
-      ["Работа с дизайнерами и строителями", "Trade-партнеры могут отправлять фасады, чертежи, спецификации отделок и клиентские референсы, чтобы быстрее перейти от дизайн-идеи к custom millwork."],
+      ["Индивидуальный дизайн", "Каждый scope начинается с комнаты, замеров, образа жизни и архитектурного контекста, а не с выбора из каталога."],
+      ["Премиальные материалы", "Дерево, камень, шпон, металл, стекло, кожа и текстиль подбираются по пропорции, долговечности и визуальной сдержанности."],
+      ["Архитектурная точность", "Ритм панелей, линии стыков, размеры built-ins, свет и фурнитура планируются до производства."],
+      ["Работа в Северной Америке", "CAS AURUM рассматривает residential и trade-запросы по Северной Америке и уточняет путь дизайна, изготовления, доставки и установки."],
+      ["От консультации до установки", "Процесс может идти от фото и планов к замерам, материалам, техническому scope, координации производства и монтажному планированию."],
+      ["Работа с дизайнерами, строителями и девелоперами", "Trade-партнеры могут передать фасады, чертежи, спецификации и ограничения проекта для millwork, мебели и стеновых панелей."],
     ],
   },
 };
@@ -625,39 +608,37 @@ const homepagePositioning = {
 const projectsGalleryCopy = {
   en: {
     title: "Completed Projects",
-    desc: "Explore completed Cas Aurum work across architectural millwork, bespoke furniture, premium finish carpentry, custom cabinetry, bathrooms, kitchens, ceilings, stairs, decks, built-ins, and refined residential interiors.",
+    desc: "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and refined interior details.",
     metaTitle: `Completed Projects | ${BRAND}`,
-    metaDesc: "Explore completed custom interior projects by Cas Aurum, including architectural millwork, bespoke furniture, media walls, closets, wall panels, bathrooms, ceilings, stairs, decks, cabinetry, and premium finish work.",
-    primaryCta: "Request Estimate",
+    metaDesc: "Explore completed CAS AURUM custom interiors, millwork, cabinetry, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and premium interior details.",
+    primaryCta: "Request a Consultation",
     secondaryCta: "Explore Collections",
     noteTitle: "Built for real homes",
-    microcopy: "Each project reflects custom planning, material selection, fabrication, finishing, and installation details shaped around the home, the room, and the client’s lifestyle.",
-    categories: ["All", "Bathroom / Vanity", "Exterior / Deck", "Kitchen / Cabinetry", "Architectural Millwork / Living Rooms", "Stairs / Finish Carpentry", "Laundry / Utility", "Ceilings"],
-    cardCta: "Request a Similar Project",
+    microcopy: "Each completed project card connects a finished CAS AURUM image with its room type, service category, materials and a consultation path for similar custom work.",
+    cardCta: "Discuss a Similar Project",
     requestTitle: "What you can request from this gallery",
-    requestText: "Send room photos, dimensions, drawings or inspiration references and CAS AURUM will review the right custom furniture, cabinetry, millwork or finish carpentry direction for your home.",
+    requestText: "Send room photos, dimensions, drawings or inspiration references and CAS AURUM will review the right custom cabinetry, architectural millwork, media wall, vanity, reception, bar cabinet, table or ceiling scope.",
     linksTitle: "Continue exploring custom work",
     faqs: [
-      ["Can you build something similar for my home?", "Yes. Share room photos, rough dimensions, inspiration references, location, timeline and budget range so CAS AURUM can review the right custom direction."],
-      ["Do you copy previous projects exactly?", "No. Completed projects are useful references, but each new scope is adapted to the room, dimensions, materials, storage needs and architectural character of the home."],
-      ["Can you adapt a completed project to my room size and materials?", "Yes. CAS AURUM can reinterpret cabinetry, millwork, stairs, ceilings, decks, vanities or built-ins around your measurements, finishes and site conditions."],
-      ["Do you work with designers, builders, and architects?", "Yes. Trade professionals can submit elevations, plans, finish schedules and client references through the consultation or partner path."],
-      ["How do I request an estimate?", "Use the consultation form and send photos, measurements, drawings if available, preferred materials, project location, budget range and timeline."],
+      ["Can CAS AURUM build something similar for my home?", "Yes. Share room photos, rough dimensions, inspiration references, location, timeline and budget range so CAS AURUM can review the right custom path."],
+      ["Can a completed project be adapted to my room size and materials?", "Yes. Completed work can guide proportion, material direction and detailing, then the scope is adjusted to your room dimensions, finishes and site conditions."],
+      ["Do you copy previous projects exactly?", "No. Completed projects are useful references, but each new scope is adapted to the room, storage needs, materials and architectural character of the property."],
+      ["Do you work with designers, builders and architects?", "Yes. Trade professionals can submit elevations, plans, finish schedules and client references through the consultation or partner path."],
+      ["How do I request an estimate or consultation?", "Use the consultation form and send photos, measurements, drawings if available, preferred materials, project location, budget range and timeline."],
     ],
   },
   es: {
     title: "Proyectos realizados",
-    desc: "Explore trabajos completados de Cas Aurum en millwork arquitectónico, mobiliario bespoke, carpintería de acabado premium, cabinetry a medida, baños, cocinas, techos, escaleras, decks, built-ins e interiores residenciales refinados.",
+    desc: "Explore proyectos realizados por CAS AURUM: carpintería arquitectónica, mobiliario a medida, media walls, cocinas, vanities, recepciones, muebles bar, mesas, cielos decorativos y detalles interiores premium.",
     metaTitle: `Proyectos realizados | ${BRAND}`,
-    metaDesc: "Explore proyectos interiores completados por Cas Aurum, incluidos millwork arquitectónico, muebles a medida, media walls, closets, paneles, baños, techos, escaleras, decks, cabinetry y acabados premium.",
-    primaryCta: "Solicitar presupuesto",
+    metaDesc: "Explore proyectos realizados por CAS AURUM: carpintería arquitectónica, mobiliario a medida, media walls, cocinas, vanities, recepciones, muebles bar, mesas y detalles interiores premium.",
+    primaryCta: "Solicitar una consulta",
     secondaryCta: "Explorar colecciones",
     noteTitle: "Construido para hogares reales",
-    microcopy: "Cada proyecto refleja planificación a medida, selección de materiales, fabricación, acabado e instalación adaptados a la casa, la habitación y el estilo de vida del cliente.",
-    categories: ["Todo", "Baño / Vanity", "Exterior / Deck", "Cocina / Cabinetry", "Millwork arquitectónico / Salas", "Escaleras / Carpintería de acabado", "Lavandería / Utility", "Techos"],
-    cardCta: "Solicitar un proyecto similar",
+    microcopy: "Cada tarjeta conecta una imagen realizada de CAS AURUM con su espacio, categoría de servicio, materiales y camino de consulta para un trabajo similar.",
+    cardCta: "Hablar sobre un proyecto similar",
     requestTitle: "Qué puede solicitar desde esta galería",
-    requestText: "Envíe fotos del espacio, medidas, planos o referencias y CAS AURUM revisará la dirección adecuada de muebles a medida, cabinetry, millwork o carpintería de acabado para su hogar.",
+    requestText: "Envíe fotos del espacio, medidas, planos o referencias y CAS AURUM revisará el alcance adecuado para cabinetry, carpintería arquitectónica, media wall, vanity, recepción, mueble bar, mesa o cielo decorativo.",
     linksTitle: "Seguir explorando trabajos a medida",
     faqs: [
       ["¿Pueden construir algo similar para mi casa?", "Sí. Comparta fotos del espacio, medidas aproximadas, referencias, ubicación, plazo y rango de presupuesto para que CAS AURUM revise la dirección adecuada."],
@@ -669,17 +650,16 @@ const projectsGalleryCopy = {
   },
   fr: {
     title: "Projets réalisés",
-    desc: "Explorez les réalisations Cas Aurum en menuiserie architecturale, mobilier bespoke, menuiserie de finition premium, cabinetry sur mesure, salles de bain, cuisines, plafonds, escaliers, terrasses, built-ins et intérieurs résidentiels raffinés.",
+    desc: "Découvrez les projets réalisés par CAS AURUM : menuiserie architecturale, mobilier sur mesure, murs média, cuisines, meubles vasques, réceptions, bars, tables, plafonds décoratifs et détails intérieurs haut de gamme.",
     metaTitle: `Projets réalisés | ${BRAND}`,
-    metaDesc: "Explorez les projets intérieurs réalisés par Cas Aurum, incluant menuiserie architecturale, mobilier sur mesure, media walls, dressings, panneaux, salles de bain, plafonds, escaliers, terrasses, cabinetry et finitions premium.",
-    primaryCta: "Demander une estimation",
+    metaDesc: "Découvrez les projets réalisés par CAS AURUM : menuiserie architecturale, mobilier sur mesure, murs média, cuisines, meubles vasques, réceptions, bars, tables et détails haut de gamme.",
+    primaryCta: "Demander une consultation",
     secondaryCta: "Explorer les collections",
     noteTitle: "Conçu pour de vrais intérieurs",
-    microcopy: "Chaque projet reflète une planification sur mesure, le choix des matériaux, la fabrication, la finition et les détails d’installation adaptés à la maison, à la pièce et au mode de vie du client.",
-    categories: ["Tout", "Salle de bain / Meuble vasque", "Extérieur / Terrasse", "Cuisine / Cabinetry", "Menuiserie architecturale / Salons", "Escaliers / Menuiserie de finition", "Buanderie / pièce utilitaire", "Plafonds"],
-    cardCta: "Demander un projet similaire",
+    microcopy: "Chaque carte relie une image réalisée CAS AURUM à sa pièce, sa catégorie de service, ses matériaux et un chemin de consultation pour un projet similaire.",
+    cardCta: "Discuter d’un projet similaire",
     requestTitle: "Ce que vous pouvez demander depuis cette galerie",
-    requestText: "Envoyez photos, mesures, plans ou références, et CAS AURUM examinera la bonne direction de mobilier sur mesure, cabinetry, millwork ou menuiserie de finition pour votre maison.",
+    requestText: "Envoyez photos, mesures, plans ou références, et CAS AURUM examinera le bon périmètre pour cabinetry, menuiserie architecturale, mur média, meuble vasque, réception, meuble bar, table ou plafond décoratif.",
     linksTitle: "Continuer avec les travaux sur mesure",
     faqs: [
       ["Pouvez-vous réaliser quelque chose de similaire pour ma maison ?", "Oui. Envoyez photos, dimensions approximatives, références, localisation, calendrier et fourchette de budget afin que CAS AURUM examine la bonne direction sur mesure."],
@@ -691,17 +671,16 @@ const projectsGalleryCopy = {
   },
   ru: {
     title: "Выполненные проекты",
-    desc: "Посмотрите выполненные работы Cas Aurum: архитектурная столярка, мебель на заказ, премиальная отделка, корпусная мебель, ванные, кухни, потолки, лестницы, террасы, встроенные решения и продуманные жилые интерьеры.",
+    desc: "Посмотрите выполненные работы CAS AURUM: корпусная мебель на заказ, архитектурная столярка, медиа-стены, кухни, тумбы, ресепшн-зоны, барные шкафы, столы, потолочные решения и премиальные интерьерные детали.",
     metaTitle: `Выполненные проекты | ${BRAND}`,
-    metaDesc: "Смотрите выполненные интерьерные проекты Cas Aurum: архитектурная столярка, мебель на заказ, media walls, гардеробные, панели, ванные, потолки, лестницы, террасы, корпусная мебель и премиальная отделка.",
-    primaryCta: "Запросить расчет",
+    metaDesc: "Смотрите выполненные проекты CAS AURUM: корпусная мебель, архитектурная столярка, медиа-стены, кухни, тумбы, ресепшн-зоны, барные шкафы, столы и интерьерные детали.",
+    primaryCta: "Запросить консультацию",
     secondaryCta: "Смотреть коллекции",
     noteTitle: "Создано для реальных домов",
-    microcopy: "Каждый проект отражает индивидуальное планирование, подбор материалов, изготовление, отделку и монтажные детали, адаптированные под дом, помещение и образ жизни клиента.",
-    categories: ["Все", "Ванные / тумбы", "Экстерьер / террасы", "Кухни / корпусная мебель", "Архитектурная столярка / гостиные", "Лестницы / финишная столярка", "Прачечная / utility", "Потолки"],
-    cardCta: "Запросить похожий проект",
+    microcopy: "Каждая карточка связывает выполненное изображение CAS AURUM с комнатой, категорией работ, материалами и консультацией по похожему проекту.",
+    cardCta: "Обсудить похожий проект",
     requestTitle: "Что можно запросить по этой галерее",
-    requestText: "Отправьте фото комнаты, размеры, чертежи или референсы, и CAS AURUM предложит подходящее направление мебели на заказ, корпусных решений, millwork или финишной столярки для вашего дома.",
+    requestText: "Отправьте фото комнаты, размеры, чертежи или референсы, и CAS AURUM предложит подходящий scope для корпусной мебели, архитектурной столярки, медиа-стены, тумбы, ресепшн-зоны, барного шкафа, стола или потолочного решения.",
     linksTitle: "Продолжить просмотр работ на заказ",
     faqs: [
       ["Можете сделать похожее для моего дома?", "Да. Отправьте фото помещения, примерные размеры, референсы, локацию, сроки и бюджетный диапазон, чтобы CAS AURUM оценил подходящее направление."],
@@ -956,6 +935,199 @@ function shortProjectCaption(value, lang) {
 function localizedText(value, lang) {
   if (!value || typeof value === "string") return value || "";
   return value[lang] || value.en || Object.values(value)[0] || "";
+}
+
+function loadCompletedProjectManifest() {
+  try {
+    const items = JSON.parse(readFileSync(COMPLETED_PROJECT_MANIFEST_PATH, "utf8"));
+    if (!Array.isArray(items)) return legacyCompletedProjectItems();
+    const manifestItems = items.map((item) => {
+      const file = item.filename_webp || path.basename(item.public_path_suggested || "");
+      const category = item.category || "Completed Work";
+      const room = item.room || "Custom Interior";
+      return {
+        slug: item.slug || file.replace(/\.webp$/, ""),
+        file,
+        src: item.public_path_suggested || `/images/projects/${file}`,
+        category,
+        categoryKey: slugify(category),
+        room,
+        roomKey: slugify(room),
+        title: { en: item.title_en, es: item.title_es, fr: item.title_fr, ru: item.title_ru },
+        alt: { en: item.alt_en, es: item.alt_es, fr: item.alt_fr, ru: item.alt_ru },
+        caption: { en: item.caption_en },
+        status: { en: item.status_en, es: item.status_es, fr: item.status_fr, ru: item.status_ru },
+        keywords: item.keywords || "",
+        width: Number(item.width || 1448),
+        height: Number(item.height || 1086),
+      };
+    }).filter((item) => item.file);
+    const availableItems = manifestItems.filter((item) => publicAssetExists(item.src));
+    if (manifestItems.length && availableItems.length !== manifestItems.length) {
+      console.warn(`Completed project manifest references ${manifestItems.length - availableItems.length} missing public assets.`);
+    }
+    return availableItems.length ? availableItems : legacyCompletedProjectItems();
+  } catch (error) {
+    console.warn(`Completed project manifest unavailable: ${error.message}`);
+    return legacyCompletedProjectItems();
+  }
+}
+
+function publicAssetExists(src) {
+  if (!src || /^https?:\/\//i.test(src)) return true;
+  const relative = String(src).replace(/^\//, "");
+  return existsSync(path.join(PUBLIC_DIR, relative));
+}
+
+function legacyCompletedProjectItems() {
+  try {
+    const projectDir = path.join(PUBLIC_DIR, "images", "projects");
+    return readdirSync(projectDir)
+      .filter((file) => /\.webp$/i.test(file))
+      .sort()
+      .map((file) => {
+        const meta = legacyCompletedProjectMeta(file);
+        return {
+          slug: file.replace(/\.webp$/i, ""),
+          file,
+          src: `/images/projects/${file}`,
+          category: meta.category,
+          categoryKey: slugify(meta.category),
+          room: meta.room,
+          roomKey: slugify(meta.room),
+          title: { en: meta.title },
+          alt: { en: `${meta.title}, completed CAS AURUM ${meta.category.toLowerCase()} work.` },
+          caption: { en: meta.caption },
+          status: { en: "Completed Project", es: "Proyecto realizado", fr: "Projet réalisé", ru: "Выполненный проект" },
+          keywords: meta.keywords,
+          width: 1448,
+          height: 1086,
+        };
+      });
+  } catch (error) {
+    console.warn(`Legacy completed project assets unavailable: ${error.message}`);
+    return [];
+  }
+}
+
+function legacyCompletedProjectMeta(file) {
+  const clean = file.replace(/^cas-aurum-/, "").replace(/\.webp$/i, "").replaceAll("-", " ");
+  const title = clean.replace(/\b\w/g, (letter) => letter.toUpperCase());
+  const lower = clean.toLowerCase();
+  if (lower.includes("kitchen") || lower.includes("cabinetry")) return { title, category: "Kitchen Cabinetry", room: "Kitchen", caption: "Completed custom cabinetry and kitchen millwork with premium material direction.", keywords: "custom kitchen cabinetry, premium millwork, completed project" };
+  if (lower.includes("bathroom") || lower.includes("vanity") || lower.includes("tub")) return { title, category: "Bathroom Vanity", room: "Bathroom / Powder Room", caption: "Completed bathroom millwork and refined vanity or spa detail work.", keywords: "custom bathroom vanity, bathroom millwork, completed project" };
+  if (lower.includes("stair")) return { title, category: "Architectural Millwork", room: "Custom Interior", caption: "Completed architectural woodwork detail with measured proportions and premium finishing.", keywords: "architectural millwork, custom woodwork, completed project" };
+  if (lower.includes("ceiling") || lower.includes("beam") || lower.includes("truss")) return { title, category: "Ceilings", room: "Living Room", caption: "Completed ceiling and architectural wood detail work for a refined interior.", keywords: "custom ceiling millwork, wood beams, completed project" };
+  if (lower.includes("deck") || lower.includes("exterior") || lower.includes("railing")) return { title, category: "Architectural Millwork", room: "Exterior / Outdoor", caption: "Completed architectural exterior detail with custom woodwork and finish coordination.", keywords: "custom exterior millwork, deck railing, completed project" };
+  if (lower.includes("living") || lower.includes("built-in") || lower.includes("bench")) return { title, category: "Architectural Millwork", room: "Living Room / Library", caption: "Completed built-in millwork with storage, paneling and architectural room detail.", keywords: "custom built-ins, architectural millwork, completed project" };
+  return { title, category: "Architectural Millwork", room: "Custom Interior", caption: "Completed CAS AURUM custom interior work with premium materials and measured detailing.", keywords: "custom interiors, completed millwork project" };
+}
+
+function completedProjectByFile(file) {
+  return completedProjectItems.find((item) => item.file === file);
+}
+
+function completedProjectTitle(project, lang) {
+  return localizedText(project?.title, lang) || project?.file?.replace(/^cas-aurum-/, "").replace(/\.webp$/, "").replaceAll("-", " ") || "";
+}
+
+function completedProjectCategory(project, lang) {
+  return localizedCompletedProjectLabel(project?.category || "", lang);
+}
+
+function completedProjectRoom(project, lang) {
+  return localizedCompletedProjectLabel(project?.room || "", lang);
+}
+
+function localizedCompletedProjectLabel(value, lang) {
+  const labels = {
+    "Architectural Millwork": {
+      en: "Architectural Millwork", es: "Carpintería arquitectónica", fr: "Menuiserie architecturale", ru: "Архитектурная столярка",
+    },
+    "Commercial Millwork": {
+      en: "Commercial Millwork", es: "Carpintería comercial", fr: "Menuiserie commerciale", ru: "Коммерческая столярка",
+    },
+    "Office Millwork": {
+      en: "Office Millwork", es: "Carpintería para oficina", fr: "Menuiserie de bureau", ru: "Столярка для офиса",
+    },
+    "Media Walls": {
+      en: "Media Walls", es: "Media walls", fr: "Murs média", ru: "Медиа-стены",
+    },
+    "Kitchen Cabinetry": {
+      en: "Kitchen Cabinetry", es: "Cocinas y cabinetry", fr: "Cabinetry de cuisine", ru: "Кухонная корпусная мебель",
+    },
+    "Bespoke Furniture": {
+      en: "Bespoke Furniture", es: "Mobiliario a medida", fr: "Mobilier sur mesure", ru: "Мебель на заказ",
+    },
+    "Bathroom Vanity": {
+      en: "Bathroom Vanity", es: "Vanity de baño", fr: "Meuble vasque", ru: "Тумба для ванной",
+    },
+    "Ceilings": {
+      en: "Ceiling Millwork", es: "Cielos decorativos", fr: "Plafonds décoratifs", ru: "Потолочные решения",
+    },
+    "Living Room / Library": {
+      en: "Living Room / Library", es: "Sala / biblioteca", fr: "Salon / bibliothèque", ru: "Гостиная / библиотека",
+    },
+    "Reception / Lobby": {
+      en: "Reception / Lobby", es: "Recepción / lobby", fr: "Réception / hall", ru: "Ресепшен / лобби",
+    },
+    "Lobby / Reception": {
+      en: "Lobby / Reception", es: "Lobby / recepción", fr: "Hall / réception", ru: "Лобби / ресепшен",
+    },
+    "Office / Lounge": {
+      en: "Office / Lounge", es: "Oficina / lounge", fr: "Bureau / lounge", ru: "Офис / лаунж",
+    },
+    "Living Room": {
+      en: "Living Room", es: "Sala", fr: "Salon", ru: "Гостиная",
+    },
+    "Commercial Lobby": {
+      en: "Commercial Lobby", es: "Lobby comercial", fr: "Hall commercial", ru: "Коммерческое лобби",
+    },
+    "Kitchen": {
+      en: "Kitchen", es: "Cocina", fr: "Cuisine", ru: "Кухня",
+    },
+    "Bar / Lounge": {
+      en: "Bar / Lounge", es: "Bar / lounge", fr: "Bar / lounge", ru: "Бар / лаунж",
+    },
+    "Office / Dining": {
+      en: "Office / Dining", es: "Oficina / comedor", fr: "Bureau / salle à manger", ru: "Офис / столовая",
+    },
+    "Bathroom / Powder Room": {
+      en: "Bathroom / Powder Room", es: "Baño / powder room", fr: "Salle de bain / cabinet de toilette", ru: "Ванная / гостевой санузел",
+    },
+  };
+  return labels[value]?.[lang] || labels[value]?.en || value;
+}
+
+function completedProjectCategories(lang) {
+  return [
+    { key: "all", label: localized("All Completed Work", lang), href: "#selected-work" },
+    ...completedProjectCategoryKeys.map((key) => {
+      const project = completedProjectItems.find((item) => item.categoryKey === key);
+      return { key, label: completedProjectCategory(project, lang), href: `#completed-category-${key}` };
+    }),
+  ];
+}
+
+function completedProjectLinkTarget(lang, project) {
+  if (!project) return { href: urlFor(lang, "projects"), label: pageLabel("projects", lang) };
+  if (project.category === "Bathroom Vanity" || project.room?.includes("Bathroom")) return { href: seoPageUrlFor(lang, "/rooms/bathroom"), label: roomProjectLabel(lang, "bathroom") };
+  if (project.category === "Kitchen Cabinetry" || project.room === "Kitchen") return { href: seoPageUrlFor(lang, "/rooms/kitchen"), label: roomProjectLabel(lang, "kitchen") };
+  if (project.category === "Media Walls" || project.file.includes("tv-wall") || project.file.includes("media-console")) return { href: urlFor(lang, "mediaWalls"), label: pageLabel("mediaWalls", lang) };
+  if (project.category === "Office Millwork" || project.room?.includes("Office")) return { href: seoPageUrlFor(lang, "/rooms/home-office"), label: roomProjectLabel(lang, "homeOffice") };
+  if (project.category === "Commercial Millwork" || project.category === "Ceilings" || project.room?.includes("Lobby") || project.room?.includes("Reception")) return { href: urlFor(lang, "trade"), label: pageLabel("trade", lang) };
+  if (project.category === "Bespoke Furniture") return { href: urlFor(lang, "customFurniture"), label: pageLabel("customFurniture", lang) };
+  if (project.room?.includes("Library")) return { href: urlFor(lang, "builtIns"), label: pageLabel("builtIns", lang) };
+  return { href: urlFor(lang, "projects"), label: pageLabel("projects", lang) };
+}
+
+function seoPageUrlFor(lang, path) {
+  return cleanPath(`/${lang}${path.startsWith("/") ? path : `/${path}`}`);
+}
+
+function projectContextLink(route, project) {
+  const target = completedProjectLinkTarget(route.lang, project);
+  return `<a class="chip" href="${target.href}">${escapeHtml(localized("Related page", route.lang))}: ${escapeHtml(target.label)}</a>`;
 }
 
 function collectionDescription(collection, lang) {
@@ -1459,7 +1631,7 @@ function buildProgrammaticImages(page, lang, locationName) {
   const materialSlug = slugify(page.material || "premium-materials");
   const filename = `cas-aurum-${serviceSlug}-${objectSlug}-${materialSlug}-${citySlug}-${stateSlug}.webp`;
   const title = `${page.vertical} ${locationName ? `in ${locationName}` : "for North America"}`;
-  const prompt = `Create a photorealistic premium interior concept for CAS AURUM showing ${page.vertical.toLowerCase()} for a ${page.objectType}, with ${page.material}, quiet luxury, architectural lighting, refined North American proportions, editorial photography, no people, no text, no logo.`;
+  const prompt = `Create a photorealistic premium interior project direction for CAS AURUM showing ${page.vertical.toLowerCase()} for a ${page.objectType}, with ${page.material}, quiet luxury, architectural lighting, refined North American proportions, editorial photography, no people, no text, no logo.`;
   const negativePrompt = "cheap furniture, clutter, unrealistic materials, cartoon, CGI look, excessive gold, overexposed, low quality, distorted furniture, text, watermark, logo, fake brand names, people";
   const altText = {
     en: `${title} with ${page.material} and custom architectural detailing.`,
@@ -1478,6 +1650,7 @@ function buildProgrammaticImages(page, lang, locationName) {
 
 function buildProgrammaticInternalLinks(page, lang) {
   const links = [
+    { href: urlFor(lang, "designConcept"), label: pageLabel("designConcept", lang) },
     { href: urlFor(lang, page.parentKey || "solutions"), label: copy[lang].nav[page.parentKey] || page.vertical },
     { href: urlFor(lang, "consultation"), label: copy[lang].cta.consult },
     { href: urlFor(lang, "measurement"), label: copy[lang].cta.measure },
@@ -1551,12 +1724,16 @@ const server = http.createServer(async (request, response) => {
   const url = new URL(request.url || "/", BASE_URL);
   const path = cleanPath(url.pathname);
   try {
+    if (path === "/api/design-concept-lead") setDesignConceptCorsHeaders(request, response);
+    if (request.method === "OPTIONS" && path === "/api/design-concept-lead") return json(response, { ok: true });
     if ((request.method === "GET" || request.method === "HEAD") && (path === "/site.css" || path === SITE_CSS_PATH)) return cssAsset(response, request.method);
-    if ((request.method === "GET" || request.method === "HEAD") && (path === "/client.js" || path === CLIENT_JS_PATH)) return clientJsAsset(response, request.method);
-    if ((request.method === "GET" || request.method === "HEAD") && (path === "/planner.js" || path === PLANNER_JS_PATH)) return plannerJsAsset(response, request.method);
-    if ((request.method === "GET" || request.method === "HEAD") && isPublicAssetPath(path)) return servePublicAsset(path, response, request.method);
-    if (request.method === "POST" && path === "/api/lead") return await handleLead(request, response, url);
-    if (request.method === "POST" && path === "/api/partner-application") return await handlePartnerApplication(request, response);
+	    if ((request.method === "GET" || request.method === "HEAD") && (path === "/client.js" || path === CLIENT_JS_PATH)) return clientJsAsset(response, request.method);
+	    if ((request.method === "GET" || request.method === "HEAD") && (path === "/planner.js" || path === PLANNER_JS_PATH)) return plannerJsAsset(response, request.method);
+	    if ((request.method === "GET" || request.method === "HEAD") && isPublicAssetPath(path)) return servePublicAsset(path, response, request.method);
+	    if (request.method === "GET" && path === "/start-design-concept") return redirect(response, "/design-concept#start-design-concept");
+	    if (request.method === "POST" && path === "/api/lead") return await handleLead(request, response, url);
+	    if (request.method === "POST" && path === "/api/design-concept-lead") return await handleDesignConceptLead(request, response);
+	    if (request.method === "POST" && path === "/api/partner-application") return await handlePartnerApplication(request, response);
     if (path.startsWith("/api/planner-projects")) return await handlePlannerProjectApi(request, response, url, path);
     if (path === "/admin") return redirect(response, "/crm-app");
     if (path === "/partner-portal") return noStoreHtml(response, partnerPortalPage(url));
@@ -1678,8 +1855,9 @@ function renderPage(route) {
     const page = pageForLanguage(route.programmaticPage, lang);
     return layout(route, page.seoTitle, page.metaDescription, programmaticPage(route, page));
   }
-  if (key === "home") return layout(route, t.home.title, t.home.desc, home(route));
-  if (route.collection) return layout(route, `${route.collection.name} | ${BRAND} ${localized("Collections", lang)}`, collectionDescription(route.collection, lang), collectionDetailPage(route, route.collection));
+	  if (key === "home") return layout(route, t.home.title, t.home.desc, home(route));
+	  if (key === "designConcept") return layout(route, designConceptMeta(route.lang).title, designConceptMeta(route.lang).description, designConceptPage(route));
+	  if (route.collection) return layout(route, `${route.collection.name} | ${BRAND} ${localized("Collections", lang)}`, collectionDescription(route.collection, lang), collectionDetailPage(route, route.collection));
   if (servicePageKeys.includes(key)) {
     const service = serviceContent(lang, key);
     return layout(route, service.title, service.desc, servicePage(route, key, service));
@@ -1725,9 +1903,10 @@ function home(route) {
     </section>
     ${trustStrip(route.lang)}
 	    <section class="intro"><p class="eyebrow">CAS AURUM</p><h2>${escapeHtml(localized("Custom Architectural Surfaces", route.lang))}</h2><p>${escapeHtml(t.home.intro)}</p></section>
+      ${designConceptBridge(route)}
 	    ${serviceCards(route)}
-      ${homeCompletedProjects(route)}
 	    ${moneyScopeCards(route)}
+      ${homeCompletedProjects(route)}
       ${homeInlineCta(route)}
 	    ${collectionsBand(route)}
     ${whySection(route)}
@@ -1741,31 +1920,37 @@ function home(route) {
 function homeCompletedProjects(route) {
   const gallery = projectsGalleryText(route.lang);
   const projects = [
-    "cas-aurum-vaulted-living-room-built-ins-fireplace.webp",
-    "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp",
-    "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp",
-    "cas-aurum-built-in-window-bench-wall-paneling.webp",
-  ].map((file) => completedProjectItems.find((item) => item.file === file)).filter(Boolean);
-  const cards = projects.map((project, index) => {
-    const title = localizedText(project.title, route.lang);
-    const category = gallery.categories[completedProjectCategoryKeys.indexOf(project.categoryKey) + 1] || gallery.categories[0];
+    "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+    "cas-aurum-premium-wood-stone-tv-wall-unit-led-lighting.webp",
+    "cas-aurum-premium-ivory-kitchen-cabinetry-brass-hardware.webp",
+    "cas-aurum-premium-fluted-stone-bathroom-vanity.webp",
+    "cas-aurum-premium-walnut-glass-bar-cabinet.webp",
+    "cas-aurum-premium-wood-slat-ceiling-reception-lobby.webp",
+  ].map((file) => completedProjectByFile(file)).filter(Boolean);
+  const previewProjects = projects.length ? projects : completedProjectItems.slice(0, 6);
+  const cards = previewProjects.map((project, index) => {
+    const title = completedProjectTitle(project, route.lang);
+    const category = completedProjectCategory(project, route.lang);
+    const room = completedProjectRoom(project, route.lang);
     return `<article class="concept-card">
       <figure class="concept-media">
-        <img src="/images/projects/${escapeHtml(project.file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, category))}" loading="lazy" decoding="async" width="1536" height="1024">
+        <img src="${escapeHtml(project.src)}" alt="${escapeHtml(completedProjectAlt(route.lang, project, title, category))}" loading="lazy" decoding="async" width="${project.width}" height="${project.height}">
         <figcaption class="project-caption"><strong>${escapeHtml(category)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption>
       </figure>
       <div>
         ${galleryStatusPill(route.lang, "completed")}
-        <span>${escapeHtml(category)}</span>
+        <span>${escapeHtml(category)} · ${escapeHtml(room)}</span>
         <h3>${escapeHtml(title)}</h3>
-        <p>${escapeHtml(completedProjectCaption(route.lang, category))}</p>
+        <p>${escapeHtml(completedProjectCaption(route.lang, project, category))}</p>
+        ${projectContextLink(route, project)}
+        <a class="button secondary card-cta" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("View Completed Projects", route.lang))}</a>
       </div>
     </article>`;
   }).join("");
   return `<section class="seo-copy wide">
     <p class="eyebrow">${escapeHtml(localized("Completed Work", route.lang))}</p>
-    <h2>${escapeHtml(localized("A closer look at finished CAS AURUM interiors", route.lang))}</h2>
-    <p>${escapeHtml(localized("Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.", route.lang))}</p>
+    <h2>${escapeHtml(localized("Finished interiors, millwork and custom details", route.lang))}</h2>
+    <p>${escapeHtml(localized("Explore completed CAS AURUM work across custom cabinetry, architectural millwork, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and refined residential or commercial interior details.", route.lang))}</p>
     <div class="actions"><a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("View Completed Projects", route.lang))}</a></div>
   </section><section class="concept-grid home-project-preview">${cards}</section>`;
 }
@@ -1795,9 +1980,10 @@ function servicePage(route, key, service) {
     ${processSection(route)}
     ${imageGallery(route, [service.asset, key === "wallPanels" ? "custom-tv-wall-panels-modern-home" : "luxury-closet-millwork", key === "trade" ? "architectural-millwork-hotel-lobby" : "premium-materials-closeup"])}
     ${internalLinks(route, key)}
+    ${serviceRelatedCompletedWorkSection(route, key)}
     ${faqBlock(route.lang, faqKeyForService(key))}
     ${key === "trade" ? tradeInlineLead(route) : ""}
-    ${ctaSection(route, key === "trade" ? copy[route.lang].cta.project : copy[route.lang].cta.consult)}
+	    ${serviceCtaSection(route, key === "trade" ? copy[route.lang].cta.project : copy[route.lang].cta.consult)}
   `;
 }
 
@@ -1809,6 +1995,57 @@ function faqKeyForService(key) {
   if (["customFurniture", "customClosets"].includes(key)) return "customFurniture";
   if (["millwork", "builtIns"].includes(key)) return "millwork";
   return "wallPanels";
+}
+
+function serviceRelatedCompletedWorkSection(route, key) {
+  const filesByKey = {
+    wallPanels: [
+      "cas-aurum-premium-wood-stone-tv-wall-unit-led-lighting.webp",
+      "cas-aurum-premium-slatted-media-console-living-room.webp",
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+    ],
+    customFurniture: [
+      "cas-aurum-premium-live-edge-designer-table-office.webp",
+      "cas-aurum-premium-walnut-glass-bar-cabinet.webp",
+      "cas-aurum-premium-slatted-media-console-living-room.webp",
+    ],
+    millwork: [
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+      "cas-aurum-premium-executive-office-lounge-wall-millwork.webp",
+      "cas-aurum-premium-fluted-reception-desk-stone-lobby.webp",
+    ],
+    solutions: [
+      "cas-aurum-premium-ivory-kitchen-cabinetry-brass-hardware.webp",
+      "cas-aurum-premium-wood-stone-tv-wall-unit-led-lighting.webp",
+      "cas-aurum-premium-fluted-stone-bathroom-vanity.webp",
+    ],
+    mediaWalls: [
+      "cas-aurum-premium-wood-stone-tv-wall-unit-led-lighting.webp",
+      "cas-aurum-premium-slatted-media-console-living-room.webp",
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+    ],
+    builtIns: [
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+      "cas-aurum-premium-executive-office-lounge-wall-millwork.webp",
+      "cas-aurum-premium-walnut-glass-bar-cabinet.webp",
+    ],
+    customClosets: [
+      "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp",
+      "cas-aurum-premium-walnut-glass-bar-cabinet.webp",
+    ],
+    trade: [
+      "cas-aurum-premium-fluted-reception-desk-stone-lobby.webp",
+      "cas-aurum-premium-wood-slat-ceiling-reception-lobby.webp",
+      "cas-aurum-premium-executive-office-lounge-wall-millwork.webp",
+    ],
+  };
+  const relatedProjects = filesByKey[key] || [];
+  if (!relatedProjects.length) return "";
+  return relatedCompletedWorkSection(route, {
+    relatedProjects,
+    relatedProjectsTitle: localized("Related completed projects", route.lang),
+    relatedProjectsBody: localized("Completed project images are shown here to connect room planning with real custom work, materials and site-built details.", route.lang),
+  });
 }
 
 function serviceCommercialFit(route, key) {
@@ -2379,7 +2616,7 @@ function collectionDetailPage(route, collection) {
     ${pageHero(route.lang, collection.name, collectionDescription(collection, route.lang), collection.assetId)}
     <section class="seo-copy wide">
       <p class="eyebrow">${escapeHtml(galleryStatusLabel(route.lang, "concept"))}</p>
-      <h2>${escapeHtml(localized("Concept studies across North America", route.lang))}</h2>
+      <h2>${escapeHtml(localized("Project directions across North America", route.lang))}</h2>
       <p>${escapeHtml(conceptTransparencyCopy(route.lang))}</p>
     </section>
     <section class="concept-grid">${collection.projects.map((project, index) => `
@@ -2443,7 +2680,437 @@ function contactPage(route) {
 
 function formPage(route, type) {
   const t = copy[route.lang];
-  return `${pageHero(route.lang, type === "consultation" ? t.cta.consult : t.cta.measure, t.contact[1], type === "consultation" ? "designer-builder-partnership" : "measurement-consultation-process")}<section class="form-shell"><div class="panel">${leadForm(route, type)}</div></section>`;
+  return `${pageHero(route.lang, type === "consultation" ? t.cta.consult : t.cta.measure, t.contact[1], type === "consultation" ? "designer-builder-partnership" : "measurement-consultation-process")}${type === "consultation" ? designConceptBridge(route) : ""}<section class="form-shell"><div class="panel">${leadForm(route, type)}</div></section>`;
+}
+
+function designConceptMeta(lang) {
+  const titles = {
+    en: "Interior Design Concept Packages | CAS AURUM",
+    es: "Paquetes de concepto de diseño interior | CAS AURUM",
+    fr: "Forfaits de concept design interieur | CAS AURUM",
+    ru: "Пакеты дизайн-концепта интерьера | CAS AURUM",
+  };
+  const descriptions = {
+    en: "Order a premium design concept for a media wall, closet, kitchen, built-in, wall panels or full interior space. Transparent starting prices, clear deliverables and upgrade paths to technical packages or realization.",
+    es: "Order a premium design concept for a media wall, closet, kitchen, built-in, wall panels or full interior space. Transparent starting prices, clear deliverables and upgrade paths to technical packages or realization.",
+    fr: "Order a premium design concept for a media wall, closet, kitchen, built-in, wall panels or full interior space. Transparent starting prices, clear deliverables and upgrade paths to technical packages or realization.",
+    ru: "Order a premium design concept for a media wall, closet, kitchen, built-in, wall panels or full interior space. Transparent starting prices, clear deliverables and upgrade paths to technical packages or realization.",
+  };
+  return { title: titles[lang] || titles.en, description: descriptions[lang] || descriptions.en };
+}
+
+function designConceptPage(route) {
+  const t = designConceptText(route.lang);
+  return `
+    <div data-design-concept-page data-language="${route.lang}">
+      ${designConceptHero(route, t)}
+      ${designConceptPositioning(route, t)}
+      ${designConceptPackages(route, t)}
+      ${designConceptPricing(route, t)}
+      ${designConceptProcess(route, t)}
+      ${designConceptFormSection(route, t)}
+      ${designConceptFaq(route, t)}
+      ${designConceptInternalLinks(route, t)}
+    </div>
+  `;
+}
+
+function designConceptHero(route, t) {
+  return `<section class="page-hero design-concept-hero">
+    <div>
+      <p class="eyebrow">${escapeHtml(t.heroEyebrow)}</p>
+      <h1>${escapeHtml(t.heroTitle)}</h1>
+      <p class="lede">${escapeHtml(t.heroText)}</p>
+      <div class="actions">
+        <a class="button primary track" data-event="design_concept_form_start" href="#start-design-concept">${escapeHtml(t.heroPrimary)}</a>
+        <a class="button secondary track" data-event="design_concept_compare_packages" href="#packages">${escapeHtml(t.heroSecondary)}</a>
+      </div>
+    </div>
+    <figure>${img("custom-tv-wall-panels-modern-home", route.lang, "eager")}<figcaption>${escapeHtml(t.heroCaption)}</figcaption></figure>
+  </section>`;
+}
+
+function designConceptPositioning(route, t) {
+  return `<section class="seo-copy wide design-concept-positioning">
+    <p class="eyebrow">${escapeHtml(t.positioningEyebrow)}</p>
+    <h2>${escapeHtml(t.positioningTitle)}</h2>
+    <p>${escapeHtml(t.positioningText)}</p>
+    <div class="concept-keywords" aria-label="Design concept focus">
+      ${["interior design concept", "custom media wall concept", "closet design concept", "kitchen design concept", "custom millwork design package", "technical millwork package", "luxury interior concept"].map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+    </div>
+  </section>`;
+}
+
+function designConceptPackages(route, t) {
+  return `<section class="section-head" id="packages">
+    <p class="eyebrow">${escapeHtml(t.packagesEyebrow)}</p>
+    <h2>${escapeHtml(t.packagesTitle)}</h2>
+    <p>${escapeHtml(t.packagesText)}</p>
+  </section>
+  <section class="package-grid">
+    ${t.packages.map((item) => designConceptPackageCard(item)).join("")}
+  </section>`;
+}
+
+function designConceptPackageCard(item) {
+  return `<article class="package-card">
+    <span>${escapeHtml(item.kicker)}</span>
+    <h3>${escapeHtml(item.title)}</h3>
+    <strong>${escapeHtml(item.price)}</strong>
+    <p>${escapeHtml(item.bestFor)}</p>
+    <dl>
+      <dt>${escapeHtml(item.inputsTitle)}</dt><dd>${escapeHtml(item.inputs)}</dd>
+      <dt>${escapeHtml(item.deliverablesTitle)}</dt><dd>${escapeHtml(item.deliverables)}</dd>
+      <dt>${escapeHtml(item.timelineTitle)}</dt><dd>${escapeHtml(item.timeline)}</dd>
+    </dl>
+    <a class="button primary package-select track" data-event="design_concept_package_select" data-package-select="${escapeHtml(item.value)}" href="#start-design-concept">${escapeHtml(item.cta)}</a>
+  </article>`;
+}
+
+function designConceptPricing(route, t) {
+  return `<section class="seo-copy wide">
+    <p class="eyebrow">${escapeHtml(t.pricingEyebrow)}</p>
+    <h2>${escapeHtml(t.pricingTitle)}</h2>
+    <p>${escapeHtml(t.pricingText)}</p>
+  </section>
+  <section class="pricing-grid">
+    ${t.pricing.map((item) => `<article><span>${escapeHtml(item.price)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.timeline)}</p></article>`).join("")}
+  </section>`;
+}
+
+function designConceptProcess(route, t) {
+  return `<section class="process design-concept-process">
+    <p class="eyebrow">${escapeHtml(t.processEyebrow)}</p>
+    <h2>${escapeHtml(t.processTitle)}</h2>
+    <div>${t.steps.map((step, index) => `<article><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(step)}</h3><p>${escapeHtml(t.stepText[index] || t.stepText[0])}</p></article>`).join("")}</div>
+  </section>`;
+}
+
+function designConceptFormSection(route, t) {
+  return `<section class="form-shell design-concept-form-shell" id="start-design-concept">
+    <div class="panel">
+      <p class="eyebrow">${escapeHtml(t.formEyebrow)}</p>
+      <h2>${escapeHtml(t.formTitle)}</h2>
+      <p>${escapeHtml(t.formIntro)}</p>
+      ${designConceptLeadForm(route, t)}
+    </div>
+  </section>`;
+}
+
+function designConceptLeadForm(route, t) {
+  return `<form class="lead-form design-concept-form" data-design-concept-form data-lead-form="design_concept_flow" data-endpoint="/api/design-concept-lead" enctype="multipart/form-data">
+    <input type="hidden" name="formType" value="design_concept_flow">
+    <input type="hidden" name="leadType" value="design_concept_flow">
+    <input type="hidden" name="lead_type" value="design_concept_flow">
+    <input type="hidden" name="language" value="${route.lang}">
+    <input type="hidden" name="source_page" value="${urlFor(route.lang, "designConcept")}">
+    <input type="hidden" name="sourceUrl" value="${urlFor(route.lang, "designConcept")}">
+    <input type="hidden" name="exact_price" value="$450">
+    <input type="hidden" name="quoted_timeline" value="3-5 business days">
+    <input type="hidden" name="payment_url" value="">
+    <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    <div class="form-step">
+      <span>01</span>
+      <h3>${escapeHtml(t.formSteps.package)}</h3>
+      ${selectWithValues(t.fields.packageType, "package_type", designConceptOptionSet(t.packageOptions), true, "design_concept", "data-package-type")}
+      <p class="form-hint" data-package-help>${escapeHtml(t.packageHelp.design_concept)}</p>
+      <div class="selection-summary" data-concept-selection-summary>
+        <div><span>${escapeHtml(t.selectionLabels.price)}</span><strong data-selected-price>$450</strong></div>
+        <div><span>${escapeHtml(t.selectionLabels.timeline)}</span><strong data-selected-timeline>3-5 business days</strong></div>
+        <a class="button secondary" data-payment-link href="" target="_blank" rel="noopener" hidden>${escapeHtml(t.selectionLabels.pay)}</a>
+        <p class="form-hint" data-payment-note>${escapeHtml(t.selectionLabels.paymentPending)}</p>
+      </div>
+    </div>
+    <div class="form-step">
+      <span>02</span>
+      <h3>${escapeHtml(t.formSteps.project)}</h3>
+      <div class="form-grid">${selectWithValues(t.fields.projectType, "project_type", designConceptOptionSet(t.projectTypeOptions), true)}${selectWithValues(t.fields.desiredStyle, "desired_style", designConceptOptionSet(t.styleOptions), true)}</div>
+    </div>
+    <div class="form-step">
+      <span>03</span>
+      <h3>${escapeHtml(t.formSteps.contact)}</h3>
+      <div class="form-grid">${input(t.fields.clientName, "client_name", true)}${input(t.fields.email, "email", true, "email")}${input(t.fields.phone, "phone", false, "tel")}${input(t.fields.location, "project_location", true)}</div>
+    </div>
+    <div class="form-step">
+      <span>04</span>
+      <h3>${escapeHtml(t.formSteps.files)}</h3>
+      <div class="form-grid">${fileInput(t.fields.photos, "project_photos", true)}${fileInput(t.fields.inspiration, "inspiration_images", false)}</div>
+      <p class="form-hint">${escapeHtml(t.fileHint)}</p>
+    </div>
+    <div class="form-step">
+      <span>05</span>
+      <h3>${escapeHtml(t.formSteps.dimensions)}</h3>
+      <div class="form-grid">
+        ${input(t.fields.length, "dimension_length", false, "text", "data-dimension-length")}
+        ${input(t.fields.widthDepth, "dimension_width_depth", false, "text", "data-dimension-width-depth")}
+        ${input(t.fields.height, "dimension_height", false, "text", "data-dimension-height")}
+      </div>
+      <p class="form-hint" data-dimensions-help>${escapeHtml(t.dimensionsHint.design_concept)}</p>
+    </div>
+    <div class="form-step">
+      <span>06</span>
+      <h3>${escapeHtml(t.formSteps.details)}</h3>
+      <div class="form-grid">${selectWithValues(t.fields.timeline, "timeline", designConceptOptionSet(t.timelineOptions), true)}${selectWithValues(t.fields.budget, "budget_range", designConceptOptionSet(t.budgetOptions), true)}</div>
+      <label>${escapeHtml(t.fields.description)}<textarea name="project_description" required></textarea></label>
+      <p class="form-hint">${escapeHtml(t.checkoutHint)}</p>
+    </div>
+    <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(t.consent)}</label>
+    <button class="button primary" type="submit">${escapeHtml(t.submit)}</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
+  </form>`;
+}
+
+function designConceptFaq(route, t) {
+  return `<section class="faq design-concept-faq"><h2>${escapeHtml(t.faqTitle)}</h2>${t.faq.map(([q, a]) => `<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join("")}</section>`;
+}
+
+function designConceptInternalLinks(route, t) {
+  const links = ["mediaWalls", "customClosets", "wallPanels", "builtIns", "solutions", "projects", "trade", "consultation"];
+  return `<section class="internal"><h2>${escapeHtml(t.continueTitle)}</h2>${links.map((key) => `<a href="${urlFor(route.lang, key)}">${escapeHtml(pageLabel(key, route.lang))}</a>`).join("")}</section>`;
+}
+
+function designConceptBridge(route) {
+  const lang = route.lang;
+  return `<section class="cta design-concept-bridge"><p class="eyebrow">${escapeHtml(localized("Fixed-price starting point", lang))}</p><h2>${escapeHtml(localized("Start with a Design Concept", lang))}</h2><p>${escapeHtml(localized("Before investing in custom fabrication, cabinetry or installation, start with a clear design direction, transparent starting price and practical next-step guidance.", lang))}</p><div class="actions"><a class="button primary track" data-event="design_concept_bridge_clicked" href="${urlFor(lang, "designConcept")}">${escapeHtml(localized("Get a Fixed-Price Concept", lang))}</a><a class="button secondary track" data-event="full_project_review_clicked" href="${urlFor(lang, "consultation")}">${escapeHtml(localized("Request Full Project Review", lang))}</a></div></section>`;
+}
+
+function serviceCtaSection(route, label) {
+  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Start with clarity", route.lang))}</p><h2>${escapeHtml(localized("Begin with a design concept or request a full project review", route.lang))}</h2><p>${escapeHtml(localized("A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.", route.lang))}</p><div class="actions"><a class="button primary track" data-event="design_concept_service_cta_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Start with a Design Concept", route.lang))}</a><a class="button secondary track" data-event="full_project_review_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(localized("Request Full Project Review", route.lang))}</a></div></section>`;
+}
+
+function designConceptText(lang) {
+  const shared = {
+    heroTitle: "Get a Premium Interior Design Concept Before You Commit to Fabrication",
+    heroText: "Upload photos of your room, wall, closet, kitchen or built-in area. CAS AURUM will prepare a clear design direction with materials, layout ideas and next-step budget guidance.",
+    packagesTitle: "Choose Your Package",
+    packagesText: "Select the level of detail you need now. You can begin with a visual concept and upgrade to a preliminary technical package or realization review when the scope is ready.",
+    pricingTitle: "Transparent Starting Prices",
+    pricingText: "Final pricing depends on complexity, number of zones, level of detail and whether technical documentation is required.",
+    processTitle: "How It Works",
+    formTitle: "Start Your Design Concept",
+    formIntro: "Choose a package, share the space, upload photos and describe the direction you want CAS AURUM to review.",
+    submit: "Submit Project for Review",
+    checkoutHint: "Online checkout for fixed-price concept packages can be added in the next step.",
+  };
+  const localizedCopy = {
+    en: {
+      heroEyebrow: "Design Concept Packages",
+      heroPrimary: "Start Design Concept",
+      heroSecondary: "Compare Packages",
+      heroCaption: "A concept-first path for media walls, closets, kitchens, built-ins and refined room directions.",
+      positioningEyebrow: "Low-risk beginning",
+      positioningTitle: "Before fabrication, clarify the design direction",
+      positioningText: "Before investing in custom fabrication, cabinetry or installation, start with a clear design direction. Our concept packages help homeowners, designers and builders understand the visual potential, material direction and approximate project path.",
+      packagesEyebrow: "Service levels",
+      pricingEyebrow: "Pricing transparency",
+      processEyebrow: "Process",
+      formEyebrow: "Project intake",
+      faqTitle: "Frequently Asked Questions",
+      continueTitle: "Continue exploring CAS AURUM",
+      formSteps: {
+        package: "Choose your package",
+        project: "Select project type",
+        contact: "Contact and location",
+        files: "Upload photos",
+        dimensions: "Share dimensions",
+        details: "Budget, timeline and description",
+      },
+      fields: designConceptFieldLabels("en"),
+      selectionLabels: { price: "Selected price", timeline: "Execution time", pay: "Pay / reserve package", paymentPending: "Payment link is prepared for this package and appears here once checkout is configured." },
+      packageHelp: {
+        design_concept: "Photos are required. Measurements are optional for a visual concept.",
+        design_technical: "Dimensions are required for a technical package.",
+        realization_review: "Realization is reviewed individually based on location, scope and availability.",
+      },
+      dimensionsHint: {
+        design_concept: "For a visual concept, add length, width/depth and height only if you already have them.",
+        design_technical: "Dimensions and ceiling height are required for technical package review.",
+        realization_review: "Dimensions are recommended. Location, budget and desired timeline are required for realization review.",
+      },
+      fileHint: "Project photos are required so CAS AURUM can see the actual wall, room, closet, kitchen or built-in area. Inspiration images are optional.",
+      consent: "I agree that CAS AURUM may contact me about this design concept request.",
+      packageOptions: [["design_concept", "Design Concept"], ["design_technical", "Design + Technical Package"], ["realization_review", "Design + Realization Review"]],
+      projectTypeOptions: designConceptProjectOptions("en"),
+      styleOptions: designConceptStyleOptions("en"),
+      timelineOptions: designConceptTimelineOptions("en"),
+      budgetOptions: designConceptBudgetOptions("en"),
+      packages: designConceptPackagesData("en"),
+      pricing: designConceptPricingData("en"),
+      steps: ["Upload photos", "Choose your package", "Share dimensions if technical package is needed", "CAS AURUM prepares your concept", "Review your design direction", "Upgrade to technical package or realization if needed"],
+      stepText: ["Send the room, wall, closet, kitchen or built-in area from the angles that show proportion and constraints.", "Pick a concept, technical package or realization review depending on the decision you need next.", "Technical packages need dimensions so the layout, panel direction and notes can be more useful.", "CAS AURUM studies the room, materials, style direction and approximate project path.", "Receive a clear visual and written direction for the next conversation.", "Move from concept to preliminary technical planning or selected realization review when appropriate."],
+      faq: designConceptFaqData("en"),
+    },
+    es: {
+      heroEyebrow: "Paquetes de concepto",
+      heroPrimary: "Iniciar concepto",
+      heroSecondary: "Comparar paquetes",
+      heroCaption: "Un inicio claro para media walls, closets, cocinas, built-ins y espacios premium.",
+      positioningEyebrow: "Inicio de bajo riesgo",
+      positioningTitle: "Antes de fabricar, aclare la direccion",
+      positioningText: "Antes de invertir en fabricacion, cabinetry o instalacion, comience con una direccion de diseno clara. Los paquetes ayudan a propietarios, designers y builders a entender potencial visual, materiales y siguiente paso.",
+      packagesEyebrow: "Niveles de servicio",
+      pricingEyebrow: "Precios transparentes",
+      processEyebrow: "Proceso",
+      formEyebrow: "Intake de proyecto",
+      faqTitle: "Preguntas frecuentes",
+      continueTitle: "Seguir explorando CAS AURUM",
+      formSteps: { package: "Elegir paquete", project: "Tipo de proyecto", contact: "Contacto y ubicacion", files: "Subir fotos", dimensions: "Compartir medidas", details: "Presupuesto, plazo y descripcion" },
+      fields: designConceptFieldLabels("es"),
+      selectionLabels: { price: "Precio seleccionado", timeline: "Tiempo de entrega", pay: "Pagar / reservar paquete", paymentPending: "El link de pago aparecera aqui cuando checkout este configurado." },
+      packageHelp: { design_concept: "Las fotos son obligatorias. Las medidas son opcionales para concepto visual.", design_technical: "Las dimensiones son obligatorias para el paquete tecnico.", realization_review: "La realizacion se revisa individualmente segun ubicacion, alcance y disponibilidad." },
+      dimensionsHint: { design_concept: "Para concepto visual, agregue largo, ancho/profundidad y altura solo si ya los tiene.", design_technical: "Dimensiones y altura de techo son obligatorias para revision tecnica.", realization_review: "Las dimensiones son recomendadas. Ubicacion, presupuesto y plazo son obligatorios." },
+      fileHint: "Las fotos del proyecto son obligatorias. Las referencias visuales son opcionales.",
+      consent: "Acepto que CAS AURUM me contacte sobre esta solicitud.",
+      packageOptions: [["design_concept", "Design Concept"], ["design_technical", "Design + Technical Package"], ["realization_review", "Design + Realization Review"]],
+      projectTypeOptions: designConceptProjectOptions("es"),
+      styleOptions: designConceptStyleOptions("es"),
+      timelineOptions: designConceptTimelineOptions("es"),
+      budgetOptions: designConceptBudgetOptions("es"),
+      packages: designConceptPackagesData("es"),
+      pricing: designConceptPricingData("es"),
+      steps: ["Subir fotos", "Elegir paquete", "Compartir medidas si necesita paquete tecnico", "CAS AURUM prepara el concepto", "Revisar la direccion", "Subir a paquete tecnico o realizacion si hace falta"],
+      stepText: ["Comparta fotos que muestren proporciones y restricciones.", "Elija el nivel que corresponde a la decision siguiente.", "Los paquetes tecnicos necesitan medidas para ser utiles.", "CAS AURUM estudia espacio, materiales y estilo.", "Reciba una direccion clara para avanzar.", "Puede pasar a tecnica preliminar o revision de realizacion."],
+      faq: designConceptFaqData("es"),
+    },
+    fr: {
+      heroEyebrow: "Forfaits concept",
+      heroPrimary: "Demarrer le concept",
+      heroSecondary: "Comparer les forfaits",
+      heroCaption: "Un depart clair pour murs media, dressings, cuisines, integres et espaces premium.",
+      positioningEyebrow: "Depart a faible risque",
+      positioningTitle: "Avant fabrication, clarifiez la direction",
+      positioningText: "Avant d'investir dans fabrication, cabinetry ou installation, commencez par une direction de design claire. Les forfaits aident proprietaires, designers et builders a comprendre potentiel visuel, matieres et prochaine etape.",
+      packagesEyebrow: "Niveaux de service",
+      pricingEyebrow: "Prix transparents",
+      processEyebrow: "Processus",
+      formEyebrow: "Intake projet",
+      faqTitle: "Questions frequentes",
+      continueTitle: "Continuer avec CAS AURUM",
+      formSteps: { package: "Choisir le forfait", project: "Type de projet", contact: "Contact et lieu", files: "Ajouter photos", dimensions: "Partager dimensions", details: "Budget, calendrier et description" },
+      fields: designConceptFieldLabels("fr"),
+      selectionLabels: { price: "Prix selectionne", timeline: "Delai", pay: "Payer / reserver", paymentPending: "Le lien de paiement apparaitra ici lorsque le checkout sera configure." },
+      packageHelp: { design_concept: "Les photos sont obligatoires. Les dimensions sont optionnelles pour un concept visuel.", design_technical: "Les dimensions sont obligatoires pour un forfait technique.", realization_review: "La realisation est examinee individuellement selon lieu, portee et disponibilite." },
+      dimensionsHint: { design_concept: "Pour un concept visuel, ajoutez longueur, largeur/profondeur et hauteur seulement si vous les avez.", design_technical: "Dimensions et hauteur sous plafond sont obligatoires pour la revue technique.", realization_review: "Dimensions recommandees. Lieu, budget et calendrier sont obligatoires." },
+      fileHint: "Les photos du projet sont obligatoires. Les images d'inspiration sont optionnelles.",
+      consent: "J'accepte que CAS AURUM me contacte au sujet de cette demande.",
+      packageOptions: [["design_concept", "Design Concept"], ["design_technical", "Design + Technical Package"], ["realization_review", "Design + Realization Review"]],
+      projectTypeOptions: designConceptProjectOptions("fr"),
+      styleOptions: designConceptStyleOptions("fr"),
+      timelineOptions: designConceptTimelineOptions("fr"),
+      budgetOptions: designConceptBudgetOptions("fr"),
+      packages: designConceptPackagesData("fr"),
+      pricing: designConceptPricingData("fr"),
+      steps: ["Ajouter photos", "Choisir le forfait", "Partager dimensions si le forfait technique est necessaire", "CAS AURUM prepare le concept", "Revoir la direction", "Passer a technique ou realisation si necessaire"],
+      stepText: ["Montrez proportions et contraintes.", "Choisissez le niveau adapte.", "La technique demande des dimensions.", "CAS AURUM etudie espace, matieres et style.", "Recevez une direction claire.", "Passez a la suite si le projet le demande."],
+      faq: designConceptFaqData("fr"),
+    },
+    ru: {
+      heroEyebrow: "Пакеты дизайн-концепта",
+      heroPrimary: "Начать дизайн-концепт",
+      heroSecondary: "Сравнить пакеты",
+      heroCaption: "Понятный старт для media walls, closets, kitchens, built-ins и премиальных комнат.",
+      positioningEyebrow: "Низкий риск старта",
+      positioningTitle: "До производства уточните дизайн-направление",
+      positioningText: "Перед инвестициями в custom fabrication, cabinetry или установку начните с ясного дизайн-направления. Пакеты помогают владельцам, дизайнерам и строителям понять визуальный потенциал, материалы и примерный путь проекта.",
+      packagesEyebrow: "Уровни сервиса",
+      pricingEyebrow: "Прозрачные стартовые цены",
+      processEyebrow: "Процесс",
+      formEyebrow: "Заявка по проекту",
+      faqTitle: "Частые вопросы",
+      continueTitle: "Продолжить изучение CAS AURUM",
+      formSteps: { package: "Выберите пакет", project: "Тип проекта", contact: "Контакт и локация", files: "Загрузите фото", dimensions: "Укажите размеры", details: "Бюджет, сроки и описание" },
+      fields: designConceptFieldLabels("ru"),
+      selectionLabels: { price: "Выбранная цена", timeline: "Срок выполнения", pay: "Оплатить / забронировать пакет", paymentPending: "Ссылка на оплату появится здесь, когда checkout будет подключен для выбранного пакета." },
+      packageHelp: { design_concept: "Фото обязательны. Размеры для визуального концепта необязательны.", design_technical: "Для technical package размеры обязательны.", realization_review: "Realization рассматривается индивидуально по локации, scope и доступности." },
+      dimensionsHint: { design_concept: "Для визуального концепта укажите длину, ширину/глубину и высоту только если они уже есть.", design_technical: "Для technical package обязательны длина, ширина/глубина и высота/высота потолка.", realization_review: "Размеры рекомендуются. Локация, бюджет и желаемые сроки обязательны." },
+      fileHint: "Фото проекта обязательны, чтобы CAS AURUM видел реальную стену, комнату, closet, kitchen или built-in зону. Референсы необязательны.",
+      consent: "Я согласен, что CAS AURUM может связаться со мной по этой заявке.",
+      packageOptions: [["design_concept", "Design Concept"], ["design_technical", "Design + Technical Package"], ["realization_review", "Design + Realization Review"]],
+      projectTypeOptions: designConceptProjectOptions("ru"),
+      styleOptions: designConceptStyleOptions("ru"),
+      timelineOptions: designConceptTimelineOptions("ru"),
+      budgetOptions: designConceptBudgetOptions("ru"),
+      packages: designConceptPackagesData("ru"),
+      pricing: designConceptPricingData("ru"),
+      steps: ["Загрузить фото", "Выбрать пакет", "Передать размеры, если нужен technical package", "CAS AURUM готовит концепт", "Рассмотреть дизайн-направление", "Перейти к technical package или realization review"],
+      stepText: ["Покажите пространство и ограничения.", "Выберите уровень детализации.", "Technical package требует размеров.", "CAS AURUM изучает пространство, материалы и стиль.", "Получите понятное направление.", "При необходимости переходите на следующий уровень."],
+      faq: designConceptFaqData("ru"),
+    },
+  };
+  return { ...shared, ...(localizedCopy[lang] || localizedCopy.en) };
+}
+
+function designConceptFieldLabels(lang) {
+  const labels = {
+    en: { packageType: "Package type", projectType: "Project type", clientName: "Name", email: "Email", phone: "Phone (optional)", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height" },
+    es: { packageType: "Tipo de paquete", projectType: "Tipo de proyecto", clientName: "Nombre", email: "Email", phone: "Telefono (opcional)", location: "Ubicacion del proyecto", description: "Descripcion del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imagenes de inspiracion (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo" },
+    fr: { packageType: "Type de forfait", projectType: "Type de projet", clientName: "Nom", email: "Email", phone: "Telephone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaite", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond" },
+    ru: { packageType: "Тип пакета", projectType: "Тип проекта", clientName: "Имя", email: "Email", phone: "Телефон (optional)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (optional)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка" },
+  };
+  return labels[lang] || labels.en;
+}
+
+function designConceptProjectOptions(lang) {
+  return [["media_wall", "Media wall"], ["closet_wardrobe", "Closet / wardrobe"], ["kitchen", "Kitchen"], ["wall_panels", "Wall panels"], ["built_ins", "Built-ins"], ["bathroom", "Bathroom"], ["bedroom", "Bedroom"], ["living_room", "Living room"], ["office_library", "Office / library"], ["whole_space", "Whole space"], ["other", "Other"]];
+}
+
+function designConceptStyleOptions(lang) {
+  return [["quiet_luxury", "Quiet luxury"], ["modern_warm", "Modern warm"], ["classic_luxury", "Classic luxury"], ["minimal", "Minimal"], ["dark_noir", "Dark noir"], ["natural_wood", "Natural wood"], ["not_sure", "Not sure"]];
+}
+
+function designConceptTimelineOptions(lang) {
+  return [["asap", "ASAP"], ["1_3_months", "1-3 months"], ["3_6_months", "3-6 months"], ["planning_only", "Planning only"]];
+}
+
+function designConceptBudgetOptions(lang) {
+  return [["under_10k", "Under $10k"], ["10_25k", "$10k-$25k"], ["25_50k", "$25k-$50k"], ["50_100k", "$50k-$100k"], ["100k_plus", "$100k+"], ["not_sure", "Not sure"]];
+}
+
+function designConceptPackagesData(lang) {
+  const labels = {
+    inputsTitle: "Required inputs",
+    deliverablesTitle: "Deliverables",
+    timelineTitle: "Timeline",
+  };
+  return [
+    { value: "design_concept", kicker: "Level 1", title: "Design Concept", price: "From $450", bestFor: "Best for a clear visual direction before committing to fabrication.", inputsTitle: labels.inputsTitle, inputs: "Photos required; inspiration and approximate dimensions optional.", deliverablesTitle: labels.deliverablesTitle, deliverables: "1-2 design directions, material mood direction, basic layout idea, style notes, preliminary budget range and PDF-style concept brief.", timelineTitle: labels.timelineTitle, timeline: "3-5 business days", cta: "Start Design Concept" },
+    { value: "design_technical", kicker: "Level 2", title: "Design + Technical Package", price: "From $1,200", bestFor: "Best when measurements and implementation planning need to start taking shape.", inputsTitle: labels.inputsTitle, inputs: "Photos, dimensions, ceiling height where relevant, wishes and inspiration.", deliverablesTitle: labels.deliverablesTitle, deliverables: "Refined concept, dimensions-based layout, material direction, preliminary cut-list or panel breakdown direction where applicable, fabrication notes, hardware and lighting notes.", timelineTitle: labels.timelineTitle, timeline: "7-14 business days", cta: "Request Technical Package" },
+    { value: "realization_review", kicker: "Level 3", title: "Design + Realization", price: "Custom estimate", bestFor: "Available for selected projects in Atlanta and by special arrangement in other locations.", inputsTitle: labels.inputsTitle, inputs: "Photos required; dimensions recommended; location, budget and desired fabrication or installation timeline required.", deliverablesTitle: labels.deliverablesTitle, deliverables: "Site visit if available, final design, fabrication coordination, materials, installation or project realization review.", timelineTitle: labels.timelineTitle, timeline: "Reviewed individually", cta: "Request Realization Review" },
+  ];
+}
+
+function designConceptPricingData(lang) {
+  return [
+    { title: "Single Wall / Media Wall Concept", price: "from $450", timeline: "3-5 business days" },
+    { title: "Closet / Wardrobe Concept", price: "from $650", timeline: "3-5 business days" },
+    { title: "Room Concept", price: "from $850", timeline: "4-6 business days" },
+    { title: "Kitchen / Complex Built-in Concept", price: "from $1,200", timeline: "5-7 business days" },
+    { title: "Technical Package", price: "from $1,200-$2,500+", timeline: "7-14 business days" },
+    { title: "Realization", price: "custom estimate", timeline: "reviewed individually" },
+  ];
+}
+
+function designConceptFaqData(lang) {
+  const en = [
+    ["What photos should I upload?", "Upload wide photos of the full room or wall, closer shots of corners and obstacles, ceiling and floor transitions, existing cabinetry or AV equipment, and any inspiration images that show the feeling you want."],
+    ["Do I need exact measurements?", "For a Level 1 Design Concept, measurements are helpful but not required. For a Design + Technical Package, dimensions and ceiling height are required so the layout and preliminary technical notes can be useful."],
+    ["Can I order only a design concept without fabrication?", "Yes. The Design Concept package is built as a standalone low-risk first step before any fabrication, cabinetry or installation commitment."],
+    ["Can the concept fee be credited toward a larger project?", "For selected larger projects, CAS AURUM may review a concept credit toward a technical package or realization scope. This is confirmed in writing after project review."],
+    ["What is included in the technical package?", "This package may include layout direction, preliminary fabrication notes, material planning and cut-list direction where applicable. It is not a substitute for licensed architectural, structural or code-required engineering documents."],
+    ["Is this a stamped architectural or engineering document?", "No. The technical package is a preliminary technical package for design and fabrication direction. It is not stamped architecture, structural engineering or code-required documentation."],
+    ["Can CAS AURUM fabricate and install the project?", "Design + Realization is available for selected projects in Atlanta and by special arrangement in other locations. Each project is reviewed by location, scope, budget, schedule and availability."],
+    ["How fast will I receive my concept?", "Most Level 1 concepts are prepared in 3-5 business days. Room concepts, kitchens and complex built-ins can take 4-7 business days. Technical packages usually take 7-14 business days."],
+    ["Can designers/builders use this service for their clients?", "Yes. Designers and builders can submit photos, plans, measurements, inspiration and client goals to clarify visual direction or prepare a preliminary technical package."],
+  ];
+  return en;
+}
+
+function designConceptOptionSet(options) {
+  return options.map(([value, label]) => ({ value, label }));
+}
+
+function fileInput(label, name, required) {
+  return `<label>${escapeHtml(label)}<input type="file" name="${name}" ${required ? "required" : ""} multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>`;
 }
 
 function technicalPlannerPage(route) {
@@ -2479,7 +3146,7 @@ function technicalPlannerPage(route) {
       </div>
       <div class="planner-surface">
         <div>
-          <h2>${escapeHtml(localized("Visualization surface", lang))}</h2>
+          <h2>${escapeHtml(localized("Planning surface", lang))}</h2>
           <p>${escapeHtml(localized("Set the approximate wall, niche, room zone or furniture footprint before adding modules.", lang))}</p>
         </div>
         <label>${escapeHtml(localized("Type", lang))}<select data-surface-kind><option value="plane">Plane / wall surface</option><option value="room">Room / zone</option></select></label>
@@ -2615,6 +3282,7 @@ function programmaticPage(route, page) {
     ${programmaticAreas(page, route.lang)}
     ${programmaticMedia(page, route.lang)}
     ${programmaticInternalLinks(route, page)}
+    ${designConceptBridge(route)}
     ${programmaticFaq(page)}
     <section class="two-col">
       <div>
@@ -2650,10 +3318,11 @@ function casaurumSeoPageTemplate(route, page) {
     <section class="seo-sections">
       ${page.sections.map((section) => `<article><h2>${escapeHtml(section.heading)}</h2><p>${escapeHtml(section.body)}</p></article>`).join("")}
     </section>
-    ${page.pageType === "room" ? relatedCompletedWorkSection(route, page) : ""}
-    ${page.pageType === "hub" && page.path === "/rooms" ? roomsCompletedProjectsSection(route) : ""}
-    ${relatedCasaurumSection(route, page)}
-    <section class="faq"><h2>${escapeHtml(localized("Frequently Asked Questions", lang))}</h2>${page.faq.map((item) => `<details><summary>${escapeHtml(item.q)}</summary><p>${escapeHtml(item.a)}</p></details>`).join("")}</section>
+	    ${page.pageType === "room" ? relatedCompletedWorkSection(route, page) : ""}
+	    ${page.pageType === "hub" && page.path === "/rooms" ? roomsCompletedProjectsSection(route) : ""}
+	    ${relatedCasaurumSection(route, page)}
+	    ${designConceptBridge(route)}
+	    <section class="faq"><h2>${escapeHtml(localized("Frequently Asked Questions", lang))}</h2>${page.faq.map((item) => `<details><summary>${escapeHtml(item.q)}</summary><p>${escapeHtml(item.a)}</p></details>`).join("")}</section>
     <section class="two-col">
       <div>
         <p class="eyebrow">${escapeHtml(BRAND)}</p>
@@ -2669,26 +3338,31 @@ function relatedCompletedWorkSection(route, page) {
   const files = (page.relatedProjects || []).filter(Boolean);
   if (!files.length) return "";
   const gallery = projectsGalleryText(route.lang);
-  const heading = page.relatedProjectsTitle || localized("Related Completed Work", route.lang);
+  const heading = page.relatedProjectsTitle || localized("Related completed projects", route.lang);
+  const body = page.relatedProjectsBody || localized("Completed project images are shown here to connect room planning with real custom work, materials and site-built details.", route.lang);
   const cards = files.map((file, index) => relatedProjectCard(route, file, index, gallery)).join("");
-  return `<section class="seo-copy wide"><p class="eyebrow">${escapeHtml(galleryStatusLabel(route.lang, "completed"))}</p><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(localized("Completed project images are shown here to connect room planning with real custom work, materials and site-built details.", route.lang))}</p></section><section class="concept-grid related-projects">${cards}</section>`;
+  return `<section class="seo-copy wide"><p class="eyebrow">${escapeHtml(localized("Completed Work", route.lang))}</p><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></section><section class="concept-grid related-projects">${cards}</section>`;
 }
 
 function relatedProjectCard(route, file, index, gallery) {
-  const project = completedProjectItems.find((item) => item.file === file);
-  const title = project ? localizedText(project.title, route.lang) : file.replace(/^cas-aurum-/, "").replace(/\.webp$/, "").replaceAll("-", " ");
-  const categoryIndex = project ? completedProjectCategoryKeys.indexOf(project.categoryKey) + 1 : 0;
-  const category = gallery.categories[categoryIndex] || gallery.categories[0];
+  const project = completedProjectByFile(file) || completedProjectItems[index % Math.max(completedProjectItems.length, 1)];
+  const title = project ? completedProjectTitle(project, route.lang) : file.replace(/^cas-aurum-/, "").replace(/\.webp$/, "").replaceAll("-", " ");
+  const category = project ? completedProjectCategory(project, route.lang) : gallery.title;
+  const room = project ? completedProjectRoom(project, route.lang) : localized("Completed Work", route.lang);
+  const width = project?.width || 1448;
+  const height = project?.height || 1086;
+  const src = project?.src || `/images/projects/${file}`;
   return `<article class="concept-card">
     <figure class="concept-media">
-      <img src="/images/projects/${escapeHtml(file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, category))}" loading="${index === 0 ? "eager" : "lazy"}" decoding="async" width="1536" height="1024">
+      <img src="${escapeHtml(src)}" alt="${escapeHtml(completedProjectAlt(route.lang, project, title, category))}" loading="${index === 0 ? "eager" : "lazy"}" decoding="async" width="${width}" height="${height}">
       <figcaption class="project-caption"><strong>${escapeHtml(category)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption>
     </figure>
     <div>
       ${galleryStatusPill(route.lang, "completed")}
-      <span>${escapeHtml(category)}</span>
+      <span>${escapeHtml(category)} · ${escapeHtml(room)}</span>
       <h3>${escapeHtml(title)}</h3>
-      <p>${escapeHtml(completedProjectCaption(route.lang, category))}</p>
+      <p>${escapeHtml(completedProjectCaption(route.lang, project, category))}</p>
+      ${projectContextLink(route, project)}
       <a class="button secondary card-cta" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("View Related Projects", route.lang))}</a>
     </div>
   </article>`;
@@ -2697,19 +3371,22 @@ function relatedProjectCard(route, file, index, gallery) {
 function roomsCompletedProjectsSection(route) {
   const gallery = projectsGalleryText(route.lang);
   const groups = [
-    ["bathroom", "cas-aurum-luxury-marble-bathroom-freestanding-tub.webp"],
-    ["kitchen", "cas-aurum-white-custom-kitchen-cabinetry-wood-beams.webp"],
-    ["livingRoom", "cas-aurum-vaulted-living-room-built-ins-fireplace.webp"],
-    ["bedroom", "cas-aurum-built-in-window-bench-wall-paneling.webp"],
-    ["walkInCloset", "cas-aurum-custom-laundry-room-stacked-washer-cabinetry.webp"],
+    ["bathroom", "cas-aurum-premium-fluted-stone-bathroom-vanity.webp"],
+    ["kitchen", "cas-aurum-premium-ivory-kitchen-cabinetry-brass-hardware.webp"],
+    ["livingRoom", "cas-aurum-premium-wood-stone-tv-wall-unit-led-lighting.webp"],
+    ["library", "cas-aurum-premium-walnut-built-in-bookcase-library-wall.webp"],
+    ["office", "cas-aurum-premium-executive-office-lounge-wall-millwork.webp"],
   ];
   const cards = groups.map(([labelKey, file], index) => {
-    const project = completedProjectItems.find((item) => item.file === file);
-    const title = project ? localizedText(project.title, route.lang) : labelKey;
+    const project = completedProjectByFile(file) || completedProjectItems[index % Math.max(completedProjectItems.length, 1)];
+    const title = project ? completedProjectTitle(project, route.lang) : labelKey;
     const roomLabel = roomProjectLabel(route.lang, labelKey);
+    const src = project?.src || `/images/projects/${file}`;
+    const width = project?.width || 1448;
+    const height = project?.height || 1086;
     return `<article class="concept-card">
-      <figure class="concept-media"><img src="/images/projects/${escapeHtml(file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, roomLabel))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1536" height="1024"><figcaption class="project-caption"><strong>${escapeHtml(roomLabel)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption></figure>
-      <div>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(roomLabel)}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(completedProjectCaption(route.lang, roomLabel))}</p><a class="button secondary card-cta" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("Explore Completed Work", route.lang))}</a></div>
+      <figure class="concept-media"><img src="${escapeHtml(src)}" alt="${escapeHtml(completedProjectAlt(route.lang, project, title, roomLabel))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="${width}" height="${height}"><figcaption class="project-caption"><strong>${escapeHtml(roomLabel)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption></figure>
+      <div>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(roomLabel)}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(completedProjectCaption(route.lang, project, roomLabel))}</p>${projectContextLink(route, project)}<a class="button secondary card-cta" href="${urlFor(route.lang, "projects")}">${escapeHtml(localized("Explore Completed Work", route.lang))}</a></div>
     </article>`;
   }).join("");
   return `<section class="seo-copy wide"><p class="eyebrow">${escapeHtml(galleryStatusLabel(route.lang, "completed"))}</p><h2>${escapeHtml(localized("Explore Completed Projects by Room", route.lang))}</h2><p>${escapeHtml(gallery.microcopy)}</p></section><section class="concept-grid related-projects">${cards}</section>`;
@@ -2717,10 +3394,10 @@ function roomsCompletedProjectsSection(route) {
 
 function roomProjectLabel(lang, key) {
   const labels = {
-    en: { bathroom: "Bathroom", kitchen: "Kitchen", livingRoom: "Living Room", bedroom: "Bedroom", walkInCloset: "Walk-In Closet" },
-    es: { bathroom: "Baño", kitchen: "Cocina", livingRoom: "Sala", bedroom: "Dormitorio", walkInCloset: "Vestidor" },
-    fr: { bathroom: "Salle de bain", kitchen: "Cuisine", livingRoom: "Salon", bedroom: "Chambre", walkInCloset: "Dressing" },
-    ru: { bathroom: "Ванная", kitchen: "Кухня", livingRoom: "Гостиная", bedroom: "Спальня", walkInCloset: "Гардеробная" },
+    en: { bathroom: "Bathroom", kitchen: "Kitchen", livingRoom: "Living Room", library: "Library", office: "Office", homeOffice: "Home Office" },
+    es: { bathroom: "Baño", kitchen: "Cocina", livingRoom: "Sala", library: "Biblioteca", office: "Oficina", homeOffice: "Oficina en casa" },
+    fr: { bathroom: "Salle de bain", kitchen: "Cuisine", livingRoom: "Salon", library: "Bibliothèque", office: "Bureau", homeOffice: "Bureau à domicile" },
+    ru: { bathroom: "Ванная", kitchen: "Кухня", livingRoom: "Гостиная", library: "Библиотека", office: "Офис", homeOffice: "Домашний офис" },
   };
   return labels[lang]?.[key] || labels.en[key] || key;
 }
@@ -2949,7 +3626,7 @@ function projectsPage(route) {
     </section>
     ${projectCategoryChips(route, gallery)}
     <section class="concept-grid" id="selected-work">${completedProjectItems.map((project, index) => projectGalleryCard(route, project, index, gallery)).join("")}</section>
-    <section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(gallery.requestTitle)}</h2><p>${escapeHtml(gallery.requestText)}</p><a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(gallery.primaryCta)}</a></section>
+	    <section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(gallery.requestTitle)}</h2><p>${escapeHtml(gallery.requestText)}</p><div class="actions"><a class="button primary track" data-event="design_concept_gallery_cta_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Start with a Design Concept", route.lang))}</a><a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(gallery.primaryCta)}</a></div></section>
     ${projectsInternalLinks(route, gallery)}
     ${projectsFaqBlock(route, gallery)}
   `;
@@ -2960,46 +3637,56 @@ function projectsGalleryText(lang) {
 }
 
 function projectsHero(route, gallery) {
-  return `<section class="page-hero"><div><p class="eyebrow">${escapeHtml(BRAND)}</p><h1>${escapeHtml(gallery.title)}</h1><p class="lede">${escapeHtml(gallery.desc)}</p><p>${escapeHtml(gallery.microcopy)}</p><div class="actions"><a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(gallery.primaryCta)}</a><a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "collections")}">${escapeHtml(gallery.secondaryCta)}</a></div></div><figure>${img("premium-materials-closeup", route.lang, "eager")}<figcaption>${escapeHtml(caption("premium-materials-closeup", route.lang))}</figcaption></figure></section>`;
+  const heroProject = completedProjectItems[0];
+  const heroImage = heroProject
+    ? `<img src="${escapeHtml(heroProject.src)}" alt="${escapeHtml(completedProjectAlt(route.lang, heroProject, completedProjectTitle(heroProject, route.lang), completedProjectCategory(heroProject, route.lang)))}" loading="eager" fetchpriority="high" decoding="async" width="${heroProject.width}" height="${heroProject.height}">`
+    : img("premium-materials-closeup", route.lang, "eager");
+  const captionText = heroProject ? completedProjectCaption(route.lang, heroProject, completedProjectCategory(heroProject, route.lang)) : caption("premium-materials-closeup", route.lang);
+	  return `<section class="page-hero"><div><p class="eyebrow">${escapeHtml(BRAND)}</p><h1>${escapeHtml(gallery.title)}</h1><p class="lede">${escapeHtml(gallery.desc)}</p><p>${escapeHtml(gallery.microcopy)}</p><div class="actions"><a class="button primary track" data-event="design_concept_gallery_hero_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Get a Fixed-Price Concept", route.lang))}</a><a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "collections")}">${escapeHtml(gallery.secondaryCta)}</a></div></div><figure>${heroImage}<figcaption>${escapeHtml(captionText)}</figcaption></figure></section>`;
 }
 
 function projectCategoryChips(route, gallery) {
-  return `<section class="chip-row" aria-label="${escapeHtml(localized("Best project-fit scopes", route.lang))}">${gallery.categories.map((category, index) => `<a href="${index === 0 ? "#selected-work" : `#completed-category-${completedProjectCategoryKeys[index - 1]}`}" class="chip">${escapeHtml(category)}</a>`).join("")}</section>`;
+  return `<section class="chip-row" aria-label="${escapeHtml(localized("Best project-fit scopes", route.lang))}">${completedProjectCategories(route.lang).map((category) => `<a href="${category.href}" class="chip">${escapeHtml(category.label)}</a>`).join("")}</section>`;
 }
 
 function projectGalleryCard(route, project, index, gallery) {
-  const categoryIndex = completedProjectCategoryKeys.indexOf(project.categoryKey) + 1;
-  const category = gallery.categories[categoryIndex] || gallery.categories[0];
-  const title = localizedText(project.title, route.lang);
-  const href = urlFor(route.lang, "consultation");
+  const category = completedProjectCategory(project, route.lang);
+  const room = completedProjectRoom(project, route.lang);
+  const title = completedProjectTitle(project, route.lang);
+	  const href = urlFor(route.lang, "designConcept");
   const firstInCategory = completedProjectItems.findIndex((item) => item.categoryKey === project.categoryKey) === index;
   const id = firstInCategory ? `completed-category-${project.categoryKey}` : `project-card-${index + 1}`;
   return `<article class="concept-card" id="${id}">
     <figure class="concept-media">
-      <img src="/images/projects/${escapeHtml(project.file)}" alt="${escapeHtml(completedProjectAlt(route.lang, title, category))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1536" height="1024">
+      <img src="${escapeHtml(project.src)}" alt="${escapeHtml(completedProjectAlt(route.lang, project, title, category))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="${project.width}" height="${project.height}">
       <figcaption class="project-caption"><strong>${escapeHtml(category)}</strong>${galleryStatusPill(route.lang, "completed")}<span>${escapeHtml(title)}</span></figcaption>
     </figure>
     <div>
       ${galleryStatusPill(route.lang, "completed")}
-      <span>${escapeHtml(category)}</span>
+      <span>${escapeHtml(category)} · ${escapeHtml(room)}</span>
       <h3>${escapeHtml(title)}</h3>
-      <p>${escapeHtml(completedProjectCaption(route.lang, category))}</p>
+      <p>${escapeHtml(completedProjectCaption(route.lang, project, category))}</p>
+      ${projectContextLink(route, project)}
       <a class="button secondary card-cta" href="${href}">${escapeHtml(gallery.cardCta)}</a>
     </div>
   </article>`;
 }
 
-function completedProjectAlt(lang, title, category) {
+function completedProjectAlt(lang, project, title, category) {
+  const manifestAlt = localizedText(project?.alt, lang);
+  if (manifestAlt) return manifestAlt;
   const text = {
-    en: `${title}, completed Cas Aurum ${category} project.`,
-    es: `${title}: proyecto completado de Cas Aurum en ${category}.`,
-    fr: `${title} : projet réalisé Cas Aurum, ${category}.`,
-    ru: `${title}: выполненный проект Cas Aurum, категория ${category}.`,
+    en: `${title}, completed CAS AURUM ${category} project.`,
+    es: `${title}: proyecto realizado de CAS AURUM en ${category}.`,
+    fr: `${title} : projet réalisé CAS AURUM, ${category}.`,
+    ru: `${title}: выполненный проект CAS AURUM, категория ${category}.`,
   };
   return text[lang] || text.en;
 }
 
-function completedProjectCaption(lang, category) {
+function completedProjectCaption(lang, project, category) {
+  const manifestCaption = localizedText(project?.caption, lang);
+  if (manifestCaption) return manifestCaption;
   const text = {
     en: `Completed custom work in ${category}, planned around materials, proportions, fabrication details and site conditions.`,
     es: `Trabajo a medida completado en ${category}, planificado según materiales, proporciones, detalles de fabricación y condiciones del sitio.`,
@@ -3010,8 +3697,21 @@ function completedProjectCaption(lang, category) {
 }
 
 function projectsInternalLinks(route, gallery) {
-  const links = ["customFurniture", "mediaWalls", "customClosets", "builtIns", "wallPanels", "millwork", "collections", "trade", "consultation"];
-  return `<section class="internal"><h2>${escapeHtml(gallery.linksTitle)}</h2>${links.map((key) => `<a href="${urlFor(route.lang, key)}">${escapeHtml(pageLabel(key, route.lang))}</a>`).join("")}</section>`;
+  const links = [
+    { href: urlFor(route.lang, "mediaWalls"), label: pageLabel("mediaWalls", route.lang) },
+    { href: urlFor(route.lang, "builtIns"), label: pageLabel("builtIns", route.lang) },
+    { href: urlFor(route.lang, "customFurniture"), label: pageLabel("customFurniture", route.lang) },
+    { href: urlFor(route.lang, "millwork"), label: pageLabel("millwork", route.lang) },
+    { href: seoPageUrlFor(route.lang, "/rooms/living-room"), label: roomProjectLabel(route.lang, "livingRoom") },
+    { href: seoPageUrlFor(route.lang, "/rooms/kitchen"), label: roomProjectLabel(route.lang, "kitchen") },
+    { href: seoPageUrlFor(route.lang, "/rooms/bathroom"), label: roomProjectLabel(route.lang, "bathroom") },
+    { href: seoPageUrlFor(route.lang, "/rooms/home-office"), label: roomProjectLabel(route.lang, "homeOffice") },
+    { href: urlFor(route.lang, "collections"), label: pageLabel("collections", route.lang) },
+    { href: urlFor(route.lang, "trade"), label: pageLabel("trade", route.lang) },
+    { href: urlFor(route.lang, "contact"), label: pageLabel("contact", route.lang) },
+    { href: urlFor(route.lang, "consultation"), label: pageLabel("consultation", route.lang) },
+  ];
+  return `<section class="internal"><h2>${escapeHtml(gallery.linksTitle)}</h2>${links.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}</section>`;
 }
 
 function projectsFaqBlock(route, gallery) {
@@ -3259,27 +3959,28 @@ function footer(route) {
 
 function seoHeaderLinks(lang) {
   const labels = {
-    en: ["Interiors", "Completed Projects", "Collections", "Journal", "Contact", "Partner Login"],
-    es: ["Interiores", "Proyectos realizados", "Colecciones", "Revista", "Contacto", "Acceso Partners"],
-    fr: ["Intérieurs", "Projets réalisés", "Collections", "Journal", "Contact", "Accès Partenaire"],
-    ru: ["Интерьеры", "Выполненные проекты", "Коллекции", "Журнал", "Контакты", "Вход партнера"],
+    en: ["Interiors", "Design Concept", "Collections", "Completed Projects", "Journal", "Contact", "Partner Login"],
+    es: ["Interiores", "Concepto", "Colecciones", "Proyectos realizados", "Revista", "Contacto", "Acceso Partners"],
+    fr: ["Intérieurs", "Concept", "Collections", "Projets réalisés", "Journal", "Contact", "Accès Partenaire"],
+    ru: ["Интерьеры", "Дизайн-концепт", "Коллекции", "Выполненные проекты", "Журнал", "Контакты", "Вход партнера"],
   }[lang] || {};
   return [
     { href: `/${lang}/interiors`, label: labels[0] },
-    { href: urlFor(lang, "projects"), label: labels[1] },
+    { href: urlFor(lang, "designConcept"), label: labels[1] },
     { href: urlFor(lang, "collections"), label: labels[2] },
-    { href: `/${lang}/journal`, label: labels[3] },
-    { href: urlFor(lang, "contact"), label: labels[4] },
-    { href: "/crm-app", label: labels[5] },
+    { href: urlFor(lang, "projects"), label: labels[3] },
+    { href: `/${lang}/journal`, label: labels[4] },
+    { href: urlFor(lang, "contact"), label: labels[5] },
+    { href: "/crm-app", label: labels[6] },
   ];
 }
 
 function seoFooterColumns(lang, route = { key: "usa", path: "/" }) {
 	  const labels = {
-	    en: ["Custom scopes", "Interior styles", "Rooms", "Design cities", "Collections", "Journal", "Partnership"],
-	    es: ["Alcances a medida", "Estilos interiores", "Espacios", "Ciudades de diseño", "Colecciones", "Revista", "Partners"],
-	    fr: ["Portées sur mesure", "Styles intérieurs", "Pièces", "Villes design", "Collections", "Journal", "Partenariat"],
-	    ru: ["Кастомные задачи", "Стили интерьера", "Комнаты", "Города", "Коллекции", "Журнал", "Партнерство"],
+	    en: ["Custom scopes", "Interior styles", "Rooms", "Design cities", "Completed Work", "Collections", "Journal", "Partnership"],
+	    es: ["Alcances a medida", "Estilos interiores", "Espacios", "Ciudades de diseño", "Trabajos realizados", "Colecciones", "Revista", "Partners"],
+	    fr: ["Portées sur mesure", "Styles intérieurs", "Pièces", "Villes design", "Réalisations", "Collections", "Journal", "Partenariat"],
+	    ru: ["Кастомные задачи", "Стили интерьера", "Комнаты", "Города", "Выполненные работы", "Коллекции", "Журнал", "Партнерство"],
   }[lang] || {};
   const link = (path, label) => ({ href: `/${lang}${path}`, label });
   const footerLabel = (key) => ({
@@ -3287,40 +3988,41 @@ function seoFooterColumns(lang, route = { key: "usa", path: "/" }) {
       modern: "Modern", quietLuxury: "Quiet Luxury", organicModern: "Organic Modern", luxury: "Luxury",
       livingRoom: "Living Room", kitchen: "Kitchen", bedroom: "Bedroom", walkInCloset: "Walk-In Closet",
       villa: "Villa", penthouse: "Penthouse", mansion: "Mansion", privateResidence: "Private Residence",
-	      mediaWalls: "Custom Media Walls", builtIns: "Custom Built-Ins", customClosets: "Luxury Custom Closets", wallPanels: "Luxury Wall Panels",
+	      designConcept: "Design Concept Packages", mediaWalls: "Custom Media Walls", builtIns: "Custom Built-Ins", customClosets: "Luxury Custom Closets", wallPanels: "Luxury Wall Panels",
 	      planner: "Technical Millwork Planner", modernIdeas: "Modern Interior Design Ideas", quietLuxuryJournal: "Quiet Luxury", luxuryKitchens: "Luxury Kitchens", premiumMaterials: "Premium Materials", partnerProgram: "Partner Program", applyPartner: "Apply as Partner", trade: "For Designers & Builders",
     },
     es: {
       modern: "Moderno", quietLuxury: "Lujo discreto", organicModern: "Orgánico moderno", luxury: "Lujo",
       livingRoom: "Sala", kitchen: "Cocina", bedroom: "Dormitorio", walkInCloset: "Vestidor",
       villa: "Villa", penthouse: "Penthouse", mansion: "Mansión", privateResidence: "Residencia privada",
-	      mediaWalls: "Muros media a medida", builtIns: "Muebles integrados", customClosets: "Closets de lujo", wallPanels: "Paneles de lujo",
+	      designConcept: "Paquetes de concepto", mediaWalls: "Muros media a medida", builtIns: "Muebles integrados", customClosets: "Closets de lujo", wallPanels: "Paneles de lujo",
 	      planner: "Planificador Técnico de Carpintería", modernIdeas: "Ideas de Diseño Interior Moderno", quietLuxuryJournal: "Lujo discreto", luxuryKitchens: "Cocinas de Lujo", premiumMaterials: "Materiales Premium", partnerProgram: "Programa de Partners", applyPartner: "Aplicar como Partner", trade: "Diseñadores y Constructores",
     },
     fr: {
       modern: "Moderne", quietLuxury: "Luxe discret", organicModern: "Moderne organique", luxury: "Luxe",
       livingRoom: "Salon", kitchen: "Cuisine", bedroom: "Chambre", walkInCloset: "Dressing",
       villa: "Villa", penthouse: "Penthouse", mansion: "Manoir", privateResidence: "Résidence privée",
-	      mediaWalls: "Murs média sur mesure", builtIns: "Rangements intégrés", customClosets: "Dressings de luxe", wallPanels: "Panneaux de luxe",
+	      designConcept: "Forfaits concept", mediaWalls: "Murs média sur mesure", builtIns: "Rangements intégrés", customClosets: "Dressings de luxe", wallPanels: "Panneaux de luxe",
 	      planner: "Planificateur Technique de Menuiserie", modernIdeas: "Idées de Design Intérieur Moderne", quietLuxuryJournal: "Luxe discret", luxuryKitchens: "Cuisines de Luxe", premiumMaterials: "Matériaux Premium", partnerProgram: "Programme Partenaire", applyPartner: "Devenir Partenaire", trade: "Designers et Constructeurs",
     },
     ru: {
       modern: "Современный стиль", quietLuxury: "Тихая роскошь", organicModern: "Органический модерн", luxury: "Люкс",
       livingRoom: "Гостиная", kitchen: "Кухня", bedroom: "Спальня", walkInCloset: "Гардеробная",
       villa: "Вилла", penthouse: "Пентхаус", mansion: "Особняк", privateResidence: "Частная резиденция",
-	      mediaWalls: "Media стены на заказ", builtIns: "Встроенная мебель", customClosets: "Люксовые гардеробные", wallPanels: "Люксовые панели",
+	      designConcept: "Пакеты дизайн-концепта", mediaWalls: "Media стены на заказ", builtIns: "Встроенная мебель", customClosets: "Люксовые гардеробные", wallPanels: "Люксовые панели",
 	      planner: "Технический Конструктор Мебели", modernIdeas: "Идеи современного интерьера", quietLuxuryJournal: "Тихая роскошь", luxuryKitchens: "Люксовые кухни", premiumMaterials: "Премиальные материалы", partnerProgram: "Партнерская программа", applyPartner: "Стать партнером", trade: "Для дизайнеров и строителей",
     },
   }[lang]?.[key] || key);
   const cityLinks = regionCityLinks(lang, marketForRoute(route)).slice(0, 6);
   return [
-	    { title: labels[0], links: ["mediaWalls", "builtIns", "customClosets", "wallPanels"].map((key) => ({ href: urlFor(lang, key), label: footerLabel(key) })) },
+	    { title: labels[0], links: ["designConcept", "mediaWalls", "builtIns", "customClosets", "wallPanels"].map((key) => ({ href: urlFor(lang, key), label: footerLabel(key) })) },
 	    { title: labels[1], links: [link("/styles/modern", footerLabel("modern")), link("/styles/quiet-luxury", footerLabel("quietLuxury")), link("/styles/organic-modern", footerLabel("organicModern")), link("/styles/luxury", footerLabel("luxury"))] },
-	    { title: labels[2], links: [link("/rooms/living-room", footerLabel("livingRoom")), link("/rooms/kitchen", footerLabel("kitchen")), link("/rooms/bedroom", footerLabel("bedroom")), link("/rooms/walk-in-closet", footerLabel("walkInCloset"))] },
+    { title: labels[2], links: [link("/rooms/living-room", footerLabel("livingRoom")), link("/rooms/kitchen", footerLabel("kitchen")), link("/rooms/bedroom", footerLabel("bedroom")), link("/rooms/walk-in-closet", footerLabel("walkInCloset"))] },
     { title: labels[3], links: cityLinks },
-    { title: labels[4], links: [{ href: urlFor(lang, "projects"), label: pageLabel("projects", lang) }, ...collectionsData.slice(0, 3).map((collection) => ({ href: collectionUrlFor(lang, collection), label: collection.name.replace(" Collection", "") }))] },
-    { title: labels[5], links: [{ href: urlFor(lang, "planner"), label: footerLabel("planner") }, link("/journal/modern-interior-design-ideas", footerLabel("modernIdeas")), link("/journal/quiet-luxury-interior-design", footerLabel("quietLuxuryJournal")), link("/journal/luxury-kitchen-design-ideas", footerLabel("luxuryKitchens")), link("/journal/best-materials-for-premium-interiors", footerLabel("premiumMaterials"))] },
-    { title: labels[6], links: [{ href: urlFor(lang, "partners"), label: footerLabel("partnerProgram") }, { href: `${urlFor(lang, "partners")}#apply`, label: footerLabel("applyPartner") }, { href: urlFor(lang, "trade"), label: footerLabel("trade") }, { href: urlFor(lang, "planner"), label: footerLabel("planner") }] },
+    { title: labels[4], links: [{ href: urlFor(lang, "projects"), label: pageLabel("projects", lang) }] },
+    { title: labels[5], links: collectionsData.slice(0, 3).map((collection) => ({ href: collectionUrlFor(lang, collection), label: collection.name.replace(" Collection", "") })) },
+    { title: labels[6], links: [{ href: urlFor(lang, "planner"), label: footerLabel("planner") }, link("/journal/modern-interior-design-ideas", footerLabel("modernIdeas")), link("/journal/quiet-luxury-interior-design", footerLabel("quietLuxuryJournal")), link("/journal/luxury-kitchen-design-ideas", footerLabel("luxuryKitchens")), link("/journal/best-materials-for-premium-interiors", footerLabel("premiumMaterials"))] },
+    { title: labels[7], links: [{ href: urlFor(lang, "partners"), label: footerLabel("partnerProgram") }, { href: `${urlFor(lang, "partners")}#apply`, label: footerLabel("applyPartner") }, { href: urlFor(lang, "trade"), label: footerLabel("trade") }, { href: urlFor(lang, "planner"), label: footerLabel("planner") }] },
   ];
 }
 
@@ -3408,16 +4110,16 @@ function imageGallery(route, ids) {
 
 function internalLinks(route, key) {
   const map = {
-    wallPanels: ["mediaWalls", "customFurniture", "millwork", "measurement", "collections"],
-    customFurniture: ["customClosets", "builtIns", "mediaWalls", "millwork", "consultation", "collections"],
-    millwork: ["builtIns", "customClosets", "trade", "customFurniture", "consultation", "collections"],
-    solutions: ["mediaWalls", "customClosets", "builtIns", "customFurniture", "consultation", "collections"],
-    mediaWalls: ["wallPanels", "customFurniture", "builtIns", "consultation", "collections"],
-    builtIns: ["millwork", "customFurniture", "customClosets", "mediaWalls", "consultation"],
-    customClosets: ["customFurniture", "builtIns", "millwork", "consultation", "collections"],
-    trade: ["planner", "millwork", "builtIns", "mediaWalls", "consultation"],
-  };
-  const links = map[key] || ["trade", "customFurniture", "consultation", "collections"];
+	    wallPanels: ["designConcept", "projects", "mediaWalls", "customFurniture", "millwork", "measurement", "collections"],
+	    customFurniture: ["designConcept", "projects", "customClosets", "builtIns", "mediaWalls", "millwork", "consultation", "collections"],
+	    millwork: ["designConcept", "projects", "builtIns", "customClosets", "trade", "customFurniture", "consultation", "collections"],
+	    solutions: ["designConcept", "projects", "mediaWalls", "customClosets", "builtIns", "customFurniture", "consultation", "collections"],
+	    mediaWalls: ["designConcept", "projects", "wallPanels", "customFurniture", "builtIns", "consultation", "collections"],
+	    builtIns: ["designConcept", "projects", "millwork", "customFurniture", "customClosets", "mediaWalls", "consultation"],
+	    customClosets: ["designConcept", "projects", "customFurniture", "builtIns", "millwork", "consultation", "collections"],
+	    trade: ["designConcept", "projects", "planner", "millwork", "builtIns", "mediaWalls", "consultation"],
+	  };
+  const links = map[key] || ["projects", "trade", "customFurniture", "consultation", "collections"];
   return `<section class="internal"><h2>${escapeHtml(localized("Continue exploring", route.lang))}</h2>${links.map((k) => `<a href="${urlFor(route.lang, k)}">${escapeHtml(pageLabel(k, route.lang))}</a>`).join("")}</section>`;
 }
 
@@ -3942,6 +4644,21 @@ async function readJsonBody(request) {
   return JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
 }
 
+async function readRequestBuffer(request, maxBytes = 35 * 1024 * 1024) {
+  const chunks = [];
+  let total = 0;
+  for await (const chunk of request) {
+    total += chunk.length;
+    if (total > maxBytes) {
+      const error = new Error("Request body is too large.");
+      error.status = 413;
+      throw error;
+    }
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
 function parseCrmAppReminder(text) {
   const raw = String(text || "").trim();
   const [timePartRaw, ...contextParts] = raw.split(/\s+[—-]\s+|:\s+/);
@@ -4035,12 +4752,16 @@ function formSubmitLabel(lang, type) {
   return labels[type] || (type === "consultation" ? copy[lang].cta.consult : copy[lang].cta.measure);
 }
 
-function input(label, name, required, type = "text") {
-  return `<label>${escapeHtml(label)}<input type="${type}" name="${name}" ${required ? "required" : ""}></label>`;
+function input(label, name, required, type = "text", extraAttributes = "") {
+  return `<label>${escapeHtml(label)}<input type="${type}" name="${name}" ${required ? "required" : ""} ${extraAttributes}></label>`;
 }
 
 function select(label, name, options, required, selectedValue = "") {
   return `<label>${escapeHtml(label)}<select name="${name}" ${required ? "required" : ""}><option value=""></option>${options.map((o) => `<option${o === selectedValue ? " selected" : ""}>${escapeHtml(o)}</option>`).join("")}</select></label>`;
+}
+
+function selectWithValues(label, name, options, required, selectedValue = "", extraAttributes = "") {
+  return `<label>${escapeHtml(label)}<select name="${name}" ${required ? "required" : ""} ${extraAttributes}><option value=""></option>${options.map((option) => `<option value="${escapeHtml(option.value)}"${option.value === selectedValue ? " selected" : ""}>${escapeHtml(option.label)}</option>`).join("")}</select></label>`;
 }
 
 async function handleLead(request, response) {
@@ -4078,6 +4799,367 @@ async function handleLead(request, response) {
     return json(response, { ok: false, message: "Lead saved to fallback, but encrypted CRM insert failed.", id: lead.id, storage }, 502);
   }
   return json(response, { ok: true, id: lead.id, storage, plannerProject: publicPlannerProjectPayload(plannerProject) });
+}
+
+async function handleDesignConceptLead(request, response) {
+  const rateLimited = rateLimitSubmission(request, response);
+  if (rateLimited) return;
+
+  let parsed;
+  try {
+    parsed = await readDesignConceptLeadRequest(request);
+  } catch (error) {
+    return json(response, { ok: false, message: error.message || "Invalid design concept request." }, error.status || 400);
+  }
+  const payload = parsed.payload;
+  if (payload.website) return json(response, { ok: true, id: randomUUID() });
+
+  const normalized = normalizeDesignConceptLeadPayload(payload, request);
+  if (normalized.error) return json(response, { ok: false, message: normalized.error.message, missing: normalized.error.missing || [] }, normalized.error.status || 400);
+
+  const lead = normalized.lead;
+  if (parsed.files.length) {
+    lead.uploadedFiles = await saveDesignConceptUploadedFiles(lead.id, parsed.files);
+    lead.message = designConceptLeadSummary(lead);
+  }
+  const storage = await persistLead(lead);
+  await deliverLeadEmail(lead);
+  console.log(JSON.stringify({
+    event: "design_concept_lead_submitted",
+    leadId: lead.id,
+    package_type: lead.package_type,
+    project_type: lead.project_type,
+    language: lead.language,
+    source_page: lead.source_page,
+    files_count: lead.uploadedFiles.length,
+    dimensions_provided: lead.dimensionsProvided,
+    timestamp: lead.timestamp,
+  }));
+  if (!storage.localDbOk && process.env.LOCAL_CRM_REQUIRED !== "false") {
+    return json(response, { ok: false, message: "Design concept lead saved to fallback, but encrypted CRM insert failed.", id: lead.id, storage }, 502);
+  }
+  return json(response, { ok: true, id: lead.id, lead_type: "design_concept_flow", storage });
+}
+
+async function readDesignConceptLeadRequest(request) {
+  const contentType = request.headers["content-type"] || "";
+  if (!contentType.includes("multipart/form-data")) return { payload: await readJsonBody(request), files: [] };
+  const match = contentType.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+  if (!match) {
+    const error = new Error("Multipart boundary is missing.");
+    error.status = 400;
+    throw error;
+  }
+  const body = await readRequestBuffer(request, MAX_DESIGN_CONCEPT_UPLOAD_BYTES);
+  const parsed = parseMultipartFormData(body, match[1] || match[2]);
+  validateDesignConceptFiles(parsed.files);
+  return parsed;
+}
+
+function parseMultipartFormData(body, boundary) {
+  const payload = {};
+  const files = [];
+  const delimiter = Buffer.from(`--${boundary}`);
+  for (let part of splitBuffer(body, delimiter)) {
+    if (!part.length) continue;
+    if (part[0] === 45 && part[1] === 45) continue;
+    if (part[0] === 13 && part[1] === 10) part = part.subarray(2);
+    if (part.at(-2) === 13 && part.at(-1) === 10) part = part.subarray(0, -2);
+    const headerEnd = part.indexOf(Buffer.from("\r\n\r\n"));
+    if (headerEnd < 0) continue;
+    const headers = part.subarray(0, headerEnd).toString("utf8");
+    const content = part.subarray(headerEnd + 4);
+    const disposition = headers.match(/content-disposition:\s*form-data;([^\r\n]+)/i)?.[1] || "";
+    const name = disposition.match(/name="([^"]+)"/i)?.[1] || "";
+    const filename = disposition.match(/filename="([^"]*)"/i)?.[1] || "";
+    if (!name) continue;
+    if (filename) {
+      files.push({
+        field: name,
+        name: path.basename(filename),
+        type: headers.match(/content-type:\s*([^\r\n]+)/i)?.[1]?.trim() || "application/octet-stream",
+        size: content.length,
+        buffer: content,
+      });
+    } else {
+      payload[name] = content.toString("utf8");
+    }
+  }
+  payload.uploadedFiles = files.map(({ buffer, ...file }) => file);
+  return { payload, files };
+}
+
+function splitBuffer(buffer, delimiter) {
+  const parts = [];
+  let start = 0;
+  let index = buffer.indexOf(delimiter, start);
+  while (index !== -1) {
+    parts.push(buffer.subarray(start, index));
+    start = index + delimiter.length;
+    index = buffer.indexOf(delimiter, start);
+  }
+  parts.push(buffer.subarray(start));
+  return parts;
+}
+
+function validateDesignConceptFiles(files) {
+  if (files.length > MAX_DESIGN_CONCEPT_FILES) {
+    const error = new Error(`Too many uploaded files. Maximum is ${MAX_DESIGN_CONCEPT_FILES}.`);
+    error.status = 413;
+    throw error;
+  }
+  for (const file of files) {
+    if (file.size > MAX_DESIGN_CONCEPT_UPLOAD_BYTES) {
+      const error = new Error("One uploaded file is too large.");
+      error.status = 413;
+      throw error;
+    }
+  }
+}
+
+function rateLimitSubmission(request, response) {
+  const ip = request.socket.remoteAddress || "unknown";
+  const now = Date.now();
+  const hits = submissions.get(ip) || [];
+  const recent = hits.filter((time) => now - time < 60_000);
+  if (recent.length >= 5) {
+    json(response, { ok: false, message: "Too many requests." }, 429);
+    return true;
+  }
+  recent.push(now);
+  submissions.set(ip, recent);
+  return false;
+}
+
+function normalizeDesignConceptLeadPayload(payload, request) {
+  const packageType = normalizeDesignConceptValue(payload.package_type || payload.packageType, ["design_concept", "design_technical", "realization_review"]);
+  const projectType = normalizeDesignConceptValue(payload.project_type || payload.projectType, designConceptProjectOptions("en").map(([value]) => value));
+  const desiredStyle = normalizeDesignConceptValue(payload.desired_style || payload.desiredStyle, designConceptStyleOptions("en").map(([value]) => value));
+  const timelineValue = normalizeDesignConceptValue(payload.timeline || payload.timeline_value, designConceptTimelineOptions("en").map(([value]) => value));
+  const budgetValue = normalizeDesignConceptValue(payload.budget_range || payload.budgetRange, designConceptBudgetOptions("en").map(([value]) => value));
+  const uploadedFiles = designConceptUploadedFiles(payload);
+  const selectedOffer = designConceptOfferFor(packageType, projectType);
+  const hasPhotos = uploadedFiles.some((file) => !file.field || file.field === "project_photos");
+  const baseRequired = {
+    package_type: packageType,
+    project_type: projectType,
+    client_name: payload.client_name || payload.clientName,
+    email: payload.email,
+    project_location: payload.project_location || payload.projectLocation,
+    project_description: payload.project_description || payload.projectDescription,
+    desired_style: desiredStyle,
+    timeline: timelineValue,
+    budget_range: budgetValue,
+    consent: payload.consent,
+  };
+  const missing = Object.entries(baseRequired).filter(([, value]) => !String(value || "").trim()).map(([field]) => field);
+  if (!hasPhotos) missing.push("project_photos");
+  if (packageType === "design_technical") {
+    if (!String(payload.dimension_length || payload.dimensions || "").trim()) missing.push("dimension_length");
+    if (!String(payload.dimension_width_depth || payload.project_depth || payload.wall_width || "").trim()) missing.push("dimension_width_depth");
+    if (!String(payload.dimension_height || payload.ceiling_height || payload.ceilingHeight || "").trim()) missing.push("dimension_height");
+  }
+  if (packageType === "realization_review") {
+    if (!String(payload.project_location || payload.projectLocation || "").trim()) missing.push("project_location");
+    if (!budgetValue) missing.push("budget_range");
+    if (!timelineValue) missing.push("timeline");
+  }
+  if (missing.length) return { error: { status: 400, message: "Missing required design concept fields.", missing: [...new Set(missing)] } };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(payload.email || ""))) return { error: { status: 400, message: "Invalid email.", missing: ["email"] } };
+
+  const name = String(payload.client_name || payload.clientName || "").trim();
+  const [firstName, ...lastParts] = name.split(/\s+/);
+  const projectLocation = String(payload.project_location || payload.projectLocation || "").trim();
+  const dimensionsProvided = Boolean(String(payload.dimension_length || payload.dimension_width_depth || payload.dimension_height || payload.dimensions || payload.ceiling_height || payload.ceilingHeight || payload.wall_width || payload.wallWidth || payload.project_depth || payload.projectDepth || "").trim());
+  const packageLabel = designConceptLabel(packageType, designConceptText("en").packageOptions);
+  const projectTypeLabel = designConceptLabel(projectType, designConceptProjectOptions("en"));
+  const styleLabel = designConceptLabel(desiredStyle, designConceptStyleOptions("en"));
+  const timelineLabel = designConceptLabel(timelineValue, designConceptTimelineOptions("en"));
+  const budgetLabel = designConceptLabel(budgetValue, designConceptBudgetOptions("en"));
+  const lead = {
+    ...payload,
+    id: randomUUID(),
+    timestamp: new Date().toISOString(),
+    leadType: "design_concept_flow",
+    lead_type: "design_concept_flow",
+    formType: "design_concept_flow",
+    source_page: payload.source_page || payload.sourcePage || "/design-concept",
+    sourceUrl: payload.sourceUrl || payload.source_url || payload.source_page || "/design-concept",
+    language: payload.language || "en",
+    package_type: packageType,
+    packageType,
+    packageLabel,
+    project_type: projectType,
+    projectType: projectTypeLabel,
+    projectTypeValue: projectType,
+    desired_style: desiredStyle,
+    desiredStyle,
+    desiredStyleLabel: styleLabel,
+    client_name: name,
+    fullName: name,
+    firstName: firstName || name,
+    lastName: lastParts.join(" "),
+    email: String(payload.email || "").trim(),
+    phone: String(payload.phone || "").trim(),
+    project_location: projectLocation,
+    projectLocation,
+    city: projectLocation,
+    project_description: String(payload.project_description || payload.projectDescription || "").trim(),
+    dimension_length: String(payload.dimension_length || payload.dimensions || "").trim(),
+    dimension_width_depth: String(payload.dimension_width_depth || payload.project_depth || payload.wall_width || "").trim(),
+    dimension_height: String(payload.dimension_height || payload.ceiling_height || payload.ceilingHeight || "").trim(),
+    dimensions: String(payload.dimensions || payload.dimension_length || "").trim(),
+    ceiling_height: String(payload.ceiling_height || payload.ceilingHeight || payload.dimension_height || "").trim(),
+    wall_width: String(payload.wall_width || payload.wallWidth || payload.dimension_length || "").trim(),
+    project_depth: String(payload.project_depth || payload.projectDepth || payload.dimension_width_depth || "").trim(),
+    dimensionsProvided,
+    exact_price: selectedOffer.price,
+    quoted_timeline: selectedOffer.timeline,
+    payment_url: selectedOffer.paymentUrl,
+    paymentStatus: selectedOffer.paymentUrl ? "payment_link_ready" : "payment_link_not_configured",
+    timeline: timelineLabel,
+    timeline_value: timelineValue,
+    budget: budgetLabel,
+    budget_range: budgetValue,
+    serviceNeeded: packageLabel,
+    service: "Interior design concept package",
+    vertical: "Design Concept Packages",
+    intent: "design_concept_flow",
+    objectType: projectTypeLabel,
+    material: styleLabel,
+    referrer: payload.referrer || "",
+    userAgent: request.headers["user-agent"] || "",
+    ip: request.socket.remoteAddress || "unknown",
+    uploadedFiles,
+  };
+  lead.message = designConceptLeadSummary(lead);
+  return { lead };
+}
+
+function normalizeDesignConceptValue(value, allowed) {
+  const normalized = String(value || "").trim();
+  return allowed.includes(normalized) ? normalized : "";
+}
+
+function designConceptOfferFor(packageType, projectType) {
+  const normalizedPackage = packageType || "design_concept";
+  const normalizedProject = projectType || "media_wall";
+  const offers = designConceptOfferMatrix();
+  const fallback = offers[normalizedPackage]?.other || offers.design_concept.media_wall;
+  return offers[normalizedPackage]?.[normalizedProject] || fallback;
+}
+
+function designConceptOfferMatrix() {
+  return {
+    design_concept: {
+      media_wall: designConceptOffer("$450", "3-5 business days", "DESIGN_CONCEPT_PAYMENT_MEDIA_WALL_URL"),
+      wall_panels: designConceptOffer("$450", "3-5 business days", "DESIGN_CONCEPT_PAYMENT_WALL_PANELS_URL"),
+      closet_wardrobe: designConceptOffer("$650", "3-5 business days", "DESIGN_CONCEPT_PAYMENT_CLOSET_URL"),
+      living_room: designConceptOffer("$850", "4-6 business days", "DESIGN_CONCEPT_PAYMENT_ROOM_URL"),
+      bedroom: designConceptOffer("$850", "4-6 business days", "DESIGN_CONCEPT_PAYMENT_ROOM_URL"),
+      bathroom: designConceptOffer("$850", "4-6 business days", "DESIGN_CONCEPT_PAYMENT_ROOM_URL"),
+      office_library: designConceptOffer("$850", "4-6 business days", "DESIGN_CONCEPT_PAYMENT_ROOM_URL"),
+      kitchen: designConceptOffer("$1,200", "5-7 business days", "DESIGN_CONCEPT_PAYMENT_KITCHEN_URL"),
+      built_ins: designConceptOffer("$1,200", "5-7 business days", "DESIGN_CONCEPT_PAYMENT_BUILT_INS_URL"),
+      whole_space: designConceptOffer("$1,800", "6-8 business days", "DESIGN_CONCEPT_PAYMENT_WHOLE_SPACE_URL"),
+      other: designConceptOffer("$850", "4-6 business days", "DESIGN_CONCEPT_PAYMENT_ROOM_URL"),
+    },
+    design_technical: {
+      wall_panels: designConceptOffer("$1,200", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_WALL_PANELS_URL"),
+      media_wall: designConceptOffer("$1,500", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_MEDIA_WALL_URL"),
+      living_room: designConceptOffer("$1,800", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_ROOM_URL"),
+      bedroom: designConceptOffer("$1,800", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_ROOM_URL"),
+      bathroom: designConceptOffer("$1,800", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_ROOM_URL"),
+      office_library: designConceptOffer("$1,800", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_ROOM_URL"),
+      closet_wardrobe: designConceptOffer("$2,000", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_CLOSET_URL"),
+      kitchen: designConceptOffer("$2,500", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_KITCHEN_URL"),
+      built_ins: designConceptOffer("$2,500", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_BUILT_INS_URL"),
+      whole_space: designConceptOffer("$3,500", "10-18 business days", "DESIGN_TECHNICAL_PAYMENT_WHOLE_SPACE_URL"),
+      other: designConceptOffer("$1,800", "7-14 business days", "DESIGN_TECHNICAL_PAYMENT_ROOM_URL"),
+    },
+    realization_review: {
+      media_wall: designConceptOffer("Custom estimate", "reviewed individually", "DESIGN_REALIZATION_REVIEW_PAYMENT_URL"),
+      wall_panels: designConceptOffer("Custom estimate", "reviewed individually", "DESIGN_REALIZATION_REVIEW_PAYMENT_URL"),
+      closet_wardrobe: designConceptOffer("Custom estimate", "reviewed individually", "DESIGN_REALIZATION_REVIEW_PAYMENT_URL"),
+      kitchen: designConceptOffer("Custom estimate", "reviewed individually", "DESIGN_REALIZATION_REVIEW_PAYMENT_URL"),
+      built_ins: designConceptOffer("Custom estimate", "reviewed individually", "DESIGN_REALIZATION_REVIEW_PAYMENT_URL"),
+      whole_space: designConceptOffer("Custom estimate", "reviewed individually", "DESIGN_REALIZATION_REVIEW_PAYMENT_URL"),
+      other: designConceptOffer("Custom estimate", "reviewed individually", "DESIGN_REALIZATION_REVIEW_PAYMENT_URL"),
+    },
+  };
+}
+
+function designConceptOffer(price, timeline, envKey) {
+  return { price, timeline, paymentUrl: process.env[envKey] || "" };
+}
+
+function designConceptUploadedFiles(payload) {
+  const files = Array.isArray(payload.uploadedFiles) ? payload.uploadedFiles : Array.isArray(payload.files) ? payload.files : [];
+  return files.map((file) => typeof file === "object" ? {
+    field: file.field || "",
+    name: file.name || "",
+    size: Number(file.size || 0),
+    type: file.type || "",
+    path: file.path || "",
+    url: file.url || "",
+  } : { field: "", name: String(file), size: 0, type: "" }).filter((file) => file.name || file.field);
+}
+
+async function saveDesignConceptUploadedFiles(leadId, files) {
+  const safeLeadId = String(leadId).replace(/[^a-z0-9-]/gi, "");
+  const uploadDir = path.join(PUBLIC_DIR, "uploads", "design-concepts", safeLeadId);
+  await mkdir(uploadDir, { recursive: true });
+  const saved = [];
+  for (const [index, file] of files.entries()) {
+    if (!file?.buffer?.length) continue;
+    const filename = safeUploadFilename(file.name || `file-${index + 1}`, index);
+    const diskPath = path.join(uploadDir, filename);
+    await writeFile(diskPath, file.buffer);
+    const publicPath = `/uploads/design-concepts/${safeLeadId}/${filename}`;
+    saved.push({
+      field: file.field || "",
+      name: file.name || filename,
+      storedName: filename,
+      size: file.size || file.buffer.length,
+      type: file.type || contentTypeFor(filename),
+      path: publicPath,
+      url: `${BASE_URL}${publicPath}`,
+    });
+  }
+  return saved;
+}
+
+function safeUploadFilename(filename, index) {
+  const ext = path.extname(filename).toLowerCase();
+  const allowedExt = new Set([".pdf", ".jpg", ".jpeg", ".png", ".webp", ".heic"]);
+  const safeExt = allowedExt.has(ext) ? ext : ".bin";
+  const base = path.basename(filename, ext).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 70) || "upload";
+  return `${String(index + 1).padStart(2, "0")}-${base}${safeExt}`;
+}
+
+function designConceptLabel(value, options) {
+  return (options.find(([optionValue]) => optionValue === value) || [value, value])[1];
+}
+
+function designConceptLeadSummary(lead) {
+  return [
+    `Design concept flow: ${lead.packageLabel}`,
+    `Project type: ${lead.projectType}`,
+    `Desired style: ${lead.desiredStyleLabel}`,
+    `Location: ${lead.projectLocation}`,
+    `Selected price: ${lead.exact_price || "-"}`,
+    `Execution time: ${lead.quoted_timeline || "-"}`,
+    `Payment link: ${lead.payment_url || "not configured"}`,
+    `Budget: ${lead.budget}`,
+    `Timeline: ${lead.timeline}`,
+    `Dimensions provided: ${lead.dimensionsProvided ? "yes" : "no"}`,
+    lead.dimension_length ? `Length: ${lead.dimension_length}` : "",
+    lead.dimension_width_depth ? `Width / depth: ${lead.dimension_width_depth}` : "",
+    lead.dimension_height ? `Height / ceiling: ${lead.dimension_height}` : "",
+    `Uploaded files: ${lead.uploadedFiles.length}`,
+    "",
+    lead.project_description,
+  ].filter(Boolean).join("\n");
 }
 
 async function handlePartnerApplication(request, response) {
@@ -4294,7 +5376,7 @@ async function deliverLeadEmail(lead) {
     const { default: nodemailer } = await import("nodemailer");
     const transporter = nodemailer.createTransport({ host: process.env.SMTP_HOST, port: Number(process.env.SMTP_PORT || 587), secure: Number(process.env.SMTP_PORT) === 465, auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } });
     const attachments = plannerPdfAttachment(lead);
-    await transporter.sendMail({ from: process.env.SMTP_FROM || process.env.SMTP_USER, to, subject: `CAS AURUM lead: ${lead.formType || "inquiry"} from ${lead.firstName} ${lead.lastName}`, text: leadEmailText(lead), attachments });
+	    await transporter.sendMail({ from: process.env.SMTP_FROM || process.env.SMTP_USER, to, subject: leadEmailSubject(lead), text: leadEmailText(lead), attachments });
     if (lead.formType === "technical_millwork_planner" && lead.email) {
       await transporter.sendMail({
         from: process.env.SMTP_FROM || process.env.SMTP_USER,
@@ -4311,6 +5393,13 @@ async function deliverLeadEmail(lead) {
 
 function leadEmailText(lead) {
   return Object.entries(lead).map(([k, v]) => `${k}: ${Array.isArray(v) ? v.map((item) => typeof item === "object" ? JSON.stringify(item) : item).join(", ") : v}`).join("\n");
+}
+
+function leadEmailSubject(lead) {
+  if (lead.leadType === "design_concept_flow" || lead.formType === "design_concept_flow") {
+    return `[CAS AURUM] New Design Concept Lead — ${lead.package_type || lead.packageType || "package"} — ${lead.project_type || lead.projectTypeValue || "project"}`;
+  }
+  return `CAS AURUM lead: ${lead.formType || "inquiry"} from ${lead.firstName} ${lead.lastName}`;
 }
 
 function plannerPdfAttachment(lead) {
@@ -4420,8 +5509,50 @@ function schemaGraph(route, title, description) {
     for (const image of page.imageAssets) graph.push({ "@type": "ImageObject", name: image.filename, contentUrl: absoluteAssetUrl(assetById(image.assetId).src), caption: image.caption[route.lang] || image.caption.en });
     return { "@context": "https://schema.org", "@graph": graph };
   }
-  if (servicePageKeys.includes(route.key)) graph.push({ "@type": "Service", name: serviceContent("en", route.key).h1, provider: { "@id": `${BASE_URL}/#organization` }, areaServed: ["United States", "Canada", "Mexico"], description });
-  if (route.key === "planner") graph.push({ "@type": "SoftwareApplication", name: "CAS AURUM Technical Millwork Planner", applicationCategory: "DesignApplication", operatingSystem: "Web", provider: { "@id": `${BASE_URL}/#organization` }, description });
+  if (route.key === "projects") {
+    const gallery = projectsGalleryText(route.lang);
+    graph.push({
+      "@type": "CreativeWork",
+      "@id": `${url}#completed-work`,
+      name: gallery.title,
+      description: gallery.desc,
+      creator: { "@id": `${BASE_URL}/#organization` },
+      image: completedProjectItems.map((project) => absoluteAssetUrl(project.src)),
+    });
+    for (const project of completedProjectItems) {
+      graph.push({
+        "@type": "ImageObject",
+        name: completedProjectTitle(project, route.lang),
+        contentUrl: absoluteAssetUrl(project.src),
+        caption: completedProjectCaption(route.lang, project, completedProjectCategory(project, route.lang)),
+        keywords: project.keywords,
+        width: project.width,
+        height: project.height,
+        about: [completedProjectCategory(project, route.lang), completedProjectRoom(project, route.lang)],
+      });
+    }
+    graph.push({ "@type": "FAQPage", mainEntity: gallery.faqs.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) });
+	  }
+	  if (servicePageKeys.includes(route.key)) graph.push({ "@type": "Service", name: serviceContent("en", route.key).h1, provider: { "@id": `${BASE_URL}/#organization` }, areaServed: ["United States", "Canada", "Mexico"], description });
+	  if (route.key === "designConcept") {
+	    const concept = designConceptText(route.lang);
+	    graph.push({
+	      "@type": "Service",
+	      "@id": `${url}#design-concept-service`,
+	      name: "Interior Design Concept Packages",
+	      provider: { "@id": `${BASE_URL}/#organization` },
+	      areaServed: ["United States", "Canada", "Mexico"],
+	      serviceType: ["interior design concept", "custom media wall concept", "closet design concept", "kitchen design concept", "custom millwork design package", "technical millwork package", "luxury interior concept"],
+	      description,
+	      offers: {
+	        "@type": "OfferCatalog",
+	        name: "CAS AURUM design concept packages",
+	        itemListElement: concept.pricing.map((item) => ({ "@type": "Offer", name: item.title, priceSpecification: { "@type": "PriceSpecification", priceCurrency: "USD", description: `${item.price} - ${item.timeline}` } })),
+	      },
+	    });
+	    graph.push({ "@type": "FAQPage", mainEntity: concept.faq.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) });
+	  }
+	  if (route.key === "planner") graph.push({ "@type": "SoftwareApplication", name: "CAS AURUM Technical Millwork Planner", applicationCategory: "DesignApplication", operatingSystem: "Web", provider: { "@id": `${BASE_URL}/#organization` }, description });
   if (["wallPanels", "customFurniture", "millwork"].includes(route.key)) graph.push({ "@type": "FAQPage", mainEntity: (faqs[route.key] || faqs.wallPanels).map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) });
   graph.push({ "@type": "ImageObject", contentUrl: absoluteAssetUrl(assetById("hero-luxury-wall-panels-living-room").src), name: assetById("hero-luxury-wall-panels-living-room").filename });
   if (route.key === "home") {
@@ -4613,6 +5744,7 @@ function llmsTxt() {
 	    ["/custom-media-walls", "Custom media walls and luxury TV wall panels"],
 	    ["/custom-built-ins", "Custom built-ins and built-in furniture"],
 	    ["/luxury-custom-closets", "Luxury custom closets and walk-in wardrobes"],
+	    ["/design-concept", "Interior design concept packages with transparent starting prices"],
 	    ["/collections", "Material and design collections"],
 	    ["/for-designers-builders", "Designer, builder and developer partnerships"],
 	    ["/projects", "Completed projects and custom interior work"],
@@ -4744,10 +5876,11 @@ function imagePreloadForRoute(route) {
 
 function primaryImageAssetId(route) {
   if (route.casaurumSeoPage) return route.casaurumSeoPage.imageAssets?.[0]?.assetId || "premium-materials-closeup";
-  if (route.programmaticPage) return route.programmaticPage.assetId || "premium-materials-closeup";
-  if (route.collection) return route.collection.assetId || "premium-materials-closeup";
-  if (route.key === "home") return "hero-luxury-wall-panels-living-room";
-  if (["wallPanels", "customFurniture", "millwork", "solutions", "trade"].includes(route.key)) return copy[route.lang].services[route.key].asset;
+	  if (route.programmaticPage) return route.programmaticPage.assetId || "premium-materials-closeup";
+	  if (route.collection) return route.collection.assetId || "premium-materials-closeup";
+	  if (route.key === "home") return "hero-luxury-wall-panels-living-room";
+	  if (route.key === "designConcept") return "custom-tv-wall-panels-modern-home";
+	  if (["wallPanels", "customFurniture", "millwork", "solutions", "trade"].includes(route.key)) return copy[route.lang].services[route.key].asset;
   if (route.key === "projects") return "premium-materials-closeup";
   return "";
 }
@@ -4773,9 +5906,10 @@ function caption(id, lang) {
 }
 
 function pageLabel(key, lang) {
-  const t = copy[lang];
-  if (key === "planner") return localized("Technical Millwork Planner", lang);
-  if (key === "projects") return projectsGalleryText(lang).title;
+	  const t = copy[lang];
+	  if (key === "planner") return localized("Technical Millwork Planner", lang);
+	  if (key === "designConcept") return t.nav.designConcept || "Design Concept";
+	  if (key === "projects") return projectsGalleryText(lang).title;
   if (servicePageKeys.includes(key)) return t.nav[key] || serviceContent(lang, key).h1;
   return t.nav[key] || t.cta[key === "consultation" ? "consult" : key === "measurement" ? "measure" : "consult"] || regionLabel(key, lang) || key;
 }
@@ -4815,6 +5949,7 @@ function localized(value, lang) {
       "Technical Millwork Planner": "Planificador Técnico de Carpintería",
       "Project type": "Tipo de proyecto",
       "Helpful files": "Archivos útiles",
+      "Planning surface": "Superficie de planificación",
       "Nearby areas and project context": "Áreas cercanas y contexto del proyecto",
       "Service": "Servicio",
       "Tailored for refined spaces": "A medida para espacios refinados",
@@ -4846,25 +5981,29 @@ function localized(value, lang) {
       "Ask CAS AURUM": "Preguntar a CAS AURUM",
       "Send a short project note and the team will help you choose the right next step: design discussion, estimate review, measurement request or trade project intake.": "Envíe una nota breve del proyecto y el equipo le ayudará a elegir el siguiente paso: conversación de diseño, revisión estimada, solicitud de medición o intake profesional.",
       "Portfolio note": "Nota de portafolio",
-      "Concept studies across North America": "Estudios de concepto en Norteamérica",
-      "Concept studies for premium custom interiors": "Estudios de concepto para interiores premium a medida",
+      "Project directions across North America": "Direcciones de proyecto en Norteamérica",
+      "Project studies for premium custom interiors": "Estudios de proyecto para interiores premium a medida",
       "Best project-fit scopes": "Alcances más adecuados",
       "What helps us respond": "Qué nos ayuda a responder",
       "Collection preview": "Vista de colección",
-      "Visual concepts across North America": "Conceptos visuales en Norteamérica",
-      "These scenes show possible material directions, room types and premium interior concepts for the collection. Use them as a starting point for proportion, finish, lighting and custom scope conversations.": "Estas escenas muestran posibles direcciones de materiales, tipos de espacios y conceptos interiores premium para la colección. Úselas como punto de partida para conversar sobre proporción, acabado, iluminación y alcance a medida.",
-      "Collection visuals show design direction, material mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Las visuales de colección muestran dirección de diseño, atmósfera material e ideas de planificación. Las proporciones, acabados y detalles técnicos finales se confirman durante la revisión del proyecto.",
+      "Visual directions across North America": "Direcciones visuales en Norteamérica",
+      "These scenes show possible material directions, room types and premium project paths for the collection. Use them as a starting point for proportion, finish, lighting and custom scope conversations.": "Estas escenas muestran posibles direcciones de materiales, tipos de espacios y caminos de proyecto premium para la colección. Úselas como punto de partida para conversar sobre proporción, acabado, iluminación y alcance a medida.",
+      "Collection images show material direction, mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Las imágenes de colección muestran dirección material, atmósfera e ideas de planificación. Las proporciones, acabados y detalles técnicos finales se confirman durante la revisión del proyecto.",
       "Explore other collections": "Explorar otras colecciones",
       "Inspired by": "Inspirado en",
+      "Related page": "Página relacionada",
       "Related Completed Work": "Trabajos completados relacionados",
+      "Related completed projects": "Proyectos realizados relacionados",
       "View Related Projects": "Ver proyectos relacionados",
       "Explore Completed Work": "Explorar trabajos completados",
       "Explore Completed Projects by Room": "Explorar proyectos completados por espacio",
       "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Las imágenes de proyectos completados conectan la planificación del espacio con trabajo real a medida, materiales y detalles ejecutados en sitio.",
       "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Comparta el espacio, tipo de propiedad, ubicación, dirección material, tiempos y rango de inversión. CAS AURUM responderá con el siguiente paso adecuado para una consulta interior premium a medida.",
-      "Completed Work": "Trabajo realizado",
-      "A closer look at finished CAS AURUM interiors": "Una mirada cercana a interiores realizados por CAS AURUM",
-      "Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.": "Explore trabajos residenciales realizados en cabinetry a medida, millwork arquitectónico, baños, cocinas, detalles de escaleras, techos, built-ins, decks y acabados interiores refinados.",
+      "All Completed Work": "Todos los trabajos realizados",
+      "Completed Work": "Trabajos realizados",
+      "Finished interiors, millwork and custom details": "Interiores, carpintería y detalles a medida terminados",
+      "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, bathrooms, kitchens, stairs, ceilings, built-ins, decks and refined residential finishes.": "Explore trabajos realizados de CAS AURUM en cabinetry a medida, millwork arquitectónico, baños, cocinas, escaleras, techos, built-ins, decks y acabados residenciales refinados.",
+      "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and refined residential or commercial interior details.": "Explore proyectos realizados por CAS AURUM: carpintería arquitectónica, mobiliario a medida, media walls, cocinas, vanities, recepciones, muebles bar, mesas, cielos decorativos y detalles interiores premium.",
       "View Completed Projects": "Ver proyectos realizados",
     },
     fr: {
@@ -4895,6 +6034,7 @@ function localized(value, lang) {
       "Technical Millwork Planner": "Planificateur Technique de Menuiserie",
       "Project type": "Type de projet",
       "Helpful files": "Fichiers utiles",
+      "Planning surface": "Surface de planification",
       "Nearby areas and project context": "Zones proches et contexte du projet",
       "Service": "Service",
       "Tailored for refined spaces": "Sur mesure pour espaces raffinés",
@@ -4925,25 +6065,29 @@ function localized(value, lang) {
       "Ask CAS AURUM": "Demander à CAS AURUM",
       "Send a short project note and the team will help you choose the right next step: design discussion, estimate review, measurement request or trade project intake.": "Envoyez une courte note de projet et l'équipe vous aidera à choisir la bonne prochaine étape: discussion design, examen estimatif, demande de mesures ou dossier professionnel.",
       "Portfolio note": "Note portfolio",
-      "Concept studies across North America": "Études concept en Amérique du Nord",
-      "Concept studies for premium custom interiors": "Études concept pour intérieurs premium sur mesure",
+      "Project directions across North America": "Directions de projet en Amérique du Nord",
+      "Project studies for premium custom interiors": "Études de projet pour intérieurs premium sur mesure",
       "Best project-fit scopes": "Portées les plus adaptées",
       "What helps us respond": "Ce qui nous aide à répondre",
       "Collection preview": "Aperçu de collection",
-      "Visual concepts across North America": "Concepts visuels en Amérique du Nord",
-      "These scenes show possible material directions, room types and premium interior concepts for the collection. Use them as a starting point for proportion, finish, lighting and custom scope conversations.": "Ces scènes montrent des directions possibles de matériaux, types d'espaces et concepts intérieurs premium pour la collection. Utilisez-les comme point de départ pour parler proportions, finitions, lumière et portée sur mesure.",
-      "Collection visuals show design direction, material mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Les visuels de collection montrent une direction design, une ambiance matière et des idées de planification. Les proportions, finitions et détails techniques finaux sont confirmés pendant la revue du projet.",
+      "Visual directions across North America": "Directions visuelles en Amérique du Nord",
+      "These scenes show possible material directions, room types and premium project paths for the collection. Use them as a starting point for proportion, finish, lighting and custom scope conversations.": "Ces scènes montrent des directions possibles de matériaux, types d'espaces et parcours de projet premium pour la collection. Utilisez-les comme point de départ pour parler proportions, finitions, lumière et portée sur mesure.",
+      "Collection images show material direction, mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Les images de collection montrent une direction matière, une ambiance et des idées de planification. Les proportions, finitions et détails techniques finaux sont confirmés pendant la revue du projet.",
       "Explore other collections": "Explorer d'autres collections",
       "Inspired by": "Inspiré par",
+      "Related page": "Page liée",
       "Related Completed Work": "Projets réalisés liés",
+      "Related completed projects": "Projets réalisés liés",
       "View Related Projects": "Voir les projets liés",
       "Explore Completed Work": "Explorer les projets réalisés",
       "Explore Completed Projects by Room": "Explorer les projets réalisés par pièce",
       "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Les images de projets réalisés relient la planification de la pièce à un travail sur mesure réel, aux matériaux et aux détails exécutés sur site.",
       "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Partagez la pièce, le type de propriété, le lieu, la direction matière, le calendrier et la fourchette d'investissement. CAS AURUM répondra avec la prochaine étape adaptée à une consultation intérieure premium sur mesure.",
-      "Completed Work": "Travaux réalisés",
-      "A closer look at finished CAS AURUM interiors": "Un regard plus précis sur les intérieurs réalisés CAS AURUM",
-      "Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.": "Explorez des réalisations résidentielles en cabinetry sur mesure, menuiserie architecturale, salles de bain, cuisines, escaliers, plafonds, intégrés, terrasses et finitions raffinées.",
+      "All Completed Work": "Toutes les réalisations",
+      "Completed Work": "Réalisations",
+      "Finished interiors, millwork and custom details": "Intérieurs, menuiserie et détails sur mesure réalisés",
+      "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, bathrooms, kitchens, stairs, ceilings, built-ins, decks and refined residential finishes.": "Explorez les réalisations CAS AURUM en cabinetry sur mesure, menuiserie architecturale, salles de bain, cuisines, escaliers, plafonds, intégrés, terrasses et finitions résidentielles raffinées.",
+      "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and refined residential or commercial interior details.": "Découvrez les projets réalisés par CAS AURUM : menuiserie architecturale, mobilier sur mesure, murs média, cuisines, meubles vasques, réceptions, bars, tables, plafonds décoratifs et détails intérieurs haut de gamme.",
       "View Completed Projects": "Voir les projets réalisés",
     },
     ru: {
@@ -4974,6 +6118,7 @@ function localized(value, lang) {
       "Technical Millwork Planner": "Технический Конструктор Мебели",
       "Project type": "Тип проекта",
       "Helpful files": "Полезные файлы",
+      "Planning surface": "Поверхность планирования",
       "Nearby areas and project context": "Ближайшие зоны и контекст проекта",
       "Service": "Услуга",
       "Tailored for refined spaces": "Для утонченных пространств",
@@ -5004,25 +6149,29 @@ function localized(value, lang) {
       "Ask CAS AURUM": "Задать вопрос CAS AURUM",
       "Send a short project note and the team will help you choose the right next step: design discussion, estimate review, measurement request or trade project intake.": "Отправьте короткое описание проекта, и команда поможет выбрать правильный следующий шаг: обсуждение дизайна, предварительная оценка, запрос замера или intake для профессионального проекта.",
       "Portfolio note": "Примечание к портфолио",
-      "Concept studies across North America": "Концепт-исследования по Северной Америке",
-      "Concept studies for premium custom interiors": "Концепт-исследования для премиальных интерьеров на заказ",
+      "Project directions across North America": "Проектные направления по Северной Америке",
+      "Project studies for premium custom interiors": "Проектные исследования для премиальных интерьеров на заказ",
       "Best project-fit scopes": "Наиболее подходящие типы проектов",
       "What helps us respond": "Что помогает нам ответить",
       "Collection preview": "Превью коллекции",
-      "Visual concepts across North America": "Визуальные концепты по Северной Америке",
-      "These scenes show possible material directions, room types and premium interior concepts for the collection. Use them as a starting point for proportion, finish, lighting and custom scope conversations.": "Эти сцены показывают возможные направления материалов, типы помещений и премиальные интерьерные концепции коллекции. Используйте их как отправную точку для обсуждения пропорций, отделок, света и кастомного объема работ.",
-      "Collection visuals show design direction, material mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Визуалы коллекций показывают направление дизайна, настроение материалов и идеи планировки. Финальные пропорции, отделки и технические детали подтверждаются при разборе проекта.",
+      "Visual directions across North America": "Визуальные направления по Северной Америке",
+      "These scenes show possible material directions, room types and premium project paths for the collection. Use them as a starting point for proportion, finish, lighting and custom scope conversations.": "Эти сцены показывают возможные направления материалов, типы помещений и премиальные проектные направления коллекции. Используйте их как отправную точку для обсуждения пропорций, отделок, света и кастомного объема работ.",
+      "Collection images show material direction, mood and room planning ideas. Final proportions, finishes and technical details are confirmed during project review.": "Изображения коллекций показывают направление материалов, настроение и идеи планировки. Финальные пропорции, отделки и технические детали подтверждаются при разборе проекта.",
       "Explore other collections": "Смотреть другие коллекции",
       "Inspired by": "Вдохновлено",
+      "Related page": "Связанная страница",
       "Related Completed Work": "Связанные выполненные работы",
+      "Related completed projects": "Связанные выполненные проекты",
       "View Related Projects": "Смотреть связанные проекты",
       "Explore Completed Work": "Смотреть выполненные работы",
       "Explore Completed Projects by Room": "Смотреть выполненные проекты по комнатам",
       "Completed project images are shown here to connect room planning with real custom work, materials and site-built details.": "Изображения выполненных проектов связывают планирование комнаты с реальной кастомной работой, материалами и деталями на объекте.",
       "Share the room, property type, location, material direction, timeline and investment range. CAS AURUM will respond with the right next step for a premium custom interior consultation.": "Укажите комнату, тип объекта, локацию, направление материалов, сроки и инвестиционный диапазон. CAS AURUM предложит подходящий следующий шаг для премиальной консультации по интерьеру на заказ.",
+      "All Completed Work": "Все выполненные работы",
       "Completed Work": "Выполненные работы",
-      "A closer look at finished CAS AURUM interiors": "Ближе к выполненным интерьерам CAS AURUM",
-      "Explore completed residential work across custom cabinetry, architectural millwork, bathrooms, kitchens, stair details, ceilings, built-ins, decks and refined interior finishes.": "Посмотрите выполненные жилые работы: корпусная мебель на заказ, архитектурная столярка, ванные, кухни, детали лестниц, потолки, built-ins, террасы и утонченные интерьерные отделки.",
+      "Finished interiors, millwork and custom details": "Завершенные интерьеры, столярные работы и детали на заказ",
+      "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, bathrooms, kitchens, stairs, ceilings, built-ins, decks and refined residential finishes.": "Посмотрите выполненные работы CAS AURUM: корпусная мебель на заказ, архитектурная столярка, ванные, кухни, лестницы, потолки, built-ins, террасы и утонченные жилые отделки.",
+      "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and refined residential or commercial interior details.": "Посмотрите выполненные работы CAS AURUM: корпусная мебель, архитектурная столярка, медиа-стены, кухни, тумбы, ресепшн-зоны, барные шкафы, столы, потолочные решения и премиальные интерьерные детали.",
       "View Completed Projects": "Смотреть выполненные проекты",
     },
   };
@@ -5141,34 +6290,166 @@ function clientJs() {
   const menu = document.querySelector('.menu-button'); const nav = document.querySelector('#nav');
   if (menu && nav) menu.addEventListener('click', () => { const open = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('.lang a').forEach(a => a.addEventListener('click', () => localStorage.setItem('cas_aurum_lang', a.hreflang)));
-  function track(name, detail){ window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: name, ...detail }); if (window.gtag) window.gtag('event', name, detail || {}); }
-  if (window.__CAS_AURUM_SEO_PAGE__) track('seo_page_view', window.__CAS_AURUM_SEO_PAGE__);
-  document.querySelectorAll('.track').forEach(el => el.addEventListener('click', () => track(el.dataset.event || 'cta_clicked', { label: el.textContent.trim(), href: el.href })));
-  const msg = ${messages};
-  document.querySelectorAll('form[data-lead-form]').forEach(form => {
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const lang = form.querySelector('[name=language]').value || 'en';
-      const status = form.querySelector('.form-status');
-      if (!form.reportValidity()) { status.textContent = msg[lang].required; return; }
-      const data = Object.fromEntries(new FormData(form).entries());
-      const params = new URLSearchParams(location.search);
-      data.referrer = document.referrer; data.sourceUrl = location.href;
+	  function track(name, detail){ window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: name, ...detail }); if (window.gtag) window.gtag('event', name, detail || {}); }
+	  if (window.__CAS_AURUM_SEO_PAGE__) track('seo_page_view', window.__CAS_AURUM_SEO_PAGE__);
+	  const designConceptPage = document.querySelector('[data-design-concept-page]');
+	  if (designConceptPage) track('design_concept_page_view', { language: designConceptPage.dataset.language || 'en' });
+	  document.querySelectorAll('.track').forEach(el => el.addEventListener('click', () => track(el.dataset.event || 'cta_clicked', { label: el.textContent.trim(), href: el.href })));
+	  const msg = ${messages};
+	  function formDataWithoutFiles(form){
+	    const data = {};
+	    const formData = new FormData(form);
+	    formData.forEach((value, key) => {
+	      if (typeof File !== 'undefined' && value instanceof File) return;
+	      data[key] = value;
+	    });
+	    return data;
+	  }
+	  function fileMetadata(form){
+	    return [...form.querySelectorAll('input[type=file]')].flatMap(input => [...input.files].map(file => ({ field: input.name || '', name: file.name, size: file.size, type: file.type })));
+	  }
+	  document.querySelectorAll('[data-design-concept-form]').forEach(form => {
+	    const packageSelect = form.querySelector('[name=package_type]');
+	    const projectSelect = form.querySelector('[name=project_type]');
+	    const packageHelp = form.querySelector('[data-package-help]');
+	    const dimensionsHelp = form.querySelector('[data-dimensions-help]');
+	    const lengthInput = form.querySelector('[name=dimension_length]');
+	    const widthDepthInput = form.querySelector('[name=dimension_width_depth]');
+	    const heightInput = form.querySelector('[name=dimension_height]');
+	    const exactPriceInput = form.querySelector('[name=exact_price]');
+	    const quotedTimelineInput = form.querySelector('[name=quoted_timeline]');
+	    const paymentUrlInput = form.querySelector('[name=payment_url]');
+	    const selectedPrice = form.querySelector('[data-selected-price]');
+	    const selectedTimeline = form.querySelector('[data-selected-timeline]');
+	    const paymentLink = form.querySelector('[data-payment-link]');
+	    const paymentNote = form.querySelector('[data-payment-note]');
+	    const offers = ${JSON.stringify(designConceptOfferMatrix())};
+	    const help = {
+	      design_concept: 'Photos are required. Measurements are optional for a visual concept.',
+	      design_technical: 'Dimensions are required for a technical package.',
+	      realization_review: 'Realization is reviewed individually based on location, scope and availability.'
+	    };
+	    const dimensionHelp = {
+	      design_concept: 'For a visual concept, add length, width/depth and height only if you already have them.',
+	      design_technical: 'For a technical package, length, width/depth and height/ceiling height are required.',
+	      realization_review: 'Dimensions are recommended. Location, budget and desired timeline are required for realization review.'
+	    };
+	    const dimensionLabels = {
+	      media_wall: ['Wall length', 'Wall depth / available depth', 'Wall height / ceiling height'],
+	      wall_panels: ['Wall length', 'Wall depth / return depth', 'Wall height / ceiling height'],
+	      closet_wardrobe: ['Closet width', 'Closet depth', 'Closet height'],
+	      kitchen: ['Cabinet run length', 'Room / cabinet depth', 'Ceiling height'],
+	      built_ins: ['Built-in length', 'Built-in depth', 'Built-in height'],
+	      bathroom: ['Vanity / wall length', 'Room depth', 'Ceiling height'],
+	      bedroom: ['Room length', 'Room width', 'Ceiling height'],
+	      living_room: ['Room length', 'Room width', 'Ceiling height'],
+	      office_library: ['Room length', 'Room width', 'Ceiling height'],
+	      whole_space: ['Total length / main zone', 'Total width / secondary zone', 'Ceiling height'],
+	      other: ['Length', 'Width / depth', 'Height / ceiling height']
+	    };
+	    function setInputLabel(input, text){
+	      if (!input || !input.parentElement) return;
+	      input.parentElement.firstChild.textContent = text;
+	    }
+	    function syncPackage(){
+	      const packageValue = packageSelect ? packageSelect.value : 'design_concept';
+	      const projectValue = projectSelect ? projectSelect.value : 'media_wall';
+	      const offer = (offers[packageValue] && (offers[packageValue][projectValue] || offers[packageValue].other)) || offers.design_concept.media_wall;
+	      if (packageHelp) packageHelp.textContent = help[packageValue] || help.design_concept;
+	      if (dimensionsHelp) dimensionsHelp.textContent = dimensionHelp[packageValue] || dimensionHelp.design_concept;
+	      [lengthInput, widthDepthInput, heightInput].forEach(input => { if (input) input.required = packageValue === 'design_technical'; });
+	      const labels = dimensionLabels[projectValue] || dimensionLabels.other;
+	      setInputLabel(lengthInput, labels[0]);
+	      setInputLabel(widthDepthInput, labels[1]);
+	      setInputLabel(heightInput, labels[2]);
+	      if (exactPriceInput) exactPriceInput.value = offer.price || '';
+	      if (quotedTimelineInput) quotedTimelineInput.value = offer.timeline || '';
+	      if (paymentUrlInput) paymentUrlInput.value = offer.paymentUrl || '';
+	      if (selectedPrice) selectedPrice.textContent = offer.price || '-';
+	      if (selectedTimeline) selectedTimeline.textContent = offer.timeline || '-';
+	      if (paymentLink) {
+	        paymentLink.hidden = !offer.paymentUrl;
+	        if (offer.paymentUrl) paymentLink.href = offer.paymentUrl;
+	      }
+	      if (paymentNote) paymentNote.textContent = offer.paymentUrl ? 'Payment link is ready for the selected package.' : 'Payment link is prepared for this package and appears here once checkout is configured.';
+	      track('design_concept_level_selected', { package_type: packageValue, project_type: projectValue, exact_price: offer.price || '' });
+	    }
+	    if (packageSelect) packageSelect.addEventListener('change', syncPackage);
+	    if (projectSelect) projectSelect.addEventListener('change', syncPackage);
+	    form.addEventListener('focusin', () => {
+	      if (form.dataset.started) return;
+	      form.dataset.started = '1';
+	      track('design_concept_form_start', { package_type: packageSelect ? packageSelect.value : '', language: form.querySelector('[name=language]')?.value || 'en' });
+	    });
+	    syncPackage();
+	  });
+	  document.querySelectorAll('[data-package-select]').forEach(button => button.addEventListener('click', () => {
+	    const form = document.querySelector('[data-design-concept-form]');
+	    const select = form && form.querySelector('[name=package_type]');
+	    if (select) {
+	      select.value = button.dataset.packageSelect;
+	      select.dispatchEvent(new Event('change', { bubbles: true }));
+	    }
+	    track('design_concept_package_select', { package_type: button.dataset.packageSelect || '', label: button.textContent.trim() });
+	  }));
+	  document.querySelectorAll('form[data-lead-form]').forEach(form => {
+	    form.addEventListener('submit', async (event) => {
+	      event.preventDefault();
+	      const lang = form.querySelector('[name=language]').value || 'en';
+	      const status = form.querySelector('.form-status');
+	      if (!form.reportValidity()) { status.textContent = msg[lang].required; return; }
+	      const isDesignConcept = form.matches('[data-design-concept-form]');
+	      const data = formDataWithoutFiles(form);
+	      const files = fileMetadata(form);
+	      const params = new URLSearchParams(location.search);
+	      data.referrer = document.referrer; data.sourceUrl = location.href;
       data.utmSource = params.get('utm_source') || '';
       data.utmMedium = params.get('utm_medium') || '';
       data.utmCampaign = params.get('utm_campaign') || '';
       data.utmTerm = params.get('utm_term') || '';
       data.utmContent = params.get('utm_content') || '';
-      data.files = [...form.querySelectorAll('input[type=file]')].flatMap(input => [...input.files].map(file => ({ name: file.name, size: file.size, type: file.type })));
-      try {
-        const res = await fetch('/api/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) });
-        if (!res.ok) throw new Error('failed');
-        const dataOut = await res.json().catch(() => ({}));
-        status.textContent = dataOut.plannerProject?.restoreUrl ? msg[lang].success + ' Continue link: ' + dataOut.plannerProject.restoreUrl : msg[lang].success;
-        form.reset(); track(form.dataset.leadForm + '_form_submitted', { language: lang });
-      } catch { status.textContent = msg[lang].error; }
-    });
-  });
+	      data.files = files;
+	      try {
+	        const endpoint = form.dataset.endpoint || '/api/lead';
+	        const buildRequestOptions = () => isDesignConcept
+	          ? { method: 'POST', body: designConceptFormData(form, data) }
+	          : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) };
+	        let res;
+	        try {
+	          res = await fetch(endpoint, buildRequestOptions());
+	        } catch (fetchError) {
+	          const fallbackEndpoint = designConceptFallbackEndpoint(endpoint);
+	          if (!fallbackEndpoint) throw fetchError;
+	          res = await fetch(fallbackEndpoint, buildRequestOptions());
+	        }
+	        if (!res.ok && isDesignConcept) {
+	          const fallbackEndpoint = designConceptFallbackEndpoint(endpoint);
+	          if (fallbackEndpoint) res = await fetch(fallbackEndpoint, buildRequestOptions());
+	        }
+	        if (!res.ok) throw new Error('failed');
+	        const dataOut = await res.json().catch(() => ({}));
+	        status.textContent = dataOut.plannerProject?.restoreUrl ? msg[lang].success + ' Continue link: ' + dataOut.plannerProject.restoreUrl : msg[lang].success;
+	        form.reset();
+	        if (isDesignConcept) form.querySelector('[name=package_type]')?.dispatchEvent(new Event('change', { bubbles: true }));
+	        track(form.dataset.leadForm + '_form_submitted', { language: lang });
+	        if (form.dataset.leadForm === 'design_concept_flow') track('design_concept_form_submit', { language: lang, package_type: data.package_type || '', project_type: data.project_type || '', files_count: files.length });
+	      } catch { status.textContent = msg[lang].error; }
+	    });
+	  });
+	  function designConceptFormData(form, data){
+	    const formData = new FormData(form);
+	    Object.entries(data).forEach(([key, value]) => {
+	      if (key === 'files') return;
+	      formData.set(key, value || '');
+	    });
+	    return formData;
+	  }
+	  function designConceptFallbackEndpoint(endpoint){
+	    if (!endpoint || !String(endpoint).endsWith('/api/design-concept-lead')) return '';
+	    if (!['localhost','127.0.0.1'].includes(location.hostname)) return '';
+	    if (location.port === '4888') return '';
+	    return 'http://localhost:4888/api/design-concept-lead';
+	  }
   document.querySelectorAll('form[data-partner-form]').forEach(form => {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -5194,7 +6475,10 @@ function clientJs() {
       }
     });
   });
-  document.querySelectorAll('input[type=file]').forEach(input => input.addEventListener('change', () => track('file_uploaded', { count: input.files.length })));
+	  document.querySelectorAll('input[type=file]').forEach(input => input.addEventListener('change', () => {
+	    track('file_uploaded', { count: input.files.length, field: input.name || '' });
+	    if (input.closest('[data-design-concept-form]')) track('design_concept_file_upload', { count: input.files.length, field: input.name || '' });
+	  }));
   document.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => track('phone_clicked')));
   document.querySelectorAll('a[href^="mailto:"]').forEach(a => a.addEventListener('click', () => track('email_clicked')));
   `;
@@ -6518,6 +7802,7 @@ function plannerJsAsset(response, method = "GET") {
 function isPublicAssetPath(requestPath) {
   return requestPath.startsWith("/images/")
     || requestPath.startsWith("/videos/")
+    || requestPath.startsWith("/uploads/")
     || requestPath.startsWith("/brand/")
     || requestPath === "/favicon.ico"
     || requestPath === "/site.webmanifest";
@@ -6532,7 +7817,8 @@ function servePublicAsset(requestPath, response, method = "GET") {
     response.end("Not found");
     return;
   }
-  response.writeHead(200, { "Content-Type": contentTypeFor(filePath), "Cache-Control": "public, max-age=31536000, immutable" });
+  const cacheControl = requestPath.startsWith("/uploads/") ? "no-store, no-cache, must-revalidate, max-age=0" : "public, max-age=31536000, immutable";
+  response.writeHead(200, { "Content-Type": contentTypeFor(filePath), "Cache-Control": cacheControl });
   if (method === "HEAD") return response.end();
   createReadStream(filePath).pipe(response);
 }
@@ -6541,6 +7827,9 @@ function contentTypeFor(filePath) {
   const ext = path.extname(filePath).toLowerCase();
   if (ext === ".webp") return "image/webp";
   if (ext === ".png") return "image/png";
+  if (ext === ".jpg" || ext === ".jpeg") return "image/jpeg";
+  if (ext === ".heic") return "image/heic";
+  if (ext === ".pdf") return "application/pdf";
   if (ext === ".mp4") return "video/mp4";
   if (ext === ".webm") return "video/webm";
   if (ext === ".ico") return "image/x-icon";
@@ -6557,6 +7846,19 @@ function robots(response, content) { response.writeHead(200, { "Content-Type": "
 function json(response, payload, status = 200) { response.writeHead(status, { "Content-Type": "application/json; charset=utf-8" }); response.end(JSON.stringify(payload)); }
 function cleanPath(path) { const normalized = path.replace(/\/+/g, "/"); return normalized.length > 1 ? normalized.replace(/\/$/, "") : normalized; }
 function escapeHtml(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"); }
+
+function setDesignConceptCorsHeaders(request, response) {
+  const origin = request.headers.origin || "";
+  const baseOrigin = new URL(BASE_URL).origin;
+  const allowed = origin === baseOrigin
+    || origin === "https://casaurum.com"
+    || /^https?:\/\/(?:localhost|127\.0\.0\.1):\d+$/i.test(origin);
+  if (!allowed) return;
+  response.setHeader("Access-Control-Allow-Origin", origin);
+  response.setHeader("Vary", "Origin");
+  response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
 
 function loadEnvFile(path) {
   try {
@@ -6581,11 +7883,13 @@ function css() {
   .site-header{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:16px clamp(18px,4vw,64px);background:rgba(21,18,14,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
   .brand{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap}.brand-lockup{width:118px;height:auto;object-fit:contain;flex:0 0 auto}.footer-brand-lockup{width:150px}nav{display:flex;justify-content:center;gap:18px;font-size:13px;color:var(--warm)}nav a,.site-footer a{text-decoration:none}.header-cta,.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border:1px solid var(--gold);text-decoration:none;font-weight:700;font-size:13px}.header-cta,.button.primary{background:var(--gold);color:var(--black)}.button.secondary{background:transparent;color:var(--ivory);border-color:var(--line)}.lang{display:flex;gap:7px}.lang a{font-size:12px;text-decoration:none;color:var(--soft)}.lang .active{color:var(--gold)}.menu-button{display:none}
   section{padding:clamp(42px,7vw,92px) clamp(18px,5vw,72px)}.hero{width:auto;max-width:none;min-height:auto;margin:clamp(18px,3vw,42px) clamp(18px,4vw,72px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.85fr);align-items:stretch;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#100e0b}.hero-media{height:clamp(390px,43vw,560px);min-width:0;min-height:0;margin:0}.hero-video{position:relative;overflow:hidden;background:#080706}.hero-video video{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:cover}.hero-video img{height:100%;min-width:0;min-height:0}.hero-copy{min-width:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4.8vw,68px);background:linear-gradient(135deg,#1a1712,#24342c)}.hero h1{font-size:clamp(38px,5.2vw,74px)}.hero h2{font-size:clamp(26px,3vw,42px)}.eyebrow{margin:0 0 14px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}h1,h2,h3{font-family:Georgia,Times New Roman,serif;font-weight:500;line-height:1.06;margin:0}h1{font-size:clamp(42px,7vw,92px)}h2{font-size:clamp(28px,4vw,52px)}h3{font-size:23px}p{color:var(--warm)}.lede{font-size:clamp(18px,2vw,22px);max-width:760px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-  .trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:20px;color:var(--stone);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.intro,.section-head,.seo-copy{max-width:980px}.seo-copy.wide{max-width:1120px}.intro p,.seo-copy p{font-size:18px}.legal-copy{max-width:1040px;margin:auto}.legal-copy article{border-top:1px solid var(--line);padding:24px 0}.legal-copy h2{font-size:clamp(24px,3vw,34px);margin-bottom:12px}.legal-copy p{max-width:900px;font-size:16px;color:var(--warm)}.stealth-admin-link{color:inherit;text-decoration:none;cursor:inherit}.stealth-admin-link:visited,.stealth-admin-link:hover,.stealth-admin-link:focus{color:inherit;text-decoration:none}.seo-hero{display:grid;grid-template-columns:1fr .9fr;gap:clamp(28px,5vw,72px);align-items:center;min-height:72vh}.seo-hero figure{margin:0}.seo-hero img{min-height:460px;border-radius:8px}.seo-direct{max-width:1040px}.seo-direct h2{font-size:clamp(28px,4vw,48px)}.seo-sections{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding-top:0}.seo-sections article,.seo-related div{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:24px}.seo-sections h2{font-size:28px}.seo-related{display:grid;grid-template-columns:1fr;gap:16px}.seo-related div{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.seo-related h2{width:100%;font-size:34px}.seo-related a{border:1px solid var(--line);padding:11px 14px;text-decoration:none;color:var(--warm)}.cards,.answer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.card,.panel,.lead-card,.answer-grid article,.why article,.process article,.programmatic-meta div{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:24px;border-radius:8px}.programmatic-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:24px;padding-bottom:24px}.programmatic-meta span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.programmatic-meta strong{display:block;margin-top:6px;font-family:Georgia,serif;font-size:22px;font-weight:500}.card{text-decoration:none;min-height:260px;transition:transform .2s,border-color .2s}.answer-grid article{min-height:0}.answer-grid h3{font-size:22px;margin-bottom:8px}.answer-grid p{font-size:15px;color:var(--warm)}.card:hover,.lead-card:hover{transform:translateY(-3px);border-color:rgba(196,161,95,.8)}.card span,.process span{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.split-band,.page-hero,.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center}.split-band img,.page-hero img{min-height:420px;border-radius:8px}.reverse{grid-template-columns:.9fr 1.1fr}.why{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}.why-grid,.process>div{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.lead-paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}.lead-card{text-decoration:none}.region-city-panel div{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.region-city-panel a{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none}.region-city-panel a:hover{border-color:var(--gold);color:var(--ivory)}.chip-row{display:flex;gap:10px;flex-wrap:wrap;padding-top:0;padding-bottom:22px}.chip{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none;font-size:13px}.chip:hover,.chip:focus-visible{border-color:var(--gold);color:var(--ivory)}.loyalty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.loyalty-card,.portal-preview{border:1px solid rgba(196,161,95,.28);background:linear-gradient(180deg,rgba(196,161,95,.09),rgba(255,255,255,.035));border-radius:8px;padding:24px}.loyalty-card span,.portal-preview-head span,.portal-metrics span{display:block;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.loyalty-card strong{display:block;margin:12px 0;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.loyalty-card p{color:var(--warm);font-size:15px}.loyalty-card ul{margin:18px 0 0;padding-left:18px;color:var(--soft)}.loyalty-card li{margin:8px 0}.partner-portal{display:grid;grid-template-columns:1fr .9fr;gap:clamp(24px,5vw,72px);align-items:center}.portal-features{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.portal-features span{border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--warm);font-size:13px}.portal-preview{background:#0f0d0a}.portal-preview-head{display:flex;justify-content:space-between;gap:14px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:16px}.portal-preview-head strong{color:var(--ivory);font-size:18px}.portal-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}.portal-metrics div{border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.035);padding:12px}.portal-metrics strong{display:block;margin-top:6px;color:var(--ivory);font-size:24px}.portal-timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}.portal-timeline li{display:grid;gap:4px;border-left:2px solid var(--gold);padding:4px 0 4px 12px}.portal-timeline b{color:var(--ivory)}.portal-timeline span{color:var(--soft);font-size:14px}.gallery,.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gallery figure,.page-hero figure,.concept-media{margin:0}.gallery img{aspect-ratio:4/3;border-radius:8px}.concept-card{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;overflow:hidden}.concept-card img{width:100%;aspect-ratio:4/3;object-fit:cover}.concept-card div{padding:18px}.concept-card span{display:block;color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.concept-card .status-pill,.project-caption .status-pill{display:inline-flex;width:max-content;align-items:center;border:1px solid rgba(196,161,95,.42);border-radius:999px;padding:5px 9px;background:rgba(196,161,95,.08);color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card h3{font-size:24px;margin:8px 0}.concept-card p{font-size:15px;color:var(--warm)}.concept-card .card-cta{width:100%;margin-top:12px}.project-caption{display:grid;gap:6px;padding:12px 14px 14px;background:#100e0b;border-bottom:1px solid var(--line);font-size:13px;color:var(--soft)}.project-caption strong{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.project-caption span{color:var(--warm);font-size:13px;letter-spacing:0;text-transform:none}.project-caption .status-pill{color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card .inspired{color:var(--soft);font-size:13px;border-top:1px solid var(--line);margin-top:14px;padding-top:12px}figcaption{font-size:13px;color:var(--soft);padding-top:10px}.concept-card .project-caption{padding-top:12px}.internal{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.internal h2{width:100%;font-size:34px}.internal a,.internal span{border:1px solid var(--line);padding:11px 14px;text-decoration:none}.faq{max-width:980px}.faq details{border-top:1px solid var(--line);padding:18px 0}.faq summary{cursor:pointer;color:var(--ivory);font-size:19px}.cta{margin:clamp(20px,5vw,72px);background:var(--green);border:1px solid var(--line);border-radius:8px}.planner-hero{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:end;padding-top:clamp(34px,5vw,72px);padding-bottom:24px}.planner-hero h1{font-size:clamp(38px,5vw,72px)}.planner-estimate{border:1px solid var(--line);background:#100e0b;border-radius:8px;padding:22px}.planner-estimate span,.planner-stats span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.planner-estimate strong{display:block;margin-top:8px;color:var(--gold);font-family:Georgia,serif;font-size:32px;font-weight:500}.planner-shell{padding-top:0}.planner-toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}.planner-surface{display:grid;grid-template-columns:minmax(220px,1fr) 220px;gap:14px;align-items:start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px;margin-bottom:14px}.planner-surface h2{font-size:24px}.planner-surface p{margin:8px 0 0}.surface-fields{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.surface-fields fieldset{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center;margin:0;border:1px solid var(--line);border-radius:6px;padding:10px}.surface-fields legend{padding:0 5px;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.surface-fields span{color:var(--soft);font-size:12px}.planner-workspace{display:grid;grid-template-columns:250px minmax(360px,1fr) 300px;gap:14px;align-items:stretch}.planner-palette,.planner-stage,.planner-inspector,.planner-summary,.planner-lead{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px}.planner-palette h2,.planner-inspector h2,.planner-summary h2,.planner-lead h2{font-size:24px;margin-bottom:12px}.planner-module-button{width:100%;display:grid;gap:4px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:8px;cursor:pointer}.planner-module-button span{font-weight:800}.planner-module-button small{color:var(--soft);line-height:1.35}.planner-canvas-wrap{height:560px;min-height:360px;background:#080706;border:1px solid rgba(196,161,95,.24);border-radius:6px;overflow:hidden;cursor:grab}.planner-canvas-wrap:active{cursor:grabbing}.planner-canvas-wrap canvas{display:block;width:100%;height:100%}.planner-stage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.planner-inspector-fields{display:grid;gap:10px}.planner-inspector-fields label{font-size:13px}.planner-inspector-fields small{color:var(--soft);font-size:11px}.planner-check{display:flex;grid-template-columns:auto 1fr;gap:8px;align-items:center}.planner-check input{width:auto;min-height:0}.planner-output{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:14px;margin-top:14px}.planner-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.planner-stats div{border:1px solid var(--line);border-radius:6px;padding:12px;background:#0f0d0a}.planner-stats strong{display:block;margin-top:5px;color:var(--gold);font-family:Georgia,serif;font-size:24px}.planner-summary ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}.planner-summary button{width:100%;display:grid;gap:3px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:10px;cursor:pointer}.planner-summary button.active{border-color:var(--gold)}.planner-summary span{color:var(--soft);font-size:13px}.form-shell{max-width:980px}.lead-form{display:grid;gap:16px}.planner-form{gap:14px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}label{display:grid;gap:7px;color:var(--warm);font-size:14px}input,select,textarea{width:100%;border:1px solid var(--line);background:#0f0d0a;color:var(--ivory);min-height:44px;padding:10px;border-radius:4px}textarea{min-height:130px}.consent{grid-template-columns:auto 1fr;align-items:start}.hp{position:absolute;left:-9999px}.form-status{min-height:24px;color:var(--gold)}:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.site-footer{display:grid;grid-template-columns:1.35fr repeat(8,minmax(120px,1fr));gap:20px;padding:42px clamp(18px,5vw,72px);border-top:1px solid var(--line);background:#100e0b}.site-footer div{display:grid;align-content:start;gap:9px}.site-footer h3{font-size:20px}
-  .collection-card-link{display:block;color:inherit;text-decoration:none}
+  .trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:20px;color:var(--stone);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.intro,.section-head,.seo-copy{max-width:980px}.seo-copy.wide{max-width:1120px}.intro p,.seo-copy p{font-size:18px}.legal-copy{max-width:1040px;margin:auto}.legal-copy article{border-top:1px solid var(--line);padding:24px 0}.legal-copy h2{font-size:clamp(24px,3vw,34px);margin-bottom:12px}.legal-copy p{max-width:900px;font-size:16px;color:var(--warm)}.stealth-admin-link{color:inherit;text-decoration:none;cursor:inherit}.stealth-admin-link:visited,.stealth-admin-link:hover,.stealth-admin-link:focus{color:inherit;text-decoration:none}.seo-hero{display:grid;grid-template-columns:1fr .9fr;gap:clamp(28px,5vw,72px);align-items:center;min-height:72vh}.seo-hero figure{margin:0}.seo-hero img{min-height:460px;border-radius:8px}.seo-direct{max-width:1040px}.seo-direct h2{font-size:clamp(28px,4vw,48px)}.seo-sections{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding-top:0}.seo-sections article,.seo-related div{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:24px}.seo-sections h2{font-size:28px}.seo-related{display:grid;grid-template-columns:1fr;gap:16px}.seo-related div{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.seo-related h2{width:100%;font-size:34px}.seo-related a{border:1px solid var(--line);padding:11px 14px;text-decoration:none;color:var(--warm)}.cards,.answer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.card,.panel,.lead-card,.answer-grid article,.why article,.process article,.programmatic-meta div{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:24px;border-radius:8px}.programmatic-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:24px;padding-bottom:24px}.programmatic-meta span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.programmatic-meta strong{display:block;margin-top:6px;font-family:Georgia,serif;font-size:22px;font-weight:500}.card{text-decoration:none;min-height:260px;transition:transform .2s,border-color .2s}.answer-grid article{min-height:0}.answer-grid h3{font-size:22px;margin-bottom:8px}.answer-grid p{font-size:15px;color:var(--warm)}.card:hover,.lead-card:hover{transform:translateY(-3px);border-color:rgba(196,161,95,.8)}.card span,.process span{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.split-band,.page-hero,.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center}.split-band img,.page-hero img{min-height:420px;border-radius:8px}.reverse{grid-template-columns:.9fr 1.1fr}.why{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}.why-grid,.process>div{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.lead-paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}.lead-card{text-decoration:none}.region-city-panel div{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.region-city-panel a{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none}.region-city-panel a:hover{border-color:var(--gold);color:var(--ivory)}.chip-row{display:flex;gap:10px;flex-wrap:wrap;padding-top:0;padding-bottom:22px}.chip{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none;font-size:13px}.chip:hover,.chip:focus-visible{border-color:var(--gold);color:var(--ivory)}.loyalty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.loyalty-card,.portal-preview{border:1px solid rgba(196,161,95,.28);background:linear-gradient(180deg,rgba(196,161,95,.09),rgba(255,255,255,.035));border-radius:8px;padding:24px}.loyalty-card span,.portal-preview-head span,.portal-metrics span{display:block;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.loyalty-card strong{display:block;margin:12px 0;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.loyalty-card p{color:var(--warm);font-size:15px}.loyalty-card ul{margin:18px 0 0;padding-left:18px;color:var(--soft)}.loyalty-card li{margin:8px 0}.partner-portal{display:grid;grid-template-columns:1fr .9fr;gap:clamp(24px,5vw,72px);align-items:center}.portal-features{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.portal-features span{border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--warm);font-size:13px}.portal-preview{background:#0f0d0a}.portal-preview-head{display:flex;justify-content:space-between;gap:14px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:16px}.portal-preview-head strong{color:var(--ivory);font-size:18px}.portal-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}.portal-metrics div{border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.035);padding:12px}.portal-metrics strong{display:block;margin-top:6px;color:var(--ivory);font-size:24px}.portal-timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}.portal-timeline li{display:grid;gap:4px;border-left:2px solid var(--gold);padding:4px 0 4px 12px}.portal-timeline b{color:var(--ivory)}.portal-timeline span{color:var(--soft);font-size:14px}.gallery,.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gallery figure,.page-hero figure,.concept-media{margin:0}.gallery img{aspect-ratio:4/3;border-radius:8px}.concept-card{display:block;color:inherit;text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;overflow:hidden}.concept-card img{width:100%;aspect-ratio:4/3;object-fit:cover}.concept-card div{padding:18px}.concept-card span{display:block;color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.concept-card .status-pill,.project-caption .status-pill{display:inline-flex;width:max-content;align-items:center;border:1px solid rgba(196,161,95,.42);border-radius:999px;padding:5px 9px;background:rgba(196,161,95,.08);color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card h3{font-size:24px;margin:8px 0}.concept-card p{font-size:15px;color:var(--warm)}.concept-card .card-cta{width:100%;margin-top:12px}.project-caption{display:grid;gap:6px;padding:12px 14px 14px;background:#100e0b;border-bottom:1px solid var(--line);font-size:13px;color:var(--soft)}.project-caption strong{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.project-caption span{color:var(--warm);font-size:13px;letter-spacing:0;text-transform:none}.project-caption .status-pill{color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card .inspired{color:var(--soft);font-size:13px;border-top:1px solid var(--line);margin-top:14px;padding-top:12px}figcaption{font-size:13px;color:var(--soft);padding-top:10px}.concept-card .project-caption{padding-top:12px}.internal{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.internal h2{width:100%;font-size:34px}.internal a,.internal span{border:1px solid var(--line);padding:11px 14px;text-decoration:none}.faq{max-width:980px}.faq details{border-top:1px solid var(--line);padding:18px 0}.faq summary{cursor:pointer;color:var(--ivory);font-size:19px}.cta{margin:clamp(20px,5vw,72px);background:var(--green);border:1px solid var(--line);border-radius:8px}.planner-hero{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:end;padding-top:clamp(34px,5vw,72px);padding-bottom:24px}.planner-hero h1{font-size:clamp(38px,5vw,72px)}.planner-estimate{border:1px solid var(--line);background:#100e0b;border-radius:8px;padding:22px}.planner-estimate span,.planner-stats span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.planner-estimate strong{display:block;margin-top:8px;color:var(--gold);font-family:Georgia,serif;font-size:32px;font-weight:500}.planner-shell{padding-top:0}.planner-toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}.planner-surface{display:grid;grid-template-columns:minmax(220px,1fr) 220px;gap:14px;align-items:start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px;margin-bottom:14px}.planner-surface h2{font-size:24px}.planner-surface p{margin:8px 0 0}.surface-fields{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.surface-fields fieldset{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center;margin:0;border:1px solid var(--line);border-radius:6px;padding:10px}.surface-fields legend{padding:0 5px;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.surface-fields span{color:var(--soft);font-size:12px}.planner-workspace{display:grid;grid-template-columns:250px minmax(360px,1fr) 300px;gap:14px;align-items:stretch}.planner-palette,.planner-stage,.planner-inspector,.planner-summary,.planner-lead{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px}.planner-palette h2,.planner-inspector h2,.planner-summary h2,.planner-lead h2{font-size:24px;margin-bottom:12px}.planner-module-button{width:100%;display:grid;gap:4px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:8px;cursor:pointer}.planner-module-button span{font-weight:800}.planner-module-button small{color:var(--soft);line-height:1.35}.planner-canvas-wrap{height:560px;min-height:360px;background:#080706;border:1px solid rgba(196,161,95,.24);border-radius:6px;overflow:hidden;cursor:grab}.planner-canvas-wrap:active{cursor:grabbing}.planner-canvas-wrap canvas{display:block;width:100%;height:100%}.planner-stage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.planner-inspector-fields{display:grid;gap:10px}.planner-inspector-fields label{font-size:13px}.planner-inspector-fields small{color:var(--soft);font-size:11px}.planner-check{display:flex;grid-template-columns:auto 1fr;gap:8px;align-items:center}.planner-check input{width:auto;min-height:0}.planner-output{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:14px;margin-top:14px}.planner-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.planner-stats div{border:1px solid var(--line);border-radius:6px;padding:12px;background:#0f0d0a}.planner-stats strong{display:block;margin-top:5px;color:var(--gold);font-family:Georgia,serif;font-size:24px}.planner-summary ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}.planner-summary button{width:100%;display:grid;gap:3px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:10px;cursor:pointer}.planner-summary button.active{border-color:var(--gold)}.planner-summary span{color:var(--soft);font-size:13px}.form-shell{max-width:980px}.lead-form{display:grid;gap:16px}.planner-form{gap:14px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}label{display:grid;gap:7px;color:var(--warm);font-size:14px}input,select,textarea{width:100%;border:1px solid var(--line);background:#0f0d0a;color:var(--ivory);min-height:44px;padding:10px;border-radius:4px}textarea{min-height:130px}.consent{grid-template-columns:auto 1fr;align-items:start}.hp{position:absolute;left:-9999px}.form-status{min-height:24px;color:var(--gold)}:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.site-footer{display:grid;grid-template-columns:1.35fr repeat(9,minmax(112px,1fr));gap:20px;padding:42px clamp(18px,5vw,72px);border-top:1px solid var(--line);background:#100e0b}.site-footer div{display:grid;align-content:start;gap:9px}.site-footer h3{font-size:20px}
+	  .collection-card-link{display:block;color:inherit;text-decoration:none}
+	  .concept-card .chip{display:inline-flex;width:max-content;margin-top:4px}
+	  .design-concept-hero h1{font-size:clamp(40px,5.6vw,78px)}.design-concept-positioning{padding-bottom:24px}.concept-keywords{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.concept-keywords span{border:1px solid rgba(196,161,95,.32);border-radius:999px;padding:8px 11px;color:var(--stone);font-size:12px}.package-grid,.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.package-card,.pricing-grid article,.form-step{border:1px solid rgba(196,161,95,.24);background:linear-gradient(180deg,rgba(196,161,95,.08),rgba(255,255,255,.035));border-radius:8px;padding:24px}.package-card{display:grid;gap:14px;align-content:start;min-height:520px}.package-card>span,.pricing-grid span,.form-step>span{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.package-card strong{display:block;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.package-card p{margin:0}.package-card dl{display:grid;gap:10px;margin:0}.package-card dt{color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.package-card dd{margin:0;color:var(--warm);font-size:14px}.package-card .button{margin-top:auto}.pricing-grid article{min-height:170px}.pricing-grid h3{margin:10px 0 6px;font-size:24px}.pricing-grid p{margin:0;color:var(--soft)}.design-concept-form-shell{max-width:1120px}.design-concept-form .form-step{display:grid;gap:14px;background:rgba(255,255,255,.035)}.design-concept-form .form-step h3{font-size:26px}.selection-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:center;border:1px solid rgba(196,161,95,.24);background:#0f0d0a;border-radius:8px;padding:14px}.selection-summary div{display:grid;gap:4px}.selection-summary span{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.selection-summary strong{font-family:Georgia,serif;font-size:26px;font-weight:500}.selection-summary .button{grid-column:auto}.selection-summary p{grid-column:1/-1}.form-hint{margin:0;color:var(--soft);font-size:14px}.design-concept-bridge .actions,.cta .actions{margin-top:18px}
   @media(max-width:1050px){.site-header{grid-template-columns:auto auto 1fr}.menu-button{display:inline-flex;justify-self:end;background:transparent;color:var(--ivory);border:1px solid var(--line);padding:10px}nav{display:none;grid-column:1/-1;justify-content:start;flex-direction:column}.open{display:flex}.header-cta{display:none}.lang{justify-self:end}}
   @media(max-width:1200px){.site-footer{grid-template-columns:repeat(3,1fr)}}
   .planner-toolbar{grid-template-columns:repeat(4,1fr)}.planner-stage{margin-bottom:14px}.planner-workspace{grid-template-columns:minmax(0,1fr) 320px}.planner-palette{display:grid;grid-template-columns:1fr;gap:14px}.planner-palette>h2{margin-bottom:0}.planner-module-group{border:1px solid var(--line);border-radius:8px;background:#0f0d0a;padding:12px}.planner-module-group h3{font-size:20px;margin-bottom:10px}.planner-module-group .planner-module-button{background:#15120e}.planner-wall-picker{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.planner-wall-picker .button{min-height:38px}.planner-wall-picker .active{border-color:#b8f2c4;color:#07120b;background:#b8f2c4}.planner-canvas-wrap{position:relative;overscroll-behavior:contain}.planner-canvas-wrap canvas{touch-action:pan-y}.planner-nudge{position:absolute;left:14px;bottom:14px;z-index:3;display:grid;grid-template-columns:repeat(3,42px);grid-template-areas:". up ." "left . right" ". down .";gap:6px;padding:10px;border:1px solid var(--line);border-radius:8px;background:rgba(15,13,10,.82);backdrop-filter:blur(10px)}.planner-nudge[hidden]{display:none}.planner-nudge button,.planner-zoom button{min-width:42px;min-height:42px;padding-inline:0;font-size:18px}.planner-nudge [data-planner-nudge-dir="up"]{grid-area:up}.planner-nudge [data-planner-nudge-dir="left"]{grid-area:left}.planner-nudge [data-planner-nudge-dir="right"]{grid-area:right}.planner-nudge [data-planner-nudge-dir="down"]{grid-area:down}.planner-zoom{position:absolute;right:14px;top:14px;z-index:3;display:grid;gap:6px;padding:8px;border:1px solid var(--line);border-radius:8px;background:rgba(15,13,10,.82);backdrop-filter:blur(10px)}.surface-fields label{border:1px solid var(--line);border-radius:6px;background:#0f0d0a;padding:10px}.surface-fields small{color:var(--soft);font-size:11px}
-  @media(max-width:1050px){.hero{grid-template-columns:1fr}.hero-media{height:clamp(280px,48vw,420px)}.hero-copy{padding:clamp(28px,5vw,48px)}}@media(max-width:820px){.split-band,.page-hero,.seo-hero,.two-col,.why,.lead-paths,.site-footer,.planner-hero,.planner-toolbar,.planner-surface,.planner-workspace,.planner-output,.partner-portal{grid-template-columns:1fr}.cards,.answer-grid,.gallery,.concept-grid,.why-grid,.process>div,.form-grid,.programmatic-meta,.seo-sections,.planner-stats,.surface-fields,.loyalty-grid{grid-template-columns:1fr}.planner-canvas-wrap{height:390px}.hero{margin:18px}.hero-media{height:clamp(280px,68vw,390px)}.hero-copy{padding:30px 24px}.hero-video video,.hero-video img{min-height:0}.reverse{grid-template-columns:1fr}.cta{margin-inline:18px}.portal-metrics{grid-template-columns:1fr 1fr}section{padding-inline:18px}}
+  @media(max-width:1050px){.hero{grid-template-columns:1fr}.hero-media{height:clamp(280px,48vw,420px)}.hero-copy{padding:clamp(28px,5vw,48px)}.package-grid,.pricing-grid{grid-template-columns:1fr 1fr}}@media(max-width:820px){.split-band,.page-hero,.seo-hero,.two-col,.why,.lead-paths,.site-footer,.planner-hero,.planner-toolbar,.planner-surface,.planner-workspace,.planner-output,.partner-portal{grid-template-columns:1fr}.cards,.answer-grid,.gallery,.concept-grid,.why-grid,.process>div,.form-grid,.programmatic-meta,.seo-sections,.planner-stats,.surface-fields,.loyalty-grid,.package-grid,.pricing-grid{grid-template-columns:1fr}.planner-canvas-wrap{height:390px}.hero{margin:18px}.hero-media{height:clamp(280px,68vw,390px)}.hero-copy{padding:30px 24px}.hero-video video,.hero-video img{min-height:0}.reverse{grid-template-columns:1fr}.cta{margin-inline:18px}.portal-metrics{grid-template-columns:1fr 1fr}.package-card{min-height:0}section{padding-inline:18px}}
   `;
 }
