@@ -32,7 +32,9 @@ const paths = [
   "/collections/signature",
   "/kitchens",
   "/georgia/luxury-custom-kitchens",
+  "/georgia/premium-design-concepts",
   "/georgia/atlanta/luxury-custom-kitchens",
+  "/georgia/atlanta/premium-design-concepts",
   "/georgia/atlanta/custom-kitchen-cabinets",
   "/georgia/atlanta/kitchen-cabinet-refacing",
   "/miami/luxury-custom-kitchens",
@@ -42,6 +44,8 @@ const paths = [
   "/es/paneles-de-pared-de-lujo",
   "/fr/panneaux-muraux-de-luxe",
   "/ru/premium-stenovye-paneli",
+  "/en/design-concepts/georgia",
+  "/en/design-concepts/atlanta",
   "/sitemap.xml",
   "/robots.txt",
 ];
@@ -117,6 +121,40 @@ if (!kitchenPage.body.includes("/design-concept") || !kitchenPage.body.includes(
 }
 console.log("/design-concept sales flow ok");
 
+const consultationPage = await read("/request-consultation");
+for (const requiredText of [
+  'href="/request-consultation#consultation-form"',
+  'id="consultation-form"',
+  'name="fullName"',
+  'name="phone"',
+  'name="email"',
+  'name="message"',
+]) {
+  if (!consultationPage.body.includes(requiredText)) {
+    server.kill();
+    throw new Error(`/request-consultation missing required text: ${requiredText}`);
+  }
+}
+if (consultationPage.body.includes('<select name="budget"') || consultationPage.body.includes('<select name="timeline"') || consultationPage.body.includes('<select name="projectType"') || consultationPage.body.includes('<select name="serviceNeeded"')) {
+  server.kill();
+  throw new Error("/request-consultation should render the simplified consultation form without budget, timeline, project type or service selects");
+}
+const shortConsultationValidation = await post("/api/lead", {
+  formType: "consultation",
+  leadType: "consultation",
+  language: "en",
+  fullName: "Smoke Short Consultation",
+  phone: "+1 555 0100",
+  consent: "on",
+  sourceUrl: "/request-consultation#consultation-form",
+});
+const shortConsultationValidationJson = JSON.parse(shortConsultationValidation.body || "{}");
+if (shortConsultationValidation.status !== 400 || shortConsultationValidationJson.missing?.length !== 1 || shortConsultationValidationJson.missing[0] !== "message") {
+  server.kill();
+  throw new Error(`/api/lead simplified consultation validation returned ${shortConsultationValidation.status}: ${shortConsultationValidation.body}`);
+}
+console.log("/request-consultation simplified form ok");
+
 const privacyPage = await read("/privacy-policy");
 if (!privacyPage.body.includes('<a class="stealth-admin-link" href="/admin">contact CAS AURUM</a>')) {
   server.kill();
@@ -137,7 +175,7 @@ const lead = await post("/api/lead", {
   phone: "+1 555 0100",
   zipCode: "33101",
   message: "Short form smoke test.",
-  sourceUrl: "/request-consultation",
+  sourceUrl: "/request-consultation#consultation-form",
 });
 if (lead.status !== 200) {
   server.kill();
@@ -312,8 +350,10 @@ function post(path, body) {
         },
       },
       (res) => {
-        res.resume();
-        res.on("end", () => resolve({ status: res.statusCode }));
+        let responseBody = "";
+        res.setEncoding("utf8");
+        res.on("data", (chunk) => (responseBody += chunk));
+        res.on("end", () => resolve({ status: res.statusCode, body: responseBody }));
       },
     );
     req.on("error", reject);

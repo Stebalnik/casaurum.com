@@ -441,6 +441,16 @@ export const intents = [
 }));
 
 const cityMarketBriefs = {
+  georgia: {
+    intro: "Georgia premium interiors should connect Atlanta-market polish with practical durability for residences, hospitality spaces, offices and developer interiors. CAS AURUM treats design concepts as a low-risk way to clarify material direction, built-in scope and budget logic before fabrication or installation is reviewed.",
+    direct: "Georgia is a priority CAS AURUM market for premium design concepts, luxury interiors, custom wall panels, built-ins, closets, kitchens and architectural millwork inquiries.",
+    sections: [
+      ["Georgia project fit", "The strongest Georgia inquiries usually come from Atlanta, Buckhead, Alpharetta, Sandy Springs, Marietta, Roswell, Milton, Brookhaven, Johns Creek and Savannah projects where custom work needs to feel premium without becoming fragile or overdecorated."],
+      ["Design concept value", "A premium design concept gives the client and project team a clear visual and material direction before custom cabinetry, wall panels, furniture or millwork are priced in detail. It helps separate serious project intent from general inspiration browsing."],
+      ["Useful brief", "A useful Georgia design concept brief should include city or ZIP code, room photos, rough dimensions, ceiling height, target materials, inspiration images, desired scope and the level of realization needed after the concept."],
+      ["High-intent Georgia scopes", "The strongest organic paths for Georgia should connect design concept searches to luxury kitchens, custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork."],
+    ],
+  },
   atlanta: {
     intro: "Atlanta luxury interiors need to balance Southern warmth with disciplined architectural detailing: custom cabinetry that feels built into the home, wall panels that improve proportion, and material choices that hold up in busy family, hospitality and developer spaces.",
     direct: "Atlanta is CAS AURUM's priority Georgia market for custom cabinetry, wall panels, built-ins, closets, kitchens and architectural millwork inquiries.",
@@ -503,6 +513,13 @@ const cityMarketBriefs = {
 };
 
 const cityProfiles = {
+  georgia: {
+    propertyMix: "Atlanta-area residences, Buckhead homes, Alpharetta family houses, Savannah properties, boutique hospitality, offices and developer interiors",
+    designMood: "premium, warm, durable and architecturally resolved",
+    constraints: "regional spread, remodel phasing, family use, hospitality durability and the need to clarify concept direction before custom fabrication",
+    materials: ["walnut", "white oak", "natural stone", "textured wall panels", "champagne brass"],
+    scopes: ["design concepts", "luxury kitchens", "media walls", "built-ins", "closets", "architectural millwork"],
+  },
   atlanta: {
     propertyMix: "Buckhead residences, Sandy Springs remodels, Alpharetta family homes, boutique hospitality and developer interiors",
     designMood: "warm, substantial and quietly polished",
@@ -625,7 +642,7 @@ const cityProfiles = {
 };
 
 export const cities = [
-  ["atlanta", "Atlanta", "United States"], ["miami", "Miami", "United States"], ["new-york", "New York", "United States"], ["chicago", "Chicago", "United States"], ["charlotte", "Charlotte", "United States"], ["nashville", "Nashville", "United States"], ["houston", "Houston", "United States"], ["dallas", "Dallas", "United States"], ["los-angeles", "Los Angeles", "United States"], ["beverly-hills", "Beverly Hills", "United States"], ["palm-beach", "Palm Beach", "United States"], ["scottsdale", "Scottsdale", "United States"], ["seattle", "Seattle", "United States"], ["san-francisco", "San Francisco", "United States"], ["toronto", "Toronto", "Canada"], ["vancouver", "Vancouver", "Canada"], ["mexico-city", "Mexico City", "Mexico"],
+  ["georgia", "Georgia", "United States"], ["atlanta", "Atlanta", "United States"], ["miami", "Miami", "United States"], ["new-york", "New York", "United States"], ["chicago", "Chicago", "United States"], ["charlotte", "Charlotte", "United States"], ["nashville", "Nashville", "United States"], ["houston", "Houston", "United States"], ["dallas", "Dallas", "United States"], ["los-angeles", "Los Angeles", "United States"], ["beverly-hills", "Beverly Hills", "United States"], ["palm-beach", "Palm Beach", "United States"], ["scottsdale", "Scottsdale", "United States"], ["seattle", "Seattle", "United States"], ["san-francisco", "San Francisco", "United States"], ["toronto", "Toronto", "Canada"], ["vancouver", "Vancouver", "Canada"], ["mexico-city", "Mexico City", "Mexico"],
 ].map(([slug, cityName, country]) => {
   const profile = cityProfiles[slug];
   return {
@@ -636,9 +653,18 @@ export const cities = [
     marketSections: cityMarketBriefs[slug]?.sections,
     localDesignSignals: [profile.designMood, profile.constraints, profile.scopes.slice(0, 3).join(", ")],
     popularPropertyTypes: ["villa", "penthouse", "private-residence", "luxury-condo"],
-    relatedCities: relatedFrom(slug, ["atlanta", "miami", "new-york", "chicago", "charlotte", "nashville", "houston", "toronto"], 3),
+    relatedCities: relatedFrom(slug, ["georgia", "atlanta", "miami", "new-york", "chicago", "charlotte", "nashville", "houston", "toronto"], 3),
   };
 });
+
+const designConceptMarkets = [
+  { slug: "georgia", citySlug: "georgia", locationName: "Georgia", modifier: "premium", h1: "Premium Design Concepts in Georgia" },
+  { slug: "georgia/luxury", citySlug: "georgia", locationName: "Georgia", modifier: "luxury", h1: "Luxury Interior Design Concepts in Georgia" },
+  { slug: "georgia/premium", citySlug: "georgia", locationName: "Georgia", modifier: "premium", h1: "Premium Interior Design Concepts in Georgia" },
+  { slug: "atlanta", citySlug: "atlanta", locationName: "Atlanta", modifier: "premium", h1: "Premium Design Concepts in Atlanta" },
+  { slug: "atlanta/luxury", citySlug: "atlanta", locationName: "Atlanta", modifier: "luxury", h1: "Luxury Interior Design Concepts in Atlanta" },
+  { slug: "atlanta/premium", citySlug: "atlanta", locationName: "Atlanta", modifier: "premium", h1: "Premium Interior Design Concepts in Atlanta" },
+];
 
 export const collections = [
   { slug: "aurum", name: "Aurum Collection", philosophy: "champagne brass refinement, warm stone and quiet luxury", materials: ["limestone", "champagne brass", "taupe lacquer"], relatedStyles: ["quiet-luxury", "contemporary", "italian-inspired", "luxury"], imagePath: "/images/collections/aurum-01-champagne-gallery-residence.webp" },
@@ -738,6 +764,7 @@ function buildCasaurumSeoPages() {
     base.push(...cities.map((city) => cityPage(locale, city)));
     base.push(...collections.map((collection) => collectionPage(locale, collection)));
     base.push(...articles.map((article) => articlePage(locale, article)));
+    base.push(...designConceptMarkets.map((market) => designConceptMarketPage(locale, market)));
   }
 
   const comboBases = [];
@@ -759,8 +786,9 @@ function buildCasaurumSeoPages() {
   const topIntents = dedupeCombo([...requiredIntents, ...intentBases]).slice(0, MAX_GENERATED_INTENT_PAGES);
 
   const cityCombos = [];
+  const cityStyleTargets = [...styles.slice(0, 6), bySlug(styles, "premium"), bySlug(styles, "luxury")].filter(Boolean);
   for (const city of cities) cityCombos.push({ type: "city-service", city });
-  for (const city of cities) for (const style of styles.slice(0, 6)) cityCombos.push({ type: "city-style", city, style });
+  for (const city of cities) for (const style of cityStyleTargets) cityCombos.push({ type: "city-style", city, style });
   for (const city of cities) for (const room of rooms.slice(0, 5)) cityCombos.push({ type: "city-room", city, room });
   for (const city of cities) for (const property of propertyTypes.slice(0, 4)) cityCombos.push({ type: "city-property", city, property });
   const topCityCombos = cityCombos.slice(0, MAX_GENERATED_CITY_COMBINATION_PAGES);
@@ -863,6 +891,99 @@ function articlePage(locale, article) {
     relatedStyles: article.relatedStyles, relatedRooms: article.relatedRooms, relatedCollections: ["aurum", "forma", "madera"],
     imagePath: collectionImage(article.relatedStyles.includes("quiet-luxury") ? "aurum" : "forma"), allowlisted: true,
   });
+}
+
+function designConceptMarketPage(locale, market) {
+  const profile = cityProfiles[market.citySlug] || cityProfiles.georgia;
+  const locationName = market.locationName;
+  const modifierLabel = market.modifier === "luxury" ? "luxury" : "premium";
+  const h1 = locale === "en" ? market.h1 : designConceptMarketH1(locale, market);
+  const materialList = profile.materials.join(", ");
+  const scopeList = profile.scopes.join(", ");
+  return makePage({
+    pageType: "design-concept-market",
+    locale,
+    path: `/design-concepts/${market.slug}`,
+    h1,
+    eyebrow: "Design Concepts",
+    metaTitle: `${h1} | CAS AURUM`,
+    metaDescription: `${BRAND} creates ${modifierLabel} interior design concepts for ${locationName} projects: material direction, custom wall panels, built-ins, closets, kitchens, media walls and millwork planning before fabrication review.`,
+    intro: `${h1} help turn inspiration into a practical project brief before custom fabrication, cabinetry or installation is reviewed. CAS AURUM focuses the concept around room photos, rough dimensions, material direction, storage needs, lighting, budget logic and the next realistic step for ${locationName}.`,
+    directSummary: `${locationName} ${modifierLabel} design concepts are useful when a client needs a clear visual and material direction for custom interiors before committing to detailed drawings, fabrication or installation.`,
+    sections: designConceptMarketSections(locale, market, profile, materialList, scopeList),
+    faq: designConceptMarketFaq(locale, market, profile),
+    breadcrumbs: crumb(locale, [[l(locale, "interiors"), "/interiors"], ["Design Concepts", "/design-concepts"], [h1, `/design-concepts/${market.slug}`]]),
+    relatedCities: [market.citySlug === "georgia" ? "atlanta" : "georgia", "miami", "new-york"],
+    relatedStyles: ["premium", "luxury", "quiet-luxury", "bespoke"],
+    relatedRooms: ["living-room", "kitchen", "walk-in-closet", "home-office"],
+    relatedCollections: ["aurum", "signature", "forma"],
+    imagePath: collectionImage(market.modifier === "luxury" ? "aurum" : "signature"),
+    citySlug: market.citySlug,
+    allowlisted: true,
+    extraLinks: [
+      { href: "/design-concept", label: "Fixed-Price Design Concept" },
+      { href: market.citySlug === "georgia" ? "/georgia/premium-design-concepts" : "/georgia/atlanta/premium-design-concepts", label: `${locationName} premium design concept inquiry` },
+      { href: `/en/cities/${market.citySlug}`, label: `${locationName} interiors` },
+      { href: "/en/styles/luxury", label: "Luxury interiors" },
+      { href: "/en/styles/premium", label: "Premium interiors" },
+    ],
+  });
+}
+
+function designConceptMarketH1(locale, market) {
+  const base = market.modifier === "luxury" ? "Luxury Interior Design Concepts" : "Premium Interior Design Concepts";
+  return {
+    es: `${base} en ${market.locationName}`,
+    fr: `${base} à ${market.locationName}`,
+    ru: `${base} in ${market.locationName}`,
+  }[locale] || market.h1;
+}
+
+function designConceptMarketSections(locale, market, profile, materialList, scopeList) {
+  const locationName = market.locationName;
+  if (locale !== "en") return standardSections(locale, designConceptMarketH1(locale, market), bySlug(styles, market.modifier), null, null, bySlug(cities, market.citySlug));
+  return [
+    {
+      heading: `${locationName} concept fit`,
+      body: `A ${locationName} design concept is strongest for ${profile.propertyMix}. The concept should feel ${profile.designMood}, then translate that feeling into wall composition, storage, furniture scale, material choices and lighting direction.`,
+    },
+    {
+      heading: "Before fabrication or installation",
+      body: "The purpose is not to replace final drawings. It is to clarify the visual direction, approximate scope, key materials and decision path before the client invests in detailed technical work, production review or site coordination.",
+    },
+    {
+      heading: "Best-fit custom scopes",
+      body: `Relevant CAS AURUM scopes include ${scopeList}. These searches carry stronger project intent than broad decor inspiration because they imply a room, a wall, a storage need or a custom package.`,
+    },
+    {
+      heading: "Material direction",
+      body: `Good starting materials include ${materialList}. A premium concept should keep the palette edited so the result feels custom and architectural rather than a generic luxury collage.`,
+    },
+    {
+      heading: "What to send",
+      body: `Send photos, rough dimensions, ceiling height, city or ZIP code, room function, target materials, inspiration images and whether the next step should be a basic concept, technical package or realization review.`,
+    },
+    {
+      heading: "AI search answer value",
+      body: `${locationName} pages are written to answer practical questions directly: what a premium concept includes, which scopes fit the market, what materials make sense and what CAS AURUM needs before recommending a next step.`,
+    },
+    {
+      heading: "What to avoid",
+      body: `Avoid treating ${locationName} as a keyword swap. A useful concept must account for property type, light, maintenance, storage, budget range and whether the design is meant for a residence, hospitality space, office or developer interior.`,
+    },
+  ];
+}
+
+function designConceptMarketFaq(locale, market, profile) {
+  const locationName = market.locationName;
+  if (locale !== "en") return faqFor(locale, designConceptMarketH1(locale, market));
+  return [
+    { q: `What is included in a ${locationName} premium design concept?`, a: "A useful concept can include visual direction, material mood, wall or furniture composition, basic layout notes, storage priorities, lighting direction and a recommended next step." },
+    { q: `Is a design concept the same as fabrication drawings?`, a: "No. A concept is the lower-risk planning step before detailed shop drawings, engineering, production pricing, field measurement or installation coordination." },
+    { q: `Which projects fit ${locationName}?`, a: `Relevant scopes include ${profile.scopes.join(", ")} for ${profile.propertyMix}.` },
+    { q: "What should I send before requesting a design concept?", a: "Send room photos, rough dimensions, ceiling height, city or ZIP code, target materials, inspiration images, timeline and whether you want concept-only or a path toward realization." },
+    { q: "Does CAS AURUM claim a local office or completed project in every city?", a: "No. Market pages are planning guidance unless a page explicitly states a local office, showroom, license or completed project." },
+  ];
 }
 
 function combinationPage(locale, combo) {
@@ -1348,7 +1469,7 @@ function makePage(input) {
     slug, canonicalUrl: `${BASE_URL}${slug}`, hreflangAlternates: { ...alternates, "x-default": alternates.en },
     openGraph: { title: input.metaTitle, description: input.metaDescription, image: input.imagePath || collectionImage("aurum") },
     cta: { primary: l(input.locale, "ctaPrimary"), secondary: l(input.locale, "ctaSecondary") },
-    internalLinks: getRelatedCasaurumLinks(input),
+    internalLinks: dedupeLinks([...getRelatedCasaurumLinks(input), ...(input.extraLinks || [])]),
     schemaData: [], lastModified: "2026-06-03", changeFrequency: input.pageType === "article" ? "monthly" : "weekly", priority: priorityFor(input.pageType),
     ...input, slug,
   };
@@ -1532,6 +1653,17 @@ function schemaFor(page) {
     { "@type": "BreadcrumbList", itemListElement: page.breadcrumbs.map((item, index) => ({ "@type": "ListItem", position: index + 1, name: item.name, item: `${BASE_URL}${item.href}` })) },
     { "@type": "FAQPage", mainEntity: page.faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) },
   ];
+  if (page.pageType === "design-concept-market") {
+    graph.push({
+      "@type": "Service",
+      "@id": `${page.canonicalUrl}#design-concept-service`,
+      name: page.h1,
+      provider: { "@type": "Organization", name: BRAND, url: BASE_URL },
+      areaServed: page.citySlug === "atlanta" ? ["Atlanta", "Georgia", "United States"] : ["Georgia", "United States"],
+      serviceType: ["premium interior design concept", "luxury interior design concept", "custom millwork concept", "wall panel concept", "custom furniture concept"],
+      description: page.metaDescription,
+    });
+  }
   if (page.imagePath) graph.push({ "@type": "ImageObject", contentUrl: page.imagePath.startsWith("http") ? page.imagePath : `${BASE_URL}${page.imagePath}`, name: page.h1 });
   return graph;
 }
@@ -1777,6 +1909,7 @@ function combinationIntro(locale, h1) {
 
 function priorityFor(pageType) {
   if (pageType === "hub") return "0.8";
+  if (pageType === "design-concept-market") return "0.78";
   if (["style", "room", "collection", "article"].includes(pageType)) return "0.75";
   if (pageType.startsWith("city")) return "0.68";
   return "0.62";

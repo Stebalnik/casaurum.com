@@ -740,6 +740,7 @@ const regionCities = {
 
 const programmaticVerticals = {
   luxuryInteriors: vertical("luxury-interiors", "Luxury Interiors", "luxury interior concepts", "general_consultation", "solutions", "premium-materials-closeup"),
+  designConcepts: vertical("design-concepts", "Premium Design Concepts", "premium interior design concept packages", "general_consultation", "designConcept", "custom-tv-wall-panels-modern-home"),
   kitchens: vertical("kitchens", "Luxury Custom Kitchens", "custom kitchen design direction", "kitchen_consultation", "solutions", "premium-materials-closeup"),
   kitchenCabinets: vertical("custom-kitchen-cabinets", "Custom Kitchen Cabinets", "custom kitchen cabinet concepts", "kitchen_consultation", "solutions", "premium-materials-closeup"),
   kitchenRemodeling: vertical("kitchen-remodeling-coordination", "Kitchen Remodeling Coordination", "kitchen remodeling coordination", "kitchen_consultation", "solutions", "measurement-consultation-process"),
@@ -810,11 +811,13 @@ const programmaticPageSpecs = [
   pageSpec("core-restaurant", "restaurants", null, { intent: "commercial", objectType: "restaurant", material: "wood veneer", slug: "restaurant-interiors", tier: 1, indexingStatus: "approved" }),
   pageSpec("core-office", "office", null, { intent: "commercial", objectType: "office", material: "walnut", slug: "office-interiors", tier: 1, indexingStatus: "approved" }),
   pageSpec("georgia-kitchens", "kitchens", "georgia", { intent: "luxury", objectType: "kitchen", material: "walnut", slug: "georgia/luxury-custom-kitchens", tier: 1, indexingStatus: "approved" }),
+  pageSpec("georgia-design-concepts", "designConcepts", "georgia", { intent: "design concept", objectType: "interior", material: "premium materials", slug: "georgia/premium-design-concepts", tier: 1, indexingStatus: "approved" }),
   pageSpec("georgia-cabinets", "kitchenCabinets", "georgia", { intent: "custom", objectType: "kitchen", material: "oak", tier: 1, indexingStatus: "approved" }),
   pageSpec("georgia-wall-panels", "wallPanels", "georgia", { intent: "luxury", objectType: "living room", material: "fluted panels", tier: 1, indexingStatus: "approved" }),
   pageSpec("georgia-furniture", "furniture", "georgia", { intent: "bespoke", objectType: "bedroom", material: "walnut", tier: 1, indexingStatus: "approved" }),
   pageSpec("georgia-millwork", "millwork", "georgia", { intent: "premium", objectType: "commercial lobby", material: "wood veneer", tier: 1, indexingStatus: "approved" }),
   pageSpec("atlanta-cabinets", "kitchenCabinets", "atlanta", { intent: "custom", objectType: "kitchen", material: "walnut", tier: 1, indexingStatus: "approved" }),
+  pageSpec("atlanta-design-concepts", "designConcepts", "atlanta", { intent: "design concept", objectType: "luxury interior", material: "walnut", slug: "georgia/atlanta/premium-design-concepts", tier: 1, indexingStatus: "approved" }),
   pageSpec("atlanta-refacing", "cabinetRefacing", "atlanta", { intent: "refacing", objectType: "kitchen", material: "wood veneer", tier: 1, indexingStatus: "approved" }),
   pageSpec("atlanta-wall-panels", "wallPanels", "atlanta", { intent: "luxury", objectType: "TV wall", material: "slat panels", tier: 1, indexingStatus: "approved" }),
   pageSpec("atlanta-closets", "closets", "atlanta", { intent: "custom", objectType: "walk-in closet", material: "walnut", tier: 1, indexingStatus: "approved" }),
@@ -1654,7 +1657,7 @@ function buildProgrammaticInternalLinks(page, lang) {
   const links = [
     { href: urlFor(lang, "designConcept"), label: pageLabel("designConcept", lang) },
     { href: urlFor(lang, page.parentKey || "solutions"), label: copy[lang].nav[page.parentKey] || page.vertical },
-    { href: urlFor(lang, "consultation"), label: copy[lang].cta.consult },
+    { href: consultationFormUrl(lang), label: copy[lang].cta.consult },
     { href: urlFor(lang, "measurement"), label: copy[lang].cta.measure },
     { href: urlFor(lang, "trade"), label: copy[lang].nav.trade },
   ];
@@ -1899,7 +1902,7 @@ function home(route) {
         <h2>${escapeHtml(hp.sub)}</h2>
         <p class="lede">${escapeHtml(hp.microcopy)}</p>
         <div class="actions">
-          <a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(hp.primaryCta)}</a>
+          <a class="button primary track" data-event="cta_clicked" href="${consultationFormUrl(route.lang)}">${escapeHtml(hp.primaryCta)}</a>
           <a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "projects")}">${escapeHtml(hp.secondaryCta)}</a>
         </div>
       </div>
@@ -2683,7 +2686,11 @@ function contactPage(route) {
 
 function formPage(route, type) {
   const t = copy[route.lang];
-  return `${pageHero(route.lang, type === "consultation" ? t.cta.consult : t.cta.measure, t.contact[1], type === "consultation" ? "designer-builder-partnership" : "measurement-consultation-process")}${type === "consultation" ? designConceptBridge(route) : ""}<section class="form-shell"><div class="panel">${leadForm(route, type)}</div></section>`;
+  const id = type === "consultation" ? ` id="consultation-form"` : "";
+  const intro = type === "consultation"
+    ? `<p class="eyebrow">${escapeHtml(localized("Project request", route.lang))}</p><h2>${escapeHtml(localized("Tell us what you want to build", route.lang))}</h2><p>${escapeHtml(localized("Share the essentials and CAS AURUM will contact you to clarify the next step.", route.lang))}</p>`
+    : "";
+  return `${pageHero(route.lang, type === "consultation" ? t.cta.consult : t.cta.measure, t.contact[1], type === "consultation" ? "designer-builder-partnership" : "measurement-consultation-process")}${type === "consultation" ? designConceptBridge(route) : ""}<section class="form-shell"${id}><div class="panel">${intro}${leadForm(route, type)}</div></section>`;
 }
 
 function designConceptMeta(lang) {
@@ -2874,11 +2881,11 @@ function designConceptInternalLinks(route, t) {
 
 function designConceptBridge(route) {
   const lang = route.lang;
-  return `<section class="cta design-concept-bridge"><p class="eyebrow">${escapeHtml(localized("Fixed-price starting point", lang))}</p><h2>${escapeHtml(localized("Start with a Design Concept", lang))}</h2><p>${escapeHtml(localized("Before investing in custom fabrication, cabinetry or installation, start with a clear design direction, transparent starting price and practical next-step guidance.", lang))}</p><div class="actions"><a class="button primary track" data-event="design_concept_bridge_clicked" href="${urlFor(lang, "designConcept")}">${escapeHtml(localized("Get a Fixed-Price Concept", lang))}</a><a class="button secondary track" data-event="full_project_review_clicked" href="${urlFor(lang, "consultation")}">${escapeHtml(localized("Request Full Project Review", lang))}</a></div></section>`;
+  return `<section class="cta design-concept-bridge"><p class="eyebrow">${escapeHtml(localized("Fixed-price starting point", lang))}</p><h2>${escapeHtml(localized("Start with a Design Concept", lang))}</h2><p>${escapeHtml(localized("Before investing in custom fabrication, cabinetry or installation, start with a clear design direction, transparent starting price and practical next-step guidance.", lang))}</p><div class="actions"><a class="button primary track" data-event="design_concept_bridge_clicked" href="${urlFor(lang, "designConcept")}">${escapeHtml(localized("Get a Fixed-Price Concept", lang))}</a><a class="button secondary track" data-event="full_project_review_clicked" href="${consultationFormUrl(lang)}">${escapeHtml(localized("Request Full Project Review", lang))}</a></div></section>`;
 }
 
 function serviceCtaSection(route, label) {
-  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Start with clarity", route.lang))}</p><h2>${escapeHtml(localized("Begin with a design concept or request a full project review", route.lang))}</h2><p>${escapeHtml(localized("A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.", route.lang))}</p><div class="actions"><a class="button primary track" data-event="design_concept_service_cta_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Start with a Design Concept", route.lang))}</a><a class="button secondary track" data-event="full_project_review_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(localized("Request Full Project Review", route.lang))}</a></div></section>`;
+  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Start with clarity", route.lang))}</p><h2>${escapeHtml(localized("Begin with a design concept or request a full project review", route.lang))}</h2><p>${escapeHtml(localized("A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.", route.lang))}</p><div class="actions"><a class="button primary track" data-event="design_concept_service_cta_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Start with a Design Concept", route.lang))}</a><a class="button secondary track" data-event="full_project_review_clicked" href="${consultationFormUrl(route.lang)}">${escapeHtml(localized("Request Full Project Review", route.lang))}</a></div></section>`;
 }
 
 function designConceptText(lang) {
@@ -3307,7 +3314,7 @@ function casaurumSeoPageTemplate(route, page) {
         <h1>${escapeHtml(page.h1)}</h1>
         <p class="lede">${escapeHtml(page.intro)}</p>
         <div class="actions">
-          <a class="button primary track" data-event="cta_clicked" href="${urlFor(lang, "consultation")}">${escapeHtml(page.cta.primary)}</a>
+          <a class="button primary track" data-event="cta_clicked" href="${consultationFormUrl(lang)}">${escapeHtml(page.cta.primary)}</a>
           <a class="button secondary track" data-event="cta_clicked" href="${urlFor(lang, page.pageType === "room" ? "projects" : "collections")}">${escapeHtml(page.cta.secondary)}</a>
         </div>
       </div>
@@ -3629,7 +3636,7 @@ function projectsPage(route) {
     </section>
     ${projectCategoryChips(route, gallery)}
     <section class="concept-grid" id="selected-work">${completedProjectItems.map((project, index) => projectGalleryCard(route, project, index, gallery)).join("")}</section>
-	    <section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(gallery.requestTitle)}</h2><p>${escapeHtml(gallery.requestText)}</p><div class="actions"><a class="button primary track" data-event="design_concept_gallery_cta_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Start with a Design Concept", route.lang))}</a><a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(gallery.primaryCta)}</a></div></section>
+	    <section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(gallery.requestTitle)}</h2><p>${escapeHtml(gallery.requestText)}</p><div class="actions"><a class="button primary track" data-event="design_concept_gallery_cta_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Start with a Design Concept", route.lang))}</a><a class="button secondary track" data-event="cta_clicked" href="${consultationFormUrl(route.lang)}">${escapeHtml(gallery.primaryCta)}</a></div></section>
     ${projectsInternalLinks(route, gallery)}
     ${projectsFaqBlock(route, gallery)}
   `;
@@ -3712,7 +3719,7 @@ function projectsInternalLinks(route, gallery) {
     { href: urlFor(route.lang, "collections"), label: pageLabel("collections", route.lang) },
     { href: urlFor(route.lang, "trade"), label: pageLabel("trade", route.lang) },
     { href: urlFor(route.lang, "contact"), label: pageLabel("contact", route.lang) },
-    { href: urlFor(route.lang, "consultation"), label: pageLabel("consultation", route.lang) },
+    { href: consultationFormUrl(route.lang), label: pageLabel("consultation", route.lang) },
   ];
   return `<section class="internal"><h2>${escapeHtml(gallery.linksTitle)}</h2>${links.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}</section>`;
 }
@@ -3946,7 +3953,7 @@ function header(route) {
     <a class="brand track" data-event="cta_clicked" href="${urlFor(route.lang, "home")}" aria-label="CAS AURUM home"><img class="brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a>
     <button class="menu-button" type="button" aria-controls="nav" aria-expanded="false">Menu</button>
     <nav id="nav" aria-label="Primary">${nav.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}</nav>
-    <a class="header-cta track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(t.cta.consult)}</a>
+    <a class="header-cta track" data-event="cta_clicked" href="${consultationFormUrl(route.lang)}">${escapeHtml(t.cta.consult)}</a>
   </header>`;
 }
 
@@ -4091,7 +4098,7 @@ function whySection(route) {
 
 function homeInlineCta(route) {
   const hp = homepagePositioning[route.lang] || homepagePositioning.en;
-  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(hp.inlineCtaTitle)}</h2><p>${escapeHtml(hp.inlineCtaText)}</p><a class="button primary track" data-event="cta_clicked" href="${urlFor(route.lang, "consultation")}">${escapeHtml(hp.primaryCta)}</a></section>`;
+  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(hp.inlineCtaTitle)}</h2><p>${escapeHtml(hp.inlineCtaText)}</p><a class="button primary track" data-event="cta_clicked" href="${consultationFormUrl(route.lang)}">${escapeHtml(hp.primaryCta)}</a></section>`;
 }
 
 function tradeBand(route) {
@@ -4100,7 +4107,7 @@ function tradeBand(route) {
 
 function leadPaths(route) {
   const t = copy[route.lang];
-  return `<section class="lead-paths"><a class="lead-card track" data-event="consultation_form_opened" href="${urlFor(route.lang, "consultation")}"><h2>${escapeHtml(t.cta.consult)}</h2><p>${escapeHtml(localized("Share your property, project type, timeline, budget range and design direction.", route.lang))}</p></a><a class="lead-card track" data-event="measurement_form_opened" href="${urlFor(route.lang, "measurement")}"><h2>${escapeHtml(t.cta.measure)}</h2><p>${escapeHtml(localized("Request on-site measurement, virtual consultation or guidance on the right next step.", route.lang))}</p></a></section>`;
+  return `<section class="lead-paths"><a class="lead-card track" data-event="consultation_form_opened" href="${consultationFormUrl(route.lang)}"><h2>${escapeHtml(t.cta.consult)}</h2><p>${escapeHtml(localized("Share the essentials: your name, phone, location and what you want to build.", route.lang))}</p></a><a class="lead-card track" data-event="measurement_form_opened" href="${urlFor(route.lang, "measurement")}"><h2>${escapeHtml(t.cta.measure)}</h2><p>${escapeHtml(localized("Request on-site measurement, virtual consultation or guidance on the right next step.", route.lang))}</p></a></section>`;
 }
 
 function processSection(route) {
@@ -4124,7 +4131,7 @@ function internalLinks(route, key) {
 	    trade: ["designConcept", "projects", "planner", "millwork", "builtIns", "mediaWalls", "consultation"],
 	  };
   const links = map[key] || ["projects", "trade", "customFurniture", "consultation", "collections"];
-  return `<section class="internal"><h2>${escapeHtml(localized("Continue exploring", route.lang))}</h2>${links.map((k) => `<a href="${urlFor(route.lang, k)}">${escapeHtml(pageLabel(k, route.lang))}</a>`).join("")}</section>`;
+  return `<section class="internal"><h2>${escapeHtml(localized("Continue exploring", route.lang))}</h2>${links.map((k) => `<a href="${k === "consultation" ? consultationFormUrl(route.lang) : urlFor(route.lang, k)}">${escapeHtml(pageLabel(k, route.lang))}</a>`).join("")}</section>`;
 }
 
 function faqBlock(lang, key, compact = false) {
@@ -4133,7 +4140,7 @@ function faqBlock(lang, key, compact = false) {
 }
 
 function ctaSection(route, label) {
-  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(label)}</h2><p>${escapeHtml(localized("Tell us about the space, service need, location and timeline. CAS AURUM will review the scope and respond with the appropriate next step.", route.lang))}</p><a class="button primary" href="${urlFor(route.lang, "consultation")}">${escapeHtml(label)}</a></section>`;
+  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(label)}</h2><p>${escapeHtml(localized("Tell us about the space, service need, location and timeline. CAS AURUM will review the scope and respond with the appropriate next step.", route.lang))}</p><a class="button primary" href="${consultationFormUrl(route.lang)}">${escapeHtml(label)}</a></section>`;
 }
 
 function crmMiniAppPage() {
@@ -4691,13 +4698,40 @@ function leadForm(route, type) {
   const f = copy[route.lang].form;
   const programmaticMeta = route.programmaticPage ? pageForLanguage(route.programmaticPage, route.lang) : null;
   const label = formSubmitLabel(route.lang, type);
+  const sourceUrl = type === "consultation" ? consultationFormUrl(route.lang) : routeUrlFor(route.lang, route);
   const serviceNeeded = programmaticMeta?.vertical || routeServiceName(route);
   const services = ["Luxury interiors", "Luxury wall panels", "Custom wall panels", "Custom furniture", "Architectural millwork", "Custom kitchens", "Custom kitchen cabinets", "Kitchen remodeling coordination", "Cabinet refacing", "Cabinet refinishing", "Cabinet restoration", "Custom closets", "Built-in furniture", "Custom vanities", "Premium office interiors", "Hotel & hospitality interiors", "Restaurant interiors", "Designer / builder partnership", "Developer interior packages", "Other"];
   const projectTypes = ["Residential", "Commercial", "Hotel / Hospitality", "Restaurant", "Office", "Development project", "Other"];
   const budgets = ["$10,000-$25,000", "$25,000-$50,000", "$50,000-$100,000", "$100,000+", "Not sure yet"];
   const timelines = ["ASAP", "1-3 months", "3-6 months", "6+ months"];
+  if (type === "consultation") {
+    return `<form class="lead-form" data-lead-form="${type}" enctype="multipart/form-data">
+    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(sourceUrl)}">
+    <input type="hidden" name="projectType" value="Private consultation"><input type="hidden" name="serviceNeeded" value="Private consultation"><input type="hidden" name="budget" value="To be discussed"><input type="hidden" name="timeline" value="To be discussed">
+    <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.phone, "phone", true, "tel")}${input(`${f.email} (${localized("optional", route.lang)})`, "email", false, "email")}${input(localized("City or ZIP code", route.lang), "zipCode", false)}</div>
+    <label>${escapeHtml(localized("What would you like to discuss?", route.lang))}<textarea name="message" required></textarea></label>
+    <label>${escapeHtml(f.upload)}<input type="file" name="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
+    <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(f.consent)}</label>
+    <button class="button primary" type="submit">${escapeHtml(label)}</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
+  </form>`;
+  }
+  if (isShortLeadForm(type)) {
+    const defaultProjectType = type === "contact_question" ? "Contact question" : "Private consultation";
+    return `<form class="lead-form" data-lead-form="${type}" enctype="multipart/form-data">
+    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(sourceUrl)}">
+    <input type="hidden" name="projectType" value="${escapeHtml(defaultProjectType)}"><input type="hidden" name="serviceNeeded" value="${escapeHtml(serviceNeeded)}"><input type="hidden" name="budget" value="To be discussed"><input type="hidden" name="timeline" value="To be discussed"><input type="hidden" name="zipCode" value="To be discussed"><input type="hidden" name="consent" value="yes">
+    ${programmaticMeta ? programmaticLeadHiddenFields(programmaticMeta) : ""}
+    <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.phone, "phone", true, "tel")}${input(f.email, "email", true, "email")}</div>
+    <label>${escapeHtml(f.message)}<textarea name="message" required></textarea></label>
+    <button class="button primary" type="submit">${escapeHtml(label)}</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
+  </form>`;
+  }
   return `<form class="lead-form" data-lead-form="${type}" enctype="multipart/form-data">
-    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${routeUrlFor(route.lang, route)}">
+    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(sourceUrl)}">
     ${programmaticMeta ? programmaticLeadHiddenFields(programmaticMeta) : ""}
     <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
     <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.email, "email", true, "email")}${input(f.phone, "phone", true, "tel")}${input("ZIP / Postal code", "zipCode", true)}${select(f.projectType, "projectType", projectTypes, true)}${select(f.service, "serviceNeeded", services, true, serviceNeeded)}${select(f.budget, "budget", budgets, true)}${select(f.timeline, "timeline", timelines, true)}</div>
@@ -4707,6 +4741,19 @@ function leadForm(route, type) {
     <button class="button primary" type="submit">${escapeHtml(label)}</button>
     <p class="form-status" role="status" aria-live="polite"></p>
   </form>`;
+}
+
+function isShortLeadForm(type) {
+  return new Set([
+    "contact_question",
+    "general_consultation",
+    "kitchen_consultation",
+    "kitchen_measurement",
+    "wall_panels_consultation",
+    "custom_furniture_consultation",
+    "millwork_project_request",
+    "commercial_project_request",
+  ]).has(type);
 }
 
 function routeServiceName(route) {
@@ -4782,10 +4829,30 @@ async function handleLead(request, response) {
   const payload = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
   if (payload.website) return json(response, { ok: true, id: randomUUID() });
   normalizeShortLeadPayload(payload);
-  const required = ["firstName", "email", "phone", "zipCode", "projectType", "serviceNeeded", "budget", "timeline", "message", "consent"];
+  const formType = String(payload.formType || payload.leadType || "");
+  const isConsultationRequest = formType === "consultation";
+  const isShortRequest = isShortLeadForm(formType);
+  if (isConsultationRequest) {
+    payload.projectType ||= "Private consultation";
+    payload.serviceNeeded ||= "Private consultation";
+    payload.budget ||= "To be discussed";
+    payload.timeline ||= "To be discussed";
+  } else if (isShortRequest) {
+    payload.projectType ||= "Private consultation";
+    payload.serviceNeeded ||= "Private consultation";
+    payload.budget ||= "To be discussed";
+    payload.timeline ||= "To be discussed";
+    payload.zipCode ||= "To be discussed";
+    payload.consent ||= "yes";
+  }
+  const required = isConsultationRequest
+    ? ["firstName", "phone", "message", "consent"]
+    : isShortRequest
+    ? ["firstName", "email", "phone", "message", "consent"]
+    : ["firstName", "email", "phone", "zipCode", "projectType", "serviceNeeded", "budget", "timeline", "message", "consent"];
   const missing = required.filter((field) => !payload[field]);
   if (missing.length) return json(response, { ok: false, message: "Missing required fields.", missing }, 400);
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return json(response, { ok: false, message: "Invalid email." }, 400);
+  if (payload.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return json(response, { ok: false, message: "Invalid email." }, 400);
 
   const lead = {
     ...payload,
@@ -5729,7 +5796,7 @@ function sitemapLegacyAlternates(pathForLang) {
 
 function casaurumSitemapGroup(pageType) {
   if (pageType === "hub") return "casaurum-hubs";
-  if (["style", "room", "property", "city", "collection", "article"].includes(pageType)) return "casaurum-entities";
+  if (["style", "room", "property", "city", "collection", "article", "design-concept-market"].includes(pageType)) return "casaurum-entities";
   if (["city-service", "city-style"].includes(pageType)) return "casaurum-cities";
   return "casaurum-combinations";
 }
@@ -5789,6 +5856,8 @@ function llmsTxt() {
 	    ["/custom-built-ins", "Custom built-ins and built-in furniture"],
 	    ["/luxury-custom-closets", "Luxury custom closets and walk-in wardrobes"],
 	    ["/design-concept", "Interior design concept packages with transparent starting prices"],
+	    ["/georgia/premium-design-concepts", "Premium design concepts in Georgia"],
+	    ["/georgia/atlanta/premium-design-concepts", "Premium design concepts in Atlanta"],
 	    ["/collections", "Material and design collections"],
 	    ["/for-designers-builders", "Designer, builder and developer partnerships"],
 	    ["/projects", "Completed projects and custom interior work"],
@@ -5796,8 +5865,13 @@ function llmsTxt() {
 	    ["/request-measurement", "Measurement request"],
 	    ["/en/interiors", "Premium interior design hub"],
 	    ["/en/styles/luxury", "Luxury interiors"],
+	    ["/en/styles/premium", "Premium interiors"],
 	    ["/en/styles/quiet-luxury", "Quiet luxury interiors"],
 	    ["/en/styles/bespoke", "Bespoke interiors"],
+	    ["/en/design-concepts/georgia", "Premium design concepts in Georgia"],
+	    ["/en/design-concepts/georgia/luxury", "Luxury interior design concepts in Georgia"],
+	    ["/en/design-concepts/atlanta", "Premium design concepts in Atlanta"],
+	    ["/en/design-concepts/atlanta/luxury", "Luxury interior design concepts in Atlanta"],
 	    ["/en/rooms/living-room", "Living room interior ideas"],
 	    ["/en/rooms/kitchen", "Luxury kitchen ideas"],
 	    ["/en/rooms/walk-in-closet", "Walk-in closet ideas"],
@@ -5813,6 +5887,7 @@ The site is intended for homeowners, designers, builders, developers, hospitalit
 ## Core Topics
 
 - Luxury wall panels and custom wall panels
+- Premium and luxury interior design concepts before fabrication review
 - Bespoke furniture and custom built-ins
 - Architectural millwork and premium cabinetry concepts
 - Custom closets, wardrobes, vanities and media walls
@@ -5888,6 +5963,10 @@ function urlFor(lang, key) {
   const prefix = langs[lang].prefix;
   const slug = slugs[lang][key] || "";
   return cleanPath(`${prefix}/${slug}`);
+}
+
+function consultationFormUrl(lang) {
+  return `${urlFor(lang, "consultation")}#consultation-form`;
 }
 
 function isEnglishOnlyPageKey(key) {

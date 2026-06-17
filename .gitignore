@@ -5,6 +5,7 @@
 node_modules/
 credentials/
 leads/
+public/uploads/
 data/*.sqlite
 data/*.sqlite-*
 data/*cache*.json
