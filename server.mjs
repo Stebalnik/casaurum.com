@@ -58,7 +58,7 @@ const SEO_PERFORMANCE_CACHE_PATH = "/var/www/casaurum.com/data/seo-performance-c
 const SEO_PERFORMANCE_CACHE_TTL_MS = Number(process.env.SEO_PERFORMANCE_CACHE_TTL_MS || 6 * 60 * 60 * 1000);
 const MAX_DESIGN_CONCEPT_UPLOAD_BYTES = Number(process.env.MAX_DESIGN_CONCEPT_UPLOAD_MB || 35) * 1024 * 1024;
 const MAX_DESIGN_CONCEPT_FILES = Number(process.env.MAX_DESIGN_CONCEPT_FILES || 12);
-const STATIC_ASSET_VERSION = "20260617a";
+const STATIC_ASSET_VERSION = "20260617b";
 const SITE_CSS_PATH = `/site-${STATIC_ASSET_VERSION}.css`;
 const CLIENT_JS_PATH = `/client-${STATIC_ASSET_VERSION}.js`;
 const PLANNER_JS_PATH = `/planner-${STATIC_ASSET_VERSION}.js`;
@@ -6471,10 +6471,19 @@ function clientJs() {
 	      const lang = form.querySelector('[name=language]').value || 'en';
 	      const status = form.querySelector('.form-status');
 		      if (!form.reportValidity()) { if (status) status.textContent = msg[lang].required; return; }
-	      const isDesignConcept = form.matches('[data-design-concept-form]');
-	      const data = formDataWithoutFiles(form);
-	      const files = fileMetadata(form);
-	      const params = new URLSearchParams(location.search);
+		      const isDesignConcept = form.matches('[data-design-concept-form]');
+		      const data = formDataWithoutFiles(form);
+		      const files = fileMetadata(form);
+		      if (isDesignConcept) {
+		        const maxUploadBytes = ${MAX_DESIGN_CONCEPT_UPLOAD_BYTES};
+		        const totalUploadBytes = files.reduce((total, file) => total + Number(file.size || 0), 0);
+		        const oversizedFile = files.find((file) => Number(file.size || 0) > maxUploadBytes);
+		        if (oversizedFile || totalUploadBytes > maxUploadBytes) {
+		          if (status) status.textContent = 'Uploaded files are too large. Please send fewer photos, use smaller images, or include file links in the project description.';
+		          return;
+		        }
+		      }
+		      const params = new URLSearchParams(location.search);
 	      data.referrer = document.referrer; data.sourceUrl = location.href;
       data.utmSource = params.get('utm_source') || '';
       data.utmMedium = params.get('utm_medium') || '';
