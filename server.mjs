@@ -76,6 +76,8 @@ const navKeys = ["wallPanels", "customFurniture", "millwork", "solutions", "proj
 const servicePageKeys = ["wallPanels", "customFurniture", "millwork", "solutions", "mediaWalls", "builtIns", "customClosets", "trade"];
 const pageOrder = ["home", "designConcept", "wallPanels", "customFurniture", "millwork", "solutions", "mediaWalls", "builtIns", "customClosets", "collections", "trade", "partners", "planner", "projects", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
 const programmaticIndexStatuses = new Set(["approved"]);
+const englishOnlyPageKeys = new Set(["designConcept"]);
+const DESIGN_CONCEPT_MEASUREMENT_SURCHARGE_RATE = 0.11;
 
 const slugs = {
 	  en: {
@@ -1764,6 +1766,7 @@ const server = http.createServer(async (request, response) => {
     if (path === "/health") return json(response, { status: "ok", brand: BRAND });
     const route = resolveRoute(path);
     if (!route) return html(response, render404("en"), 404);
+    if (isEnglishOnlyPageKey(route.key) && route.lang !== "en") return redirect(response, `${urlFor("en", route.key)}${url.search || ""}`);
     return html(response, renderPage(route));
   } catch (error) {
     console.error(error);
@@ -2807,7 +2810,7 @@ function designConceptLeadForm(route, t) {
     <input type="hidden" name="sourceUrl" value="${urlFor(route.lang, "designConcept")}">
     <input type="hidden" name="exact_price" value="$450">
     <input type="hidden" name="quoted_timeline" value="3-5 business days">
-    <input type="hidden" name="payment_url" value="">
+    <input type="hidden" name="measurement_surcharge_rate" value="11%">
     <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
     <div class="form-step">
       <span>01</span>
@@ -2817,8 +2820,7 @@ function designConceptLeadForm(route, t) {
       <div class="selection-summary" data-concept-selection-summary>
         <div><span>${escapeHtml(t.selectionLabels.price)}</span><strong data-selected-price>$450</strong></div>
         <div><span>${escapeHtml(t.selectionLabels.timeline)}</span><strong data-selected-timeline>3-5 business days</strong></div>
-        <a class="button secondary" data-payment-link href="" target="_blank" rel="noopener" hidden>${escapeHtml(t.selectionLabels.pay)}</a>
-        <p class="form-hint" data-payment-note>${escapeHtml(t.selectionLabels.paymentPending)}</p>
+        <p class="form-hint" data-price-note>${escapeHtml(t.selectionLabels.reviewFirst)}</p>
       </div>
     </div>
     <div class="form-step">
@@ -2845,6 +2847,7 @@ function designConceptLeadForm(route, t) {
         ${input(t.fields.widthDepth, "dimension_width_depth", false, "text", "data-dimension-width-depth")}
         ${input(t.fields.height, "dimension_height", false, "text", "data-dimension-height")}
       </div>
+      <label class="measurement-choice"><input type="checkbox" name="needs_measurement" value="yes" data-needs-measurement> ${escapeHtml(t.fields.needsMeasurement)}</label>
       <p class="form-hint" data-dimensions-help>${escapeHtml(t.dimensionsHint.design_concept)}</p>
     </div>
     <div class="form-step">
@@ -2852,7 +2855,7 @@ function designConceptLeadForm(route, t) {
       <h3>${escapeHtml(t.formSteps.details)}</h3>
       <div class="form-grid">${selectWithValues(t.fields.timeline, "timeline", designConceptOptionSet(t.timelineOptions), true)}${selectWithValues(t.fields.budget, "budget_range", designConceptOptionSet(t.budgetOptions), true)}</div>
       <label>${escapeHtml(t.fields.description)}<textarea name="project_description" required></textarea></label>
-      <p class="form-hint">${escapeHtml(t.checkoutHint)}</p>
+      <p class="form-hint">${escapeHtml(t.reviewHint)}</p>
     </div>
     <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(t.consent)}</label>
     <button class="button primary" type="submit">${escapeHtml(t.submit)}</button>
@@ -2890,7 +2893,7 @@ function designConceptText(lang) {
     formTitle: "Start Your Design Concept",
     formIntro: "Choose a package, share the space, upload photos and describe the direction you want CAS AURUM to review.",
     submit: "Submit Project for Review",
-    checkoutHint: "Online checkout for fixed-price concept packages can be added in the next step.",
+    reviewHint: "CAS AURUM reviews the request first. Paid concept work starts only after a conversation and written confirmation.",
   };
   const localizedCopy = {
     en: {
@@ -2912,20 +2915,20 @@ function designConceptText(lang) {
         project: "Select project type",
         contact: "Contact and location",
         files: "Upload photos",
-        dimensions: "Share dimensions",
+        dimensions: "Dimensions or measurement",
         details: "Budget, timeline and description",
       },
       fields: designConceptFieldLabels("en"),
-      selectionLabels: { price: "Selected price", timeline: "Execution time", pay: "Pay / reserve package", paymentPending: "Payment link is prepared for this package and appears here once checkout is configured." },
+      selectionLabels: { price: "Estimated concept price", timeline: "Estimated timing", reviewFirst: "No online payment is collected here. CAS AURUM will review the request and contact you before any paid work begins." },
       packageHelp: {
-        design_concept: "Photos are required. Measurements are optional for a visual concept.",
-        design_technical: "Dimensions are required for a technical package.",
+        design_concept: "Photos are required. Add length, width and height, or request a measurement.",
+        design_technical: "Add dimensions, or request a measurement before the technical package is reviewed.",
         realization_review: "Realization is reviewed individually based on location, scope and availability.",
       },
       dimensionsHint: {
-        design_concept: "For a visual concept, add length, width/depth and height only if you already have them.",
-        design_technical: "Dimensions and ceiling height are required for technical package review.",
-        realization_review: "Dimensions are recommended. Location, budget and desired timeline are required for realization review.",
+        design_concept: "Enter length, width/depth and height. If you do not have dimensions, select measurement; the concept estimate increases by 11%.",
+        design_technical: "Enter length, width/depth and height, or select measurement so CAS AURUM can review the next step.",
+        realization_review: "Dimensions are recommended. Select measurement if site dimensions are the next blocker.",
       },
       fileHint: "Project photos are required so CAS AURUM can see the actual wall, room, closet, kitchen or built-in area. Inspiration images are optional.",
       consent: "I agree that CAS AURUM may contact me about this design concept request.",
@@ -2956,7 +2959,7 @@ function designConceptText(lang) {
       continueTitle: "Seguir explorando CAS AURUM",
       formSteps: { package: "Elegir paquete", project: "Tipo de proyecto", contact: "Contacto y ubicacion", files: "Subir fotos", dimensions: "Compartir medidas", details: "Presupuesto, plazo y descripcion" },
       fields: designConceptFieldLabels("es"),
-      selectionLabels: { price: "Precio seleccionado", timeline: "Tiempo de entrega", pay: "Pagar / reservar paquete", paymentPending: "El link de pago aparecera aqui cuando checkout este configurado." },
+      selectionLabels: { price: "Precio estimado", timeline: "Tiempo estimado", reviewFirst: "No online payment is collected here. CAS AURUM reviews the request before any paid work begins." },
       packageHelp: { design_concept: "Las fotos son obligatorias. Las medidas son opcionales para concepto visual.", design_technical: "Las dimensiones son obligatorias para el paquete tecnico.", realization_review: "La realizacion se revisa individualmente segun ubicacion, alcance y disponibilidad." },
       dimensionsHint: { design_concept: "Para concepto visual, agregue largo, ancho/profundidad y altura solo si ya los tiene.", design_technical: "Dimensiones y altura de techo son obligatorias para revision tecnica.", realization_review: "Las dimensiones son recomendadas. Ubicacion, presupuesto y plazo son obligatorios." },
       fileHint: "Las fotos del proyecto son obligatorias. Las referencias visuales son opcionales.",
@@ -2988,7 +2991,7 @@ function designConceptText(lang) {
       continueTitle: "Continuer avec CAS AURUM",
       formSteps: { package: "Choisir le forfait", project: "Type de projet", contact: "Contact et lieu", files: "Ajouter photos", dimensions: "Partager dimensions", details: "Budget, calendrier et description" },
       fields: designConceptFieldLabels("fr"),
-      selectionLabels: { price: "Prix selectionne", timeline: "Delai", pay: "Payer / reserver", paymentPending: "Le lien de paiement apparaitra ici lorsque le checkout sera configure." },
+      selectionLabels: { price: "Prix estime", timeline: "Delai estime", reviewFirst: "No online payment is collected here. CAS AURUM reviews the request before any paid work begins." },
       packageHelp: { design_concept: "Les photos sont obligatoires. Les dimensions sont optionnelles pour un concept visuel.", design_technical: "Les dimensions sont obligatoires pour un forfait technique.", realization_review: "La realisation est examinee individuellement selon lieu, portee et disponibilite." },
       dimensionsHint: { design_concept: "Pour un concept visuel, ajoutez longueur, largeur/profondeur et hauteur seulement si vous les avez.", design_technical: "Dimensions et hauteur sous plafond sont obligatoires pour la revue technique.", realization_review: "Dimensions recommandees. Lieu, budget et calendrier sont obligatoires." },
       fileHint: "Les photos du projet sont obligatoires. Les images d'inspiration sont optionnelles.",
@@ -3020,7 +3023,7 @@ function designConceptText(lang) {
       continueTitle: "Продолжить изучение CAS AURUM",
       formSteps: { package: "Выберите пакет", project: "Тип проекта", contact: "Контакт и локация", files: "Загрузите фото", dimensions: "Укажите размеры", details: "Бюджет, сроки и описание" },
       fields: designConceptFieldLabels("ru"),
-      selectionLabels: { price: "Выбранная цена", timeline: "Срок выполнения", pay: "Оплатить / забронировать пакет", paymentPending: "Ссылка на оплату появится здесь, когда checkout будет подключен для выбранного пакета." },
+      selectionLabels: { price: "Ориентировочная цена", timeline: "Ориентировочный срок", reviewFirst: "No online payment is collected here. CAS AURUM reviews the request before any paid work begins." },
       packageHelp: { design_concept: "Фото обязательны. Размеры для визуального концепта необязательны.", design_technical: "Для technical package размеры обязательны.", realization_review: "Realization рассматривается индивидуально по локации, scope и доступности." },
       dimensionsHint: { design_concept: "Для визуального концепта укажите длину, ширину/глубину и высоту только если они уже есть.", design_technical: "Для technical package обязательны длина, ширина/глубина и высота/высота потолка.", realization_review: "Размеры рекомендуются. Локация, бюджет и желаемые сроки обязательны." },
       fileHint: "Фото проекта обязательны, чтобы CAS AURUM видел реальную стену, комнату, closet, kitchen или built-in зону. Референсы необязательны.",
@@ -3042,10 +3045,10 @@ function designConceptText(lang) {
 
 function designConceptFieldLabels(lang) {
   const labels = {
-    en: { packageType: "Package type", projectType: "Project type", clientName: "Name", email: "Email", phone: "Phone (optional)", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height" },
-    es: { packageType: "Tipo de paquete", projectType: "Tipo de proyecto", clientName: "Nombre", email: "Email", phone: "Telefono (opcional)", location: "Ubicacion del proyecto", description: "Descripcion del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imagenes de inspiracion (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo" },
-    fr: { packageType: "Type de forfait", projectType: "Type de projet", clientName: "Nom", email: "Email", phone: "Telephone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaite", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond" },
-    ru: { packageType: "Тип пакета", projectType: "Тип проекта", clientName: "Имя", email: "Email", phone: "Телефон (optional)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (optional)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка" },
+    en: { packageType: "Package type", projectType: "Project type", clientName: "Name", email: "Email", phone: "Phone (optional)", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height", needsMeasurement: "I need CAS AURUM to arrange measurement (+11% to the concept estimate)" },
+    es: { packageType: "Tipo de paquete", projectType: "Tipo de proyecto", clientName: "Nombre", email: "Email", phone: "Telefono (opcional)", location: "Ubicacion del proyecto", description: "Descripcion del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imagenes de inspiracion (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo", needsMeasurement: "I need CAS AURUM to arrange measurement (+11% to the concept estimate)" },
+    fr: { packageType: "Type de forfait", projectType: "Type de projet", clientName: "Nom", email: "Email", phone: "Telephone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaite", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond", needsMeasurement: "I need CAS AURUM to arrange measurement (+11% to the concept estimate)" },
+    ru: { packageType: "Тип пакета", projectType: "Тип проекта", clientName: "Имя", email: "Email", phone: "Телефон (optional)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (optional)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка", needsMeasurement: "I need CAS AURUM to arrange measurement (+11% to the concept estimate)" },
   };
   return labels[lang] || labels.en;
 }
@@ -4050,7 +4053,8 @@ function localizedCityName(slug, fallback, lang) {
 }
 
 function languageSwitcher(route) {
-  return `<div class="lang" aria-label="Language">${Object.keys(langs).map((lang) => `<a class="${route.lang === lang ? "active" : ""} track" data-event="language_changed" href="${routeUrlFor(lang, route)}" hreflang="${lang}">${langs[lang].label}</a>`).join("")}</div>`;
+  const languageKeys = isEnglishOnlyPageKey(route.key) ? ["en"] : Object.keys(langs);
+  return `<div class="lang" aria-label="Language">${languageKeys.map((lang) => `<a class="${route.lang === lang ? "active" : ""} track" data-event="language_changed" href="${routeUrlFor(lang, route)}" hreflang="${lang}">${langs[lang].label}</a>`).join("")}</div>`;
 }
 
 function pageHero(lang, h1, text, assetId) {
@@ -4938,7 +4942,12 @@ function normalizeDesignConceptLeadPayload(payload, request) {
   const timelineValue = normalizeDesignConceptValue(payload.timeline || payload.timeline_value, designConceptTimelineOptions("en").map(([value]) => value));
   const budgetValue = normalizeDesignConceptValue(payload.budget_range || payload.budgetRange, designConceptBudgetOptions("en").map(([value]) => value));
   const uploadedFiles = designConceptUploadedFiles(payload);
-  const selectedOffer = designConceptOfferFor(packageType, projectType);
+  const measurementRequested = truthyFormValue(payload.needs_measurement || payload.needsMeasurement || payload.measurement_requested || payload.measurementRequested);
+  const dimensionLength = String(payload.dimension_length || payload.dimensions || "").trim();
+  const dimensionWidthDepth = String(payload.dimension_width_depth || payload.project_depth || payload.wall_width || "").trim();
+  const dimensionHeight = String(payload.dimension_height || payload.ceiling_height || payload.ceilingHeight || "").trim();
+  const dimensionsComplete = Boolean(dimensionLength && dimensionWidthDepth && dimensionHeight);
+  const selectedOffer = designConceptOfferFor(packageType, projectType, measurementRequested);
   const hasPhotos = uploadedFiles.some((file) => !file.field || file.field === "project_photos");
   const baseRequired = {
     package_type: packageType,
@@ -4954,10 +4963,11 @@ function normalizeDesignConceptLeadPayload(payload, request) {
   };
   const missing = Object.entries(baseRequired).filter(([, value]) => !String(value || "").trim()).map(([field]) => field);
   if (!hasPhotos) missing.push("project_photos");
-  if (packageType === "design_technical") {
-    if (!String(payload.dimension_length || payload.dimensions || "").trim()) missing.push("dimension_length");
-    if (!String(payload.dimension_width_depth || payload.project_depth || payload.wall_width || "").trim()) missing.push("dimension_width_depth");
-    if (!String(payload.dimension_height || payload.ceiling_height || payload.ceilingHeight || "").trim()) missing.push("dimension_height");
+  if (!measurementRequested) {
+    if (!dimensionLength) missing.push("dimension_length");
+    if (!dimensionWidthDepth) missing.push("dimension_width_depth");
+    if (!dimensionHeight) missing.push("dimension_height");
+    if (!dimensionsComplete) missing.push("needs_measurement");
   }
   if (packageType === "realization_review") {
     if (!String(payload.project_location || payload.projectLocation || "").trim()) missing.push("project_location");
@@ -4970,7 +4980,7 @@ function normalizeDesignConceptLeadPayload(payload, request) {
   const name = String(payload.client_name || payload.clientName || "").trim();
   const [firstName, ...lastParts] = name.split(/\s+/);
   const projectLocation = String(payload.project_location || payload.projectLocation || "").trim();
-  const dimensionsProvided = Boolean(String(payload.dimension_length || payload.dimension_width_depth || payload.dimension_height || payload.dimensions || payload.ceiling_height || payload.ceilingHeight || payload.wall_width || payload.wallWidth || payload.project_depth || payload.projectDepth || "").trim());
+  const dimensionsProvided = dimensionsComplete;
   const packageLabel = designConceptLabel(packageType, designConceptText("en").packageOptions);
   const projectTypeLabel = designConceptLabel(projectType, designConceptProjectOptions("en"));
   const styleLabel = designConceptLabel(desiredStyle, designConceptStyleOptions("en"));
@@ -5005,18 +5015,22 @@ function normalizeDesignConceptLeadPayload(payload, request) {
     projectLocation,
     city: projectLocation,
     project_description: String(payload.project_description || payload.projectDescription || "").trim(),
-    dimension_length: String(payload.dimension_length || payload.dimensions || "").trim(),
-    dimension_width_depth: String(payload.dimension_width_depth || payload.project_depth || payload.wall_width || "").trim(),
-    dimension_height: String(payload.dimension_height || payload.ceiling_height || payload.ceilingHeight || "").trim(),
-    dimensions: String(payload.dimensions || payload.dimension_length || "").trim(),
-    ceiling_height: String(payload.ceiling_height || payload.ceilingHeight || payload.dimension_height || "").trim(),
-    wall_width: String(payload.wall_width || payload.wallWidth || payload.dimension_length || "").trim(),
-    project_depth: String(payload.project_depth || payload.projectDepth || payload.dimension_width_depth || "").trim(),
+    dimension_length: dimensionLength,
+    dimension_width_depth: dimensionWidthDepth,
+    dimension_height: dimensionHeight,
+    dimensions: String(payload.dimensions || dimensionLength || "").trim(),
+    ceiling_height: String(payload.ceiling_height || payload.ceilingHeight || dimensionHeight || "").trim(),
+    wall_width: String(payload.wall_width || payload.wallWidth || dimensionLength || "").trim(),
+    project_depth: String(payload.project_depth || payload.projectDepth || dimensionWidthDepth || "").trim(),
     dimensionsProvided,
+    measurementRequested,
+    needs_measurement: measurementRequested ? "yes" : "no",
+    measurement_surcharge_rate: measurementRequested ? "11%" : "",
     exact_price: selectedOffer.price,
+    base_price: selectedOffer.basePrice || selectedOffer.price,
+    measurement_surcharge_amount: selectedOffer.measurementSurchargeAmount || "",
     quoted_timeline: selectedOffer.timeline,
-    payment_url: selectedOffer.paymentUrl,
-    paymentStatus: selectedOffer.paymentUrl ? "payment_link_ready" : "payment_link_not_configured",
+    conceptStatus: "review_before_paid_work",
     timeline: timelineLabel,
     timeline_value: timelineValue,
     budget: budgetLabel,
@@ -5041,12 +5055,17 @@ function normalizeDesignConceptValue(value, allowed) {
   return allowed.includes(normalized) ? normalized : "";
 }
 
-function designConceptOfferFor(packageType, projectType) {
+function truthyFormValue(value) {
+  return ["1", "true", "yes", "on"].includes(String(value || "").trim().toLowerCase());
+}
+
+function designConceptOfferFor(packageType, projectType, measurementRequested = false) {
   const normalizedPackage = packageType || "design_concept";
   const normalizedProject = projectType || "media_wall";
   const offers = designConceptOfferMatrix();
   const fallback = offers[normalizedPackage]?.other || offers.design_concept.media_wall;
-  return offers[normalizedPackage]?.[normalizedProject] || fallback;
+  const offer = offers[normalizedPackage]?.[normalizedProject] || fallback;
+  return measurementRequested ? designConceptOfferWithMeasurement(offer) : { ...offer, basePrice: offer.price, measurementSurchargeAmount: "" };
 }
 
 function designConceptOfferMatrix() {
@@ -5089,8 +5108,31 @@ function designConceptOfferMatrix() {
   };
 }
 
-function designConceptOffer(price, timeline, envKey) {
-  return { price, timeline, paymentUrl: process.env[envKey] || "" };
+function designConceptOffer(price, timeline) {
+  return { price, timeline };
+}
+
+function designConceptOfferWithMeasurement(offer) {
+  const parsed = parseUsdPrice(offer.price);
+  if (!parsed) return { ...offer, basePrice: offer.price, measurementSurchargeAmount: "" };
+  const surcharge = Math.round(parsed * DESIGN_CONCEPT_MEASUREMENT_SURCHARGE_RATE);
+  return {
+    ...offer,
+    basePrice: offer.price,
+    price: formatUsdPrice(parsed + surcharge),
+    measurementSurchargeAmount: formatUsdPrice(surcharge),
+  };
+}
+
+function parseUsdPrice(value) {
+  const match = String(value || "").match(/\$[\d,]+(?:\.\d+)?/);
+  if (!match) return null;
+  const amount = Number(match[0].replace(/[^0-9.]/g, ""));
+  return Number.isFinite(amount) ? amount : null;
+}
+
+function formatUsdPrice(value) {
+  return `$${Math.round(Number(value)).toLocaleString("en-US")}`;
 }
 
 function designConceptUploadedFiles(payload) {
@@ -5148,8 +5190,10 @@ function designConceptLeadSummary(lead) {
     `Desired style: ${lead.desiredStyleLabel}`,
     `Location: ${lead.projectLocation}`,
     `Selected price: ${lead.exact_price || "-"}`,
+    lead.measurementRequested ? `Base concept price: ${lead.base_price || "-"}` : "",
+    lead.measurementRequested ? `Measurement requested: yes (+11%, ${lead.measurement_surcharge_amount || "calculated in estimate"})` : "Measurement requested: no",
     `Execution time: ${lead.quoted_timeline || "-"}`,
-    `Payment link: ${lead.payment_url || "not configured"}`,
+    `Review status: conversation before paid concept work`,
     `Budget: ${lead.budget}`,
     `Timeline: ${lead.timeline}`,
     `Dimensions provided: ${lead.dimensionsProvided ? "yes" : "no"}`,
@@ -5617,14 +5661,14 @@ function sitemapEntries() {
   const date = currentSitemapDate();
   const localeKeys = Object.keys(langs);
   for (const key of pageOrder) {
-    for (const lang of localeKeys) {
+    for (const lang of pageLanguagesForKey(key, localeKeys)) {
       entries.push({
         group: "core",
         loc: `${BASE_URL}${urlFor(lang, key)}`,
         lastmod: date,
         changefreq: key === "home" ? "weekly" : "monthly",
         priority: key === "home" ? "1.0" : "0.75",
-        alternates: sitemapLegacyAlternates((l) => urlFor(l, key)),
+        alternates: sitemapAlternatesForPageKey(key),
       });
     }
   }
@@ -5804,6 +5848,7 @@ function hreflangForRoute(route) {
   if (route.seoAlias) return `${Object.keys(langs).map((lang) => `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}/${lang}/${route.seoAlias}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}/en/${route.seoAlias}">`;
   if (route.casaurumSeoPage) return `${Object.entries(route.casaurumSeoPage.hreflangAlternates).map(([lang, href]) => `<link rel="alternate" hreflang="${lang}" href="${href}">`).join("\n  ")}`;
   if (route.collection) return `${Object.keys(langs).map((lang) => `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}${collectionUrlFor(lang, route.collection)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${collectionUrlFor("en", route.collection)}">`;
+  if (isEnglishOnlyPageKey(route.key)) return `<link rel="alternate" hreflang="en" href="${BASE_URL}${urlFor("en", route.key)}">\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${urlFor("en", route.key)}">`;
   if (!route.programmaticPage) return hreflang(route.key);
   return `${Object.keys(langs).map((lang) => `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}${programmaticUrlFor(lang, route.programmaticPage)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${programmaticUrlFor("en", route.programmaticPage)}">`;
 }
@@ -5815,6 +5860,7 @@ function routeUrlFor(lang, route) {
     return href ? cleanPath(new URL(href, BASE_URL).pathname) : route.casaurumSeoPage.slug;
   }
   if (route.collection) return collectionUrlFor(lang, route.collection);
+  if (isEnglishOnlyPageKey(route.key)) return urlFor("en", route.key);
   return route.programmaticPage ? programmaticUrlFor(lang, route.programmaticPage) : urlFor(lang, route.key);
 }
 
@@ -5838,9 +5884,24 @@ function robotsMeta(route) {
 }
 
 function urlFor(lang, key) {
+  if (isEnglishOnlyPageKey(key)) return cleanPath(`/${slugs.en[key] || ""}`);
   const prefix = langs[lang].prefix;
   const slug = slugs[lang][key] || "";
   return cleanPath(`${prefix}/${slug}`);
+}
+
+function isEnglishOnlyPageKey(key) {
+  return englishOnlyPageKeys.has(key);
+}
+
+function pageLanguagesForKey(key, localeKeys = Object.keys(langs)) {
+  return isEnglishOnlyPageKey(key) ? ["en"] : localeKeys;
+}
+
+function sitemapAlternatesForPageKey(key) {
+  if (!isEnglishOnlyPageKey(key)) return sitemapLegacyAlternates((lang) => urlFor(lang, key));
+  const href = `${BASE_URL}${urlFor("en", key)}`;
+  return { en: href, "x-default": href };
 }
 
 function img(assetId, lang, loading = "lazy") {
@@ -6316,23 +6377,22 @@ function clientJs() {
 	    const lengthInput = form.querySelector('[name=dimension_length]');
 	    const widthDepthInput = form.querySelector('[name=dimension_width_depth]');
 	    const heightInput = form.querySelector('[name=dimension_height]');
+	    const measurementCheck = form.querySelector('[name=needs_measurement]');
 	    const exactPriceInput = form.querySelector('[name=exact_price]');
 	    const quotedTimelineInput = form.querySelector('[name=quoted_timeline]');
-	    const paymentUrlInput = form.querySelector('[name=payment_url]');
 	    const selectedPrice = form.querySelector('[data-selected-price]');
 	    const selectedTimeline = form.querySelector('[data-selected-timeline]');
-	    const paymentLink = form.querySelector('[data-payment-link]');
-	    const paymentNote = form.querySelector('[data-payment-note]');
+	    const priceNote = form.querySelector('[data-price-note]');
 	    const offers = ${JSON.stringify(designConceptOfferMatrix())};
 	    const help = {
-	      design_concept: 'Photos are required. Measurements are optional for a visual concept.',
-	      design_technical: 'Dimensions are required for a technical package.',
+	      design_concept: 'Photos are required. Add length, width and height, or request a measurement.',
+	      design_technical: 'Add dimensions, or request a measurement before the technical package is reviewed.',
 	      realization_review: 'Realization is reviewed individually based on location, scope and availability.'
 	    };
 	    const dimensionHelp = {
-	      design_concept: 'For a visual concept, add length, width/depth and height only if you already have them.',
-	      design_technical: 'For a technical package, length, width/depth and height/ceiling height are required.',
-	      realization_review: 'Dimensions are recommended. Location, budget and desired timeline are required for realization review.'
+	      design_concept: 'Enter length, width/depth and height. If you do not have dimensions, select measurement; the concept estimate increases by 11%.',
+	      design_technical: 'Enter length, width/depth and height, or select measurement so CAS AURUM can review the next step.',
+	      realization_review: 'Dimensions are recommended. Select measurement if site dimensions are the next blocker.'
 	    };
 	    const dimensionLabels = {
 	      media_wall: ['Wall length', 'Wall depth / available depth', 'Wall height / ceiling height'],
@@ -6351,31 +6411,44 @@ function clientJs() {
 	      if (!input || !input.parentElement) return;
 	      input.parentElement.firstChild.textContent = text;
 	    }
+	    function parseUsd(value){
+	      const match = String(value || '').match(/\\$[\\d,]+(?:\\.\\d+)?/);
+	      if (!match) return null;
+	      const amount = Number(match[0].replace(/[^0-9.]/g, ''));
+	      return Number.isFinite(amount) ? amount : null;
+	    }
+	    function formatUsd(value){
+	      return '$' + Math.round(Number(value)).toLocaleString('en-US');
+	    }
+	    function priceWithMeasurement(price){
+	      const amount = parseUsd(price);
+	      return amount ? formatUsd(amount + Math.round(amount * ${DESIGN_CONCEPT_MEASUREMENT_SURCHARGE_RATE})) : price;
+	    }
 	    function syncPackage(){
 	      const packageValue = packageSelect ? packageSelect.value : 'design_concept';
 	      const projectValue = projectSelect ? projectSelect.value : 'media_wall';
 	      const offer = (offers[packageValue] && (offers[packageValue][projectValue] || offers[packageValue].other)) || offers.design_concept.media_wall;
+	      const needsMeasurement = Boolean(measurementCheck && measurementCheck.checked);
+	      const displayPrice = needsMeasurement ? priceWithMeasurement(offer.price || '') : (offer.price || '');
 	      if (packageHelp) packageHelp.textContent = help[packageValue] || help.design_concept;
 	      if (dimensionsHelp) dimensionsHelp.textContent = dimensionHelp[packageValue] || dimensionHelp.design_concept;
-	      [lengthInput, widthDepthInput, heightInput].forEach(input => { if (input) input.required = packageValue === 'design_technical'; });
+	      [lengthInput, widthDepthInput, heightInput].forEach(input => { if (input) input.required = !needsMeasurement; });
 	      const labels = dimensionLabels[projectValue] || dimensionLabels.other;
 	      setInputLabel(lengthInput, labels[0]);
 	      setInputLabel(widthDepthInput, labels[1]);
 	      setInputLabel(heightInput, labels[2]);
-	      if (exactPriceInput) exactPriceInput.value = offer.price || '';
+	      if (exactPriceInput) exactPriceInput.value = displayPrice || '';
 	      if (quotedTimelineInput) quotedTimelineInput.value = offer.timeline || '';
-	      if (paymentUrlInput) paymentUrlInput.value = offer.paymentUrl || '';
-	      if (selectedPrice) selectedPrice.textContent = offer.price || '-';
+	      if (selectedPrice) selectedPrice.textContent = displayPrice || '-';
 	      if (selectedTimeline) selectedTimeline.textContent = offer.timeline || '-';
-	      if (paymentLink) {
-	        paymentLink.hidden = !offer.paymentUrl;
-	        if (offer.paymentUrl) paymentLink.href = offer.paymentUrl;
-	      }
-	      if (paymentNote) paymentNote.textContent = offer.paymentUrl ? 'Payment link is ready for the selected package.' : 'Payment link is prepared for this package and appears here once checkout is configured.';
-	      track('design_concept_level_selected', { package_type: packageValue, project_type: projectValue, exact_price: offer.price || '' });
+	      if (priceNote) priceNote.textContent = needsMeasurement
+	        ? 'Measurement requested: the estimate includes an 11% measurement coordination add-on. CAS AURUM will confirm next steps before paid work begins.'
+	        : 'No online payment is collected here. CAS AURUM will review the request and contact you before any paid work begins.';
+	      track('design_concept_level_selected', { package_type: packageValue, project_type: projectValue, exact_price: displayPrice || '', needs_measurement: needsMeasurement ? 'yes' : 'no' });
 	    }
 	    if (packageSelect) packageSelect.addEventListener('change', syncPackage);
 	    if (projectSelect) projectSelect.addEventListener('change', syncPackage);
+	    if (measurementCheck) measurementCheck.addEventListener('change', syncPackage);
 	    form.addEventListener('focusin', () => {
 	      if (form.dataset.started) return;
 	      form.dataset.started = '1';
@@ -6397,7 +6470,7 @@ function clientJs() {
 	      event.preventDefault();
 	      const lang = form.querySelector('[name=language]').value || 'en';
 	      const status = form.querySelector('.form-status');
-	      if (!form.reportValidity()) { status.textContent = msg[lang].required; return; }
+		      if (!form.reportValidity()) { if (status) status.textContent = msg[lang].required; return; }
 	      const isDesignConcept = form.matches('[data-design-concept-form]');
 	      const data = formDataWithoutFiles(form);
 	      const files = fileMetadata(form);
@@ -6426,15 +6499,18 @@ function clientJs() {
 	          const fallbackEndpoint = designConceptFallbackEndpoint(endpoint);
 	          if (fallbackEndpoint) res = await fetch(fallbackEndpoint, buildRequestOptions());
 	        }
-	        if (!res.ok) throw new Error('failed');
-	        const dataOut = await res.json().catch(() => ({}));
-	        status.textContent = dataOut.plannerProject?.restoreUrl ? msg[lang].success + ' Continue link: ' + dataOut.plannerProject.restoreUrl : msg[lang].success;
-	        form.reset();
-	        if (isDesignConcept) form.querySelector('[name=package_type]')?.dispatchEvent(new Event('change', { bubbles: true }));
-	        track(form.dataset.leadForm + '_form_submitted', { language: lang });
-	        if (form.dataset.leadForm === 'design_concept_flow') track('design_concept_form_submit', { language: lang, package_type: data.package_type || '', project_type: data.project_type || '', files_count: files.length });
-	      } catch { status.textContent = msg[lang].error; }
-	    });
+		        const dataOut = await res.json().catch(() => ({}));
+		        if (!res.ok) {
+		          const missing = Array.isArray(dataOut.missing) && dataOut.missing.length ? ' Missing: ' + dataOut.missing.join(', ') + '.' : '';
+		          throw new Error((dataOut.message || msg[lang].error) + missing);
+		        }
+		        if (status) status.textContent = dataOut.plannerProject?.restoreUrl ? msg[lang].success + ' Continue link: ' + dataOut.plannerProject.restoreUrl : msg[lang].success;
+		        form.reset();
+		        if (isDesignConcept) form.querySelector('[name=package_type]')?.dispatchEvent(new Event('change', { bubbles: true }));
+		        track(form.dataset.leadForm + '_form_submitted', { language: lang });
+		        if (form.dataset.leadForm === 'design_concept_flow') track('design_concept_form_submit', { language: lang, package_type: data.package_type || '', project_type: data.project_type || '', files_count: files.length });
+		      } catch (error) { if (status) status.textContent = error?.message || msg[lang].error; }
+		    });
 	  });
 	  function designConceptFormData(form, data){
 	    const formData = new FormData(form);
@@ -7885,8 +7961,9 @@ function css() {
   section{padding:clamp(42px,7vw,92px) clamp(18px,5vw,72px)}.hero{width:auto;max-width:none;min-height:auto;margin:clamp(18px,3vw,42px) clamp(18px,4vw,72px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.85fr);align-items:stretch;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#100e0b}.hero-media{height:clamp(390px,43vw,560px);min-width:0;min-height:0;margin:0}.hero-video{position:relative;overflow:hidden;background:#080706}.hero-video video{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:cover}.hero-video img{height:100%;min-width:0;min-height:0}.hero-copy{min-width:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4.8vw,68px);background:linear-gradient(135deg,#1a1712,#24342c)}.hero h1{font-size:clamp(38px,5.2vw,74px)}.hero h2{font-size:clamp(26px,3vw,42px)}.eyebrow{margin:0 0 14px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}h1,h2,h3{font-family:Georgia,Times New Roman,serif;font-weight:500;line-height:1.06;margin:0}h1{font-size:clamp(42px,7vw,92px)}h2{font-size:clamp(28px,4vw,52px)}h3{font-size:23px}p{color:var(--warm)}.lede{font-size:clamp(18px,2vw,22px);max-width:760px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
   .trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:20px;color:var(--stone);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.intro,.section-head,.seo-copy{max-width:980px}.seo-copy.wide{max-width:1120px}.intro p,.seo-copy p{font-size:18px}.legal-copy{max-width:1040px;margin:auto}.legal-copy article{border-top:1px solid var(--line);padding:24px 0}.legal-copy h2{font-size:clamp(24px,3vw,34px);margin-bottom:12px}.legal-copy p{max-width:900px;font-size:16px;color:var(--warm)}.stealth-admin-link{color:inherit;text-decoration:none;cursor:inherit}.stealth-admin-link:visited,.stealth-admin-link:hover,.stealth-admin-link:focus{color:inherit;text-decoration:none}.seo-hero{display:grid;grid-template-columns:1fr .9fr;gap:clamp(28px,5vw,72px);align-items:center;min-height:72vh}.seo-hero figure{margin:0}.seo-hero img{min-height:460px;border-radius:8px}.seo-direct{max-width:1040px}.seo-direct h2{font-size:clamp(28px,4vw,48px)}.seo-sections{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding-top:0}.seo-sections article,.seo-related div{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:24px}.seo-sections h2{font-size:28px}.seo-related{display:grid;grid-template-columns:1fr;gap:16px}.seo-related div{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.seo-related h2{width:100%;font-size:34px}.seo-related a{border:1px solid var(--line);padding:11px 14px;text-decoration:none;color:var(--warm)}.cards,.answer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.card,.panel,.lead-card,.answer-grid article,.why article,.process article,.programmatic-meta div{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:24px;border-radius:8px}.programmatic-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:24px;padding-bottom:24px}.programmatic-meta span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.programmatic-meta strong{display:block;margin-top:6px;font-family:Georgia,serif;font-size:22px;font-weight:500}.card{text-decoration:none;min-height:260px;transition:transform .2s,border-color .2s}.answer-grid article{min-height:0}.answer-grid h3{font-size:22px;margin-bottom:8px}.answer-grid p{font-size:15px;color:var(--warm)}.card:hover,.lead-card:hover{transform:translateY(-3px);border-color:rgba(196,161,95,.8)}.card span,.process span{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.split-band,.page-hero,.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center}.split-band img,.page-hero img{min-height:420px;border-radius:8px}.reverse{grid-template-columns:.9fr 1.1fr}.why{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}.why-grid,.process>div{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.lead-paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}.lead-card{text-decoration:none}.region-city-panel div{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.region-city-panel a{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none}.region-city-panel a:hover{border-color:var(--gold);color:var(--ivory)}.chip-row{display:flex;gap:10px;flex-wrap:wrap;padding-top:0;padding-bottom:22px}.chip{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none;font-size:13px}.chip:hover,.chip:focus-visible{border-color:var(--gold);color:var(--ivory)}.loyalty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.loyalty-card,.portal-preview{border:1px solid rgba(196,161,95,.28);background:linear-gradient(180deg,rgba(196,161,95,.09),rgba(255,255,255,.035));border-radius:8px;padding:24px}.loyalty-card span,.portal-preview-head span,.portal-metrics span{display:block;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.loyalty-card strong{display:block;margin:12px 0;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.loyalty-card p{color:var(--warm);font-size:15px}.loyalty-card ul{margin:18px 0 0;padding-left:18px;color:var(--soft)}.loyalty-card li{margin:8px 0}.partner-portal{display:grid;grid-template-columns:1fr .9fr;gap:clamp(24px,5vw,72px);align-items:center}.portal-features{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.portal-features span{border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--warm);font-size:13px}.portal-preview{background:#0f0d0a}.portal-preview-head{display:flex;justify-content:space-between;gap:14px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:16px}.portal-preview-head strong{color:var(--ivory);font-size:18px}.portal-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}.portal-metrics div{border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.035);padding:12px}.portal-metrics strong{display:block;margin-top:6px;color:var(--ivory);font-size:24px}.portal-timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}.portal-timeline li{display:grid;gap:4px;border-left:2px solid var(--gold);padding:4px 0 4px 12px}.portal-timeline b{color:var(--ivory)}.portal-timeline span{color:var(--soft);font-size:14px}.gallery,.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gallery figure,.page-hero figure,.concept-media{margin:0}.gallery img{aspect-ratio:4/3;border-radius:8px}.concept-card{display:block;color:inherit;text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;overflow:hidden}.concept-card img{width:100%;aspect-ratio:4/3;object-fit:cover}.concept-card div{padding:18px}.concept-card span{display:block;color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.concept-card .status-pill,.project-caption .status-pill{display:inline-flex;width:max-content;align-items:center;border:1px solid rgba(196,161,95,.42);border-radius:999px;padding:5px 9px;background:rgba(196,161,95,.08);color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card h3{font-size:24px;margin:8px 0}.concept-card p{font-size:15px;color:var(--warm)}.concept-card .card-cta{width:100%;margin-top:12px}.project-caption{display:grid;gap:6px;padding:12px 14px 14px;background:#100e0b;border-bottom:1px solid var(--line);font-size:13px;color:var(--soft)}.project-caption strong{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.project-caption span{color:var(--warm);font-size:13px;letter-spacing:0;text-transform:none}.project-caption .status-pill{color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card .inspired{color:var(--soft);font-size:13px;border-top:1px solid var(--line);margin-top:14px;padding-top:12px}figcaption{font-size:13px;color:var(--soft);padding-top:10px}.concept-card .project-caption{padding-top:12px}.internal{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.internal h2{width:100%;font-size:34px}.internal a,.internal span{border:1px solid var(--line);padding:11px 14px;text-decoration:none}.faq{max-width:980px}.faq details{border-top:1px solid var(--line);padding:18px 0}.faq summary{cursor:pointer;color:var(--ivory);font-size:19px}.cta{margin:clamp(20px,5vw,72px);background:var(--green);border:1px solid var(--line);border-radius:8px}.planner-hero{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:end;padding-top:clamp(34px,5vw,72px);padding-bottom:24px}.planner-hero h1{font-size:clamp(38px,5vw,72px)}.planner-estimate{border:1px solid var(--line);background:#100e0b;border-radius:8px;padding:22px}.planner-estimate span,.planner-stats span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.planner-estimate strong{display:block;margin-top:8px;color:var(--gold);font-family:Georgia,serif;font-size:32px;font-weight:500}.planner-shell{padding-top:0}.planner-toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}.planner-surface{display:grid;grid-template-columns:minmax(220px,1fr) 220px;gap:14px;align-items:start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px;margin-bottom:14px}.planner-surface h2{font-size:24px}.planner-surface p{margin:8px 0 0}.surface-fields{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.surface-fields fieldset{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center;margin:0;border:1px solid var(--line);border-radius:6px;padding:10px}.surface-fields legend{padding:0 5px;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.surface-fields span{color:var(--soft);font-size:12px}.planner-workspace{display:grid;grid-template-columns:250px minmax(360px,1fr) 300px;gap:14px;align-items:stretch}.planner-palette,.planner-stage,.planner-inspector,.planner-summary,.planner-lead{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px}.planner-palette h2,.planner-inspector h2,.planner-summary h2,.planner-lead h2{font-size:24px;margin-bottom:12px}.planner-module-button{width:100%;display:grid;gap:4px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:8px;cursor:pointer}.planner-module-button span{font-weight:800}.planner-module-button small{color:var(--soft);line-height:1.35}.planner-canvas-wrap{height:560px;min-height:360px;background:#080706;border:1px solid rgba(196,161,95,.24);border-radius:6px;overflow:hidden;cursor:grab}.planner-canvas-wrap:active{cursor:grabbing}.planner-canvas-wrap canvas{display:block;width:100%;height:100%}.planner-stage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.planner-inspector-fields{display:grid;gap:10px}.planner-inspector-fields label{font-size:13px}.planner-inspector-fields small{color:var(--soft);font-size:11px}.planner-check{display:flex;grid-template-columns:auto 1fr;gap:8px;align-items:center}.planner-check input{width:auto;min-height:0}.planner-output{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:14px;margin-top:14px}.planner-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.planner-stats div{border:1px solid var(--line);border-radius:6px;padding:12px;background:#0f0d0a}.planner-stats strong{display:block;margin-top:5px;color:var(--gold);font-family:Georgia,serif;font-size:24px}.planner-summary ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}.planner-summary button{width:100%;display:grid;gap:3px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:10px;cursor:pointer}.planner-summary button.active{border-color:var(--gold)}.planner-summary span{color:var(--soft);font-size:13px}.form-shell{max-width:980px}.lead-form{display:grid;gap:16px}.planner-form{gap:14px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}label{display:grid;gap:7px;color:var(--warm);font-size:14px}input,select,textarea{width:100%;border:1px solid var(--line);background:#0f0d0a;color:var(--ivory);min-height:44px;padding:10px;border-radius:4px}textarea{min-height:130px}.consent{grid-template-columns:auto 1fr;align-items:start}.hp{position:absolute;left:-9999px}.form-status{min-height:24px;color:var(--gold)}:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.site-footer{display:grid;grid-template-columns:1.35fr repeat(9,minmax(112px,1fr));gap:20px;padding:42px clamp(18px,5vw,72px);border-top:1px solid var(--line);background:#100e0b}.site-footer div{display:grid;align-content:start;gap:9px}.site-footer h3{font-size:20px}
 	  .collection-card-link{display:block;color:inherit;text-decoration:none}
-	  .concept-card .chip{display:inline-flex;width:max-content;margin-top:4px}
-	  .design-concept-hero h1{font-size:clamp(40px,5.6vw,78px)}.design-concept-positioning{padding-bottom:24px}.concept-keywords{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.concept-keywords span{border:1px solid rgba(196,161,95,.32);border-radius:999px;padding:8px 11px;color:var(--stone);font-size:12px}.package-grid,.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.package-card,.pricing-grid article,.form-step{border:1px solid rgba(196,161,95,.24);background:linear-gradient(180deg,rgba(196,161,95,.08),rgba(255,255,255,.035));border-radius:8px;padding:24px}.package-card{display:grid;gap:14px;align-content:start;min-height:520px}.package-card>span,.pricing-grid span,.form-step>span{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.package-card strong{display:block;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.package-card p{margin:0}.package-card dl{display:grid;gap:10px;margin:0}.package-card dt{color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.package-card dd{margin:0;color:var(--warm);font-size:14px}.package-card .button{margin-top:auto}.pricing-grid article{min-height:170px}.pricing-grid h3{margin:10px 0 6px;font-size:24px}.pricing-grid p{margin:0;color:var(--soft)}.design-concept-form-shell{max-width:1120px}.design-concept-form .form-step{display:grid;gap:14px;background:rgba(255,255,255,.035)}.design-concept-form .form-step h3{font-size:26px}.selection-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:center;border:1px solid rgba(196,161,95,.24);background:#0f0d0a;border-radius:8px;padding:14px}.selection-summary div{display:grid;gap:4px}.selection-summary span{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.selection-summary strong{font-family:Georgia,serif;font-size:26px;font-weight:500}.selection-summary .button{grid-column:auto}.selection-summary p{grid-column:1/-1}.form-hint{margin:0;color:var(--soft);font-size:14px}.design-concept-bridge .actions,.cta .actions{margin-top:18px}
+		  .concept-card .chip{display:inline-flex;width:max-content;margin-top:4px}
+		  .design-concept-hero h1{font-size:clamp(40px,5.6vw,78px)}.design-concept-positioning{padding-bottom:24px}.concept-keywords{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.concept-keywords span{border:1px solid rgba(196,161,95,.32);border-radius:999px;padding:8px 11px;color:var(--stone);font-size:12px}.package-grid,.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.package-card,.pricing-grid article,.form-step{border:1px solid rgba(196,161,95,.24);background:linear-gradient(180deg,rgba(196,161,95,.08),rgba(255,255,255,.035));border-radius:8px;padding:24px}.package-card{display:grid;gap:14px;align-content:start;min-height:520px}.package-card>span,.pricing-grid span,.form-step>span{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.package-card strong{display:block;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.package-card p{margin:0}.package-card dl{display:grid;gap:10px;margin:0}.package-card dt{color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.package-card dd{margin:0;color:var(--warm);font-size:14px}.package-card .button{margin-top:auto}.pricing-grid article{min-height:170px}.pricing-grid h3{margin:10px 0 6px;font-size:24px}.pricing-grid p{margin:0;color:var(--soft)}.design-concept-form-shell{max-width:1120px}.design-concept-form .form-step{display:grid;gap:14px;background:rgba(255,255,255,.035)}.design-concept-form .form-step h3{font-size:26px}.selection-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:center;border:1px solid rgba(196,161,95,.24);background:#0f0d0a;border-radius:8px;padding:14px}.selection-summary div{display:grid;gap:4px}.selection-summary span{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.selection-summary strong{font-family:Georgia,serif;font-size:26px;font-weight:500}.selection-summary .button{grid-column:auto}.selection-summary p{grid-column:1/-1}.form-hint{margin:0;color:var(--soft);font-size:14px}.design-concept-bridge .actions,.cta .actions{margin-top:18px}
+	  .measurement-choice{grid-template-columns:auto 1fr;align-items:start}.measurement-choice input{width:auto;min-height:0;margin-top:2px}.design-concept-form .consent input{width:auto;min-height:0;margin-top:2px}
   @media(max-width:1050px){.site-header{grid-template-columns:auto auto 1fr}.menu-button{display:inline-flex;justify-self:end;background:transparent;color:var(--ivory);border:1px solid var(--line);padding:10px}nav{display:none;grid-column:1/-1;justify-content:start;flex-direction:column}.open{display:flex}.header-cta{display:none}.lang{justify-self:end}}
   @media(max-width:1200px){.site-footer{grid-template-columns:repeat(3,1fr)}}
   .planner-toolbar{grid-template-columns:repeat(4,1fr)}.planner-stage{margin-bottom:14px}.planner-workspace{grid-template-columns:minmax(0,1fr) 320px}.planner-palette{display:grid;grid-template-columns:1fr;gap:14px}.planner-palette>h2{margin-bottom:0}.planner-module-group{border:1px solid var(--line);border-radius:8px;background:#0f0d0a;padding:12px}.planner-module-group h3{font-size:20px;margin-bottom:10px}.planner-module-group .planner-module-button{background:#15120e}.planner-wall-picker{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.planner-wall-picker .button{min-height:38px}.planner-wall-picker .active{border-color:#b8f2c4;color:#07120b;background:#b8f2c4}.planner-canvas-wrap{position:relative;overscroll-behavior:contain}.planner-canvas-wrap canvas{touch-action:pan-y}.planner-nudge{position:absolute;left:14px;bottom:14px;z-index:3;display:grid;grid-template-columns:repeat(3,42px);grid-template-areas:". up ." "left . right" ". down .";gap:6px;padding:10px;border:1px solid var(--line);border-radius:8px;background:rgba(15,13,10,.82);backdrop-filter:blur(10px)}.planner-nudge[hidden]{display:none}.planner-nudge button,.planner-zoom button{min-width:42px;min-height:42px;padding-inline:0;font-size:18px}.planner-nudge [data-planner-nudge-dir="up"]{grid-area:up}.planner-nudge [data-planner-nudge-dir="left"]{grid-area:left}.planner-nudge [data-planner-nudge-dir="right"]{grid-area:right}.planner-nudge [data-planner-nudge-dir="down"]{grid-area:down}.planner-zoom{position:absolute;right:14px;top:14px;z-index:3;display:grid;gap:6px;padding:8px;border:1px solid var(--line);border-radius:8px;background:rgba(15,13,10,.82);backdrop-filter:blur(10px)}.surface-fields label{border:1px solid var(--line);border-radius:6px;background:#0f0d0a;padding:10px}.surface-fields small{color:var(--soft);font-size:11px}

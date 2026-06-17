@@ -19,11 +19,8 @@ const paths = [
   "/for-designers-builders",
   "/partners",
   "/es/programa-partners",
-  "/es/concepto-de-diseno",
   "/fr/programme-partenaires",
-  "/fr/concept-design-interieur",
   "/ru/partnerskaya-programma",
-  "/ru/dizayn-koncept",
   "/technical-millwork-planner",
   "/request-consultation",
   "/request-measurement",
@@ -58,6 +55,15 @@ for (const path of paths) {
   console.log(`${path} ok`);
 }
 
+for (const path of ["/es/concepto-de-diseno", "/fr/concept-design-interieur", "/ru/dizayn-koncept"]) {
+  const result = await request(path);
+  if (result.status !== 302 || result.headers.location !== "/design-concept") {
+    server.kill();
+    throw new Error(`${path} should redirect to /design-concept, returned ${result.status} ${result.headers.location || ""}`);
+  }
+  console.log(`${path} redirect ok`);
+}
+
 const seoIndex = await request("/seo-index");
 if (seoIndex.status !== 401) {
   server.kill();
@@ -89,7 +95,8 @@ for (const requiredText of [
   "Get a Premium Interior Design Concept Before You Commit to Fabrication",
   "Transparent Starting Prices",
   "Submit Project for Review",
-  "Online checkout for fixed-price concept packages can be added in the next step.",
+  "I need CAS AURUM to arrange measurement (+11% to the concept estimate)",
+  "Paid concept work starts only after a conversation and written confirmation.",
   "data-design-concept-form",
   "FAQPage",
 ]) {
@@ -151,6 +158,7 @@ const designConceptLead = await postMultipart("/api/design-concept-lead", {
   desired_style: "quiet_luxury",
   timeline: "planning_only",
   budget_range: "not_sure",
+  needs_measurement: "yes",
   consent: "on",
 }, [{ field: "project_photos", filename: "room.jpg", type: "image/jpeg", content: "fake image bytes" }]);
 if (designConceptLead.status !== 200) {
@@ -267,7 +275,7 @@ function request(path) {
   return new Promise((resolve, reject) => {
     const req = http.get({ hostname: "127.0.0.1", port, path }, (res) => {
       res.resume();
-      res.on("end", () => resolve({ status: res.statusCode }));
+      res.on("end", () => resolve({ status: res.statusCode, headers: res.headers }));
     });
     req.on("error", reject);
     req.setTimeout(5000, () => {
