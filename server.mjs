@@ -7346,7 +7346,7 @@ function sitemapUrlXml(entry) {
 function sitemapImageEntries() {
   const date = currentSitemapDate();
   const localeKeys = Object.keys(langs);
-  const entries = [];
+  const entriesByPage = new Map();
   const seen = new Set();
   const addImageEntry = ({ pageUrl, imageUrl, title, caption }) => {
     if (!pageUrl || !imageUrl) return;
@@ -7355,15 +7355,13 @@ function sitemapImageEntries() {
     const key = `${pageUrl}::${imageUrl}`;
     if (seen.has(key)) return;
     seen.add(key);
-    entries.push({
-      loc: pageUrl,
-      lastmod: date,
-      image: {
-        loc: imageUrl,
-        title: sanitizeVisibleText(title || BRAND),
-        caption: sanitizeVisibleText(caption || title || BRAND),
-      },
+    const entry = entriesByPage.get(pageUrl) || { loc: pageUrl, lastmod: date, images: [] };
+    entry.images.push({
+      loc: imageUrl,
+      title: sanitizeVisibleText(title || BRAND),
+      caption: sanitizeVisibleText(caption || title || BRAND),
     });
+    entriesByPage.set(pageUrl, entry);
   };
 
   for (const key of pageOrder) {
@@ -7416,7 +7414,7 @@ function sitemapImageEntries() {
     }
   }
 
-  return entries;
+  return [...entriesByPage.values()];
 }
 
 function sitemapImageUrlSetXml(entries) {
@@ -7424,10 +7422,12 @@ function sitemapImageUrlSetXml(entries) {
 }
 
 function sitemapImageUrlXml(entry) {
-  const image = entry.image || {};
-  const title = image.title ? `\n      <image:title>${escapeHtml(image.title)}</image:title>` : "";
-  const captionText = image.caption ? `\n      <image:caption>${escapeHtml(image.caption)}</image:caption>` : "";
-  return `  <url>\n    <loc>${escapeHtml(entry.loc)}</loc>\n    <lastmod>${escapeHtml(entry.lastmod)}</lastmod>\n    <image:image>\n      <image:loc>${escapeHtml(image.loc)}</image:loc>${title}${captionText}\n    </image:image>\n  </url>`;
+  const images = (entry.images || []).map((image) => {
+    const title = image.title ? `\n      <image:title>${escapeHtml(image.title)}</image:title>` : "";
+    const captionText = image.caption ? `\n      <image:caption>${escapeHtml(image.caption)}</image:caption>` : "";
+    return `    <image:image>\n      <image:loc>${escapeHtml(image.loc)}</image:loc>${title}${captionText}\n    </image:image>`;
+  }).join("\n");
+  return `  <url>\n    <loc>${escapeHtml(entry.loc)}</loc>\n    <lastmod>${escapeHtml(entry.lastmod)}</lastmod>\n${images}\n  </url>`;
 }
 
 function publicProjectImageItems() {
