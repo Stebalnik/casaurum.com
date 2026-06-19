@@ -7255,6 +7255,7 @@ function sitemapFileXml(path) {
   const name = cleanPath(path).replace("/sitemaps/", "");
   const file = sitemapFiles().find((item) => item.name === name);
   if (!file) return null;
+  if (file.type === "images") return sitemapImageUrlSetXml(file.entries);
   return sitemapUrlSetXml(file.entries);
 }
 
@@ -7268,6 +7269,7 @@ function sitemapFiles() {
     { name: "casaurum-entities.xml", entries: entries.filter((entry) => entry.group === "casaurum-entities") },
     { name: "casaurum-cities.xml", entries: entries.filter((entry) => entry.group === "casaurum-cities") },
     { name: "seo-market.xml", entries: entries.filter((entry) => entry.group === "seo-market") },
+    { name: "images.xml", type: "images", entries: sitemapImageEntries() },
   ].filter((file) => file.entries.length > 0);
   return [
     ...files,
@@ -7339,6 +7341,128 @@ function sitemapUrlXml(entry) {
     .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${escapeHtml(lang)}" href="${escapeHtml(href)}" />`)
     .join("\n");
   return `  <url>\n    <loc>${escapeHtml(entry.loc)}</loc>\n    <lastmod>${escapeHtml(entry.lastmod)}</lastmod>\n    <changefreq>${escapeHtml(entry.changefreq)}</changefreq>\n    <priority>${escapeHtml(entry.priority)}</priority>${alternates ? `\n${alternates}` : ""}\n  </url>`;
+}
+
+function sitemapImageEntries() {
+  const date = currentSitemapDate();
+  const localeKeys = Object.keys(langs);
+  const entries = [];
+  const seen = new Set();
+  const addImageEntry = ({ pageUrl, imageUrl, title, caption }) => {
+    if (!pageUrl || !imageUrl) return;
+    const imageSrc = imageUrl.replace(BASE_URL, "");
+    if (!/^https?:\/\//i.test(imageUrl) && !publicAssetExists(imageSrc)) return;
+    const key = `${pageUrl}::${imageUrl}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    entries.push({
+      loc: pageUrl,
+      lastmod: date,
+      image: {
+        loc: imageUrl,
+        title: sanitizeVisibleText(title || BRAND),
+        caption: sanitizeVisibleText(caption || title || BRAND),
+      },
+    });
+  };
+
+  for (const key of pageOrder) {
+    for (const lang of pageLanguagesForKey(key, localeKeys)) {
+      const assetId = primaryImageAssetId({ key, lang });
+      if (!assetId) continue;
+      const asset = assetById(assetId);
+      addImageEntry({
+        pageUrl: `${BASE_URL}${urlFor(lang, key)}`,
+        imageUrl: absoluteAssetUrl(asset.src),
+        title: pageLabel(key, lang),
+        caption: caption(assetId, lang),
+      });
+    }
+  }
+
+  for (const collection of collectionsData) {
+    for (const lang of localeKeys) {
+      const pageUrl = `${BASE_URL}${collectionUrlFor(lang, collection)}`;
+      if (collection.assetId) {
+        const asset = assetById(collection.assetId);
+        addImageEntry({
+          pageUrl,
+          imageUrl: absoluteAssetUrl(asset.src),
+          title: collection.name,
+          caption: caption(collection.assetId, lang),
+        });
+      }
+      for (const project of collection.projects || []) {
+        addImageEntry({
+          pageUrl,
+          imageUrl: absoluteAssetUrl(project.imageSrc || project.imagePath),
+          title: project.projectName,
+          caption: localizedText(project.imageAlt, lang) || localizedText(project.imageCaption, lang) || project.projectName,
+        });
+      }
+    }
+  }
+
+  const projectImages = publicProjectImageItems();
+  for (const lang of localeKeys) {
+    const pageUrl = `${BASE_URL}${urlFor(lang, "projects")}`;
+    for (const project of projectImages) {
+      addImageEntry({
+        pageUrl,
+        imageUrl: absoluteAssetUrl(project.src),
+        title: completedProjectTitle(project, lang),
+        caption: completedProjectCaption(lang, project, completedProjectCategory(project, lang)),
+      });
+    }
+  }
+
+  return entries;
+}
+
+function sitemapImageUrlSetXml(entries) {
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${entries.map(sitemapImageUrlXml).join("\n")}\n</urlset>`;
+}
+
+function sitemapImageUrlXml(entry) {
+  const image = entry.image || {};
+  const title = image.title ? `\n      <image:title>${escapeHtml(image.title)}</image:title>` : "";
+  const captionText = image.caption ? `\n      <image:caption>${escapeHtml(image.caption)}</image:caption>` : "";
+  return `  <url>\n    <loc>${escapeHtml(entry.loc)}</loc>\n    <lastmod>${escapeHtml(entry.lastmod)}</lastmod>\n    <image:image>\n      <image:loc>${escapeHtml(image.loc)}</image:loc>${title}${captionText}\n    </image:image>\n  </url>`;
+}
+
+function publicProjectImageItems() {
+  const byFile = new Map(completedProjectItems.map((item) => [item.file, item]));
+  try {
+    const projectDir = path.join(PUBLIC_DIR, "images", "projects");
+    return readdirSync(projectDir)
+      .filter((file) => /\.(webp|png|jpe?g|avif)$/i.test(file))
+      .sort()
+      .map((file) => byFile.get(file) || legacyProjectImageItem(file))
+      .filter(Boolean);
+  } catch (error) {
+    console.warn(`Project image sitemap assets unavailable: ${error.message}`);
+    return completedProjectItems;
+  }
+}
+
+function legacyProjectImageItem(file) {
+  const meta = legacyCompletedProjectMeta(file);
+  return {
+    slug: file.replace(/\.(webp|png|jpe?g|avif)$/i, ""),
+    file,
+    src: `/images/projects/${file}`,
+    category: meta.category,
+    categoryKey: slugify(meta.category),
+    room: meta.room,
+    roomKey: slugify(meta.room),
+    title: { en: meta.title },
+    alt: { en: `${meta.title}, completed CAS AURUM ${meta.category.toLowerCase()} work.` },
+    caption: { en: meta.caption },
+    status: { en: "Completed Project", es: "Proyecto realizado", fr: "Projet realise", ru: "Completed project" },
+    keywords: meta.keywords,
+    width: 1448,
+    height: 1086,
+  };
 }
 
 function sitemapLegacyAlternates(pathForLang) {

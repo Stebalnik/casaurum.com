@@ -322,6 +322,10 @@ if (!sitemap.body.includes("/sitemaps/casaurum-combinations-1.xml")) {
   server.kill();
   throw new Error("casaurum combination sitemap missing from sitemap index");
 }
+if (!sitemap.body.includes("/sitemaps/images.xml")) {
+  server.kill();
+  throw new Error("image sitemap missing from sitemap index");
+}
 const coreSitemap = await read("/sitemaps/core.xml");
 if (!coreSitemap.body.includes("/design-concept")) {
   server.kill();
@@ -337,6 +341,15 @@ const collectionsSitemap = await read("/sitemaps/collections.xml");
 if (!collectionsSitemap.body.includes("/ideas/aurum")) {
   server.kill();
   throw new Error("canonical idea detail page missing from sitemap");
+}
+const imageSitemap = await read("/sitemaps/images.xml");
+if (!imageSitemap.body.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"')) {
+  server.kill();
+  throw new Error("image sitemap namespace missing");
+}
+if (!imageSitemap.body.includes("<image:image>") || !imageSitemap.body.includes("/images/projects/")) {
+  server.kill();
+  throw new Error("public project images missing from image sitemap");
 }
 if (!legacyProgrammaticSitemap.body.includes("/georgia/atlanta/luxury-custom-kitchens")) {
   server.kill();
