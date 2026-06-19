@@ -1,5 +1,6 @@
 import http from "node:http";
 import { spawn } from "node:child_process";
+import { getLead } from "../crm-db.mjs";
 
 const port = 4899;
 const server = spawn("node", ["server.mjs"], {
@@ -12,10 +13,17 @@ await waitForServer();
 const paths = [
   "/",
   "/design-concept",
-  "/luxury-wall-panels",
+  "/media-walls",
+  "/custom-kitchens",
+  "/custom-closets",
+  "/built-ins",
+  "/fireplace-walls",
+  "/home-offices",
+  "/wall-panels",
+  "/mudrooms",
   "/custom-furniture",
   "/architectural-millwork",
-  "/interior-design-solutions",
+  "/solutions",
   "/for-designers-builders",
   "/partners",
   "/es/programa-partners",
@@ -25,11 +33,11 @@ const paths = [
   "/request-consultation",
   "/request-measurement",
   "/usa",
-  "/collections/aurum",
-  "/collections/forma",
-  "/collections/noir",
-  "/collections/madera",
-  "/collections/signature",
+  "/ideas/aurum",
+  "/ideas/forma",
+  "/ideas/noir",
+  "/ideas/madera",
+  "/ideas/signature",
   "/kitchens",
   "/georgia/luxury-custom-kitchens",
   "/georgia/premium-design-concepts",
@@ -41,9 +49,9 @@ const paths = [
   "/chicago/luxury-custom-furniture",
   "/canada/toronto/luxury-custom-kitchens",
   "/es/georgia/atlanta/custom-kitchen-cabinets",
-  "/es/paneles-de-pared-de-lujo",
-  "/fr/panneaux-muraux-de-luxe",
-  "/ru/premium-stenovye-paneli",
+  "/es/paneles-de-pared-a-medida",
+  "/fr/panneaux-muraux-sur-mesure",
+  "/ru/stenovye-paneli-na-zakaz",
   "/en/design-concepts/georgia",
   "/en/design-concepts/atlanta",
   "/sitemap.xml",
@@ -61,11 +69,28 @@ for (const path of paths) {
 
 for (const path of ["/es/concepto-de-diseno", "/fr/concept-design-interieur", "/ru/dizayn-koncept"]) {
   const result = await request(path);
-  if (result.status !== 302 || result.headers.location !== "/design-concept") {
+  if (result.status !== 200) {
     server.kill();
-    throw new Error(`${path} should redirect to /design-concept, returned ${result.status} ${result.headers.location || ""}`);
+    throw new Error(`${path} should render localized design concept flow, returned ${result.status}`);
   }
-  console.log(`${path} redirect ok`);
+  console.log(`${path} localized ok`);
+}
+
+for (const [path, location] of [
+  ["/luxury-wall-panels", "/wall-panels"],
+  ["/custom-media-walls", "/media-walls"],
+  ["/luxury-custom-closets", "/custom-closets"],
+  ["/custom-built-ins", "/built-ins"],
+  ["/millwork-planner", "/technical-millwork-planner"],
+  ["/projects", "/gallery"],
+  ["/collections/aurum", "/ideas/aurum"],
+]) {
+  const result = await request(path);
+  if (result.status !== 301 || result.headers.location !== location) {
+    server.kill();
+    throw new Error(`${path} should redirect to ${location}, returned ${result.status} ${result.headers.location || ""}`);
+  }
+  console.log(`${path} legacy redirect ok`);
 }
 
 const seoIndex = await request("/seo-index");
@@ -83,23 +108,23 @@ if (!partnersPage.body.includes("data-partner-form") || !partnersPage.body.inclu
 console.log("/partners form ok");
 
 const homePage = await read("/");
-if (!homePage.body.includes('<a href="/crm-app">Partner Login</a>')) {
+if (!homePage.body.includes("For Designers &amp; Builders") || !homePage.body.includes("Start Your Design Concept")) {
   server.kill();
-  throw new Error("header should expose Partner Login");
+  throw new Error("homepage should expose new navigation and Start Project CTA");
 }
-const ruHomePage = await read("/ru/premium-stenovye-paneli");
-if (!ruHomePage.body.includes('<a href="/crm-app">Вход партнера</a>')) {
+const crmApp = await request("/crm-app");
+if (crmApp.status !== 200) {
   server.kill();
-  throw new Error("Russian header should expose localized partner login");
+  throw new Error(`/crm-app should remain available, returned ${crmApp.status}`);
 }
-console.log("partner login header ok");
+console.log("homepage navigation and CRM app ok");
 
 const designConceptPage = await read("/design-concept");
 for (const requiredText of [
-  "Get a Premium Interior Design Concept Before You Commit to Fabrication",
-  "Transparent Starting Prices",
-  "Submit Project for Review",
-  "I need CAS AURUM to arrange measurement (+11% to the concept estimate)",
+  "Start With Photos and a Clear Design Concept",
+  "Design Concept",
+  "Order Design Concept",
+  "I need CAS AURUM to help arrange measurement for this project.",
   "Paid concept work starts only after a conversation and written confirmation.",
   "data-design-concept-form",
   "FAQPage",
@@ -108,6 +133,10 @@ for (const requiredText of [
     server.kill();
     throw new Error(`/design-concept missing required text: ${requiredText}`);
   }
+}
+if (designConceptPage.body.includes("13%")) {
+  server.kill();
+  throw new Error("/design-concept should not show the internal measurement surcharge percentage");
 }
 const startConceptRedirect = await request("/start-design-concept");
 if (startConceptRedirect.status !== 302) {
@@ -188,12 +217,15 @@ const designConceptLead = await postMultipart("/api/design-concept-lead", {
   formType: "design_concept_flow",
   package_type: "design_concept",
   project_type: "media_wall",
+  project_stage: "photos",
+  lead_type_classification: "homeowner",
   language: "en",
   client_name: "Smoke Concept",
   email: "smoke-concept@example.com",
+  phone: "+1 555 0102",
   project_location: "Atlanta, GA",
   project_description: "Smoke test design concept.",
-  desired_style: "quiet_luxury",
+  desired_style: "warm_natural",
   timeline: "planning_only",
   budget_range: "not_sure",
   needs_measurement: "yes",
@@ -204,6 +236,20 @@ if (designConceptLead.status !== 200) {
   throw new Error(`/api/design-concept-lead returned ${designConceptLead.status}`);
 }
 const designConceptLeadJson = JSON.parse(designConceptLead.body || "{}");
+const savedDesignConceptLead = getLead(designConceptLeadJson.id);
+if (
+  !savedDesignConceptLead?.measurement_requested ||
+  savedDesignConceptLead.exact_price !== "$554" ||
+  savedDesignConceptLead.base_price !== "from $490" ||
+  savedDesignConceptLead.estimated_price_label !== "from $490" ||
+  savedDesignConceptLead.estimated_timeline_label !== "3-5 business days" ||
+  savedDesignConceptLead.estimate_basis !== "package_type + project_type" ||
+  savedDesignConceptLead.measurement_surcharge_rate !== "13%" ||
+  savedDesignConceptLead.measurement_surcharge_amount !== "$64"
+) {
+  server.kill();
+  throw new Error(`/api/design-concept-lead should save internal 13% measurement surcharge, saved ${JSON.stringify(savedDesignConceptLead || {})}`);
+}
 const uploadedConceptFile = await request(`/uploads/design-concepts/${designConceptLeadJson.id}/01-room.jpg`);
 if (uploadedConceptFile.status !== 200) {
   server.kill();
@@ -214,14 +260,17 @@ console.log("/api/design-concept-lead ok");
 const invalidTechnicalConceptLead = await postMultipart("/api/design-concept-lead", {
   leadType: "design_concept_flow",
   formType: "design_concept_flow",
-  package_type: "design_technical",
+  package_type: "design_build_package",
   project_type: "media_wall",
+  project_stage: "measurements",
+  lead_type_classification: "homeowner",
   language: "en",
   client_name: "Smoke Technical Concept",
   email: "smoke-technical@example.com",
+  phone: "+1 555 0103",
   project_location: "Atlanta, GA",
   project_description: "Smoke test technical package without dimensions.",
-  desired_style: "quiet_luxury",
+  desired_style: "warm_natural",
   timeline: "planning_only",
   budget_range: "not_sure",
   consent: "on",
@@ -237,12 +286,15 @@ const invalidDesignConceptLead = await post("/api/design-concept-lead", {
   formType: "design_concept_flow",
   package_type: "design_concept",
   project_type: "media_wall",
+  project_stage: "photos",
+  lead_type_classification: "homeowner",
   language: "en",
   client_name: "Smoke Concept",
   email: "smoke-concept@example.com",
+  phone: "+1 555 0104",
   project_location: "Atlanta, GA",
   project_description: "Smoke test design concept without photos.",
-  desired_style: "quiet_luxury",
+  desired_style: "warm_natural",
   timeline: "planning_only",
   budget_range: "not_sure",
   consent: "on",
@@ -282,9 +334,9 @@ if (!legacyProgrammaticSitemap.body.includes("/georgia/atlanta/custom-kitchen-ca
   throw new Error("approved generated page missing from sitemap");
 }
 const collectionsSitemap = await read("/sitemaps/collections.xml");
-if (!collectionsSitemap.body.includes("/collections/aurum")) {
+if (!collectionsSitemap.body.includes("/ideas/aurum")) {
   server.kill();
-  throw new Error("collection detail page missing from sitemap");
+  throw new Error("canonical idea detail page missing from sitemap");
 }
 if (!legacyProgrammaticSitemap.body.includes("/georgia/atlanta/luxury-custom-kitchens")) {
   server.kill();

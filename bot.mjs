@@ -41,6 +41,7 @@ process.on("SIGTERM", shutdown);
 
 assertConfig();
 initCrmDb();
+await configureTelegramBotUi();
 console.log("CAS AURUM local CRM Telegram bot started");
 
 while (running) {
@@ -133,7 +134,7 @@ async function pollTelegramUpdates() {
         continue;
       }
       if (update.message.reply_to_message) await handleReplyNote(update.message);
-      else if (/^\/start/i.test(update.message.text)) await sendAuthorizedWelcome(update.message.chat.id);
+      else if (/^\/(?:start|crm|app)/i.test(update.message.text)) await sendAuthorizedWelcome(update.message.chat.id);
     }
   }
 }
@@ -205,6 +206,26 @@ async function sendAuthorizedWelcome(chatId) {
     text: "CAS AURUM CRM доступна. Открой приложение через кнопку ниже.",
     reply_markup: { inline_keyboard: [[webAppButton("🧩 CRM App")]] },
   });
+}
+
+async function configureTelegramBotUi() {
+  try {
+    await telegram("setChatMenuButton", {
+      menu_button: {
+        type: "web_app",
+        text: "CRM App",
+        web_app: { url: CRM_APP_URL },
+      },
+    });
+    await telegram("setMyCommands", {
+      commands: [
+        { command: "start", description: "Open CAS AURUM CRM" },
+        { command: "crm", description: "Open CRM Mini App" },
+      ],
+    });
+  } catch (error) {
+    console.error("Telegram CRM menu setup failed:", error.message);
+  }
 }
 
 async function handleCallback(query) {
@@ -426,6 +447,8 @@ async function sendEscalations() {
 
 function leadMessage(lead) {
   if (lead.leadType === "design_concept_flow" || lead.formType === "design_concept_flow") return designConceptLeadMessage(lead);
+  if (lead.formType === "quick_project_estimate" || lead.leadType === "quick_estimate") return quickEstimateLeadMessage(lead);
+  if (lead.formType === "technical_millwork_planner") return plannerLeadMessage(lead);
   return [
     "🟡 <b>Новая заявка CAS AURUM</b>",
     `<b>ID:</b> <code>${escapeTg(lead.id)}</code>`,
@@ -449,6 +472,66 @@ function leadMessage(lead) {
   ].filter(Boolean).join("\n");
 }
 
+function quickEstimateLeadMessage(lead) {
+  const files = Array.isArray(lead.uploadedFiles) ? lead.uploadedFiles : [];
+  const selectedFeatures = Array.isArray(lead.selected_features)
+    ? lead.selected_features
+    : String(lead.selected_features || "").split(",").map((item) => item.trim()).filter(Boolean);
+  return [
+    `🟡 <b>New Quick Estimate Lead</b>`,
+    `<b>ID:</b> <code>${escapeTg(lead.id)}</code>`,
+    `<b>Priority:</b> ${escapeTg(lead.priority || "needs qualification")}`,
+    "",
+    `<b>Project type:</b> ${escapeTg(lead.projectType || lead.project_type || "-")}`,
+    `<b>Room:</b> ${escapeTg(lead.room_type || lead.roomType || "-")}`,
+    `<b>Layout:</b> ${escapeTg(lead.selected_layout || lead.selectedLayout || "-")}`,
+    `<b>Size:</b> ${escapeTg(lead.size_bucket || lead.sizeBucket || lead.size_mode || "-")}`,
+    selectedFeatures.length ? `<b>Selected features:</b>\n${selectedFeatures.map((item) => `• ${escapeTg(item)}`).join("\n")}` : "",
+    "",
+    `<b>Preliminary range:</b> ${escapeTg(lead.preliminary_range || lead.preliminaryRange || "-")}`,
+    `<b>Confidence:</b> ${escapeTg(lead.confidence || "-")}`,
+    `<b>Photos uploaded:</b> ${files.length ? "Yes" : "No"}`,
+    `<b>ZIP:</b> ${escapeTg(zipCode(lead) || lead.zip || "-")}`,
+    `<b>Timeline:</b> ${escapeTg(lead.timeline || "-")}`,
+    "",
+    `<b>Client:</b> ${escapeTg(fullName(lead) || lead.fullName || "No name")}`,
+    `<b>Contact:</b> ${escapeTg(lead.email || "-")} / ${escapeTg(lead.phone || "-")}`,
+    `<b>Source:</b> ${escapeTg(lead.source_page || lead.sourceUrl || "-")}`,
+    "",
+    `<b>Recommended next action:</b>\n${escapeTg(lead.recommended_next_action || "Ask for wall width, ceiling height and 2-3 photos if missing. Offer Design Concept or detailed estimate review.")}`,
+    (lead.project_description || lead.project_notes || lead.notes) ? `\n<b>Notes:</b>\n${escapeTg(lead.project_description || lead.project_notes || lead.notes).slice(0, 1000)}` : "",
+  ].filter(Boolean).join("\n");
+}
+
+function plannerLeadMessage(lead) {
+  const files = Array.isArray(lead.uploadedFiles) ? lead.uploadedFiles : [];
+  const labels = Array.isArray(lead.priority_labels) ? lead.priority_labels : [];
+  return [
+    `🟡 <b>New Millwork Planner lead submitted.</b>`,
+    `<b>ID:</b> <code>${escapeTg(lead.id)}</code>`,
+    "",
+    `<b>Planner mode:</b> ${escapeTg(lead.planner_mode || "clean")}`,
+    `<b>Preset:</b> ${escapeTg(lead.planner_preset_label || lead.planner_preset || "-")}`,
+    `<b>Project type:</b> ${escapeTg(lead.projectType || lead.project_type || "-")}`,
+    `<b>Recommended package:</b> ${escapeTg(lead.recommended_package || "-")}`,
+    `<b>Internal labels:</b> ${escapeTg(labels.length ? labels.join(", ") : "-")}`,
+    "",
+    `<b>Client:</b> ${escapeTg(fullName(lead) || lead.fullName || "No name")}`,
+    `<b>Contact:</b> ${escapeTg(lead.email || "-")} / ${escapeTg(lead.phone || "-")}`,
+    `<b>Location:</b> ${escapeTg(lead.project_location || lead.projectLocation || locationLine(lead) || "-")}`,
+    `<b>Budget:</b> ${escapeTg(lead.budget_range || lead.budget || "-")}`,
+    `<b>Timeline:</b> ${escapeTg(lead.timeline || "-")}`,
+    `<b>Dimensions:</b> ${escapeTg(lead.dimensions_status || "missing")}`,
+    `<b>Files:</b> ${escapeTg(files.length)}`,
+    "",
+    `<b>Source:</b> ${escapeTg(lead.source_page || lead.sourceUrl || "-")}`,
+    `<b>Referrer:</b> ${escapeTg(lead.referrer || "-")}`,
+    `<b>Language:</b> ${escapeTg(lead.language || "-")}`,
+    "",
+    (lead.project_description || lead.designerNotes || lead.message) ? `<b>Description:</b>\n${escapeTg(lead.project_description || lead.designerNotes || lead.message).slice(0, 1200)}` : "",
+  ].filter(Boolean).join("\n");
+}
+
 function designConceptLeadMessage(lead) {
   const files = Array.isArray(lead.uploadedFiles) ? lead.uploadedFiles : [];
   const photos = files.filter((file) => !file.field || file.field === "project_photos");
@@ -458,7 +541,13 @@ function designConceptLeadMessage(lead) {
     `<b>ID:</b> <code>${escapeTg(lead.id)}</code>`,
     "",
     `<b>Package:</b> ${escapeTg(lead.packageLabel || lead.package_type || lead.packageType || "-")}`,
+    `<b>Package interest:</b> ${escapeTg(lead.packageInterest || lead.package_interest || lead.packageLabel || "-")}`,
     `<b>Project type:</b> ${escapeTg(lead.projectType || lead.project_type || "-")}`,
+    `<b>Project category:</b> ${escapeTg(lead.projectCategory || lead.project_category || "-")}`,
+    `<b>Project stage:</b> ${escapeTg(lead.projectStageLabel || lead.project_stage || "-")}`,
+    `<b>Lead type:</b> ${escapeTg(lead.leadTypeClassificationLabel || lead.lead_type_classification || "-")}`,
+    `<b>Lead intent:</b> ${escapeTg(lead.leadIntent || lead.lead_intent || "-")}`,
+    `<b>Lead temperature:</b> ${escapeTg(lead.leadTemperature || lead.lead_temperature || "-")}`,
     `<b>Desired style:</b> ${escapeTg(lead.desiredStyleLabel || lead.desired_style || "-")}`,
     `<b>Selected price:</b> ${escapeTg(lead.exact_price || "-")}`,
     `<b>Execution time:</b> ${escapeTg(lead.quoted_timeline || "-")}`,
@@ -468,6 +557,8 @@ function designConceptLeadMessage(lead) {
     `<b>Email:</b> ${escapeTg(lead.email || "-")}`,
     `<b>Phone:</b> ${escapeTg(lead.phone || "-")}`,
     `<b>Location:</b> ${escapeTg(lead.projectLocation || lead.project_location || locationLine(lead) || "-")}`,
+    `<b>Service area:</b> ${escapeTg(lead.service_area || lead.serviceArea || lead.state || "-")}`,
+    `<b>Preferred contact:</b> ${escapeTg(lead.preferred_contact_method || lead.preferredContactMethod || "-")}`,
     "",
     `<b>Budget:</b> ${escapeTg(lead.budget || lead.budget_range || "-")}`,
     `<b>Timeline:</b> ${escapeTg(lead.timeline || lead.timeline_value || "-")}`,
@@ -475,6 +566,9 @@ function designConceptLeadMessage(lead) {
     `<b>Files:</b> ${escapeTg(files.length)} total · ${escapeTg(photos.length)} photos · ${escapeTg(inspiration.length)} inspiration`,
     "",
     `<b>Source:</b> ${escapeTg(lead.sourceUrl || lead.source_page || "-")}`,
+    `<b>Page source:</b> ${escapeTg(lead.page_source || lead.pageSource || "-")}`,
+    `<b>Language:</b> ${escapeTg(lead.language || "-")}`,
+    `<b>UTM:</b> ${escapeTg([lead.utmSource, lead.utmMedium, lead.utmCampaign, lead.utmTerm, lead.utmContent].filter(Boolean).join(" / ") || "-")}`,
     "",
     lead.project_description ? `<b>Description:</b>\n${escapeTg(lead.project_description).slice(0, 1200)}` : lead.message ? `<b>Description:</b>\n${escapeTg(lead.message).slice(0, 1200)}` : "",
   ].filter(Boolean).join("\n");
@@ -697,14 +791,25 @@ async function answerCallback(callbackQueryId, text) {
 }
 
 async function telegram(method, payload) {
-  const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/${method}`, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  const result = await response.json();
-  if (!response.ok || !result.ok) throw new Error(`Telegram ${method} failed: ${JSON.stringify(result)}`);
-  return result.result;
+  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/${method}`;
+  let lastError = null;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (response.ok && result.ok) return result.result;
+      lastError = new Error(`Telegram ${method} failed: ${JSON.stringify(result)}`);
+      if (response.status < 500 && response.status !== 429) throw lastError;
+    } catch (error) {
+      lastError = error;
+    }
+    if (attempt < 3) await wait(700 * attempt);
+  }
+  throw lastError || new Error(`Telegram ${method} failed`);
 }
 
 function escapeTg(value) {
