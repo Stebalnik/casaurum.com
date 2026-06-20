@@ -83,6 +83,7 @@ const langs = {
   es: { label: "ES", name: "Español", prefix: "/es", locale: "es_MX" },
   fr: { label: "FR", name: "Français", prefix: "/fr", locale: "fr_CA" },
   ru: { label: "RU", name: "Русский", prefix: "/ru", locale: "ru_RU" },
+  uk: { label: "UK", name: "Українська", prefix: "/uk", locale: "uk_UA" },
 };
 
 const navKeys = ["solutions", "designConcept", "projects", "trade", "about", "contact"];
@@ -329,6 +330,12 @@ const slugs = {
 		    designConcept: "dizayn-koncept", solutions: "resheniya", mediaWalls: "media-steny-na-zakaz", customKitchens: "kuhni-na-zakaz", builtIns: "vstroennaya-mebel-na-zakaz", customClosets: "garderobnye-na-zakaz", fireplaceWalls: "steny-s-kaminom", homeOffices: "domashnie-kabinety", mudrooms: "prihozhie-na-zakaz", collections: "idei", trade: "dlya-dizaynerov-i-zastroyschikov", partners: "partnerskaya-programma", planner: "konstruktor-mebeli", quickEstimate: "quick-project-estimate", projects: "galereya",
     about: "o-kompanii", contact: "kontakty", consultation: "zaprosit-konsultaciyu", measurement: "zaprosit-zamer",
     usa: "ssha", canada: "kanada", mexico: "meksika", privacy: "politika-konfidencialnosti", terms: "usloviya-ispolzovaniya",
+  },
+  uk: {
+    home: "", wallPanels: "stinovi-paneli-na-zamovlennya", customFurniture: "mebli-na-zamovlennya", millwork: "arhitekturna-stolyarka",
+    designConcept: "dizayn-kontsept", solutions: "rishennya", mediaWalls: "media-stiny-na-zamovlennya", customKitchens: "kuhni-na-zamovlennya", builtIns: "vbudovani-mebli-na-zamovlennya", customClosets: "garderobni-na-zamovlennya", fireplaceWalls: "stiny-z-kaminom", homeOffices: "domashni-kabineti", mudrooms: "peredpokoyi-na-zamovlennya", collections: "ideyi", trade: "dlya-dyzayneriv-i-zabudovnykiv", partners: "partnerska-programa", planner: "konstruktor-mebliv", quickEstimate: "quick-project-estimate", projects: "galereya",
+    about: "pro-kompaniyu", contact: "kontakty", consultation: "zaprosyty-konsultaciyu", measurement: "zaprosyty-zamir",
+    usa: "ssha", canada: "kanada", mexico: "meksyka", privacy: "polityka-konfidenciynosti", terms: "umovy-korystuvannya",
   },
 };
 
@@ -831,6 +838,34 @@ const homepagePositioning = {
       ["Работа с дизайнерами, строителями и девелоперами", "Trade-партнеры могут передать фасады, чертежи, спецификации и ограничения проекта для millwork, мебели и стеновых панелей."],
     ],
   },
+  uk: {
+    h1: "Меблі на замовлення та архітектурна столярка для преміальних інтер'єрів",
+    sub: "CAS AURUM створює меблі на замовлення, TV-стіни, гардеробні, вбудовані меблі, стінові панелі та корпусні рішення для житлових і комерційних просторів.",
+    primaryCta: "Запросити оцінку",
+    secondaryCta: "Переглянути вибрані роботи",
+    microcopy: "Надішліть фото кімнати, розміри, креслення або референси. Ми оцінимо задачу й запропонуємо правильний наступний крок.",
+    scopeTitle: "Найкращі формати індивідуальних проєктів",
+    scopeIntro: "CAS AURUM найкраще підходить для точних проєктів, де меблі, зберігання, матеріали й архітектурні поверхні мають виглядати інтегрованими у простір.",
+    scopes: [
+      "TV-стіни та підвісні media-консолі",
+      "Меблі для спальні на замовлення",
+      "Преміальні гардеробні та шафові стіни",
+      "Вбудовані кабінети, бібліотеки та стіни зберігання",
+      "Архітектурні стінові панелі й акцентні поверхні",
+      "Тумби, laundry cabinetry та корпусні оновлення",
+      "Комерційна столярка для hospitality, офісів і бутиків",
+    ],
+    inlineCtaTitle: "Є кімната, стіна або ідея меблів?",
+    inlineCtaText: "Надішліть фото, розміри, креслення або референси, і CAS AURUM запропонує відповідний напрям меблів чи столярки на замовлення.",
+    why: [
+      ["Індивідуальний дизайн", "Кожен scope починається з кімнати, замірів, способу життя й архітектурного контексту, а не з вибору з каталогу."],
+      ["Преміальні матеріали", "Дерево, камінь, шпон, метал, скло, шкіра й текстиль добираються за пропорцією, довговічністю та візуальною стриманістю."],
+      ["Архітектурна точність", "Ритм панелей, лінії стиків, розміри built-ins, світло й фурнітура плануються до виробництва."],
+      ["Робота в Північній Америці", "CAS AURUM розглядає residential і trade-запити в Північній Америці та уточнює шлях дизайну, виготовлення, доставки й монтажу."],
+      ["Від консультації до монтажу", "Процес може йти від фото і планів до замірів, матеріалів, технічного scope, координації виробництва та монтажу."],
+      ["Робота з дизайнерами, будівельниками й девелоперами", "Trade-партнери можуть передати фасади, креслення, специфікації та обмеження проєкту для millwork, меблів і стінових панелей."],
+    ],
+  },
 };
 
 const solutionLabels = {
@@ -898,6 +933,22 @@ const solutionLabels = {
     howItWorks: "Как это работает",
     startProject: "Начать проект",
   },
+  uk: {
+    mediaWalls: "Медіа-стіни та TV-модулі",
+    customKitchens: "Кухні на замовлення",
+    customClosets: "Гардеробні",
+    builtIns: "Вбудовані стелажі",
+    fireplaceWalls: "Стіни з каміном",
+    wallPanels: "Стінові панелі",
+    homeOffices: "Домашні кабінети",
+    mudrooms: "Передпокої та зберігання",
+    customFurniture: "Меблі на замовлення",
+    solutions: "Рішення",
+    designConcept: "Дизайн-концепт",
+    gallery: "Галерея",
+    howItWorks: "Як це працює",
+    startProject: "Почати проєкт",
+  },
 };
 
 const solutionCopy = {
@@ -933,6 +984,39 @@ const solutionCopy = {
     finalHeadline: "Готовы увидеть, каким может стать ваше пространство?",
     finalText: "Загрузите фото комнаты и начните с понятного дизайн-концепта.",
   },
+  uk: {
+    homeTitle: "Індивідуальні інтер'єрні рішення під ваш простір | CAS AURUM",
+    homeDesc: "CAS AURUM проєктує media walls, TV-модулі, кухні, гардеробні, built-ins, стіни з каміном, стінові панелі, кабінети, передпокої та меблі на замовлення.",
+    homeHero: "Від TV-стін і кухонь на замовлення до гардеробних, built-ins та акцентних стін - ми допомагаємо перетворювати звичайні кімнати на красиві, функціональні й особисті простори.",
+    homeIntro: "CAS AURUM - студія індивідуальних інтер'єрних рішень, яка допомагає власникам домів перетворювати щоденні простори на красиві й функціональні кімнати під їхній спосіб життя.",
+    finalHeadline: "Готові побачити, яким може стати ваш простір?",
+    finalText: "Завантажте фото кімнати й почніть із зрозумілого дизайн-концепту.",
+  },
+};
+
+copy.uk = {
+  ...copy.ru,
+  nav: { designConcept: "Дизайн-концепт", wallPanels: "Стінові панелі", customFurniture: "Меблі на замовлення", millwork: "Столярка", solutions: "Інтер'єрні рішення", projects: "Виконані проєкти", collections: "Колекції", trade: "Для дизайнерів", about: "Про компанію", contact: "Контакти" },
+  cta: { consult: "Проконсультуватися з дизайн-спеціалістом", measure: "Запросити замір", collections: "Дивитися галерею", project: "Надіслати деталі проєкту", discuss: "Обговорити проєкт", start: "Почати інтер'єрний проєкт" },
+  form: formCopy("uk"),
+  home: {
+    title: "CAS AURUM | Стінові панелі, меблі на замовлення та архітектурні інтер'єри",
+    desc: "CAS AURUM створює стінові панелі, меблі на замовлення, архітектурну столярку та індивідуальні інтер'єрні рішення.",
+    h1: "CAS AURUM",
+    sub: "Стінові панелі, меблі на замовлення та архітектурні інтер'єри",
+    hero: "Індивідуальні архітектурні поверхні, столярка й меблі для житлових і комерційних просторів.",
+    intro: "CAS AURUM створює архітектурні поверхні, стінові панелі, меблі на замовлення та преміальну столярку для інтер'єрів у Північній Америці.",
+    seo: "CAS AURUM допомагає власникам, дизайнерам, архітекторам і будівельникам перейти від ідеї до індивідуальних інтер'єрних елементів.",
+  },
+  regions: {
+    usa: ["Преміальні інтер'єри у США", "CAS AURUM доступний для проєктів у США: стінові панелі, меблі на замовлення, архітектурна столярка та преміальні інтер'єрні елементи."],
+    canada: ["Преміальні інтер'єри в Канаді", "Доступно для проєктів у Канаді: меблі на замовлення, панелі, столярка та індивідуальні інтер'єрні елементи."],
+    mexico: ["Преміальні інтер'єри в Мексиці", "CAS AURUM працює з власниками, девелоперами, дизайнерами та hospitality-операторами в Мексиці."],
+  },
+  projects: ["Проєкти", "Портфоліо незабаром", "CAS AURUM готує приклади проєктів, матеріальні дослідження та прев'ю колекцій."],
+  about: ["Про CAS AURUM", "CAS AURUM створює індивідуальні архітектурні поверхні, стінові панелі, меблі на замовлення та преміальну столярку для інтер'єрів."],
+  contact: ["Контакти CAS AURUM", "Маєте питання про стінові панелі, меблі на замовлення, столярку, кухні чи преміальний інтер'єрний проєкт? Надішліть основне, і CAS AURUM запропонує правильний наступний крок."],
+  legal: { privacy: ["Політика конфіденційності", "Ця сторінка пояснює, як CAS AURUM обробляє інформацію, надіслану через сайт."], terms: ["Умови користування", "Контент сайту наданий для загальної інформації про послуги CAS AURUM. Деталі проєкту, доступність, ціни та обсяг підтверджуються письмово."] },
 };
 
 applyCustomInteriorPositioning();
@@ -1036,6 +1120,9 @@ function localizedPlain(value, lang) {
     },
     ru: {
       "Ideas": "Идеи", "Start Your Design Concept": "Начать дизайн-концепт", "Upload Photos": "Загрузить фото", "Request Project Review": "Запросить разбор проекта", "Custom Interior Solutions Designed Around Your Space": "Кастомные интерьерные решения под ваше пространство", "Explore Solutions": "Смотреть решения", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Начните с фото пространства и получите понятный дизайн-концепт до решения о производстве.", "What Do You Want To Transform?": "Что вы хотите изменить?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Выберите комнату или элемент. Каждое решение может начаться с фото и дизайн-концепта.", "Ready to See What Your Space Could Become?": "Готовы увидеть, каким может стать ваше пространство?", "Upload photos of your room and start with a clear design concept.": "Загрузите фото комнаты и начните с понятного дизайн-концепта.", "Designed around your space": "Спроектировано под пространство", "Clear first step": "Понятный первый шаг", "No pressure to build immediately": "Без давления начинать производство сразу", "Custom solutions for real homes": "Кастомные решения для реальных домов", "Design + build logic": "Логика design + build", "Useful for homeowners and trade pros": "Удобно владельцам и профессионалам",
+    },
+    uk: {
+      "Ideas": "Ідеї", "Start Your Design Concept": "Почати дизайн-концепт", "Upload Photos": "Завантажити фото", "Request Project Review": "Запросити розбір проєкту", "Custom Interior Solutions Designed Around Your Space": "Індивідуальні інтер'єрні рішення під ваш простір", "Explore Solutions": "Переглянути рішення", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Почніть із фото простору й отримайте зрозумілий дизайн-концепт до рішення про виробництво.", "What Do You Want To Transform?": "Що ви хочете змінити?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Оберіть кімнату або елемент. Кожне рішення може початися з фото та дизайн-концепту.", "Ready to See What Your Space Could Become?": "Готові побачити, яким може стати ваш простір?", "Upload photos of your room and start with a clear design concept.": "Завантажте фото кімнати й почніть із зрозумілого дизайн-концепту.", "Designed around your space": "Спроєктовано під простір", "Clear first step": "Зрозумілий перший крок", "No pressure to build immediately": "Без тиску починати виробництво одразу", "Custom solutions for real homes": "Індивідуальні рішення для реальних домів", "Design + build logic": "Логіка design + build", "Useful for homeowners and trade pros": "Зручно власникам і професіоналам",
     },
   };
   return sanitizeVisibleText(dictionary[lang]?.[value] || value);
@@ -2370,7 +2457,7 @@ function legacyRedirectTarget(path) {
 }
 
 function resolveSeoAliasRoute(path) {
-  const match = path.match(/^\/(en|es|fr|ru)\/(contact|request-concept)$/);
+  const match = path.match(/^\/(en|es|fr|ru|uk)\/(contact|request-concept)$/);
   if (!match) return null;
   const [, lang, alias] = match;
   return { lang, key: alias === "contact" ? "contact" : "consultation", path, seoAlias: alias };
@@ -2392,7 +2479,7 @@ function resolveRoomAliasRoute(path) {
 }
 
 function resolveCollectionAliasRoute(path) {
-  const match = path.match(/^\/(en|es|fr|ru)\/collections(?:\/([^/]+))?$/);
+  const match = path.match(/^\/(en|es|fr|ru|uk)\/collections(?:\/([^/]+))?$/);
   if (!match) return null;
   const [, lang, slug] = match;
   if (!slug) return { lang, key: "collections", path, collectionAlias: true };
@@ -2425,7 +2512,10 @@ function renderPage(route) {
   }
 	  if (key === "home") return layout(route, t.home.title, t.home.desc, home(route));
 	  if (key === "designConcept") return layout(route, designConceptMeta(route.lang).title, designConceptMeta(route.lang).description, designConceptPage(route));
-	  if (key === "quickEstimate") return layout(route, "Quick Project Estimate | Custom Millwork, Media Walls & Wall Panels | CAS AURUM", "Get a quick project estimate for custom media walls, wall panels, closets, bathroom vanities, office built-ins and interior millwork. Upload photos and receive a preliminary budget range.", quickProjectEstimatePage(route));
+	  if (key === "quickEstimate") {
+    const q = quickEstimateText(route.lang);
+    return layout(route, q.seoTitle, q.metaDescription, quickProjectEstimatePage(route));
+  }
 	  if (route.collection) return layout(route, `${route.collection.name} | ${BRAND} ${localized("Collections", lang)}`, collectionDescription(route.collection, lang), collectionDetailPage(route, route.collection));
   if (servicePageKeys.includes(key)) {
     const service = serviceContent(lang, key);
@@ -2433,7 +2523,8 @@ function renderPage(route) {
   }
   if (key === "planner") {
     const preset = plannerPresetForRoute(route);
-    return layout(route, preset?.seoTitle || `Millwork Planner | ${BRAND}`, preset?.seoDescription || "Plan a preliminary custom cabinet, closet, media wall, built-in, wall panel or millwork scope with a 3D planner and budget direction.", technicalPlannerPage(route));
+    const plannerCopy = plannerText(lang);
+    return layout(route, preset?.seoTitle || plannerCopy.seoTitle, preset?.seoDescription || plannerCopy.metaDescription, technicalPlannerPage(route));
   }
   if (key === "collections") return layout(route, `${localized("Collections", lang)} | ${BRAND}`, t.collectionsIntro, collectionsPage(route));
   if (key === "partners") {
@@ -3706,12 +3797,12 @@ function designConceptText(lang) {
       continueTitle: "Seguir explorando CAS AURUM",
       formSteps: { package: "Elegir paquete", project: "Tipo de proyecto", contact: "Contacto y ubicacion", files: "Subir fotos", dimensions: "Compartir medidas", details: "Presupuesto, plazo y descripcion" },
       fields: designConceptFieldLabels("es"),
-      selectionLabels: { price: "Estimated starting price", timeline: "Estimated timing", estimateDisclaimer: "This is a starting estimate based on package and project type. CAS AURUM reviews photos, dimensions, location and scope before confirming the final price and timeline.", reviewFirst: "No online payment is collected at this step. CAS AURUM first reviews your photos, project type and location. If the request is a fit, we confirm the package, timeline and final starting price, then send a payment link or invoice before design work begins." },
+      selectionLabels: { price: "Precio inicial estimado", timeline: "Tiempo estimado", estimateDisclaimer: "Es una estimación inicial según paquete y tipo de proyecto. CAS AURUM revisa fotos, dimensiones, ubicación y alcance antes de confirmar precio y plazo finales.", reviewFirst: "No se cobra online en este paso. CAS AURUM primero revisa sus fotos, tipo de proyecto y ubicación. Si la solicitud encaja, confirmamos paquete, plazo y precio inicial final, y luego enviamos link de pago o invoice." },
       packageHelp: { design_concept: "Las fotos son obligatorias. Las medidas son opcionales para concepto visual.", design_technical: "Las dimensiones son obligatorias para el paquete tecnico.", realization_review: "La realizacion se revisa individualmente segun ubicacion, alcance y disponibilidad." },
       dimensionsHint: { design_concept: "Para concepto visual, agregue largo, ancho/profundidad y altura solo si ya los tiene.", design_technical: "Dimensiones y altura de techo son obligatorias para revision tecnica.", realization_review: "Las dimensiones son recomendadas. Ubicacion, presupuesto y plazo son obligatorios." },
       fileHint: "Las fotos del proyecto son obligatorias. Las referencias visuales son opcionales.",
       consent: "Acepto que CAS AURUM me contacte sobre esta solicitud.",
-      packageOptions: [["design_concept", "Design Concept"], ["design_build_package", "Design + Build Package"], ["full_realization", "Full Realization"], ["not_sure", "Not sure yet"]],
+      packageOptions: [["design_concept", "Concepto de diseño"], ["design_build_package", "Paquete diseño + realización"], ["full_realization", "Realización completa"], ["not_sure", "No estoy seguro todavía"]],
       projectTypeOptions: designConceptProjectOptions("es"),
       styleOptions: designConceptStyleOptions("es"),
       timelineOptions: designConceptTimelineOptions("es"),
@@ -3738,12 +3829,12 @@ function designConceptText(lang) {
       continueTitle: "Continuer avec CAS AURUM",
       formSteps: { package: "Choisir le forfait", project: "Type de projet", contact: "Contact et lieu", files: "Ajouter photos", dimensions: "Partager dimensions", details: "Budget, calendrier et description" },
       fields: designConceptFieldLabels("fr"),
-      selectionLabels: { price: "Estimated starting price", timeline: "Estimated timing", estimateDisclaimer: "This is a starting estimate based on package and project type. CAS AURUM reviews photos, dimensions, location and scope before confirming the final price and timeline.", reviewFirst: "No online payment is collected at this step. CAS AURUM first reviews your photos, project type and location. If the request is a fit, we confirm the package, timeline and final starting price, then send a payment link or invoice before design work begins." },
+      selectionLabels: { price: "Prix de départ estimé", timeline: "Délai estimé", estimateDisclaimer: "Il s'agit d'une estimation de départ selon le forfait et le type de projet. CAS AURUM vérifie photos, dimensions, lieu et périmètre avant de confirmer le prix et le délai finaux.", reviewFirst: "Aucun paiement en ligne n'est demandé à cette étape. CAS AURUM examine d'abord vos photos, le type de projet et le lieu. Si la demande convient, nous confirmons forfait, délai et prix de départ final, puis envoyons un lien de paiement ou une facture." },
       packageHelp: { design_concept: "Les photos sont obligatoires. Les dimensions sont optionnelles pour un concept visuel.", design_technical: "Les dimensions sont obligatoires pour un forfait technique.", realization_review: "La realisation est examinee individuellement selon lieu, portee et disponibilite." },
       dimensionsHint: { design_concept: "Pour un concept visuel, ajoutez longueur, largeur/profondeur et hauteur seulement si vous les avez.", design_technical: "Dimensions et hauteur sous plafond sont obligatoires pour la revue technique.", realization_review: "Dimensions recommandees. Lieu, budget et calendrier sont obligatoires." },
       fileHint: "Les photos du projet sont obligatoires. Les images d'inspiration sont optionnelles.",
       consent: "J'accepte que CAS AURUM me contacte au sujet de cette demande.",
-      packageOptions: [["design_concept", "Design Concept"], ["design_build_package", "Design + Build Package"], ["full_realization", "Full Realization"], ["not_sure", "Not sure yet"]],
+      packageOptions: [["design_concept", "Concept design"], ["design_build_package", "Forfait design + réalisation"], ["full_realization", "Réalisation complète"], ["not_sure", "Je ne sais pas encore"]],
       projectTypeOptions: designConceptProjectOptions("fr"),
       styleOptions: designConceptStyleOptions("fr"),
       timelineOptions: designConceptTimelineOptions("fr"),
@@ -3770,12 +3861,12 @@ function designConceptText(lang) {
       continueTitle: "Продолжить изучение CAS AURUM",
       formSteps: { package: "Выберите пакет", project: "Тип проекта", contact: "Контакт и локация", files: "Загрузите фото", dimensions: "Укажите размеры", details: "Бюджет, сроки и описание" },
       fields: designConceptFieldLabels("ru"),
-      selectionLabels: { price: "Estimated starting price", timeline: "Estimated timing", estimateDisclaimer: "This is a starting estimate based on package and project type. CAS AURUM reviews photos, dimensions, location and scope before confirming the final price and timeline.", reviewFirst: "No online payment is collected at this step. CAS AURUM first reviews your photos, project type and location. If the request is a fit, we confirm the package, timeline and final starting price, then send a payment link or invoice before design work begins." },
+      selectionLabels: { price: "Ориентировочная стартовая цена", timeline: "Ориентировочные сроки", estimateDisclaimer: "Это стартовая оценка по пакету и типу проекта. CAS AURUM проверяет фото, размеры, локацию и scope перед подтверждением финальной цены и сроков.", reviewFirst: "На этом шаге онлайн-оплата не взимается. CAS AURUM сначала смотрит фото, тип проекта и локацию. Если запрос подходит, мы подтверждаем пакет, сроки и финальную стартовую цену, затем отправляем ссылку на оплату или invoice." },
       packageHelp: { design_concept: "Фото обязательны. Размеры для визуального концепта необязательны.", design_technical: "Для technical package размеры обязательны.", realization_review: "Realization рассматривается индивидуально по локации, scope и доступности." },
       dimensionsHint: { design_concept: "Для визуального концепта укажите длину, ширину/глубину и высоту только если они уже есть.", design_technical: "Для technical package обязательны длина, ширина/глубина и высота/высота потолка.", realization_review: "Размеры рекомендуются. Локация, бюджет и желаемые сроки обязательны." },
       fileHint: "Фото проекта обязательны, чтобы CAS AURUM видел реальную стену, комнату, closet, kitchen или built-in зону. Референсы необязательны.",
       consent: "Я согласен, что CAS AURUM может связаться со мной по этой заявке.",
-      packageOptions: [["design_concept", "Design Concept"], ["design_build_package", "Design + Build Package"], ["full_realization", "Full Realization"], ["not_sure", "Not sure yet"]],
+      packageOptions: [["design_concept", "Дизайн-концепт"], ["design_build_package", "Пакет дизайн + реализация"], ["full_realization", "Полная реализация"], ["not_sure", "Пока не уверен(а)"]],
       projectTypeOptions: designConceptProjectOptions("ru"),
       styleOptions: designConceptStyleOptions("ru"),
       timelineOptions: designConceptTimelineOptions("ru"),
@@ -3786,6 +3877,38 @@ function designConceptText(lang) {
       stepText: ["Покажите пространство и ограничения.", "Выберите уровень детализации.", "Technical package требует размеров.", "CAS AURUM изучает пространство, материалы и стиль.", "Получите понятное направление.", "При необходимости переходите на следующий уровень."],
       faq: designConceptFaqData("ru"),
     },
+    uk: {
+      heroEyebrow: "Пакети дизайн-концепту",
+      heroPrimary: "Почати дизайн-концепт",
+      heroSecondary: "Порівняти пакети",
+      heroCaption: "Зрозумілий старт для media walls, closets, kitchens, built-ins і персональних кімнат.",
+      positioningEyebrow: "Низький ризик старту",
+      positioningTitle: "До виробництва уточніть дизайн-напрям",
+      positioningText: "Перед інвестиціями в custom fabrication, cabinetry або монтаж почніть із ясного дизайн-напряму. Пакети допомагають власникам, дизайнерам і будівельникам зрозуміти візуальний потенціал, матеріали й приблизний шлях проєкту.",
+      packagesEyebrow: "Рівні сервісу",
+      pricingEyebrow: "Прозорі стартові ціни",
+      processEyebrow: "Процес",
+      formEyebrow: "Заявка по проєкту",
+      faqTitle: "Поширені питання",
+      continueTitle: "Продовжити вивчення CAS AURUM",
+      formSteps: { package: "Оберіть пакет", project: "Тип проєкту", contact: "Контакт і локація", files: "Завантажте фото", dimensions: "Вкажіть розміри", details: "Бюджет, терміни й опис" },
+      fields: designConceptFieldLabels("uk"),
+      selectionLabels: { price: "Орієнтовна стартова ціна", timeline: "Орієнтовні терміни", estimateDisclaimer: "Це стартова оцінка за пакетом і типом проєкту. CAS AURUM перевіряє фото, розміри, локацію та scope перед підтвердженням фінальної ціни й термінів.", reviewFirst: "На цьому кроці онлайн-оплата не стягується. CAS AURUM спочатку переглядає фото, тип проєкту й локацію. Якщо запит підходить, ми підтверджуємо пакет, терміни та фінальну стартову ціну, а потім надсилаємо посилання на оплату або invoice." },
+      packageHelp: { design_concept: "Фото обов'язкові. Розміри для візуального концепту необов'язкові.", design_technical: "Для technical package розміри обов'язкові.", realization_review: "Realization розглядається індивідуально за локацією, scope і доступністю." },
+      dimensionsHint: { design_concept: "Для візуального концепту вкажіть довжину, ширину/глибину й висоту тільки якщо вони вже є.", design_technical: "Для technical package обов'язкові довжина, ширина/глибина і висота/висота стелі.", realization_review: "Розміри рекомендовані. Локація, бюджет і бажані терміни обов'язкові." },
+      fileHint: "Фото проєкту обов'язкові, щоб CAS AURUM бачив реальну стіну, кімнату, closet, kitchen або built-in зону. Референси необов'язкові.",
+      consent: "Я погоджуюся, що CAS AURUM може зв'язатися зі мною щодо цієї заявки.",
+      packageOptions: [["design_concept", "Дизайн-концепт"], ["design_build_package", "Пакет дизайн + реалізація"], ["full_realization", "Повна реалізація"], ["not_sure", "Поки не впевнений(а)"]],
+      projectTypeOptions: designConceptProjectOptions("uk"),
+      styleOptions: designConceptStyleOptions("uk"),
+      timelineOptions: designConceptTimelineOptions("uk"),
+      budgetOptions: designConceptBudgetOptions("uk"),
+      packages: designConceptPackagesData("uk"),
+      pricing: designConceptPricingData("uk"),
+      steps: ["Завантажити фото", "Обрати пакет", "Передати розміри, якщо потрібен technical package", "CAS AURUM готує концепт", "Розглянути дизайн-напрям", "Перейти до technical package або realization review"],
+      stepText: ["Покажіть простір і обмеження.", "Оберіть рівень деталізації.", "Technical package потребує розмірів.", "CAS AURUM вивчає простір, матеріали й стиль.", "Отримайте зрозумілий напрям.", "За потреби переходьте на наступний рівень."],
+      faq: designConceptFaqData("uk"),
+    },
   };
   return { ...shared, ...(localizedCopy[lang] || localizedCopy.en) };
 }
@@ -3793,15 +3916,23 @@ function designConceptText(lang) {
 function designConceptFieldLabels(lang) {
   const labels = {
     en: { packageType: "Package type", projectType: "Project type", clientName: "Name", email: "Email", phone: "Phone (optional)", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height", needsMeasurement: "I need CAS AURUM to help arrange measurement for this project." },
-    es: { packageType: "Tipo de paquete", projectType: "Tipo de proyecto", clientName: "Nombre", email: "Email", phone: "Telefono (opcional)", location: "Ubicacion del proyecto", description: "Descripcion del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imagenes de inspiracion (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo", needsMeasurement: "I need CAS AURUM to help arrange measurement for this project." },
-    fr: { packageType: "Type de forfait", projectType: "Type de projet", clientName: "Nom", email: "Email", phone: "Telephone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaite", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond", needsMeasurement: "I need CAS AURUM to help arrange measurement for this project." },
-    ru: { packageType: "Тип пакета", projectType: "Тип проекта", clientName: "Имя", email: "Email", phone: "Телефон (optional)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (optional)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка", needsMeasurement: "I need CAS AURUM to help arrange measurement for this project." },
+    es: { packageType: "Tipo de paquete", projectType: "Tipo de proyecto", clientName: "Nombre", email: "Email", phone: "Teléfono (opcional)", location: "Ubicación del proyecto", description: "Descripción del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imágenes de inspiración (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo", needsMeasurement: "Necesito que CAS AURUM ayude a coordinar la medición de este proyecto." },
+    fr: { packageType: "Type de forfait", projectType: "Type de projet", clientName: "Nom", email: "Email", phone: "Téléphone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaité", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond", needsMeasurement: "J'ai besoin que CAS AURUM aide à organiser les mesures pour ce projet." },
+    ru: { packageType: "Тип пакета", projectType: "Тип проекта", clientName: "Имя", email: "Email", phone: "Телефон (необязательно)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (необязательно)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка", needsMeasurement: "Мне нужно, чтобы CAS AURUM помог организовать замер для этого проекта." },
+    uk: { packageType: "Тип пакета", projectType: "Тип проєкту", clientName: "Ім'я", email: "Email", phone: "Телефон (необов'язково)", location: "Локація проєкту", description: "Опис проєкту", desiredStyle: "Бажаний стиль", timeline: "Терміни", budget: "Бюджет", photos: "Обов'язкові фото проєкту", inspiration: "Референси (необов'язково)", length: "Довжина", widthDepth: "Ширина / глибина", height: "Висота / висота стелі", needsMeasurement: "Мені потрібно, щоб CAS AURUM допоміг організувати замір для цього проєкту." },
   };
   return labels[lang] || labels.en;
 }
 
 function designConceptProjectOptions(lang) {
-  return [
+  const labels = {
+    en: ["Media Wall / TV Unit", "Custom Kitchen", "Closet / Wardrobe", "Built-In Shelving", "Fireplace Wall", "Wall Panels", "Home Office", "Mudroom", "Custom Furniture", "Other / Whole Room"],
+    es: ["Media wall / unidad TV", "Cocina a medida", "Closet / armario", "Estantería integrada", "Muro de chimenea", "Paneles de pared", "Oficina en casa", "Mudroom / entrada", "Mueble a medida", "Otro / habitación completa"],
+    fr: ["Mur média / meuble TV", "Cuisine sur mesure", "Dressing / armoire", "Étagères intégrées", "Mur cheminée", "Panneaux muraux", "Bureau à domicile", "Entrée / mudroom", "Mobilier sur mesure", "Autre / pièce complète"],
+    ru: ["Медиа-стена / TV-модуль", "Кухня на заказ", "Гардеробная / шкаф", "Встроенный стеллаж", "Стена с камином", "Стеновые панели", "Домашний кабинет", "Прихожая / mudroom", "Мебель на заказ", "Другое / вся комната"],
+    uk: ["Медіа-стіна / TV-модуль", "Кухня на замовлення", "Гардеробна / шафа", "Вбудований стелаж", "Стіна з каміном", "Стінові панелі", "Домашній кабінет", "Передпокій / mudroom", "Меблі на замовлення", "Інше / уся кімната"],
+  }[lang] || {};
+  const values = [
     ["media_wall", "Media Wall / TV Unit"],
     ["custom_kitchen", "Custom Kitchen"],
     ["closet", "Closet / Wardrobe"],
@@ -3813,6 +3944,7 @@ function designConceptProjectOptions(lang) {
     ["custom_furniture", "Custom Furniture"],
     ["other", "Other / Whole Room"],
   ];
+  return values.map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function designConceptPricingMatrix() {
@@ -3882,44 +4014,127 @@ function designConceptPricingFallback(packageType) {
 }
 
 function designConceptStyleOptions(lang) {
-  return [["thoughtfully_modern", "Thoughtfully modern"], ["warm_natural", "Warm natural"], ["clean_minimal", "Clean minimal"], ["classic_tailored", "Classic tailored"], ["dark_contrast", "Dark contrast"], ["natural_wood", "Natural wood"], ["not_sure", "Not sure"]];
+  const labels = {
+    en: ["Thoughtfully modern", "Warm natural", "Clean minimal", "Classic tailored", "Dark contrast", "Natural wood", "Not sure"],
+    es: ["Moderno y pensado", "Natural cálido", "Minimalista limpio", "Clásico a medida", "Contraste oscuro", "Madera natural", "No estoy seguro"],
+    fr: ["Moderne et réfléchi", "Naturel chaleureux", "Minimalisme net", "Classique ajusté", "Contraste sombre", "Bois naturel", "Je ne sais pas"],
+    ru: ["Современный и продуманный", "Теплый натуральный", "Чистый минимализм", "Классический tailored", "Темный контраст", "Натуральное дерево", "Не уверен(а)"],
+    uk: ["Сучасний і продуманий", "Теплий натуральний", "Чистий мінімалізм", "Класичний tailored", "Темний контраст", "Натуральне дерево", "Не впевнений(а)"],
+  }[lang] || [];
+  return [["thoughtfully_modern", "Thoughtfully modern"], ["warm_natural", "Warm natural"], ["clean_minimal", "Clean minimal"], ["classic_tailored", "Classic tailored"], ["dark_contrast", "Dark contrast"], ["natural_wood", "Natural wood"], ["not_sure", "Not sure"]].map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function designConceptTimelineOptions(lang) {
-  return [["asap", "ASAP"], ["1_3_months", "1-3 months"], ["3_6_months", "3-6 months"], ["planning_only", "Planning only"]];
+  const labels = { es: ["Lo antes posible", "1-3 meses", "3-6 meses", "Solo planificación"], fr: ["Dès que possible", "1-3 mois", "3-6 mois", "Planification seulement"], ru: ["Как можно скорее", "1-3 месяца", "3-6 месяцев", "Только планирование"], uk: ["Якнайшвидше", "1-3 місяці", "3-6 місяців", "Лише планування"] }[lang] || [];
+  return [["asap", "ASAP"], ["1_3_months", "1-3 months"], ["3_6_months", "3-6 months"], ["planning_only", "Planning only"]].map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function designConceptBudgetOptions(lang) {
-  return [["under_5k", "Under $5k"], ["5_10k", "$5k-$10k"], ["10_25k", "$10k-$25k"], ["25_50k", "$25k-$50k"], ["50k_plus", "$50k+"], ["not_sure", "Not sure"]];
+  const labels = { es: ["Menos de $5k", "$5k-$10k", "$10k-$25k", "$25k-$50k", "$50k+", "No estoy seguro"], fr: ["Moins de 5k $", "5k $-10k $", "10k $-25k $", "25k $-50k $", "50k $+", "Je ne sais pas"], ru: ["До $5k", "$5k-$10k", "$10k-$25k", "$25k-$50k", "$50k+", "Не уверен(а)"], uk: ["До $5k", "$5k-$10k", "$10k-$25k", "$25k-$50k", "$50k+", "Не впевнений(а)"] }[lang] || [];
+  return [["under_5k", "Under $5k"], ["5_10k", "$5k-$10k"], ["10_25k", "$10k-$25k"], ["25_50k", "$25k-$50k"], ["50k_plus", "$50k+"], ["not_sure", "Not sure"]].map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function designConceptStageOptions(lang) {
-  return [["ideas", "I need ideas"], ["photos", "I have photos"], ["measurements", "I have measurements"], ["drawings", "I have drawings"], ["ready_to_build", "I am ready to build"], ["designer_builder", "I am a designer/builder"]];
+  const labels = { es: ["Necesito ideas", "Tengo fotos", "Tengo medidas", "Tengo dibujos", "Estoy listo para construir", "Soy diseñador/builder"], fr: ["J'ai besoin d'idées", "J'ai des photos", "J'ai des mesures", "J'ai des dessins", "Je suis prêt à construire", "Je suis designer/constructeur"], ru: ["Нужны идеи", "Есть фото", "Есть размеры", "Есть чертежи", "Готов(а) к реализации", "Я дизайнер/строитель"], uk: ["Потрібні ідеї", "Є фото", "Є розміри", "Є креслення", "Готовий(а) до реалізації", "Я дизайнер/будівельник"] }[lang] || [];
+  return [["ideas", "I need ideas"], ["photos", "I have photos"], ["measurements", "I have measurements"], ["drawings", "I have drawings"], ["ready_to_build", "I am ready to build"], ["designer_builder", "I am a designer/builder"]].map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function designConceptLeadTypeOptions(lang) {
-  return [["homeowner", "Homeowner"], ["designer", "Designer"], ["builder", "Builder"], ["architect", "Architect"], ["contractor", "Contractor"], ["other", "Other"]];
+  const labels = { es: ["Propietario", "Diseñador", "Builder", "Arquitecto", "Contratista", "Otro"], fr: ["Propriétaire", "Designer", "Constructeur", "Architecte", "Contractant", "Autre"], ru: ["Владелец", "Дизайнер", "Строитель", "Архитектор", "Подрядчик", "Другое"], uk: ["Власник", "Дизайнер", "Будівельник", "Архітектор", "Підрядник", "Інше"] }[lang] || [];
+  return [["homeowner", "Homeowner"], ["designer", "Designer"], ["builder", "Builder"], ["architect", "Architect"], ["contractor", "Contractor"], ["other", "Other"]].map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function designConceptPackagesData(lang) {
-  const labels = {
-    inputsTitle: "Required inputs",
-    deliverablesTitle: "Deliverables",
-    timelineTitle: "Timeline",
+  const data = {
+    en: {
+      inputsTitle: "Required inputs",
+      deliverablesTitle: "Deliverables",
+      timelineTitle: "Timeline",
+      items: [
+        { value: "design_concept", kicker: "Level 1", title: "Design Concept", price: "From $490", bestFor: "For a client who wants to see the idea first.", inputs: "Photos required; inspiration and approximate dimensions optional.", deliverables: "Space review, 1-2 concept directions, style and material direction, layout idea, estimated budget range and next-step recommendation.", timeline: "3-5 business days", cta: "Order Design Concept" },
+        { value: "design_build_package", kicker: "Level 2", title: "Design + Build Package", price: "From $1,490", bestFor: "For a client who wants a project prepared for estimate and realization.", inputs: "Photos, dimensions, ceiling height where relevant, wishes and inspiration.", deliverables: "Refined design, dimensions, elevations, material logic, build-ready direction, preliminary production notes and estimate preparation.", timeline: "7-14 business days", cta: "Request Build Package" },
+        { value: "full_realization", kicker: "Level 3", title: "Full Realization", price: "Custom quote", bestFor: "For production, delivery and installation when the scope is ready.", inputs: "Photos required; dimensions recommended; location, budget and desired fabrication or installation timeline required.", deliverables: "Site measurements, final design, engineering/shop drawings, materials, fabrication, delivery and installation.", timeline: "Reviewed individually", cta: "Request Full Project Review" },
+      ],
+    },
+    es: {
+      inputsTitle: "Datos necesarios",
+      deliverablesTitle: "Entregables",
+      timelineTitle: "Plazo",
+      items: [
+        { value: "design_concept", kicker: "Nivel 1", title: "Concepto de diseño", price: "Desde $490", bestFor: "Para quien quiere ver la idea antes de decidir qué construir.", inputs: "Fotos obligatorias; referencias y medidas aproximadas opcionales.", deliverables: "Revisión del espacio, 1-2 direcciones de concepto, estilo y materiales, idea de distribución, rango preliminar de presupuesto y recomendación del siguiente paso.", timeline: "3-5 días hábiles", cta: "Solicitar concepto" },
+        { value: "design_build_package", kicker: "Nivel 2", title: "Paquete diseño + realización", price: "Desde $1,490", bestFor: "Para preparar el proyecto para estimación, fabricación y realización.", inputs: "Fotos, dimensiones, altura de techo cuando aplique, deseos y referencias.", deliverables: "Diseño refinado, dimensiones, elevaciones, lógica de materiales, dirección para construcción, notas preliminares de producción y preparación de estimación.", timeline: "7-14 días hábiles", cta: "Solicitar paquete" },
+        { value: "full_realization", kicker: "Nivel 3", title: "Realización completa", price: "Cotización personalizada", bestFor: "Para producción, entrega e instalación cuando el alcance está listo.", inputs: "Fotos obligatorias; dimensiones recomendadas; ubicación, presupuesto y plazo deseado requeridos.", deliverables: "Medición en sitio, diseño final, ingeniería/shop drawings, materiales, fabricación, entrega e instalación.", timeline: "Revisión individual", cta: "Solicitar revisión completa" },
+      ],
+    },
+    fr: {
+      inputsTitle: "Éléments requis",
+      deliverablesTitle: "Livrables",
+      timelineTitle: "Délai",
+      items: [
+        { value: "design_concept", kicker: "Niveau 1", title: "Concept design", price: "À partir de 490 $", bestFor: "Pour voir l'idée avant de décider quoi construire.", inputs: "Photos obligatoires; inspirations et dimensions approximatives optionnelles.", deliverables: "Revue de l'espace, 1-2 directions de concept, style et matières, idée d'agencement, fourchette budgétaire préliminaire et recommandation de prochaine étape.", timeline: "3-5 jours ouvrés", cta: "Commander le concept" },
+        { value: "design_build_package", kicker: "Niveau 2", title: "Forfait design + réalisation", price: "À partir de 1 490 $", bestFor: "Pour préparer le projet à l'estimation, la fabrication et la réalisation.", inputs: "Photos, dimensions, hauteur sous plafond si utile, souhaits et inspirations.", deliverables: "Design affiné, dimensions, élévations, logique matières, direction constructible, notes préliminaires de production et préparation d'estimation.", timeline: "7-14 jours ouvrés", cta: "Demander le forfait" },
+        { value: "full_realization", kicker: "Niveau 3", title: "Réalisation complète", price: "Devis personnalisé", bestFor: "Pour production, livraison et installation quand le périmètre est prêt.", inputs: "Photos obligatoires; dimensions recommandées; lieu, budget et délai souhaité requis.", deliverables: "Mesures sur site, design final, ingénierie/shop drawings, matériaux, fabrication, livraison et installation.", timeline: "Examen individuel", cta: "Demander une revue complète" },
+      ],
+    },
+    ru: {
+      inputsTitle: "Что нужно предоставить",
+      deliverablesTitle: "Что вы получите",
+      timelineTitle: "Срок",
+      items: [
+        { value: "design_concept", kicker: "Уровень 1", title: "Дизайн-концепт", price: "От $490", bestFor: "Для клиента, который хочет сначала увидеть идею.", inputs: "Фото обязательны; референсы и примерные размеры опциональны.", deliverables: "Анализ пространства, 1-2 направления концепта, стиль и материалы, идея планировки, предварительный бюджетный диапазон и рекомендация следующего шага.", timeline: "3-5 рабочих дней", cta: "Заказать дизайн-концепт" },
+        { value: "design_build_package", kicker: "Уровень 2", title: "Пакет дизайн + реализация", price: "От $1,490", bestFor: "Для подготовки проекта к расчету, производству и реализации.", inputs: "Фото, размеры, высота потолка где важно, пожелания и референсы.", deliverables: "Уточненный дизайн, размеры, фасады, логика материалов, build-ready направление, предварительные производственные заметки и подготовка расчета.", timeline: "7-14 рабочих дней", cta: "Запросить пакет" },
+        { value: "full_realization", kicker: "Уровень 3", title: "Полная реализация", price: "Индивидуальный расчет", bestFor: "Для производства, доставки и установки, когда scope готов.", inputs: "Фото обязательны; размеры рекомендуются; локация, бюджет и желаемые сроки обязательны.", deliverables: "Замеры на объекте, финальный дизайн, engineering/shop drawings, материалы, производство, доставка и установка.", timeline: "Индивидуальный разбор", cta: "Запросить полный разбор" },
+      ],
+    },
+    uk: {
+      inputsTitle: "Що потрібно надати",
+      deliverablesTitle: "Що ви отримаєте",
+      timelineTitle: "Термін",
+      items: [
+        { value: "design_concept", kicker: "Рівень 1", title: "Дизайн-концепт", price: "Від $490", bestFor: "Для клієнта, який хоче спочатку побачити ідею.", inputs: "Фото обов'язкові; референси та приблизні розміри опціональні.", deliverables: "Аналіз простору, 1-2 напрями концепту, стиль і матеріали, ідея планування, попередній бюджетний діапазон і рекомендація наступного кроку.", timeline: "3-5 робочих днів", cta: "Замовити дизайн-концепт" },
+        { value: "design_build_package", kicker: "Рівень 2", title: "Пакет дизайн + реалізація", price: "Від $1,490", bestFor: "Для підготовки проєкту до розрахунку, виробництва й реалізації.", inputs: "Фото, розміри, висота стелі де важливо, побажання та референси.", deliverables: "Уточнений дизайн, розміри, фасади, логіка матеріалів, build-ready напрям, попередні виробничі нотатки й підготовка розрахунку.", timeline: "7-14 робочих днів", cta: "Запросити пакет" },
+        { value: "full_realization", kicker: "Рівень 3", title: "Повна реалізація", price: "Індивідуальний розрахунок", bestFor: "Для виробництва, доставки й монтажу, коли scope готовий.", inputs: "Фото обов'язкові; розміри рекомендовані; локація, бюджет і бажані терміни обов'язкові.", deliverables: "Заміри на об'єкті, фінальний дизайн, engineering/shop drawings, матеріали, виробництво, доставка й монтаж.", timeline: "Індивідуальний розбір", cta: "Запросити повний розбір" },
+      ],
+    },
   };
-  return [
-    { value: "design_concept", kicker: "Level 1", title: "Design Concept", price: "From $490", bestFor: "For a client who wants to see the idea first.", inputsTitle: labels.inputsTitle, inputs: "Photos required; inspiration and approximate dimensions optional.", deliverablesTitle: labels.deliverablesTitle, deliverables: "Space review, 1-2 concept directions, style and material direction, layout idea, estimated budget range and next-step recommendation.", timelineTitle: labels.timelineTitle, timeline: "3-5 business days", cta: "Order Design Concept" },
-    { value: "design_build_package", kicker: "Level 2", title: "Design + Build Package", price: "From $1,490", bestFor: "For a client who wants a project prepared for estimate and realization.", inputsTitle: labels.inputsTitle, inputs: "Photos, dimensions, ceiling height where relevant, wishes and inspiration.", deliverablesTitle: labels.deliverablesTitle, deliverables: "Refined design, dimensions, elevations, material logic, build-ready direction, preliminary production notes and estimate preparation.", timelineTitle: labels.timelineTitle, timeline: "7-14 business days", cta: "Request Build Package" },
-    { value: "full_realization", kicker: "Level 3", title: "Full Realization", price: "Custom quote", bestFor: "For production, delivery and installation when the scope is ready.", inputsTitle: labels.inputsTitle, inputs: "Photos required; dimensions recommended; location, budget and desired fabrication or installation timeline required.", deliverablesTitle: labels.deliverablesTitle, deliverables: "Site measurements, final design, engineering/shop drawings, materials, fabrication, delivery and installation.", timelineTitle: labels.timelineTitle, timeline: "Reviewed individually", cta: "Request Full Project Review" },
-  ];
+  const selected = data[lang] || data.en;
+  return selected.items.map((item) => ({
+    ...item,
+    inputsTitle: selected.inputsTitle,
+    deliverablesTitle: selected.deliverablesTitle,
+    timelineTitle: selected.timelineTitle,
+  }));
 }
 
 function designConceptPricingData(lang) {
-  return [
-    { title: "Design Concept", price: "from $490", timeline: "3-5 business days" },
-    { title: "Design + Build Package", price: "from $1,490", timeline: "7-14 business days" },
-    { title: "Full Realization", price: "custom quote", timeline: "reviewed individually" },
-  ];
+  const data = {
+    en: [
+      { title: "Design Concept", price: "from $490", timeline: "3-5 business days" },
+      { title: "Design + Build Package", price: "from $1,490", timeline: "7-14 business days" },
+      { title: "Full Realization", price: "custom quote", timeline: "reviewed individually" },
+    ],
+    es: [
+      { title: "Concepto de diseño", price: "desde $490", timeline: "3-5 días hábiles" },
+      { title: "Paquete diseño + realización", price: "desde $1,490", timeline: "7-14 días hábiles" },
+      { title: "Realización completa", price: "cotización personalizada", timeline: "revisión individual" },
+    ],
+    fr: [
+      { title: "Concept design", price: "à partir de 490 $", timeline: "3-5 jours ouvrés" },
+      { title: "Forfait design + réalisation", price: "à partir de 1 490 $", timeline: "7-14 jours ouvrés" },
+      { title: "Réalisation complète", price: "devis personnalisé", timeline: "examen individuel" },
+    ],
+    ru: [
+      { title: "Дизайн-концепт", price: "от $490", timeline: "3-5 рабочих дней" },
+      { title: "Пакет дизайн + реализация", price: "от $1,490", timeline: "7-14 рабочих дней" },
+      { title: "Полная реализация", price: "индивидуальный расчет", timeline: "индивидуальный разбор" },
+    ],
+    uk: [
+      { title: "Дизайн-концепт", price: "від $490", timeline: "3-5 робочих днів" },
+      { title: "Пакет дизайн + реалізація", price: "від $1,490", timeline: "7-14 робочих днів" },
+      { title: "Повна реалізація", price: "індивідуальний розрахунок", timeline: "індивідуальний розбір" },
+    ],
+  };
+  return data[lang] || data.en;
 }
 
 function designConceptFaqData(lang) {
@@ -3934,7 +4149,53 @@ function designConceptFaqData(lang) {
     ["How fast will I receive my concept?", "Most Level 1 concepts are prepared in 3-5 business days. Room concepts, kitchens and complex built-ins can take 4-7 business days. Technical packages usually take 7-14 business days."],
     ["Can designers/builders use this service for their clients?", "Yes. Designers and builders can submit photos, plans, measurements, inspiration and client goals to clarify visual direction or prepare a preliminary technical package."],
   ];
-  return en;
+  const localizedFaqs = {
+    es: [
+      ["¿Qué fotos debo subir?", "Suba fotos amplias de toda la habitación o pared, detalles de esquinas y obstáculos, transiciones de techo y piso, cabinetry o equipos AV existentes, y cualquier referencia que muestre la sensación deseada."],
+      ["¿Necesito medidas exactas?", "Para un concepto de diseño de Nivel 1, las medidas ayudan pero no son obligatorias. Para un paquete diseño + realización, las dimensiones y la altura de techo son necesarias para que la dirección técnica sea útil."],
+      ["¿Puedo pedir solo un concepto sin fabricación?", "Sí. El concepto de diseño funciona como un primer paso independiente y de bajo riesgo antes de comprometerse con fabricación, cabinetry o instalación."],
+      ["¿El costo del concepto se puede acreditar a un proyecto mayor?", "En proyectos seleccionados, CAS AURUM puede revisar un crédito del concepto hacia un paquete técnico o alcance de realización. Esto se confirma por escrito después de revisar el proyecto."],
+      ["¿Qué incluye el paquete técnico?", "Puede incluir dirección de layout, notas preliminares de fabricación, planificación de materiales y orientación de producción donde aplique. No sustituye documentos arquitectónicos, estructurales o de código con licencia."],
+      ["¿Es un documento arquitectónico o de ingeniería sellado?", "No. Es un paquete técnico preliminar para dirección de diseño y fabricación. No es arquitectura sellada, ingeniería estructural ni documentación requerida por código."],
+      ["¿CAS AURUM puede fabricar e instalar el proyecto?", "Diseño + realización está disponible para proyectos seleccionados en Atlanta y por acuerdo especial en otras ubicaciones. Cada proyecto se revisa por ubicación, alcance, presupuesto, calendario y disponibilidad."],
+      ["¿Qué tan rápido recibiré mi concepto?", "La mayoría de los conceptos de Nivel 1 se preparan en 3-5 días hábiles. Conceptos de habitaciones, cocinas y built-ins complejos pueden tomar 4-7 días hábiles. Los paquetes técnicos suelen tomar 7-14 días hábiles."],
+      ["¿Diseñadores y builders pueden usar este servicio para sus clientes?", "Sí. Diseñadores y builders pueden enviar fotos, planos, medidas, inspiración y objetivos del cliente para aclarar la dirección visual o preparar un paquete técnico preliminar."],
+    ],
+    fr: [
+      ["Quelles photos dois-je ajouter ?", "Ajoutez des photos larges de toute la pièce ou du mur, des vues rapprochées des angles et obstacles, des transitions plafond/sol, de la menuiserie ou des équipements AV existants, ainsi que les inspirations qui expriment l'ambiance souhaitée."],
+      ["Faut-il des mesures exactes ?", "Pour un concept design de Niveau 1, les mesures sont utiles mais pas obligatoires. Pour un forfait design + réalisation, les dimensions et la hauteur sous plafond sont nécessaires pour rendre la direction technique utile."],
+      ["Puis-je commander seulement un concept sans fabrication ?", "Oui. Le concept design est un premier pas indépendant et à faible risque avant tout engagement de fabrication, cabinetry ou installation."],
+      ["Le prix du concept peut-il être crédité vers un projet plus large ?", "Pour certains projets plus importants, CAS AURUM peut examiner un crédit du concept vers un forfait technique ou un périmètre de réalisation. Cela se confirme par écrit après revue du projet."],
+      ["Que comprend le forfait technique ?", "Il peut inclure une direction d'agencement, des notes préliminaires de fabrication, une logique matières et une orientation de production selon le cas. Il ne remplace pas des documents architecturaux, structurels ou réglementaires signés."],
+      ["Est-ce un document architectural ou d'ingénierie tamponné ?", "Non. C'est un forfait technique préliminaire pour la direction design et fabrication. Ce n'est pas une architecture tamponnée, une ingénierie structurelle ni une documentation exigée par le code."],
+      ["CAS AURUM peut-il fabriquer et installer le projet ?", "Design + réalisation est disponible pour certains projets à Atlanta et par arrangement spécial dans d'autres lieux. Chaque projet est examiné selon lieu, périmètre, budget, calendrier et disponibilité."],
+      ["Quand vais-je recevoir mon concept ?", "La plupart des concepts de Niveau 1 sont préparés en 3-5 jours ouvrés. Les concepts de pièces, cuisines et built-ins complexes peuvent prendre 4-7 jours ouvrés. Les forfaits techniques prennent généralement 7-14 jours ouvrés."],
+      ["Les designers et constructeurs peuvent-ils utiliser ce service pour leurs clients ?", "Oui. Designers et constructeurs peuvent envoyer photos, plans, mesures, inspirations et objectifs client pour clarifier la direction visuelle ou préparer un forfait technique préliminaire."],
+    ],
+    ru: [
+      ["Какие фото нужно загрузить?", "Загрузите общие фото всей комнаты или стены, крупные фото углов и препятствий, переходы потолка и пола, существующую мебель или AV-оборудование, а также референсы, которые передают желаемое настроение."],
+      ["Нужны ли точные размеры?", "Для дизайн-концепта Уровня 1 размеры полезны, но не обязательны. Для пакета дизайн + реализация нужны размеры и высота потолка, чтобы техническое направление было действительно полезным."],
+      ["Можно заказать только дизайн-концепт без производства?", "Да. Дизайн-концепт создан как самостоятельный первый шаг с низким риском до обязательств по производству, cabinetry или установке."],
+      ["Можно ли зачесть стоимость концепта в большой проект?", "Для отдельных крупных проектов CAS AURUM может рассмотреть зачет концепта в технический пакет или scope реализации. Это подтверждается письменно после разбора проекта."],
+      ["Что входит в технический пакет?", "Пакет может включать layout-направление, предварительные производственные заметки, планирование материалов и производственную логику, где это применимо. Он не заменяет лицензированные архитектурные, конструктивные или code-required документы."],
+      ["Это stamped архитектурный или инженерный документ?", "Нет. Это предварительный технический пакет для дизайн- и производственного направления. Он не является stamped architecture, structural engineering или обязательной code-документацией."],
+      ["CAS AURUM может изготовить и установить проект?", "Design + Realization доступен для выбранных проектов в Atlanta и по отдельной договоренности в других локациях. Каждый проект рассматривается по локации, scope, бюджету, графику и доступности."],
+      ["Как быстро я получу концепт?", "Большинство концептов Уровня 1 готовятся за 3-5 рабочих дней. Комнаты, кухни и сложные built-ins могут занять 4-7 рабочих дней. Технические пакеты обычно занимают 7-14 рабочих дней."],
+      ["Дизайнеры и строители могут использовать сервис для своих клиентов?", "Да. Дизайнеры и строители могут отправить фото, планы, размеры, референсы и цели клиента, чтобы уточнить визуальное направление или подготовить предварительный технический пакет."],
+    ],
+    uk: [
+      ["Які фото потрібно завантажити?", "Завантажте загальні фото всієї кімнати або стіни, крупні фото кутів і перешкод, переходи стелі та підлоги, наявні меблі або AV-обладнання, а також референси, які передають бажаний настрій."],
+      ["Чи потрібні точні розміри?", "Для дизайн-концепту Рівня 1 розміри корисні, але не обов'язкові. Для пакета дизайн + реалізація потрібні розміри й висота стелі, щоб технічний напрям був справді корисним."],
+      ["Можна замовити тільки дизайн-концепт без виробництва?", "Так. Дизайн-концепт створений як самостійний перший крок із низьким ризиком до зобов'язань щодо виробництва, cabinetry або монтажу."],
+      ["Чи можна зарахувати вартість концепту в більший проєкт?", "Для окремих великих проєктів CAS AURUM може розглянути зарахування концепту в технічний пакет або scope реалізації. Це підтверджується письмово після розбору проєкту."],
+      ["Що входить у технічний пакет?", "Пакет може включати layout-напрям, попередні виробничі нотатки, планування матеріалів і виробничу логіку, де це застосовно. Він не замінює ліцензовані архітектурні, конструктивні або code-required документи."],
+      ["Це stamped архітектурний або інженерний документ?", "Ні. Це попередній технічний пакет для дизайн- і виробничого напряму. Він не є stamped architecture, structural engineering або обов'язковою code-документацією."],
+      ["CAS AURUM може виготовити й встановити проєкт?", "Design + Realization доступний для вибраних проєктів в Atlanta і за окремою домовленістю в інших локаціях. Кожен проєкт розглядається за локацією, scope, бюджетом, графіком і доступністю."],
+      ["Як швидко я отримаю концепт?", "Більшість концептів Рівня 1 готуються за 3-5 робочих днів. Кімнати, кухні та складні built-ins можуть зайняти 4-7 робочих днів. Технічні пакети зазвичай займають 7-14 робочих днів."],
+      ["Дизайнери й будівельники можуть використовувати сервіс для своїх клієнтів?", "Так. Дизайнери й будівельники можуть надіслати фото, плани, розміри, референси й цілі клієнта, щоб уточнити візуальний напрям або підготувати попередній технічний пакет."],
+    ],
+  };
+  return localizedFaqs[lang] || en;
 }
 
 function designConceptOptionSet(options) {
@@ -3958,6 +4219,72 @@ function plannerUrlForPreset(lang, type = "") {
   const base = urlFor(lang, "planner");
   const preset = plannerPresetFromType(type);
   return preset ? `${base}?type=${encodeURIComponent(preset.type)}` : base;
+}
+
+function plannerText(lang) {
+  const data = {
+    en: {
+      title: "Millwork Planner",
+      seoTitle: `Millwork Planner | ${BRAND}`,
+      metaDescription: "Plan a preliminary custom cabinet, closet, media wall, built-in, wall panel or millwork scope with a 3D planner and budget direction.",
+      subtitle: "Choose a simple guided estimate or build a detailed technical scope for custom walls, media units, closets, vanities, offices and built-ins.",
+      selectProjectType: "Select project type",
+      rangeLabel: "Preliminary range",
+      emptyRange: "Add modules to calculate a budget range.",
+      advancedEyebrow: "Advanced / Pro Tool",
+      technicalTitle: "Technical Millwork Planner",
+      technicalIntro: "Use dimensions, modules, materials, lighting and detailed project notes to prepare a technical scope for CAS AURUM review.",
+    },
+    es: {
+      title: "Planificador de millwork",
+      seoTitle: `Planificador de millwork | ${BRAND}`,
+      metaDescription: "Planifique un alcance preliminar para cabinetry, closets, media walls, built-ins, paneles y millwork con dirección de presupuesto.",
+      subtitle: "Elija una estimación guiada sencilla o prepare un alcance técnico detallado para paredes, media units, closets, vanities, oficinas y built-ins.",
+      selectProjectType: "Seleccione tipo de proyecto",
+      rangeLabel: "Rango preliminar",
+      emptyRange: "Agregue módulos para calcular un rango de presupuesto.",
+      advancedEyebrow: "Herramienta avanzada / pro",
+      technicalTitle: "Planificador técnico de millwork",
+      technicalIntro: "Use dimensiones, módulos, materiales, iluminación y notas detalladas para preparar un alcance técnico para revisión de CAS AURUM.",
+    },
+    fr: {
+      title: "Planificateur de millwork",
+      seoTitle: `Planificateur de millwork | ${BRAND}`,
+      metaDescription: "Planifiez un périmètre préliminaire pour cabinetry, dressings, murs média, built-ins, panneaux muraux et millwork avec orientation budgétaire.",
+      subtitle: "Choisissez une estimation guidée simple ou créez un périmètre technique détaillé pour murs, meubles média, dressings, meubles vasques, bureaux et built-ins.",
+      selectProjectType: "Sélectionner le type de projet",
+      rangeLabel: "Fourchette préliminaire",
+      emptyRange: "Ajoutez des modules pour calculer une fourchette budgétaire.",
+      advancedEyebrow: "Outil avancé / pro",
+      technicalTitle: "Planificateur technique de millwork",
+      technicalIntro: "Utilisez dimensions, modules, matériaux, éclairage et notes détaillées pour préparer un périmètre technique à faire examiner par CAS AURUM.",
+    },
+    ru: {
+      title: "Конструктор мебели",
+      seoTitle: `Конструктор мебели | ${BRAND}`,
+      metaDescription: "Спланируйте предварительный scope для шкафов, гардеробных, медиа-стен, built-ins, стеновых панелей и millwork с бюджетным ориентиром.",
+      subtitle: "Выберите простой guided estimate или соберите детальный technical scope для стен, медиа-зон, гардеробных, тумб, офисов и встроенной мебели.",
+      selectProjectType: "Выберите тип проекта",
+      rangeLabel: "Предварительный диапазон",
+      emptyRange: "Добавьте модули, чтобы рассчитать бюджетный диапазон.",
+      advancedEyebrow: "Продвинутый / pro-инструмент",
+      technicalTitle: "Технический планировщик millwork",
+      technicalIntro: "Используйте размеры, модули, материалы, подсветку и подробные заметки, чтобы подготовить технический scope для проверки CAS AURUM.",
+    },
+    uk: {
+      title: "Конструктор меблів",
+      seoTitle: `Конструктор меблів | ${BRAND}`,
+      metaDescription: "Сплануйте попередній scope для шаф, гардеробних, медіа-стін, built-ins, стінових панелей і millwork з бюджетним орієнтиром.",
+      subtitle: "Оберіть простий guided estimate або зберіть детальний technical scope для стін, медіа-зон, гардеробних, тумб, офісів і вбудованих меблів.",
+      selectProjectType: "Оберіть тип проєкту",
+      rangeLabel: "Попередній діапазон",
+      emptyRange: "Додайте модулі, щоб розрахувати бюджетний діапазон.",
+      advancedEyebrow: "Розширений / pro-інструмент",
+      technicalTitle: "Технічний планувальник millwork",
+      technicalIntro: "Використовуйте розміри, модулі, матеріали, підсвічування й докладні нотатки, щоб підготувати технічний scope для перевірки CAS AURUM.",
+    },
+  };
+  return data[lang] || data.en;
 }
 
 function plannerPresetList(items) {
@@ -4009,39 +4336,181 @@ function servicePlannerBlock(route, key) {
   </section>`;
 }
 
-function quickEstimateDataScript(sourcePage = "/technical-millwork-planner") {
-  return `<script type="application/json" id="quick-estimate-data">${escapeHtml(JSON.stringify({ config: quickEstimateConfig, sourcePage }))}</script>`;
+function quickEstimateDataScript(sourcePage = "/technical-millwork-planner", lang = "en") {
+  return `<script type="application/json" id="quick-estimate-data">${escapeHtml(JSON.stringify({ config: quickEstimateConfig, i18n: quickEstimateI18n(lang), sourcePage }))}</script>`;
+}
+
+function quickEstimateI18n(lang) {
+  const q = quickEstimateText(lang);
+  return {
+    progress: q.progress,
+    labels: q.labels,
+    confidence: q.confidence,
+    projectTypes: q.projectTypes,
+    rooms: q.rooms,
+    sizes: q.sizes,
+    layouts: q.layouts,
+    lineItems: q.lineItems,
+  };
+}
+
+function quickEstimateText(lang) {
+  const base = {
+    title: "Quick Project Estimate",
+    guided: "Guided Estimate",
+    preliminaryRange: "Preliminary Project Range",
+    liveRange: "Live Preliminary Range",
+    heroTitle: "Get a Preliminary Project Range",
+    heroIntro: "Choose your project type, answer simple visual questions and upload photos. You do not need drawings, exact square footage or millwork terminology to begin.",
+    pathQuickDesc: "For homeowners who are not sure where to start. Answer a few simple questions, upload photos, and receive a preliminary budget range.",
+    pathQuickCta: "Get Quick Estimate",
+    pathTechnicalKicker: "Advanced Scope",
+    pathTechnicalTitle: "Technical Millwork Planner",
+    pathTechnicalDesc: "For detailed scopes, designers, builders and advanced planning. Add dimensions, modules, materials, lighting and project notes.",
+    pathTechnicalCta: "Use Technical Planner",
+    steps: ["Choose project type", "Choose room / area", "Approximate size", "Visual layout", "Simple feature questions", "Result and contact"],
+    progress: "Step {step} of 6",
+    sizeQuestion: "Do you know the wall width and ceiling height?",
+    sizeModes: { approximate: "No, use approximate size", exact: "Yes, I can enter dimensions", unknown: "Not sure" },
+    exactFields: { width: "Wall width in ft", height: "Ceiling height in ft", depth: "Optional depth", walls: "Number of walls" },
+    questions: {
+      cabinets: "Do you need cabinets?",
+      led: "Do you need LED lighting?",
+      shelves: "Do you need shelves?",
+      material: "Do you need mirror or stone-look material?",
+      hiddenDoors: "Any hidden doors?",
+      walls: "Is this one wall or multiple walls?",
+      drawings: "Do you already have design drawings or renderings?",
+    },
+    resultNote: "Final pricing depends on field measurements, materials, project details and installation conditions.",
+    includedTitle: "This preliminary range may include",
+    fields: { name: "Name", email: "Email", phone: "Phone", zip: "ZIP / project location", timeline: "Timeline", budget: "Approximate budget range", notes: "Project notes", upload: "Upload photos" },
+    notesPlaceholder: "Tell us what you want to change, what you like, and anything important about the space.",
+    send: "Send My Quick Estimate",
+    designConcept: "Request Design Concept",
+    back: "Back",
+    reset: "Reset",
+    next: "Next",
+    summary: { project: "Project", room: "Room", layout: "Layout", confidence: "Confidence", note: "This public estimate shows a preliminary range only. CAS AURUM reviews photos, dimensions, materials and installation conditions before final pricing." },
+    seoTitle: "Quick Project Estimate | Custom Millwork, Media Walls & Wall Panels | CAS AURUM",
+    metaDescription: "Get a quick project estimate for custom media walls, wall panels, closets, bathroom vanities, office built-ins and interior millwork. Upload photos and receive a preliminary budget range.",
+    h1: "Quick Project Estimate for Custom Millwork & Interior Features",
+    intro: "Not sure where to start? Use our Quick Project Estimate to get a preliminary budget range for your custom interior feature. Choose your project type, answer a few simple questions, upload photos of your space, and CAS AURUM will review your request. You do not need technical drawings, exact square footage, or millwork experience to begin.",
+    seoAside: "Photos + simple choices",
+    seoAsideText: "For custom media wall estimate, wall panel estimate, built-in cabinet estimate, custom closet estimate and bathroom vanity estimate requests.",
+    seoBodyTitle: "A simple custom millwork estimate starting point",
+    seoBody: "Use this interior millwork calculator-style guide for a quick project estimate, custom furniture estimate, custom millwork estimate Atlanta, custom media wall estimate Georgia, wall panels estimate Atlanta, custom built-ins estimate Atlanta and custom closet estimate Atlanta inquiries.",
+    faqTitle: "Quick Estimate Questions",
+    labels: {},
+    confidence: { low: "Low", medium: "Medium", high: "High" },
+    projectTypes: Object.fromEntries(quickEstimateConfig.projectTypes.map((item) => [item, item])),
+    rooms: Object.fromEntries(quickEstimateConfig.rooms.map((item) => [item, item])),
+    sizes: Object.fromEntries(Object.values(quickEstimateConfig.approximateSizes).map((item) => [item.label, item.label])),
+    layouts: Object.fromEntries(Object.values(quickEstimateConfig.layouts).flat().map((item) => [item, item])),
+    lineItems: {},
+    options: {},
+    links: ["Media Walls", "Wall Panels", "Closets", "Bathroom Vanities", "Office Built-Ins", "Kitchen / Under Bar Panels", "Design Concept", "Contact / Start Project"],
+    faq: [
+      ["Can I get a custom media wall estimate without exact measurements?", "Yes. The Quick Project Estimate can use an approximate wall size, photos and a few simple choices to create a preliminary custom media wall estimate."],
+      ["How accurate is the Quick Project Estimate?", "It is a preliminary range, not a final quote. Accuracy improves when you provide exact dimensions, photos or drawings."],
+      ["What affects the price of custom wall panels or built-ins?", "Size, material direction, cabinets, shelves, LED lighting, hidden doors, mirrors, stone-look panels, field conditions and installation details all affect a custom millwork estimate."],
+      ["Can I upload photos instead of drawings?", "Yes. Photos are welcome, and you can start without drawings, exact square footage or millwork experience."],
+      ["What happens after I submit a Quick Project Estimate?", "CAS AURUM reviews your request, photos and preliminary range, then recommends the next step such as a Design Concept or detailed technical estimate review."],
+      ["Is installation included?", "CAS AURUM estimates custom millwork, wall panels, media walls, closets, bathroom vanities and built-ins with installation review. Final inclusion is confirmed after location and field condition review."],
+      ["Do you work with designers and builders?", "Yes. Designers, builders and trade partners can use the Technical Millwork Planner for detailed scopes, zones, options, line items and internal estimate review."],
+    ],
+  };
+  const translations = quickEstimateTranslations[lang] || {};
+  return mergeDeep(mergeDeep(base, translations), quickEstimateLabelTranslations[lang] || {});
+}
+
+const quickEstimateTranslations = {
+  es: {
+    title: "Estimación Rápida del Proyecto", guided: "Estimación guiada", preliminaryRange: "Rango preliminar del proyecto", liveRange: "Rango preliminar en vivo", heroTitle: "Obtenga un rango preliminar", heroIntro: "Elija el tipo de proyecto, responda preguntas visuales sencillas y suba fotos. No necesita planos, pies cuadrados exactos ni conocer terminología de millwork para empezar.", pathQuickDesc: "Para propietarios que no saben por dónde comenzar. Responda unas preguntas simples, suba fotos y reciba un rango preliminar.", pathQuickCta: "Obtener estimación rápida", pathTechnicalKicker: "Alcance avanzado", pathTechnicalTitle: "Planificador técnico de millwork", pathTechnicalDesc: "Para alcances detallados, diseñadores, builders y planificación avanzada. Agregue dimensiones, módulos, materiales, iluminación y notas del proyecto.", pathTechnicalCta: "Usar planificador técnico", steps: ["Elegir tipo de proyecto", "Elegir habitación / área", "Tamaño aproximado", "Distribución visual", "Preguntas simples", "Resultado y contacto"], progress: "Paso {step} de 6", sizeQuestion: "¿Conoce el ancho de la pared y la altura del techo?", sizeModes: { approximate: "No, usar tamaño aproximado", exact: "Sí, puedo ingresar dimensiones", unknown: "No estoy seguro" }, exactFields: { width: "Ancho de pared en ft", height: "Altura de techo en ft", depth: "Profundidad opcional", walls: "Número de paredes" }, resultNote: "El precio final depende de mediciones en sitio, materiales, detalles del proyecto y condiciones de instalación.", includedTitle: "Este rango preliminar puede incluir", fields: { name: "Nombre", email: "Email", phone: "Teléfono", zip: "ZIP / ubicación del proyecto", timeline: "Plazo", budget: "Rango de presupuesto aproximado", notes: "Notas del proyecto", upload: "Subir fotos" }, notesPlaceholder: "Cuéntenos qué quiere cambiar, qué le gusta y cualquier detalle importante del espacio.", send: "Enviar mi estimación rápida", designConcept: "Solicitar concepto de diseño", back: "Atrás", reset: "Reiniciar", next: "Siguiente", summary: { project: "Proyecto", room: "Habitación", layout: "Layout", confidence: "Confianza", note: "Esta estimación pública muestra solo un rango preliminar. CAS AURUM revisa fotos, dimensiones, materiales y condiciones de instalación antes del precio final." }, seoTitle: "Estimación Rápida del Proyecto | Millwork, Media Walls y Paneles | CAS AURUM", metaDescription: "Obtenga una estimación rápida para media walls, paneles, closets, vanities, built-ins de oficina y millwork interior. Suba fotos y reciba un rango preliminar.", h1: "Estimación rápida para millwork e interiores a medida", intro: "¿No sabe por dónde empezar? Use nuestra Estimación Rápida del Proyecto para obtener un rango preliminar para su elemento interior a medida. Elija el tipo de proyecto, responda preguntas sencillas, suba fotos del espacio y CAS AURUM revisará su solicitud. No necesita planos técnicos, metraje exacto ni experiencia en millwork.", seoAside: "Fotos + elecciones simples", seoAsideText: "Para estimaciones de media walls, paneles, built-ins, closets y vanities a medida.", seoBodyTitle: "Un punto de partida simple para estimar millwork", seoBody: "Use esta guía tipo calculadora de millwork interior para solicitudes de quick project estimate, custom millwork estimate, custom media wall estimate Georgia, wall panels estimate Atlanta, custom built-ins estimate Atlanta y custom closet estimate Atlanta.", faqTitle: "Preguntas sobre la estimación rápida", confidence: { low: "Baja", medium: "Media", high: "Alta" },
+  },
+  fr: {
+    title: "Estimation Rapide du Projet", guided: "Estimation guidée", preliminaryRange: "Fourchette préliminaire du projet", liveRange: "Fourchette préliminaire en direct", heroTitle: "Obtenir une fourchette préliminaire", heroIntro: "Choisissez le type de projet, répondez à quelques questions visuelles simples et ajoutez des photos. Vous n'avez pas besoin de plans, de surface exacte ni de vocabulaire technique pour commencer.", pathQuickDesc: "Pour les propriétaires qui ne savent pas encore par où commencer. Répondez à quelques questions, ajoutez des photos et recevez une fourchette préliminaire.", pathQuickCta: "Obtenir une estimation rapide", pathTechnicalKicker: "Périmètre avancé", pathTechnicalTitle: "Planificateur technique de menuiserie", pathTechnicalDesc: "Pour les périmètres détaillés, designers, constructeurs et planification avancée. Ajoutez dimensions, modules, matériaux, éclairage et notes projet.", pathTechnicalCta: "Utiliser le planificateur technique", steps: ["Choisir le type de projet", "Choisir la pièce / zone", "Taille approximative", "Disposition visuelle", "Questions simples", "Résultat et contact"], progress: "Étape {step} sur 6", sizeQuestion: "Connaissez-vous la largeur du mur et la hauteur sous plafond ?", sizeModes: { approximate: "Non, utiliser une taille approximative", exact: "Oui, je peux entrer les dimensions", unknown: "Je ne sais pas" }, exactFields: { width: "Largeur du mur en ft", height: "Hauteur sous plafond en ft", depth: "Profondeur optionnelle", walls: "Nombre de murs" }, resultNote: "Le prix final dépend des mesures sur site, des matériaux, des détails du projet et des conditions d'installation.", includedTitle: "Cette fourchette préliminaire peut inclure", fields: { name: "Nom", email: "Email", phone: "Téléphone", zip: "ZIP / lieu du projet", timeline: "Calendrier", budget: "Fourchette de budget approximative", notes: "Notes du projet", upload: "Ajouter des photos" }, notesPlaceholder: "Expliquez ce que vous souhaitez changer, ce que vous aimez et les détails importants de l'espace.", send: "Envoyer mon estimation rapide", designConcept: "Demander un concept design", back: "Retour", reset: "Réinitialiser", next: "Suivant", summary: { project: "Projet", room: "Pièce", layout: "Disposition", confidence: "Confiance", note: "Cette estimation publique affiche seulement une fourchette préliminaire. CAS AURUM vérifie photos, dimensions, matériaux et conditions d'installation avant le prix final." }, seoTitle: "Estimation Rapide du Projet | Menuiserie, Murs Média et Panneaux | CAS AURUM", metaDescription: "Obtenez une estimation rapide pour murs média, panneaux muraux, dressings, meubles vasques, intégrés de bureau et menuiserie intérieure. Ajoutez des photos et recevez une fourchette préliminaire.", h1: "Estimation rapide pour menuiserie et éléments intérieurs sur mesure", intro: "Vous ne savez pas par où commencer ? Utilisez notre Estimation Rapide du Projet pour obtenir une fourchette préliminaire pour votre élément intérieur sur mesure. Choisissez le type de projet, répondez à quelques questions simples, ajoutez des photos de l'espace et CAS AURUM examinera votre demande. Aucun plan technique, surface exacte ou expérience en menuiserie n'est nécessaire.", seoAside: "Photos + choix simples", seoAsideText: "Pour estimations de murs média, panneaux, intégrés, dressings et meubles vasques sur mesure.", seoBodyTitle: "Un point de départ simple pour estimer la menuiserie", seoBody: "Utilisez ce guide de type calculateur de menuiserie intérieure pour quick project estimate, custom millwork estimate, custom media wall estimate Georgia, wall panels estimate Atlanta, custom built-ins estimate Atlanta et custom closet estimate Atlanta.", faqTitle: "Questions sur l'estimation rapide", confidence: { low: "Faible", medium: "Moyenne", high: "Élevée" },
+  },
+  ru: {
+    title: "Быстрый расчет проекта", guided: "Пошаговая оценка", preliminaryRange: "Предварительный диапазон проекта", liveRange: "Предварительный диапазон", heroTitle: "Получите предварительный диапазон бюджета", heroIntro: "Выберите тип проекта, ответьте на простые визуальные вопросы и загрузите фото. Чтобы начать, не нужны чертежи, точная площадь или знание столярной терминологии.", pathQuickDesc: "Для владельцев домов, которые пока не знают, с чего начать. Ответьте на несколько простых вопросов, загрузите фото и получите предварительный бюджетный диапазон.", pathQuickCta: "Получить быстрый расчет", pathTechnicalKicker: "Продвинутый scope", pathTechnicalTitle: "Технический планировщик millwork", pathTechnicalDesc: "Для детальных scope, дизайнеров, строителей и продвинутого планирования. Добавляйте размеры, модули, материалы, свет и заметки по проекту.", pathTechnicalCta: "Открыть технический планировщик", steps: ["Выберите тип проекта", "Выберите комнату / зону", "Примерный размер", "Визуальная компоновка", "Простые вопросы", "Результат и контакты"], progress: "Шаг {step} из 6", sizeQuestion: "Вы знаете ширину стены и высоту потолка?", sizeModes: { approximate: "Нет, использовать примерный размер", exact: "Да, могу указать размеры", unknown: "Не уверен(а)" }, exactFields: { width: "Ширина стены в ft", height: "Высота потолка в ft", depth: "Глубина, если есть", walls: "Количество стен" }, resultNote: "Финальная стоимость зависит от замеров, материалов, деталей проекта и условий монтажа.", includedTitle: "Предварительный диапазон может включать", fields: { name: "Имя", email: "Email", phone: "Телефон", zip: "ZIP / локация проекта", timeline: "Сроки", budget: "Примерный бюджет", notes: "Заметки по проекту", upload: "Загрузить фото" }, notesPlaceholder: "Расскажите, что хотите изменить, что нравится и какие детали пространства важны.", send: "Отправить быстрый расчет", designConcept: "Запросить дизайн-концепт", back: "Назад", reset: "Сбросить", next: "Далее", summary: { project: "Проект", room: "Комната", layout: "Компоновка", confidence: "Точность", note: "Публичный расчет показывает только предварительный диапазон. CAS AURUM проверяет фото, размеры, материалы и условия монтажа перед финальной ценой." }, seoTitle: "Быстрый расчет проекта | Millwork, медиа-стены и панели | CAS AURUM", metaDescription: "Получите быстрый расчет для медиа-стен, стеновых панелей, гардеробных, тумб, офисных built-ins и интерьерной столярки. Загрузите фото и получите предварительный диапазон.", h1: "Быстрый расчет для custom millwork и интерьерных элементов", intro: "Не знаете, с чего начать? Используйте Quick Project Estimate, чтобы получить предварительный бюджетный диапазон для вашего интерьерного элемента. Выберите тип проекта, ответьте на простые вопросы, загрузите фото пространства, и CAS AURUM рассмотрит запрос. Для старта не нужны технические чертежи, точная площадь или опыт в millwork.", seoAside: "Фото + простые выборы", seoAsideText: "Для расчета custom media wall, стеновых панелей, built-in cabinet, гардеробных и тумб для ванной.", seoBodyTitle: "Простая отправная точка для custom millwork estimate", seoBody: "Используйте этот interior millwork calculator-style guide для quick project estimate, custom furniture estimate, custom millwork estimate Atlanta, custom media wall estimate Georgia, wall panels estimate Atlanta, custom built-ins estimate Atlanta и custom closet estimate Atlanta.", faqTitle: "Вопросы о быстром расчете", confidence: { low: "Низкая", medium: "Средняя", high: "Высокая" },
+  },
+  uk: {
+    title: "Швидка оцінка проєкту", guided: "Покрокова оцінка", preliminaryRange: "Попередній діапазон проєкту", liveRange: "Попередній діапазон", heroTitle: "Отримайте попередній бюджетний діапазон", heroIntro: "Оберіть тип проєкту, дайте відповіді на прості візуальні питання й завантажте фото. Щоб почати, не потрібні креслення, точна площа або знання столярної термінології.", pathQuickDesc: "Для власників, які ще не знають, з чого почати. Дайте відповіді на кілька простих питань, завантажте фото й отримайте попередній бюджетний діапазон.", pathQuickCta: "Отримати швидку оцінку", pathTechnicalKicker: "Розширений scope", pathTechnicalTitle: "Технічний планувальник millwork", pathTechnicalDesc: "Для детальних scope, дизайнерів, будівельників і розширеного планування. Додавайте розміри, модулі, матеріали, світло й нотатки проєкту.", pathTechnicalCta: "Відкрити технічний планувальник", steps: ["Оберіть тип проєкту", "Оберіть кімнату / зону", "Орієнтовний розмір", "Візуальна компоновка", "Прості питання", "Результат і контакти"], progress: "Крок {step} із 6", sizeQuestion: "Ви знаєте ширину стіни та висоту стелі?", sizeModes: { approximate: "Ні, використати орієнтовний розмір", exact: "Так, можу ввести розміри", unknown: "Не впевнений(а)" }, exactFields: { width: "Ширина стіни у ft", height: "Висота стелі у ft", depth: "Глибина, якщо є", walls: "Кількість стін" }, resultNote: "Фінальна ціна залежить від замірів, матеріалів, деталей проєкту та умов монтажу.", includedTitle: "Попередній діапазон може включати", fields: { name: "Ім'я", email: "Email", phone: "Телефон", zip: "ZIP / локація проєкту", timeline: "Терміни", budget: "Орієнтовний бюджет", notes: "Нотатки про проєкт", upload: "Завантажити фото" }, notesPlaceholder: "Розкажіть, що хочете змінити, що подобається і які деталі простору важливі.", send: "Надіслати швидку оцінку", designConcept: "Запросити дизайн-концепт", back: "Назад", reset: "Скинути", next: "Далі", summary: { project: "Проєкт", room: "Кімната", layout: "Компонування", confidence: "Точність", note: "Публічна оцінка показує лише попередній діапазон. CAS AURUM перевіряє фото, розміри, матеріали й умови монтажу перед фінальною ціною." }, seoTitle: "Швидка оцінка проєкту | Millwork, медіа-стіни та панелі | CAS AURUM", metaDescription: "Отримайте швидку оцінку для медіа-стін, стінових панелей, гардеробних, тумб, офісних built-ins та інтер'єрної столярки. Завантажте фото й отримайте попередній діапазон.", h1: "Швидка оцінка для custom millwork та інтер'єрних елементів", intro: "Не знаєте, з чого почати? Використайте Quick Project Estimate, щоб отримати попередній бюджетний діапазон для вашого інтер'єрного елемента. Оберіть тип проєкту, дайте відповіді на прості питання, завантажте фото простору, і CAS AURUM розгляне запит. Для старту не потрібні технічні креслення, точна площа або досвід у millwork.", seoAside: "Фото + прості вибори", seoAsideText: "Для оцінки custom media wall, стінових панелей, built-in cabinet, гардеробних і тумб для ванної.", seoBodyTitle: "Проста відправна точка для custom millwork estimate", seoBody: "Використайте цей interior millwork calculator-style guide для quick project estimate, custom furniture estimate, custom millwork estimate Atlanta, custom media wall estimate Georgia, wall panels estimate Atlanta, custom built-ins estimate Atlanta і custom closet estimate Atlanta.", faqTitle: "Питання про швидку оцінку", confidence: { low: "Низька", medium: "Середня", high: "Висока" },
+  },
+};
+
+const quickEstimateLabelTranslations = {
+  es: {
+    projectTypes: { "TV Wall / Media Wall": "Muro TV / Media wall", "Wall Panels": "Paneles de pared", "Foyer / Entry Wall": "Foyer / muro de entrada", "Bedroom Feature Wall": "Muro protagonista de dormitorio", "Bathroom Vanity Wall": "Muro de vanity de baño", "Closet Doors / Closet Reface": "Puertas de closet / reface", "Office Built-In": "Built-in de oficina", "Kitchen Wall / Under Bar": "Muro de cocina / under bar", "Full Custom Project": "Proyecto totalmente a medida" },
+    rooms: { "Living Room": "Sala", "Bedroom": "Dormitorio", "Foyer": "Foyer", "Hallway": "Pasillo", "Kitchen": "Cocina", "Bathroom": "Baño", "Closet": "Closet", "Office": "Oficina", "Dining Area": "Comedor", "Den Room": "Den / sala privada", "Other": "Otro" },
+    sizes: { "Small wall, up to 8 ft wide": "Pared pequeña, hasta 8 ft", "Medium wall, 8-14 ft wide": "Pared mediana, 8-14 ft", "Large wall, 14-22 ft wide": "Pared grande, 14-22 ft", "Multiple walls / full room": "Varias paredes / habitación completa", "Double-height area": "Área de doble altura", "Not sure": "No estoy seguro" },
+    layouts: { "Simple TV panel": "Panel simple para TV", "TV wall with lower cabinet": "Muro TV con gabinete bajo", "TV wall with tall side cabinets": "Muro TV con gabinetes altos laterales", "Full media wall with shelves": "Media wall completo con repisas", "TV wall with hidden door": "Muro TV con puerta oculta", "Premium TV wall with stone / mirror / LED": "Muro TV premium con piedra / espejo / LED", "Flat panels": "Paneles planos", "Fluted panels": "Paneles acanalados", "Mixed wood panels": "Paneles mixtos de madera", "Stone-look accent": "Acento tipo piedra", "Panels with LED": "Paneles con LED", "Full hallway / full room panels": "Paneles para pasillo o habitación completa", "Single accent wall": "Un muro de acento", "Double-height foyer": "Foyer de doble altura", "Wall with hidden door": "Muro con puerta oculta", "Wall with mirror": "Muro con espejo", "Wall with ceiling panels": "Muro con paneles de techo", "Full foyer package": "Paquete completo de foyer", "Bed back wall": "Muro detrás de la cama", "Bed wall with LED": "Muro de cama con LED", "Bed wall with panels and nightstands": "Muro de cama con paneles y mesas de noche", "TV wall": "Muro TV", "Full bedroom feature package": "Paquete completo para dormitorio", "Vanity wall panels": "Paneles para muro de vanity", "Mirror and LED": "Espejo y LED", "Floating cabinet": "Gabinete flotante", "Double vanity": "Doble vanity", "Stone-look panels": "Paneles tipo piedra", "Full vanity feature wall": "Muro completo de vanity", "Sliding doors": "Puertas corredizas", "Mirror doors": "Puertas con espejo", "Closet reface": "Reface de closet", "Full closet front": "Frente completo de closet", "Walk-in closet system": "Sistema walk-in closet", "Desk wall": "Muro de escritorio", "Shelving wall": "Muro de repisas", "Murphy bed wall": "Muro con cama Murphy", "Tall cabinet wall": "Muro de gabinetes altos", "Full office built-in": "Built-in completo de oficina", "Kitchen accent wall": "Muro acento de cocina", "Under bar panels": "Paneles bajo barra", "Pantry / cabinet wall": "Muro de pantry / gabinetes", "Full kitchen feature package": "Paquete completo de cocina", "Custom wall": "Muro a medida", "Full room": "Habitación completa", "Multiple areas": "Varias áreas" },
+    lineItems: { "Wall panels": "Paneles de pared", "Stone-look panels": "Paneles tipo piedra", "Under bar panels": "Paneles bajo barra", "Lower cabinet": "Gabinete bajo", "Tall side cabinets": "Gabinetes altos laterales", "TV mounting preparation": "Preparación para montaje TV", "Simple LED lighting allowance": "Allowance LED simple", "Premium LED lighting allowance": "Allowance LED premium", "Shelves": "Repisas", "Mirror feature": "Elemento de espejo", "Stone-look accent material": "Material acento tipo piedra", "Hidden door allowance": "Allowance puerta oculta", "Sliding closet doors": "Puertas corredizas de closet", "Closet reface pieces": "Piezas de reface de closet", "Murphy bed wall allowance": "Allowance cama Murphy", "Built-in desk allowance": "Allowance escritorio integrado", "Integrated nightstands": "Mesas de noche integradas", "Ceiling panels": "Paneles de techo", "Countertop, sink and plumbing": "Cubierta, lavabo y plomería" },
+  },
+  fr: {
+    projectTypes: { "TV Wall / Media Wall": "Mur TV / mur média", "Wall Panels": "Panneaux muraux", "Foyer / Entry Wall": "Mur d'entrée / foyer", "Bedroom Feature Wall": "Mur accent de chambre", "Bathroom Vanity Wall": "Mur de meuble vasque", "Closet Doors / Closet Reface": "Portes de dressing / reface", "Office Built-In": "Intégré de bureau", "Kitchen Wall / Under Bar": "Mur cuisine / dessous de bar", "Full Custom Project": "Projet entièrement sur mesure" },
+    rooms: { "Living Room": "Salon", "Bedroom": "Chambre", "Foyer": "Entrée", "Hallway": "Couloir", "Kitchen": "Cuisine", "Bathroom": "Salle de bain", "Closet": "Dressing", "Office": "Bureau", "Dining Area": "Salle à manger", "Den Room": "Pièce détente", "Other": "Autre" },
+    sizes: { "Small wall, up to 8 ft wide": "Petit mur, jusqu'à 8 ft", "Medium wall, 8-14 ft wide": "Mur moyen, 8-14 ft", "Large wall, 14-22 ft wide": "Grand mur, 14-22 ft", "Multiple walls / full room": "Plusieurs murs / pièce complète", "Double-height area": "Zone double hauteur", "Not sure": "Je ne sais pas" },
+    layouts: { "Simple TV panel": "Panneau TV simple", "TV wall with lower cabinet": "Mur TV avec meuble bas", "TV wall with tall side cabinets": "Mur TV avec colonnes latérales", "Full media wall with shelves": "Mur média complet avec étagères", "TV wall with hidden door": "Mur TV avec porte dissimulée", "Premium TV wall with stone / mirror / LED": "Mur TV premium avec pierre / miroir / LED", "Flat panels": "Panneaux plats", "Fluted panels": "Panneaux cannelés", "Mixed wood panels": "Panneaux bois mixtes", "Stone-look accent": "Accent effet pierre", "Panels with LED": "Panneaux avec LED", "Full hallway / full room panels": "Panneaux couloir ou pièce complète", "Single accent wall": "Un mur accent", "Double-height foyer": "Entrée double hauteur", "Wall with hidden door": "Mur avec porte dissimulée", "Wall with mirror": "Mur avec miroir", "Wall with ceiling panels": "Mur avec panneaux plafond", "Full foyer package": "Ensemble complet entrée", "Bed back wall": "Mur derrière le lit", "Bed wall with LED": "Mur de lit avec LED", "Bed wall with panels and nightstands": "Mur de lit avec panneaux et chevets", "TV wall": "Mur TV", "Full bedroom feature package": "Ensemble chambre complet", "Vanity wall panels": "Panneaux mur vasque", "Mirror and LED": "Miroir et LED", "Floating cabinet": "Meuble suspendu", "Double vanity": "Double vasque", "Stone-look panels": "Panneaux effet pierre", "Full vanity feature wall": "Mur vasque complet", "Sliding doors": "Portes coulissantes", "Mirror doors": "Portes miroir", "Closet reface": "Reface dressing", "Full closet front": "Façade dressing complète", "Walk-in closet system": "Système dressing walk-in", "Desk wall": "Mur bureau", "Shelving wall": "Mur étagères", "Murphy bed wall": "Mur lit escamotable", "Tall cabinet wall": "Mur colonnes hautes", "Full office built-in": "Intégré bureau complet", "Kitchen accent wall": "Mur accent cuisine", "Under bar panels": "Panneaux dessous de bar", "Pantry / cabinet wall": "Mur pantry / cabinets", "Full kitchen feature package": "Ensemble cuisine complet", "Custom wall": "Mur sur mesure", "Full room": "Pièce complète", "Multiple areas": "Plusieurs zones" },
+    lineItems: { "Wall panels": "Panneaux muraux", "Stone-look panels": "Panneaux effet pierre", "Under bar panels": "Panneaux dessous de bar", "Lower cabinet": "Meuble bas", "Tall side cabinets": "Colonnes latérales", "TV mounting preparation": "Préparation fixation TV", "Simple LED lighting allowance": "Allowance LED simple", "Premium LED lighting allowance": "Allowance LED premium", "Shelves": "Étagères", "Mirror feature": "Élément miroir", "Stone-look accent material": "Matériau accent effet pierre", "Hidden door allowance": "Allowance porte dissimulée", "Sliding closet doors": "Portes coulissantes dressing", "Closet reface pieces": "Éléments reface dressing", "Murphy bed wall allowance": "Allowance lit escamotable", "Built-in desk allowance": "Allowance bureau intégré", "Integrated nightstands": "Chevets intégrés", "Ceiling panels": "Panneaux plafond", "Countertop, sink and plumbing": "Plan, vasque et plomberie" },
+  },
+  ru: {
+    projectTypes: { "TV Wall / Media Wall": "TV-стена / медиа-стена", "Wall Panels": "Стеновые панели", "Foyer / Entry Wall": "Фойе / входная стена", "Bedroom Feature Wall": "Акцентная стена спальни", "Bathroom Vanity Wall": "Стена с тумбой в ванной", "Closet Doors / Closet Reface": "Двери шкафа / обновление фасада", "Office Built-In": "Встроенная мебель для офиса", "Kitchen Wall / Under Bar": "Кухонная стена / под баром", "Full Custom Project": "Полностью custom-проект" },
+    rooms: { "Living Room": "Гостиная", "Bedroom": "Спальня", "Foyer": "Фойе", "Hallway": "Коридор", "Kitchen": "Кухня", "Bathroom": "Ванная", "Closet": "Гардеробная", "Office": "Кабинет", "Dining Area": "Столовая зона", "Den Room": "Den room", "Other": "Другое" },
+    sizes: { "Small wall, up to 8 ft wide": "Небольшая стена, до 8 ft", "Medium wall, 8-14 ft wide": "Средняя стена, 8-14 ft", "Large wall, 14-22 ft wide": "Большая стена, 14-22 ft", "Multiple walls / full room": "Несколько стен / вся комната", "Double-height area": "Двойная высота", "Not sure": "Не уверен(а)" },
+    layouts: { "Simple TV panel": "Простая TV-панель", "TV wall with lower cabinet": "TV-стена с нижней тумбой", "TV wall with tall side cabinets": "TV-стена с высокими боковыми шкафами", "Full media wall with shelves": "Полная media wall с полками", "TV wall with hidden door": "TV-стена со скрытой дверью", "Premium TV wall with stone / mirror / LED": "Premium TV-стена с камнем / зеркалом / LED", "Flat panels": "Плоские панели", "Fluted panels": "Рифленые панели", "Mixed wood panels": "Комбинированные деревянные панели", "Stone-look accent": "Акцент под камень", "Panels with LED": "Панели с LED", "Full hallway / full room panels": "Панели для коридора или всей комнаты", "Single accent wall": "Одна акцентная стена", "Double-height foyer": "Фойе двойной высоты", "Wall with hidden door": "Стена со скрытой дверью", "Wall with mirror": "Стена с зеркалом", "Wall with ceiling panels": "Стена с потолочными панелями", "Full foyer package": "Полный пакет для фойе", "Bed back wall": "Стена за кроватью", "Bed wall with LED": "Стена за кроватью с LED", "Bed wall with panels and nightstands": "Стена с панелями и тумбами", "TV wall": "TV-стена", "Full bedroom feature package": "Полный пакет для спальни", "Vanity wall panels": "Панели для vanity wall", "Mirror and LED": "Зеркало и LED", "Floating cabinet": "Подвесная тумба", "Double vanity": "Двойная тумба", "Stone-look panels": "Панели под камень", "Full vanity feature wall": "Полная vanity feature wall", "Sliding doors": "Раздвижные двери", "Mirror doors": "Зеркальные двери", "Closet reface": "Обновление фасада шкафа", "Full closet front": "Полный фасад шкафа", "Walk-in closet system": "Walk-in closet система", "Desk wall": "Стена с рабочим столом", "Shelving wall": "Стена с полками", "Murphy bed wall": "Стена с Murphy bed", "Tall cabinet wall": "Стена высоких шкафов", "Full office built-in": "Полный office built-in", "Kitchen accent wall": "Кухонная акцентная стена", "Under bar panels": "Панели под баром", "Pantry / cabinet wall": "Стена pantry / шкафов", "Full kitchen feature package": "Полный пакет для кухни", "Custom wall": "Стена на заказ", "Full room": "Вся комната", "Multiple areas": "Несколько зон" },
+    lineItems: { "Wall panels": "Стеновые панели", "Stone-look panels": "Панели под камень", "Under bar panels": "Панели под баром", "Lower cabinet": "Нижняя тумба", "Tall side cabinets": "Высокие боковые шкафы", "TV mounting preparation": "Подготовка крепления TV", "Simple LED lighting allowance": "Allowance простой LED", "Premium LED lighting allowance": "Allowance premium LED", "Shelves": "Полки", "Mirror feature": "Зеркальный элемент", "Stone-look accent material": "Акцентный материал под камень", "Hidden door allowance": "Allowance скрытой двери", "Sliding closet doors": "Раздвижные двери шкафа", "Closet reface pieces": "Элементы обновления шкафа", "Murphy bed wall allowance": "Allowance Murphy bed", "Built-in desk allowance": "Allowance встроенного стола", "Integrated nightstands": "Интегрированные тумбы", "Ceiling panels": "Потолочные панели", "Countertop, sink and plumbing": "Столешница, раковина и сантехника" },
+  },
+  uk: {
+    projectTypes: { "TV Wall / Media Wall": "TV-стіна / медіа-стіна", "Wall Panels": "Стінові панелі", "Foyer / Entry Wall": "Фойє / вхідна стіна", "Bedroom Feature Wall": "Акцентна стіна спальні", "Bathroom Vanity Wall": "Стіна з тумбою у ванній", "Closet Doors / Closet Reface": "Двері шафи / оновлення фасаду", "Office Built-In": "Вбудовані меблі для офісу", "Kitchen Wall / Under Bar": "Кухонна стіна / під баром", "Full Custom Project": "Повністю custom-проєкт" },
+    rooms: { "Living Room": "Вітальня", "Bedroom": "Спальня", "Foyer": "Фойє", "Hallway": "Коридор", "Kitchen": "Кухня", "Bathroom": "Ванна", "Closet": "Гардеробна", "Office": "Кабінет", "Dining Area": "Обідня зона", "Den Room": "Den room", "Other": "Інше" },
+    sizes: { "Small wall, up to 8 ft wide": "Невелика стіна, до 8 ft", "Medium wall, 8-14 ft wide": "Середня стіна, 8-14 ft", "Large wall, 14-22 ft wide": "Велика стіна, 14-22 ft", "Multiple walls / full room": "Кілька стін / уся кімната", "Double-height area": "Подвійна висота", "Not sure": "Не впевнений(а)" },
+    layouts: { "Simple TV panel": "Проста TV-панель", "TV wall with lower cabinet": "TV-стіна з нижньою тумбою", "TV wall with tall side cabinets": "TV-стіна з високими боковими шафами", "Full media wall with shelves": "Повна media wall з полицями", "TV wall with hidden door": "TV-стіна з прихованими дверима", "Premium TV wall with stone / mirror / LED": "Premium TV-стіна з каменем / дзеркалом / LED", "Flat panels": "Плоскі панелі", "Fluted panels": "Рифлені панелі", "Mixed wood panels": "Комбіновані дерев'яні панелі", "Stone-look accent": "Акцент під камінь", "Panels with LED": "Панелі з LED", "Full hallway / full room panels": "Панелі для коридору або всієї кімнати", "Single accent wall": "Одна акцентна стіна", "Double-height foyer": "Фойє подвійної висоти", "Wall with hidden door": "Стіна з прихованими дверима", "Wall with mirror": "Стіна з дзеркалом", "Wall with ceiling panels": "Стіна зі стельовими панелями", "Full foyer package": "Повний пакет для фойє", "Bed back wall": "Стіна за ліжком", "Bed wall with LED": "Стіна за ліжком з LED", "Bed wall with panels and nightstands": "Стіна з панелями та тумбами", "TV wall": "TV-стіна", "Full bedroom feature package": "Повний пакет для спальні", "Vanity wall panels": "Панелі для vanity wall", "Mirror and LED": "Дзеркало та LED", "Floating cabinet": "Підвісна тумба", "Double vanity": "Подвійна тумба", "Stone-look panels": "Панелі під камінь", "Full vanity feature wall": "Повна vanity feature wall", "Sliding doors": "Розсувні двері", "Mirror doors": "Дзеркальні двері", "Closet reface": "Оновлення фасаду шафи", "Full closet front": "Повний фасад шафи", "Walk-in closet system": "Walk-in closet система", "Desk wall": "Стіна з робочим столом", "Shelving wall": "Стіна з полицями", "Murphy bed wall": "Стіна з Murphy bed", "Tall cabinet wall": "Стіна високих шаф", "Full office built-in": "Повний office built-in", "Kitchen accent wall": "Кухонна акцентна стіна", "Under bar panels": "Панелі під баром", "Pantry / cabinet wall": "Стіна pantry / шаф", "Full kitchen feature package": "Повний пакет для кухні", "Custom wall": "Стіна на замовлення", "Full room": "Уся кімната", "Multiple areas": "Кілька зон" },
+    lineItems: { "Wall panels": "Стінові панелі", "Stone-look panels": "Панелі під камінь", "Under bar panels": "Панелі під баром", "Lower cabinet": "Нижня тумба", "Tall side cabinets": "Високі бокові шафи", "TV mounting preparation": "Підготовка кріплення TV", "Simple LED lighting allowance": "Allowance простого LED", "Premium LED lighting allowance": "Allowance premium LED", "Shelves": "Полиці", "Mirror feature": "Дзеркальний елемент", "Stone-look accent material": "Акцентний матеріал під камінь", "Hidden door allowance": "Allowance прихованих дверей", "Sliding closet doors": "Розсувні двері шафи", "Closet reface pieces": "Елементи оновлення шафи", "Murphy bed wall allowance": "Allowance Murphy bed", "Built-in desk allowance": "Allowance вбудованого столу", "Integrated nightstands": "Інтегровані тумби", "Ceiling panels": "Стельові панелі", "Countertop, sink and plumbing": "Стільниця, раковина і сантехніка" },
+  },
+};
+
+function mergeDeep(base, overlay) {
+  const output = Array.isArray(base) ? [...base] : { ...base };
+  for (const [key, value] of Object.entries(overlay || {})) {
+    if (value && typeof value === "object" && !Array.isArray(value) && base[key] && typeof base[key] === "object" && !Array.isArray(base[key])) output[key] = mergeDeep(base[key], value);
+    else output[key] = value;
+  }
+  return output;
 }
 
 function plannerPathCards(route) {
-  return `<section class="planner-paths" aria-label="Choose planner path">
+  const q = quickEstimateText(route.lang);
+  return `<section class="planner-paths" aria-label="${escapeHtml(localized("Choose planner path", route.lang))}">
     <article class="planner-path-card quick">
-      <p class="eyebrow">${escapeHtml("Guided Estimate")}</p>
-      <h2>${escapeHtml("Quick Project Estimate")}</h2>
-      <p>${escapeHtml("For homeowners who are not sure where to start. Answer a few simple questions, upload photos, and receive a preliminary budget range.")}</p>
-      <a class="button primary track" data-event="quick_estimate_path_selected" href="#quick-project-estimate">${escapeHtml("Get Quick Estimate")}</a>
+      <p class="eyebrow">${escapeHtml(q.guided)}</p>
+      <h2>${escapeHtml(q.title)}</h2>
+      <p>${escapeHtml(q.pathQuickDesc)}</p>
+      <a class="button primary track" data-event="quick_estimate_path_selected" href="#quick-project-estimate">${escapeHtml(q.pathQuickCta)}</a>
     </article>
     <article class="planner-path-card technical">
-      <p class="eyebrow">${escapeHtml("Advanced Scope")}</p>
-      <h2>${escapeHtml("Technical Millwork Planner")}</h2>
-      <p>${escapeHtml("For detailed scopes, designers, builders and advanced planning. Add dimensions, modules, materials, lighting and project notes.")}</p>
-      <a class="button secondary track" data-event="technical_planner_path_selected" href="#technical-millwork-planner">${escapeHtml("Use Technical Planner")}</a>
+      <p class="eyebrow">${escapeHtml(q.pathTechnicalKicker)}</p>
+      <h2>${escapeHtml(q.pathTechnicalTitle)}</h2>
+      <p>${escapeHtml(q.pathTechnicalDesc)}</p>
+      <a class="button secondary track" data-event="technical_planner_path_selected" href="#technical-millwork-planner">${escapeHtml(q.pathTechnicalCta)}</a>
     </article>
   </section>`;
 }
 
 function quickEstimateWizard(route, sourcePage = "/technical-millwork-planner") {
-  const projectCards = quickEstimateConfig.projectTypes.map((item, index) => quickChoice("projectType", item, index === 0)).join("");
-  const roomCards = quickEstimateConfig.rooms.map((item, index) => quickChoice("roomType", item, index === 0)).join("");
-  const sizeCards = Object.entries(quickEstimateConfig.approximateSizes).map(([value, item]) => quickChoice("sizeBucket", item.label, value === "medium", value)).join("");
+  const q = quickEstimateText(route.lang);
+  const projectCards = quickEstimateConfig.projectTypes.map((item, index) => quickChoice("projectType", quickLabel(q, "projectTypes", item), index === 0, item)).join("");
+  const roomCards = quickEstimateConfig.rooms.map((item, index) => quickChoice("roomType", quickLabel(q, "rooms", item), index === 0, item)).join("");
+  const sizeCards = Object.entries(quickEstimateConfig.approximateSizes).map(([value, item]) => quickChoice("sizeBucket", quickLabel(q, "sizes", item.label), value === "medium", value)).join("");
   const timelineOptions = ["ASAP", "1-3 months", "3-6 months", "6+ months", "Planning only"];
   const budgetOptions = ["Under $10,000", "$10,000-$25,000", "$25,000-$50,000", "$50,000-$100,000", "$100,000+", "Not sure"];
-  return `${quickEstimateDataScript(sourcePage)}
+  const quickSelect = (label, name, options, required = false) => selectWithValues(label, name, options.map((value) => ({ value, label: quickOptionLabel(value, route.lang) })), required);
+  return `${quickEstimateDataScript(sourcePage, route.lang)}
     <section class="quick-estimate" id="quick-project-estimate" data-quick-estimate data-source-page="${escapeHtml(sourcePage)}">
       <div class="quick-estimate-head">
-        <p class="eyebrow">${escapeHtml("Quick Project Estimate")}</p>
-        <h2>${escapeHtml("Get a Preliminary Project Range")}</h2>
-        <p>${escapeHtml("Choose your project type, answer simple visual questions and upload photos. You do not need drawings, exact square footage or millwork terminology to begin.")}</p>
+        <p class="eyebrow">${escapeHtml(q.title)}</p>
+        <h2>${escapeHtml(q.heroTitle)}</h2>
+        <p>${escapeHtml(q.heroIntro)}</p>
       </div>
       <div class="quick-estimate-grid">
         <form class="lead-form quick-estimate-form" data-lead-form="quick_project_estimate">
@@ -4064,94 +4533,94 @@ function quickEstimateWizard(route, sourcePage = "/technical-millwork-planner") 
           <input type="hidden" name="estimate_json" data-quick-field="estimateJson" value="">
           <input type="hidden" name="message" data-quick-field="message" value="">
           <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
-          <div class="quick-progress"><span data-quick-progress-label>Step 1 of 6</span><div><i data-quick-progress-bar></i></div></div>
+          <div class="quick-progress"><span data-quick-progress-label>${escapeHtml(q.progress.replace("{step}", "1"))}</span><div><i data-quick-progress-bar></i></div></div>
           <fieldset class="quick-step" data-quick-step="1">
-            <legend>${escapeHtml("Choose project type")}</legend>
+            <legend>${escapeHtml(q.steps[0])}</legend>
             <div class="quick-choice-grid">${projectCards}</div>
           </fieldset>
           <fieldset class="quick-step" data-quick-step="2" hidden>
-            <legend>${escapeHtml("Choose room / area")}</legend>
+            <legend>${escapeHtml(q.steps[1])}</legend>
             <div class="quick-choice-grid compact">${roomCards}</div>
           </fieldset>
           <fieldset class="quick-step" data-quick-step="3" hidden>
-            <legend>${escapeHtml("Approximate size")}</legend>
-            <p class="form-hint">${escapeHtml("Do you know the wall width and ceiling height?")}</p>
+            <legend>${escapeHtml(q.steps[2])}</legend>
+            <p class="form-hint">${escapeHtml(q.sizeQuestion)}</p>
             <div class="quick-segment">
-              <button type="button" class="active" data-size-mode="approximate">${escapeHtml("No, use approximate size")}</button>
-              <button type="button" data-size-mode="exact">${escapeHtml("Yes, I can enter dimensions")}</button>
-              <button type="button" data-size-mode="unknown">${escapeHtml("Not sure")}</button>
+              <button type="button" class="active" data-size-mode="approximate">${escapeHtml(q.sizeModes.approximate)}</button>
+              <button type="button" data-size-mode="exact">${escapeHtml(q.sizeModes.exact)}</button>
+              <button type="button" data-size-mode="unknown">${escapeHtml(q.sizeModes.unknown)}</button>
             </div>
             <div class="form-grid" data-exact-size hidden>
-              <label>${escapeHtml("Wall width in ft")}<input type="number" name="widthFt" min="1" max="80" step="0.5" data-quick-input="widthFt"></label>
-              <label>${escapeHtml("Ceiling height in ft")}<input type="number" name="heightFt" min="1" max="30" step="0.5" data-quick-input="heightFt"></label>
-              <label>${escapeHtml("Optional depth")}<input type="number" name="depthFt" min="0" max="8" step="0.5" data-quick-input="depthFt"></label>
-              <label>${escapeHtml("Number of walls")}<input type="number" name="wallCount" min="1" max="8" step="1" value="1" data-quick-input="wallCount"></label>
+              <label>${escapeHtml(q.exactFields.width)}<input type="number" name="widthFt" min="1" max="80" step="0.5" data-quick-input="widthFt"></label>
+              <label>${escapeHtml(q.exactFields.height)}<input type="number" name="heightFt" min="1" max="30" step="0.5" data-quick-input="heightFt"></label>
+              <label>${escapeHtml(q.exactFields.depth)}<input type="number" name="depthFt" min="0" max="8" step="0.5" data-quick-input="depthFt"></label>
+              <label>${escapeHtml(q.exactFields.walls)}<input type="number" name="wallCount" min="1" max="8" step="1" value="1" data-quick-input="wallCount"></label>
             </div>
             <div class="quick-choice-grid" data-approx-size>${sizeCards}</div>
           </fieldset>
           <fieldset class="quick-step" data-quick-step="4" hidden>
-            <legend>${escapeHtml("Visual layout")}</legend>
+            <legend>${escapeHtml(q.steps[3])}</legend>
             <div class="quick-choice-grid" data-layout-options></div>
           </fieldset>
           <fieldset class="quick-step" data-quick-step="5" hidden>
-            <legend>${escapeHtml("Simple feature questions")}</legend>
+            <legend>${escapeHtml(q.steps[4])}</legend>
             <div class="form-grid">
-              ${select("Do you need cabinets?", "quick_cabinets", ["No cabinets", "Lower cabinet only", "Tall side cabinets", "Both lower and tall cabinets", "Not sure"], false)}
-              ${select("Do you need LED lighting?", "quick_led", ["No", "Simple lighting", "Premium lighting", "Not sure"], false)}
-              ${select("Do you need shelves?", "quick_shelves", ["No", "Few shelves", "Many shelves", "Not sure"], false)}
-              ${select("Do you need mirror or stone-look material?", "quick_material", ["No", "Mirror", "Stone-look", "Both", "Not sure"], false)}
-              ${select("Any hidden doors?", "quick_hidden_doors", ["No", "1 hidden door", "2 hidden doors", "3 hidden doors", "Not sure"], false)}
-              ${select("Is this one wall or multiple walls?", "quick_wall_count", ["One wall", "Two walls", "Full room", "Not sure"], false)}
-              ${select("Do you already have design drawings or renderings?", "quick_drawings", ["Yes", "No", "I only have photos", "Not sure"], false)}
+              ${quickSelect(q.questions.cabinets, "quick_cabinets", ["No cabinets", "Lower cabinet only", "Tall side cabinets", "Both lower and tall cabinets", "Not sure"])}
+              ${quickSelect(q.questions.led, "quick_led", ["No", "Simple lighting", "Premium lighting", "Not sure"])}
+              ${quickSelect(q.questions.shelves, "quick_shelves", ["No", "Few shelves", "Many shelves", "Not sure"])}
+              ${quickSelect(q.questions.material, "quick_material", ["No", "Mirror", "Stone-look", "Both", "Not sure"])}
+              ${quickSelect(q.questions.hiddenDoors, "quick_hidden_doors", ["No", "1 hidden door", "2 hidden doors", "3 hidden doors", "Not sure"])}
+              ${quickSelect(q.questions.walls, "quick_wall_count", ["One wall", "Two walls", "Full room", "Not sure"])}
+              ${quickSelect(q.questions.drawings, "quick_drawings", ["Yes", "No", "I only have photos", "Not sure"])}
             </div>
           </fieldset>
           <fieldset class="quick-step" data-quick-step="6" hidden>
-            <legend>${escapeHtml("Result and contact")}</legend>
+            <legend>${escapeHtml(q.steps[5])}</legend>
             <div class="quick-result-card">
-              <span>${escapeHtml("Preliminary Project Range")}</span>
+              <span>${escapeHtml(q.preliminaryRange)}</span>
               <strong data-quick-range>$0 - $0</strong>
-              <p>${escapeHtml("Final pricing depends on field measurements, materials, project details and installation conditions.")}</p>
+              <p>${escapeHtml(q.resultNote)}</p>
             </div>
             <div class="quick-included">
-              <h3>${escapeHtml("This preliminary range may include")}</h3>
+              <h3>${escapeHtml(q.includedTitle)}</h3>
               <ul data-quick-included-list></ul>
             </div>
             <div class="form-grid">
-              ${input("Name", "fullName", true)}
-              ${input("Email", "email", true, "email")}
-              ${input("Phone", "phone", true, "tel")}
-              ${input("ZIP / project location", "zipCode", true)}
-              ${select("Timeline", "timeline", timelineOptions, true)}
-              ${select("Approximate budget range", "budget", budgetOptions, true)}
+              ${input(q.fields.name, "fullName", true)}
+              ${input(q.fields.email, "email", true, "email")}
+              ${input(q.fields.phone, "phone", true, "tel")}
+              ${input(q.fields.zip, "zipCode", true)}
+              ${quickSelect(q.fields.timeline, "timeline", timelineOptions, true)}
+              ${quickSelect(q.fields.budget, "budget", budgetOptions, true)}
             </div>
-            <label>${escapeHtml("Project notes")}<textarea name="project_notes" placeholder="Tell us what you want to change, what you like, and anything important about the space."></textarea></label>
-            <label>${escapeHtml("Upload photos")}<input type="file" name="project_photos" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
+            <label>${escapeHtml(q.fields.notes)}<textarea name="project_notes" placeholder="${escapeHtml(q.notesPlaceholder)}"></textarea></label>
+            <label>${escapeHtml(q.fields.upload)}<input type="file" name="project_photos" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
             <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(copy[route.lang].form.consent)}</label>
             <div class="quick-final-actions">
-              <button class="button primary" type="submit">${escapeHtml("Send My Quick Estimate")}</button>
-              <a class="button secondary" href="${urlFor(route.lang, "designConcept")}">${escapeHtml("Request Design Concept")}</a>
+              <button class="button primary" type="submit">${escapeHtml(q.send)}</button>
+              <a class="button secondary" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(q.designConcept)}</a>
             </div>
             <p class="form-status" role="status" aria-live="polite"></p>
           </fieldset>
           <div class="quick-nav">
-            <button class="button secondary" type="button" data-quick-back>${escapeHtml("Back")}</button>
-            <button class="button secondary" type="button" data-quick-reset>${escapeHtml("Reset")}</button>
-            <button class="button primary" type="button" data-quick-next>${escapeHtml("Next")}</button>
+            <button class="button secondary" type="button" data-quick-back>${escapeHtml(q.back)}</button>
+            <button class="button secondary" type="button" data-quick-reset>${escapeHtml(q.reset)}</button>
+            <button class="button primary" type="button" data-quick-next>${escapeHtml(q.next)}</button>
           </div>
         </form>
         <aside class="quick-summary" aria-live="polite">
-          <span>${escapeHtml("Live Preliminary Range")}</span>
+          <span>${escapeHtml(q.liveRange)}</span>
           <strong data-quick-summary-range>$0 - $0</strong>
           <dl>
-            <div><dt>${escapeHtml("Project")}</dt><dd data-quick-summary-project>TV Wall / Media Wall</dd></div>
-            <div><dt>${escapeHtml("Room")}</dt><dd data-quick-summary-room>Living Room</dd></div>
-            <div><dt>${escapeHtml("Layout")}</dt><dd data-quick-summary-layout>Simple TV panel</dd></div>
-            <div><dt>${escapeHtml("Confidence")}</dt><dd data-quick-summary-confidence>Medium</dd></div>
+            <div><dt>${escapeHtml(q.summary.project)}</dt><dd data-quick-summary-project>${escapeHtml(quickLabel(q, "projectTypes", "TV Wall / Media Wall"))}</dd></div>
+            <div><dt>${escapeHtml(q.summary.room)}</dt><dd data-quick-summary-room>${escapeHtml(quickLabel(q, "rooms", "Living Room"))}</dd></div>
+            <div><dt>${escapeHtml(q.summary.layout)}</dt><dd data-quick-summary-layout>${escapeHtml(quickLabel(q, "layouts", "Simple TV panel"))}</dd></div>
+            <div><dt>${escapeHtml(q.summary.confidence)}</dt><dd data-quick-summary-confidence>${escapeHtml(q.confidence.medium)}</dd></div>
           </dl>
-          <p>${escapeHtml("This public estimate shows a preliminary range only. CAS AURUM reviews photos, dimensions, materials and installation conditions before final pricing.")}</p>
+          <p>${escapeHtml(q.summary.note)}</p>
         </aside>
       </div>
-      <div class="quick-mobile-summary"><b data-quick-mobile-project>TV Wall / Media Wall</b><span data-quick-mobile-range>$0 - $0</span></div>
+      <div class="quick-mobile-summary"><b data-quick-mobile-project>${escapeHtml(quickLabel(q, "projectTypes", "TV Wall / Media Wall"))}</b><span data-quick-mobile-range>$0 - $0</span></div>
     </section>`;
 }
 
@@ -4160,62 +4629,69 @@ function quickChoice(name, label, checked = false, value = label) {
   return `<label class="quick-choice" for="${escapeHtml(id)}"><input id="${escapeHtml(id)}" type="radio" name="${escapeHtml(name)}_choice" value="${escapeHtml(value)}"${checked ? " checked" : ""}><span>${escapeHtml(label)}</span></label>`;
 }
 
+function quickLabel(q, group, value) {
+  return q?.[group]?.[value] || value;
+}
+
+function quickOptionLabel(value, lang) {
+  const maps = {
+    es: { "ASAP": "Lo antes posible", "1-3 months": "1-3 meses", "3-6 months": "3-6 meses", "6+ months": "6+ meses", "Planning only": "Solo planificación", "Under $10,000": "Menos de $10,000", "Not sure": "No estoy seguro", "Not sure yet": "No estoy seguro", "No cabinets": "Sin gabinetes", "Lower cabinet only": "Solo gabinete bajo", "Tall side cabinets": "Gabinetes altos laterales", "Both lower and tall cabinets": "Gabinetes bajos y altos", "No": "No", "Simple lighting": "Iluminación simple", "Premium lighting": "Iluminación premium", "Few shelves": "Algunas repisas", "Many shelves": "Muchas repisas", "Mirror": "Espejo", "Stone-look": "Tipo piedra", "Both": "Ambos", "1 hidden door": "1 puerta oculta", "2 hidden doors": "2 puertas ocultas", "3 hidden doors": "3 puertas ocultas", "One wall": "Una pared", "Two walls": "Dos paredes", "Full room": "Habitación completa", "Yes": "Sí", "I only have photos": "Solo tengo fotos" },
+    fr: { "ASAP": "Dès que possible", "1-3 months": "1-3 mois", "3-6 months": "3-6 mois", "6+ months": "6+ mois", "Planning only": "Planification seulement", "Under $10,000": "Moins de 10 000 $", "Not sure": "Je ne sais pas", "Not sure yet": "Je ne sais pas", "No cabinets": "Sans meubles", "Lower cabinet only": "Meuble bas seulement", "Tall side cabinets": "Colonnes latérales", "Both lower and tall cabinets": "Meubles bas et colonnes", "No": "Non", "Simple lighting": "Éclairage simple", "Premium lighting": "Éclairage premium", "Few shelves": "Quelques étagères", "Many shelves": "Beaucoup d'étagères", "Mirror": "Miroir", "Stone-look": "Effet pierre", "Both": "Les deux", "1 hidden door": "1 porte dissimulée", "2 hidden doors": "2 portes dissimulées", "3 hidden doors": "3 portes dissimulées", "One wall": "Un mur", "Two walls": "Deux murs", "Full room": "Pièce complète", "Yes": "Oui", "I only have photos": "J'ai seulement des photos" },
+    ru: { "ASAP": "Как можно скорее", "1-3 months": "1-3 месяца", "3-6 months": "3-6 месяцев", "6+ months": "6+ месяцев", "Planning only": "Только планирование", "Under $10,000": "До $10,000", "Not sure": "Не уверен(а)", "Not sure yet": "Пока не уверен(а)", "No cabinets": "Без шкафов", "Lower cabinet only": "Только нижняя тумба", "Tall side cabinets": "Высокие боковые шкафы", "Both lower and tall cabinets": "Нижние и высокие шкафы", "No": "Нет", "Simple lighting": "Простая подсветка", "Premium lighting": "Premium-подсветка", "Few shelves": "Несколько полок", "Many shelves": "Много полок", "Mirror": "Зеркало", "Stone-look": "Под камень", "Both": "Оба варианта", "1 hidden door": "1 скрытая дверь", "2 hidden doors": "2 скрытые двери", "3 hidden doors": "3 скрытые двери", "One wall": "Одна стена", "Two walls": "Две стены", "Full room": "Вся комната", "Yes": "Да", "I only have photos": "Есть только фото" },
+    uk: { "ASAP": "Якнайшвидше", "1-3 months": "1-3 місяці", "3-6 months": "3-6 місяців", "6+ months": "6+ місяців", "Planning only": "Лише планування", "Under $10,000": "До $10,000", "Not sure": "Не впевнений(а)", "Not sure yet": "Поки не впевнений(а)", "No cabinets": "Без шаф", "Lower cabinet only": "Тільки нижня тумба", "Tall side cabinets": "Високі бокові шафи", "Both lower and tall cabinets": "Нижні та високі шафи", "No": "Ні", "Simple lighting": "Просте підсвічування", "Premium lighting": "Premium-підсвічування", "Few shelves": "Кілька полиць", "Many shelves": "Багато полиць", "Mirror": "Дзеркало", "Stone-look": "Під камінь", "Both": "Обидва варіанти", "1 hidden door": "1 приховані двері", "2 hidden doors": "2 приховані двері", "3 hidden doors": "3 приховані двері", "One wall": "Одна стіна", "Two walls": "Дві стіни", "Full room": "Уся кімната", "Yes": "Так", "I only have photos": "Є лише фото" },
+  };
+  return maps[lang]?.[value] || value;
+}
+
 function quickProjectEstimatePage(route) {
+  const q = quickEstimateText(route.lang);
   const links = [
-    ["Media Walls", urlFor(route.lang, "mediaWalls")],
-    ["Wall Panels", urlFor(route.lang, "wallPanels")],
-    ["Closets", urlFor(route.lang, "customClosets")],
-    ["Bathroom Vanities", plannerUrlForPreset(route.lang, "bathroom_vanity")],
-    ["Office Built-Ins", urlFor(route.lang, "homeOffices")],
-    ["Kitchen / Under Bar Panels", urlFor(route.lang, "customKitchens")],
-    ["Design Concept", urlFor(route.lang, "designConcept")],
-    ["Contact / Start Project", urlFor(route.lang, "contact")],
-  ];
-  const faq = [
-    ["Can I get a custom media wall estimate without exact measurements?", "Yes. The Quick Project Estimate can use an approximate wall size, photos and a few simple choices to create a preliminary custom media wall estimate."],
-    ["How accurate is the Quick Project Estimate?", "It is a preliminary range, not a final quote. Accuracy improves when you provide exact dimensions, photos or drawings."],
-    ["What affects the price of custom wall panels or built-ins?", "Size, material direction, cabinets, shelves, LED lighting, hidden doors, mirrors, stone-look panels, field conditions and installation details all affect a custom millwork estimate."],
-    ["Can I upload photos instead of drawings?", "Yes. Photos are welcome, and you can start without drawings, exact square footage or millwork experience."],
-    ["What happens after I submit a Quick Project Estimate?", "CAS AURUM reviews your request, photos and preliminary range, then recommends the next step such as a Design Concept or detailed technical estimate review."],
-    ["Is installation included?", "CAS AURUM estimates custom millwork, wall panels, media walls, closets, bathroom vanities and built-ins with installation review. Final inclusion is confirmed after location and field condition review."],
-    ["Do you work with designers and builders?", "Yes. Designers, builders and trade partners can use the Technical Millwork Planner for detailed scopes, zones, options, line items and internal estimate review."],
+    [q.links[0], urlFor(route.lang, "mediaWalls")],
+    [q.links[1], urlFor(route.lang, "wallPanels")],
+    [q.links[2], urlFor(route.lang, "customClosets")],
+    [q.links[3], plannerUrlForPreset(route.lang, "bathroom_vanity")],
+    [q.links[4], urlFor(route.lang, "homeOffices")],
+    [q.links[5], urlFor(route.lang, "customKitchens")],
+    [q.links[6], urlFor(route.lang, "designConcept")],
+    [q.links[7], urlFor(route.lang, "contact")],
   ];
   return `
     <section class="planner-hero quick-seo-hero">
       <div>
-        <p class="eyebrow">${escapeHtml("Quick Project Estimate")}</p>
-        <h1>${escapeHtml("Quick Project Estimate for Custom Millwork & Interior Features")}</h1>
-        <p class="lede">${escapeHtml("Not sure where to start? Use our Quick Project Estimate to get a preliminary budget range for your custom interior feature. Choose your project type, answer a few simple questions, upload photos of your space, and CAS AURUM will review your request. You do not need technical drawings, exact square footage, or millwork experience to begin.")}</p>
+        <p class="eyebrow">${escapeHtml(q.title)}</p>
+        <h1>${escapeHtml(q.h1)}</h1>
+        <p class="lede">${escapeHtml(q.intro)}</p>
       </div>
       <aside class="planner-estimate">
-        <span>${escapeHtml("Guided Estimate")}</span>
-        <strong>${escapeHtml("Photos + simple choices")}</strong>
-        <p>${escapeHtml("For custom media wall estimate, wall panel estimate, built-in cabinet estimate, custom closet estimate and bathroom vanity estimate requests.")}</p>
+        <span>${escapeHtml(q.guided)}</span>
+        <strong>${escapeHtml(q.seoAside)}</strong>
+        <p>${escapeHtml(q.seoAsideText)}</p>
       </aside>
     </section>
     ${quickEstimateWizard(route, "/quick-project-estimate")}
     <section class="seo-copy wide">
-      <h2>${escapeHtml("A simple custom millwork estimate starting point")}</h2>
-      <p>${escapeHtml("Use this interior millwork calculator-style guide for a quick project estimate, custom furniture estimate, custom millwork estimate Atlanta, custom media wall estimate Georgia, wall panels estimate Atlanta, custom built-ins estimate Atlanta and custom closet estimate Atlanta inquiries.")}</p>
+      <h2>${escapeHtml(q.seoBodyTitle)}</h2>
+      <p>${escapeHtml(q.seoBody)}</p>
       <div class="internal">${links.map(([label, href]) => `<a href="${href}">${escapeHtml(label)}</a>`).join("")}</div>
     </section>
     <section class="faq">
       <p class="eyebrow">${escapeHtml("FAQ")}</p>
-      <h2>${escapeHtml("Quick Estimate Questions")}</h2>
-      ${faq.map(([q, a]) => `<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join("")}
+      <h2>${escapeHtml(q.faqTitle)}</h2>
+      ${q.faq.map(([question, answer]) => `<details><summary>${escapeHtml(question)}</summary><p>${escapeHtml(answer)}</p></details>`).join("")}
     </section>`;
 }
 
 function technicalPlannerPage(route) {
   const lang = route.lang;
+  const plannerCopy = plannerText(lang);
   const preset = plannerPresetForRoute(route);
   const plannerMode = preset ? "preset" : "clean";
   const projectTypes = [
-    ["", "Select project type"],
+    ["", plannerCopy.selectProjectType],
     ...Object.values(plannerPresets).map((item) => [item.type, item.label]),
   ];
-  const heroTitle = localizedPlain("Millwork Planner", lang);
-  const heroSubtitle = localizedPlain("Choose a simple guided estimate or build a detailed technical scope for custom walls, media units, closets, vanities, offices and built-ins.", lang);
+  const heroTitle = plannerCopy.title;
+  const heroSubtitle = plannerCopy.subtitle;
   const moduleGroups = [
     ["Cabinet types", [
       ["baseCabinet", "Base cabinet", "Floor cabinet for drawers, doors, sinks, appliances or lower storage runs.", "all"],
@@ -4228,23 +4704,23 @@ function technicalPlannerPage(route) {
     <section class="planner-hero">
       <div>
         <p class="eyebrow">${escapeHtml(localized("Plan My Space", lang))}</p>
-        <h1 data-planner-hero-title>${escapeHtml(heroTitle)}</h1>
-        <p class="lede" data-planner-hero-subtitle>${escapeHtml(heroSubtitle)}</p>
+        <h1 data-planner-hero-title data-planner-default-title="${escapeHtml(heroTitle)}">${escapeHtml(heroTitle)}</h1>
+        <p class="lede" data-planner-hero-subtitle data-planner-default-subtitle="${escapeHtml(heroSubtitle)}">${escapeHtml(heroSubtitle)}</p>
         ${preset ? `<p class="planner-preset-label">${escapeHtml(`Planner preset: ${preset.label}`)} <a href="${urlFor(lang, "planner")}">${escapeHtml("Start with a blank planner")}</a></p>` : ""}
       </div>
       <aside class="planner-estimate" aria-live="polite">
-        <span>${escapeHtml(localized("Preliminary range", lang))}</span>
+        <span>${escapeHtml(plannerCopy.rangeLabel)}</span>
         <strong data-planner-range>$0 - $0</strong>
-        <p data-planner-confidence>${escapeHtml(localized("Add modules to calculate a budget range.", lang))}</p>
+        <p data-planner-confidence>${escapeHtml(plannerCopy.emptyRange)}</p>
       </aside>
     </section>
     ${plannerPathCards(route)}
     ${quickEstimateWizard(route, "/technical-millwork-planner")}
     <section class="technical-planner-anchor" id="technical-millwork-planner">
       <div class="section-head">
-        <p class="eyebrow">${escapeHtml("Advanced / Pro Tool")}</p>
-        <h2>${escapeHtml("Technical Millwork Planner")}</h2>
-        <p>${escapeHtml("Use dimensions, modules, materials, lighting and detailed project notes to prepare a technical scope for CAS AURUM review.")}</p>
+        <p class="eyebrow">${escapeHtml(plannerCopy.advancedEyebrow)}</p>
+        <h2>${escapeHtml(plannerCopy.technicalTitle)}</h2>
+        <p>${escapeHtml(plannerCopy.technicalIntro)}</p>
       </div>
     </section>
     <section class="planner-shell" data-planner data-planner-mode="${plannerMode}" data-planner-preset="${escapeHtml(preset?.type || "")}" data-planner-presets="${escapeHtml(JSON.stringify(plannerPresets))}">
@@ -5235,6 +5711,7 @@ function seoHeaderLinks(lang) {
     es: ["Soluciones", "Concepto", "Galeria", "Como funciona", "Para disenadores y constructores", "About", "Iniciar proyecto"],
     fr: ["Solutions", "Concept", "Galerie", "Processus", "Pour designers et constructeurs", "About", "Demarrer"],
     ru: ["Решения", "Дизайн-концепт", "Галерея", "Как это работает", "Для дизайнеров и строителей", "О нас", "Начать проект"],
+    uk: ["Рішення", "Дизайн-концепт", "Галерея", "Як це працює", "Для дизайнерів і будівельників", "Про нас", "Почати проєкт"],
   }[lang] || {};
   return [
     { href: urlFor(lang, "solutions"), label: labels[0] },
@@ -7132,6 +7609,7 @@ function formCopy(lang) {
     es: ["Nombre", "Apellido", "Email", "Teléfono", "Idioma preferido", "País", "Estado / Provincia", "Ciudad", "Tipo de proyecto", "Servicio requerido", "Presupuesto estimado", "Tiempo", "Dirección del proyecto", "Espacios a medir", "Pies cuadrados aproximados", "Tipo de medición", "Fecha / hora preferida", "Mensaje", "Adjunte imágenes de referencia, planos o enlaces a archivos cuando estén disponibles. Si la carga de archivos no está disponible en esta sesión, incluya nombres de archivo o enlaces en el mensaje.", "Acepto que CAS AURUM me contacte sobre esta consulta.", "Gracias. Su solicitud fue recibida.", "Complete los campos requeridos.", "Algo salió mal. Inténtelo nuevamente."],
     fr: ["Prénom", "Nom", "Email", "Téléphone", "Langue préférée", "Pays", "État / Province", "Ville", "Type de projet", "Service requis", "Budget estimé", "Échéancier", "Adresse du projet", "Pièces / zones à mesurer", "Superficie approximative", "Type de mesure", "Date / heure préférée", "Message", "Ajoutez des images de référence, plans ou liens vers des fichiers si disponibles. Si le téléchargement n’est pas disponible dans cette session, indiquez les noms de fichiers ou les liens dans le message.", "J'accepte que CAS AURUM me contacte au sujet de cette demande.", "Merci. Votre demande a été reçue.", "Veuillez compléter les champs requis.", "Une erreur est survenue. Veuillez réessayer."],
     ru: ["Имя", "Фамилия", "Email", "Телефон", "Предпочтительный язык", "Страна", "Штат / Провинция", "Город", "Тип проекта", "Нужная услуга", "Ориентировочный бюджет", "Сроки", "Адрес проекта", "Помещения для замера", "Примерная площадь", "Тип замера", "Предпочтительная дата / время", "Сообщение", "Прикрепите референсы, чертежи или ссылки на файлы, если они доступны. Если загрузка файлов в текущей сессии недоступна, укажите названия файлов или ссылки в сообщении.", "Я согласен, что CAS AURUM может связаться со мной по этому запросу.", "Спасибо. Ваш запрос получен.", "Заполните обязательные поля.", "Что-то пошло не так. Попробуйте еще раз."],
+    uk: ["Ім'я", "Прізвище", "Email", "Телефон", "Бажана мова", "Країна", "Штат / Провінція", "Місто", "Тип проєкту", "Потрібна послуга", "Орієнтовний бюджет", "Терміни", "Адреса проєкту", "Приміщення для заміру", "Орієнтовна площа", "Тип заміру", "Бажана дата / час", "Повідомлення", "Додайте референси, креслення або посилання на файли, якщо вони є. Якщо завантаження файлів у цій сесії недоступне, вкажіть назви файлів або посилання в повідомленні.", "Я погоджуюся, що CAS AURUM може зв'язатися зі мною щодо цього запиту.", "Дякуємо. Ваш запит отримано.", "Заповніть обов'язкові поля.", "Щось пішло не так. Спробуйте ще раз."],
   }[lang];
   const keys = ["first", "last", "email", "phone", "language", "country", "state", "city", "projectType", "service", "budget", "timeline", "address", "rooms", "sqft", "measurementType", "date", "message", "upload", "consent", "success", "required", "error"];
   return Object.fromEntries(keys.map((k, i) => [k, base[i]]));
@@ -8372,6 +8850,7 @@ function plannerJs() {
     let boot = {};
     try { boot = JSON.parse(dataEl?.textContent || '{}'); } catch {}
     const config = boot.config || { layouts: {}, approximateSizes: {} };
+    const i18n = boot.i18n || {};
     const catalog = {};
     const form = root.querySelector('form[data-lead-form="quick_project_estimate"]');
     const steps = [...root.querySelectorAll('[data-quick-step]')];
@@ -8439,7 +8918,7 @@ function plannerJs() {
     function setStep(step){
       state.step = step;
       steps.forEach(item => item.hidden = Number(item.dataset.quickStep) !== step);
-      if (progressLabel) progressLabel.textContent = 'Step ' + step + ' of 6';
+      if (progressLabel) progressLabel.textContent = (i18n.progress || 'Step {step} of 6').replace('{step}', step);
       if (progressBar) progressBar.style.width = Math.round((step / 6) * 100) + '%';
       const next = root.querySelector('[data-quick-next]');
       const back = root.querySelector('[data-quick-back]');
@@ -8473,7 +8952,7 @@ function plannerJs() {
       const layouts = config.layouts?.[state.projectType] || ['Custom wall'];
       if (!layouts.includes(state.selectedLayout)) state.selectedLayout = layouts[0];
       if (!layoutWrap) return;
-      layoutWrap.innerHTML = layouts.map((label, index) => '<label class="quick-choice"><input type="radio" name="layout_choice" value="' + escapeHtmlClient(label) + '"' + (label === state.selectedLayout || (!state.selectedLayout && index === 0) ? ' checked' : '') + '><span>' + escapeHtmlClient(label) + '</span></label>').join('');
+      layoutWrap.innerHTML = layouts.map((label, index) => '<label class="quick-choice"><input type="radio" name="layout_choice" value="' + escapeHtmlClient(label) + '"' + (label === state.selectedLayout || (!state.selectedLayout && index === 0) ? ' checked' : '') + '><span>' + escapeHtmlClient(quickUiLabel('layouts', label)) + '</span></label>').join('');
       layoutWrap.querySelectorAll('input[name="layout_choice"]').forEach(input => input.addEventListener('change', () => { state.selectedLayout = input.value; renderQuick(); }));
     }
     function renderQuick(){
@@ -8481,12 +8960,12 @@ function plannerJs() {
       const estimate = buildEstimate();
       const range = money(estimate.calculatedTotalMin) + ' - ' + money(estimate.calculatedTotalMax);
       rangeEls.forEach(el => { if (el) el.textContent = range; });
-      if (summary.project) summary.project.textContent = state.projectType;
-      if (summary.room) summary.room.textContent = state.roomType;
-      if (summary.layout) summary.layout.textContent = state.selectedLayout;
-      if (summary.confidence) summary.confidence.textContent = titleCase(estimate.confidence);
-      if (summary.mobileProject) summary.mobileProject.textContent = state.projectType;
-      if (includedList) includedList.innerHTML = estimate.zones[0].sections[0].lineItems.filter(item => item.clientVisible !== false && !item.excluded).slice(0, 7).map(item => '<li>' + escapeHtmlClient(publicItemName(item.name)) + '</li>').join('');
+      if (summary.project) summary.project.textContent = quickUiLabel('projectTypes', state.projectType);
+      if (summary.room) summary.room.textContent = quickUiLabel('rooms', state.roomType);
+      if (summary.layout) summary.layout.textContent = quickUiLabel('layouts', state.selectedLayout);
+      if (summary.confidence) summary.confidence.textContent = i18n.confidence?.[estimate.confidence] || titleCase(estimate.confidence);
+      if (summary.mobileProject) summary.mobileProject.textContent = quickUiLabel('projectTypes', state.projectType);
+      if (includedList) includedList.innerHTML = estimate.zones[0].sections[0].lineItems.filter(item => item.clientVisible !== false && !item.excluded).slice(0, 7).map(item => '<li>' + escapeHtmlClient(quickUiLabel('lineItems', publicItemName(item.name))) + '</li>').join('');
       setHidden('projectType', state.projectType);
       setHidden('roomType', state.roomType);
       setHidden('selectedLayout', state.selectedLayout);
@@ -8623,6 +9102,7 @@ function plannerJs() {
     function confidenceValue(){ return state.sizeMode === 'exact' && state.photoCount ? 'high' : ((state.sizeBucket && state.sizeBucket !== 'not_sure') || state.photoCount ? 'medium' : 'low'); }
     function setHidden(key, value){ if (hidden[key]) hidden[key].value = value; }
     function firstLayout(projectType){ return config.layouts?.[projectType]?.[0] || 'Custom wall'; }
+    function quickUiLabel(group, value){ return i18n?.[group]?.[value] || value; }
     function sizeLabel(){ return state.sizeMode === 'exact' ? ((state.widthFt || '?') + ' ft x ' + (state.heightFt || '?') + ' ft') : (config.approximateSizes?.[state.sizeBucket]?.label || 'Not sure'); }
     function roundHundreds(value){ return Math.max(0, Math.round(Number(value || 0) / 100) * 100); }
     function money(value){ return '$' + Number(value || 0).toLocaleString('en-US'); }
@@ -8764,8 +9244,8 @@ function plannerJs() {
     function syncPlannerPreset(type, initial = false){
       const preset = selectedPreset(type);
       const optionLabel = projectEl?.selectedOptions?.[0]?.textContent || '';
-      if (heroTitleEl) heroTitleEl.textContent = preset?.heroTitle || 'Millwork Planner';
-      if (heroSubtitleEl) heroSubtitleEl.textContent = preset?.heroSubtitle || 'Build a preliminary cabinet, closet, media wall, built-in, wall panel or custom furniture scope before sending photos and notes for a design concept.';
+      if (heroTitleEl) heroTitleEl.textContent = preset?.heroTitle || heroTitleEl.dataset.plannerDefaultTitle || 'Millwork Planner';
+      if (heroSubtitleEl) heroSubtitleEl.textContent = preset?.heroSubtitle || heroSubtitleEl.dataset.plannerDefaultSubtitle || 'Build a preliminary cabinet, closet, media wall, built-in, wall panel or custom furniture scope before sending photos and notes for a design concept.';
       if (presetKickerEl) presetKickerEl.textContent = preset ? 'Preset guidance: ' + preset.label : 'Blank planner';
       if (helperTitleEl) helperTitleEl.textContent = preset?.recommendedPackage || 'Choose a project type when you are ready';
       if (uploadGuidanceEl) uploadGuidanceEl.textContent = preset?.uploadGuidance || 'Start from a blank technical workspace. Choose a project type to see tailored inputs, measurements and questions.';
