@@ -4,6 +4,24 @@ const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "h
 const BRAND = "CAS AURUM";
 const MIN_INDEXABLE_SCORE = 82;
 
+export const defaultNorthAtlantaMarkets = [
+  "Atlanta",
+  "Buckhead",
+  "Alpharetta",
+  "Milton",
+  "Roswell",
+  "Marietta",
+  "Sandy Springs",
+  "Johns Creek",
+  "Brookhaven",
+  "Suwanee",
+  "Duluth",
+  "Buford",
+  "Cumming",
+  "Peachtree Corners",
+  "Decatur",
+];
+
 const serviceCommonFaq = [
   ["What should I send before starting?", "Photos, rough dimensions, ceiling height, project goals, inspiration images and any known site constraints help CAS AURUM recommend the right design concept, technical package or project review path."],
   ["Can this begin remotely?", "Yes. Design concepts and technical planning can begin from photos, measurements and drawings. Georgia projects may also be reviewed for selected local site visits and realization."],
@@ -40,6 +58,10 @@ export const seoMarketStates = [
   state("dc-northern-virginia", "Washington DC / Northern Virginia", "DC/VA", "expansion", "selected_full_service"),
   state("massachusetts", "Massachusetts", "MA", "expansion", "design_concept_remote"),
   state("arizona", "Arizona", "AZ", "expansion", "design_concept_remote"),
+  state("ohio", "Ohio", "OH", "expansion", "design_concept_remote"),
+  state("indiana", "Indiana", "IN", "expansion", "design_concept_remote"),
+  state("washington-state", "Washington", "WA", "expansion", "design_concept_remote"),
+  state("colorado", "Colorado", "CO", "expansion", "design_concept_remote"),
 ];
 
 export const seoMarketCities = [
@@ -55,7 +77,10 @@ export const seoMarketCities = [
   city("duluth", "Duluth", "georgia", "core", 3, "Duluth projects can use custom millwork to clarify storage, improve focal walls and make renovated rooms feel complete."),
   city("cumming", "Cumming", "georgia", "core", 4, "Cumming homes often need media walls, built-ins, closets and mudrooms that improve storage while keeping the room calm."),
   city("buford", "Buford", "georgia", "core", 3, "Buford projects are a good fit for custom built-ins, media walls and storage planning where standard cabinetry feels unfinished."),
+  city("marietta", "Marietta", "georgia", "core", 4, "Marietta homes often benefit from custom kitchens, built-ins, media walls and architectural millwork that respect established residential architecture."),
   city("sugar-hill", "Sugar Hill", "georgia", "core", 3, "Sugar Hill homes can benefit from tailored media walls, built-ins and closets planned around actual dimensions and family use."),
+  city("peachtree-corners", "Peachtree Corners", "georgia", "core", 4, "Peachtree Corners projects are a strong fit for warm minimal built-ins, media walls, home offices and custom cabinetry planned for family routines."),
+  city("decatur", "Decatur", "georgia", "core", 4, "Decatur homes often need custom millwork that balances older-home character, efficient storage, natural light and thoughtful material selection."),
   city("marietta-east-cobb", "Marietta / East Cobb", "georgia", "core", 4, "Marietta and East Cobb homes often need custom kitchens, built-ins and architectural millwork that work with established residential architecture."),
   city("dunwoody", "Dunwoody", "georgia", "core", 4, "Dunwoody projects often call for custom storage, home offices, media walls and built-ins that make existing homes work better."),
   city("miami", "Miami", "florida", "expansion", 5, "Miami projects reward clean drama, integrated lighting, custom storage and materials that can handle bright daylight and entertainment-focused living."),
@@ -68,15 +93,25 @@ export const seoMarketCities = [
   city("hamptons", "Hamptons", "new-york", "expansion", 5, "Hamptons homes often need custom millwork that feels calm, durable and tailored to private entertaining and guest-ready rooms."),
   city("westchester", "Westchester", "new-york", "expansion", 4, "Westchester projects can benefit from custom storage, kitchens, offices and built-ins planned around family homes and established architecture."),
   city("los-angeles", "Los Angeles", "california", "expansion", 5, "Los Angeles interiors benefit from soft daylight, open-plan awareness, custom storage and media walls designed around the visual rhythm of the room."),
+  city("san-diego", "San Diego", "california", "expansion", 4, "San Diego projects can use remote concepts for custom cabinetry, media walls, built-ins and material palettes that respond to indoor-outdoor living."),
   city("orange-county", "Orange County", "california", "expansion", 4, "Orange County projects can begin with remote design concepts for custom kitchens, closets, built-ins and feature walls."),
   city("beverly-hills", "Beverly Hills", "california", "expansion", 5, "Beverly Hills projects often need one-of-one closets, furniture, media walls and millwork with exact finish quality and a private residential feel."),
   city("malibu", "Malibu", "california", "expansion", 5, "Malibu projects should account for daylight, material restraint, coastal conditions and custom work that feels integrated rather than decorative."),
   city("san-francisco", "San Francisco / Bay Area", "california", "expansion", 5, "San Francisco and Bay Area homes often need compact, intelligent storage, built-ins, closets and custom office millwork."),
   city("dallas", "Dallas", "texas", "expansion", 5, "Dallas interiors can support confident media walls, built-ins, offices and kitchens when the scale and materials are planned with restraint."),
+  city("fort-worth", "Fort Worth", "texas", "expansion", 4, "Fort Worth homes are a fit for custom built-ins, media walls, offices and millwork concepts with warm materials and durable detailing."),
+  city("san-antonio", "San Antonio", "texas", "expansion", 4, "San Antonio projects can begin with design concepts for custom cabinetry, wall panels, media walls and storage tailored to the home."),
   city("austin", "Austin", "texas", "expansion", 5, "Austin projects are a fit for architectural millwork, custom kitchens, media walls and built-ins with clean lines and practical technical planning."),
   city("houston", "Houston", "texas", "expansion", 4, "Houston homes often need generous storage, kitchens, wall panels and built-ins that bring order to larger rooms and open plans."),
+  city("jacksonville", "Jacksonville", "florida", "expansion", 4, "Jacksonville homes can use custom media walls, built-ins, kitchens and closets planned around natural light, durability and family use."),
+  city("tampa", "Tampa", "florida", "expansion", 4, "Tampa projects can begin with remote design concepts for custom cabinetry, media walls, wall panels and storage-heavy rooms."),
+  city("orlando", "Orlando", "florida", "expansion", 4, "Orlando homes are a fit for custom built-ins, media walls, closets and kitchen cabinetry concepts planned around daily routines."),
   city("chicago", "Chicago", "illinois", "expansion", 5, "Chicago interiors can carry strong architectural rhythm through panel grids, offices, libraries, built-ins and custom closet planning."),
+  city("columbus", "Columbus", "ohio", "expansion", 4, "Columbus projects can start with design concepts for custom cabinetry, media walls, built-ins and architectural millwork."),
   city("charlotte", "Charlotte", "north-carolina", "expansion", 4, "Charlotte homes are a fit for custom built-ins, kitchens, closets and offices that feel tailored without becoming overdone."),
+  city("indianapolis", "Indianapolis", "indiana", "expansion", 4, "Indianapolis homes can use custom built-ins, kitchens, media walls and closets planned for storage, warmth and long-term durability."),
+  city("seattle", "Seattle", "washington-state", "expansion", 5, "Seattle interiors benefit from moisture-aware material planning, calm built-ins, view preservation and warm integrated lighting."),
+  city("denver", "Denver", "colorado", "expansion", 5, "Denver projects are a fit for custom millwork, media walls, fireplace walls and built-ins with warm natural textures and durable detailing."),
   city("nashville", "Nashville", "tennessee", "expansion", 4, "Nashville projects can use custom millwork, restaurant panels, home bars, media walls and storage to bring warmth and structure."),
   city("washington-dc", "Washington DC", "dc-northern-virginia", "expansion", 5, "Washington DC projects often need measured offices, libraries, built-ins and wall systems with calm authority and durable materials."),
   city("northern-virginia", "Northern Virginia", "dc-northern-virginia", "expansion", 4, "Northern Virginia homes are a fit for custom offices, media walls, closets, kitchens and storage planning."),
