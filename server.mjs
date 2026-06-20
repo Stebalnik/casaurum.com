@@ -2023,15 +2023,15 @@ function completedProjectCategories(lang) {
 }
 
 function completedProjectLinkTarget(lang, project) {
-  if (!project) return { href: urlFor(lang, "projects"), label: pageLabel("projects", lang) };
-  if (project.category === "Bathroom Vanity" || project.room?.includes("Bathroom")) return { href: seoPageUrlFor(lang, "/rooms/bathroom"), label: roomProjectLabel(lang, "bathroom") };
-  if (project.category === "Kitchen Cabinetry" || project.room === "Kitchen") return { href: seoPageUrlFor(lang, "/rooms/kitchen"), label: roomProjectLabel(lang, "kitchen") };
-  if (project.category === "Media Walls" || project.file.includes("tv-wall") || project.file.includes("media-console")) return { href: urlFor(lang, "mediaWalls"), label: pageLabel("mediaWalls", lang) };
-  if (project.category === "Office Millwork" || project.room?.includes("Office")) return { href: seoPageUrlFor(lang, "/rooms/home-office"), label: roomProjectLabel(lang, "homeOffice") };
-  if (project.category === "Commercial Millwork" || project.category === "Ceilings" || project.room?.includes("Lobby") || project.room?.includes("Reception")) return { href: urlFor(lang, "trade"), label: pageLabel("trade", lang) };
-  if (project.category === "Bespoke Furniture") return { href: urlFor(lang, "customFurniture"), label: pageLabel("customFurniture", lang) };
-  if (project.room?.includes("Library")) return { href: urlFor(lang, "builtIns"), label: pageLabel("builtIns", lang) };
-  return { href: urlFor(lang, "projects"), label: pageLabel("projects", lang) };
+  if (!project) return { href: localizedContentHref(lang, "projects"), label: pageLabel("projects", lang) };
+  if (project.category === "Bathroom Vanity" || project.room?.includes("Bathroom")) return { href: localizedContentHref(lang, "quickEstimate"), label: roomProjectLabel(lang, "bathroom") };
+  if (project.category === "Kitchen Cabinetry" || project.room === "Kitchen") return { href: localizedContentHref(lang, "customKitchens"), label: roomProjectLabel(lang, "kitchen") };
+  if (project.category === "Media Walls" || project.file.includes("tv-wall") || project.file.includes("media-console")) return { href: localizedContentHref(lang, "mediaWalls"), label: pageLabel("mediaWalls", lang) };
+  if (project.category === "Office Millwork" || project.room?.includes("Office")) return { href: localizedContentHref(lang, "quickEstimate"), label: roomProjectLabel(lang, "homeOffice") };
+  if (project.category === "Commercial Millwork" || project.category === "Ceilings" || project.room?.includes("Lobby") || project.room?.includes("Reception")) return { href: localizedContentHref(lang, "trade"), label: pageLabel("trade", lang) };
+  if (project.category === "Bespoke Furniture") return { href: localizedContentHref(lang, "customFurniture"), label: pageLabel("customFurniture", lang) };
+  if (project.room?.includes("Library")) return { href: localizedContentHref(lang, "builtIns"), label: pageLabel("builtIns", lang) };
+  return { href: localizedContentHref(lang, "projects"), label: pageLabel("projects", lang) };
 }
 
 function seoPageUrlFor(lang, path) {
@@ -2871,7 +2871,7 @@ function renderPage(route) {
     const page = pageForLanguage(route.programmaticPage, lang);
     return layout(route, page.seoTitle, page.metaDescription, programmaticPage(route, page));
   }
-	  if (lang === "uk" && key === "home") return layout(route, "CAS AURUM українською | Custom interior solutions", "CAS AURUM створює індивідуальні інтер'єрні рішення: TV-стіни, медіа-стіни, кухні, меблі, панелі та дизайн-концепти. Почніть із фото простору або продовжіть англійською.", ukrainianLandingPage(route));
+	  if (lang === "uk" && key === "home") return layout(route, "CAS AURUM українською | Індивідуальні інтер'єрні рішення", "CAS AURUM створює індивідуальні інтер'єрні рішення: TV-стіни, медіа-стіни, кухні, меблі, панелі та дизайн-концепти. Почніть із фото простору або продовжіть англійською.", ukrainianLandingPage(route));
 	  if (key === "home") return layout(route, t.home.title, t.home.desc, home(route));
 	  if (key === "designConcept") return layout(route, designConceptMeta(route.lang).title, designConceptMeta(route.lang).description, designConceptPage(route));
 	  if (key === "quickEstimate") {
@@ -2960,7 +2960,7 @@ function ukrainianLandingPage(route) {
         <p class="eyebrow">CAS AURUM українською</p>
         <h1>Індивідуальні інтер'єрні рішення під ваш простір</h1>
         <h2>TV-стіни, медіа-стіни, кухні, меблі на замовлення, стінові панелі та дизайн-концепти для дому, який хочеться проживати щодня.</h2>
-        <p class="lede">Ця сторінка коротко пояснює, з чого почати. Повна версія сайту доступна англійською, а заявку можна надіслати через форму CAS AURUM.</p>
+        <p class="lede">Це коротка українська сторінка для першого знайомства з CAS AURUM. Повна версія сайту доступна англійською, а заявку можна надіслати через форму CAS AURUM.</p>
         <div class="actions">
           <a class="button primary track" data-event="uk_start_project_clicked" href="/design-concept#start-design-concept">Надіслати запит</a>
           <a class="button secondary track" data-event="uk_continue_english_clicked" href="/">Продовжити англійською</a>
@@ -2977,8 +2977,8 @@ function ukrainianLandingPage(route) {
       <div>
         <p class="eyebrow">Дизайн-концепт</p>
         <h2>Можна почати з фото, без креслень і точних розмірів</h2>
-        <p>Design Concept допомагає побачити напрям: композицію, матеріали, приблизний scope і наступний крок перед виробництвом або детальною оцінкою.</p>
-        <div class="actions"><a class="button primary" href="/design-concept#start-design-concept">Почати з дизайн-концепту</a><a class="button secondary" href="/quick-project-estimate">Отримати швидку оцінку</a></div>
+        <p>Дизайн-концепт допомагає побачити напрям: композицію, матеріали, приблизний обсяг і наступний крок перед виробництвом або детальною оцінкою.</p>
+        <div class="actions"><a class="button primary" href="/design-concept#start-design-concept">Почати з дизайн-концепту</a><a class="button secondary" href="/quick-project-estimate">Швидка оцінка проєкту</a></div>
       </div>
       <aside class="panel">
         <h3>Як почати</h3>
@@ -2988,8 +2988,8 @@ function ukrainianLandingPage(route) {
     <section class="cta" id="start-project">
       <p class="eyebrow">Почати проєкт</p>
       <h2>Надішліть фото простору і короткий опис</h2>
-      <p>Команда CAS AURUM розгляне запит і підкаже, чи краще почати з дизайн-концепту, Quick Project Estimate або технічного планувальника.</p>
-      <div class="actions"><a class="button primary" href="/design-concept#start-design-concept">Надіслати запит</a><a class="button secondary" href="/">English site</a></div>
+      <p>Команда CAS AURUM розгляне запит і підкаже, чи краще почати з дизайн-концепту, швидкої оцінки або технічного планувальника англійською.</p>
+      <div class="actions"><a class="button primary" href="/design-concept#start-design-concept">Надіслати запит</a><a class="button secondary" href="/">Продовжити англійською</a></div>
     </section>
   `;
 }
@@ -2998,7 +2998,7 @@ function transformCards(route) {
   const lang = route.lang;
   const labels = solutionLabels[lang] || solutionLabels.en;
   return `<section class="section-head" id="solutions"><p class="eyebrow">${escapeHtml(labels.solutions)}</p><h2>${escapeHtml(localizedPlain("What Do You Want To Transform?", lang))}</h2><p>${escapeHtml(localizedPlain("Choose a solution category and start with room photos, goals and a clear design concept.", lang))}</p></section>
-  <section class="cards solution-cards">${solutionPageKeys.map((key, index) => `<a class="card" href="${urlFor(lang, key)}"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(labels[key])}</h3><p>${escapeHtml(solutionCardText(key, lang))}</p></a>`).join("")}</section>`;
+  <section class="cards solution-cards">${solutionPageKeys.map((key, index) => `<a class="card" href="${localizedContentHref(lang, key)}"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(labels[key])}</h3><p>${escapeHtml(solutionCardText(key, lang))}</p></a>`).join("")}</section>`;
 }
 
 function solutionCardText(key, lang) {
@@ -3060,7 +3060,7 @@ function homeIdeasGallery(route) {
   const cards = ideas.map(([title, file, key], index) => {
     const project = completedProjectByFile(file);
     const src = project?.src || (file.includes("-1280") ? `/images/${file}` : `/images/projects/${file}`);
-    return `<a class="concept-card" href="${urlFor(lang, key)}"><figure class="concept-media"><img src="${escapeHtml(src)}" alt="${escapeHtml(localizedPlain(title, lang))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1448" height="1086"><figcaption class="project-caption"><strong>${escapeHtml(labels[key])}</strong><span>${escapeHtml(localizedPlain(title, lang))}</span></figcaption></figure><div><span>${escapeHtml(labels.gallery)}</span><h3>${escapeHtml(localizedPlain(title, lang))}</h3><p>${escapeHtml(solutionCardText(key, lang))}</p></div></a>`;
+    return `<a class="concept-card" href="${localizedContentHref(lang, key)}"><figure class="concept-media"><img src="${escapeHtml(src)}" alt="${escapeHtml(localizedPlain(title, lang))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1448" height="1086"><figcaption class="project-caption"><strong>${escapeHtml(labels[key])}</strong><span>${escapeHtml(localizedPlain(title, lang))}</span></figcaption></figure><div><span>${escapeHtml(labels.gallery)}</span><h3>${escapeHtml(localizedPlain(title, lang))}</h3><p>${escapeHtml(solutionCardText(key, lang))}</p></div></a>`;
   }).join("");
   return `<section class="section-head" id="gallery"><p class="eyebrow">${escapeHtml(labels.gallery)}</p><h2>${escapeHtml(localizedPlain("Gallery / Ideas", lang))}</h2><p>${escapeHtml(localizedPlain("Existing media is reorganized by the solution a homeowner is likely researching.", lang))}</p></section><section class="concept-grid">${cards}</section>`;
 }
@@ -4185,7 +4185,7 @@ function designConceptFaq(route, t) {
 
 function designConceptInternalLinks(route, t) {
   const links = ["mediaWalls", "customClosets", "wallPanels", "builtIns", "solutions", "projects", "trade", "consultation"];
-  return `<section class="internal"><h2>${escapeHtml(t.continueTitle)}</h2>${links.map((key) => `<a href="${urlFor(route.lang, key)}">${escapeHtml(pageLabel(key, route.lang))}</a>`).join("")}</section>`;
+  return `<section class="internal"><h2>${escapeHtml(t.continueTitle)}</h2>${links.map((key) => `<a href="${key === "consultation" ? consultationFormUrl(route.lang) : localizedContentHref(route.lang, key)}">${escapeHtml(pageLabel(key, route.lang))}</a>`).join("")}</section>`;
 }
 
 function designConceptBridge(route) {
@@ -4921,7 +4921,7 @@ function plannerPresetForRoute(route) {
 }
 
 function plannerUrlForPreset(lang, type = "") {
-  const base = urlFor(lang, "planner");
+  const base = lang === "ru" || lang === "uk" ? urlFor("en", "planner") : urlFor(lang, "planner");
   const preset = plannerPresetFromType(type);
   return preset ? `${base}?type=${encodeURIComponent(preset.type)}` : base;
 }
@@ -5440,14 +5440,14 @@ function quickOptionLabel(value, lang) {
 function quickProjectEstimatePage(route) {
   const q = quickEstimateText(route.lang);
   const links = [
-    [q.links[0], urlFor(route.lang, "mediaWalls")],
-    [q.links[1], urlFor(route.lang, "wallPanels")],
-    [q.links[2], urlFor(route.lang, "customClosets")],
+    [q.links[0], localizedContentHref(route.lang, "mediaWalls")],
+    [q.links[1], localizedContentHref(route.lang, "wallPanels")],
+    [q.links[2], localizedContentHref(route.lang, "customClosets")],
     [q.links[3], plannerUrlForPreset(route.lang, "bathroom_vanity")],
-    [q.links[4], urlFor(route.lang, "homeOffices")],
-    [q.links[5], urlFor(route.lang, "customKitchens")],
-    [q.links[6], urlFor(route.lang, "designConcept")],
-    [q.links[7], urlFor(route.lang, "contact")],
+    [q.links[4], localizedContentHref(route.lang, "homeOffices")],
+    [q.links[5], localizedContentHref(route.lang, "customKitchens")],
+    [q.links[6], localizedContentHref(route.lang, "designConcept")],
+    [q.links[7], localizedContentHref(route.lang, "contact")],
   ];
   return `
     <section class="planner-hero quick-seo-hero">
@@ -6193,7 +6193,7 @@ function projectsHero(route, gallery) {
     ? `<img src="${escapeHtml(heroProject.src)}" alt="${escapeHtml(completedProjectAlt(route.lang, heroProject, completedProjectTitle(heroProject, route.lang), completedProjectCategory(heroProject, route.lang)))}" loading="eager" fetchpriority="high" decoding="async" width="${heroProject.width}" height="${heroProject.height}">`
     : img("premium-materials-closeup", route.lang, "eager");
   const captionText = heroProject ? completedProjectCaption(route.lang, heroProject, completedProjectCategory(heroProject, route.lang)) : caption("premium-materials-closeup", route.lang);
-	  return `<section class="page-hero"><div><p class="eyebrow">${escapeHtml(BRAND)}</p><h1>${escapeHtml(gallery.title)}</h1><p class="lede">${escapeHtml(gallery.desc)}</p><p>${escapeHtml(gallery.microcopy)}</p><div class="actions"><a class="button primary track" data-event="design_concept_gallery_hero_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Get a Fixed-Price Concept", route.lang))}</a><a class="button secondary track" data-event="cta_clicked" href="${urlFor(route.lang, "collections")}">${escapeHtml(gallery.secondaryCta)}</a></div></div><figure>${heroImage}<figcaption>${escapeHtml(captionText)}</figcaption></figure></section>`;
+	  return `<section class="page-hero"><div><p class="eyebrow">${escapeHtml(BRAND)}</p><h1>${escapeHtml(gallery.title)}</h1><p class="lede">${escapeHtml(gallery.desc)}</p><p>${escapeHtml(gallery.microcopy)}</p><div class="actions"><a class="button primary track" data-event="design_concept_gallery_hero_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Get a Fixed-Price Concept", route.lang))}</a><a class="button secondary track" data-event="cta_clicked" href="${localizedContentHref(route.lang, "collections")}">${escapeHtml(gallery.secondaryCta)}</a></div></div><figure>${heroImage}<figcaption>${escapeHtml(captionText)}</figcaption></figure></section>`;
 }
 
 function projectCategoryChips(route, gallery) {
@@ -6248,18 +6248,20 @@ function completedProjectCaption(lang, project, category) {
 }
 
 function projectsInternalLinks(route, gallery) {
-  const links = [
-    { href: urlFor(route.lang, "mediaWalls"), label: pageLabel("mediaWalls", route.lang) },
-    { href: urlFor(route.lang, "builtIns"), label: pageLabel("builtIns", route.lang) },
-    { href: urlFor(route.lang, "customFurniture"), label: pageLabel("customFurniture", route.lang) },
-    { href: urlFor(route.lang, "millwork"), label: pageLabel("millwork", route.lang) },
-    { href: seoPageUrlFor(route.lang, "/rooms/living-room"), label: roomProjectLabel(route.lang, "livingRoom") },
-    { href: seoPageUrlFor(route.lang, "/rooms/kitchen"), label: roomProjectLabel(route.lang, "kitchen") },
-    { href: seoPageUrlFor(route.lang, "/rooms/bathroom"), label: roomProjectLabel(route.lang, "bathroom") },
-    { href: seoPageUrlFor(route.lang, "/rooms/home-office"), label: roomProjectLabel(route.lang, "homeOffice") },
-    { href: urlFor(route.lang, "collections"), label: pageLabel("collections", route.lang) },
-    { href: urlFor(route.lang, "trade"), label: pageLabel("trade", route.lang) },
-    { href: urlFor(route.lang, "contact"), label: pageLabel("contact", route.lang) },
+  const links = route.lang === "ru" ? [
+    { href: urlFor("ru", "solutions"), label: pageLabel("solutions", "ru") },
+    { href: urlFor("ru", "designConcept"), label: pageLabel("designConcept", "ru") },
+    { href: urlFor("ru", "quickEstimate"), label: pageLabel("quickEstimate", "ru") },
+    { href: urlFor("ru", "contact"), label: pageLabel("contact", "ru") },
+    { href: consultationFormUrl("ru"), label: pageLabel("consultation", "ru") },
+  ] : [
+    { href: localizedContentHref(route.lang, "mediaWalls"), label: pageLabel("mediaWalls", route.lang) },
+    { href: localizedContentHref(route.lang, "builtIns"), label: pageLabel("builtIns", route.lang) },
+    { href: localizedContentHref(route.lang, "customFurniture"), label: pageLabel("customFurniture", route.lang) },
+    { href: localizedContentHref(route.lang, "millwork"), label: pageLabel("millwork", route.lang) },
+    { href: localizedContentHref(route.lang, "collections"), label: pageLabel("collections", route.lang) },
+    { href: localizedContentHref(route.lang, "trade"), label: pageLabel("trade", route.lang) },
+    { href: localizedContentHref(route.lang, "contact"), label: pageLabel("contact", route.lang) },
     { href: consultationFormUrl(route.lang), label: pageLabel("consultation", route.lang) },
   ];
   return `<section class="internal"><h2>${escapeHtml(gallery.linksTitle)}</h2>${links.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}</section>`;
@@ -6540,8 +6542,8 @@ function footer(route) {
   if (route.lang === "uk") {
     return `<footer class="site-footer">
       <div><a class="brand" href="/uk"><img class="brand-lockup footer-brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a><p>Індивідуальні інтер'єрні рішення, дизайн-концепти, TV-стіни, кухні, меблі та стінові панелі.</p></div>
-      <div><h3>Почати</h3><a href="/design-concept#start-design-concept">Надіслати запит</a><a href="/quick-project-estimate">Quick Project Estimate</a><a href="/gallery">Галерея</a><a href="/">English site</a></div>
-      <div><h3>${escapeHtml(localized("Languages", route.lang))}</h3>${languageSwitcher(route)}<a href="/privacy-policy">Privacy Policy</a><a href="/terms-of-use">Terms of Use</a></div>
+      <div><h3>Почати</h3><a href="/design-concept#start-design-concept">Надіслати запит</a><a href="/quick-project-estimate">Швидка оцінка проєкту</a><a href="/gallery">Галерея</a><a href="/">Продовжити англійською</a></div>
+      <div><h3>${escapeHtml(localized("Languages", route.lang))}</h3>${languageSwitcher(route)}<a href="/privacy-policy">Політика конфіденційності</a><a href="/terms-of-use">Умови використання</a></div>
     </footer>`;
   }
   const seo = seoFooterColumns(route.lang, route);
@@ -6557,10 +6559,20 @@ function seoHeaderLinks(lang) {
     return [
       { href: "/uk#services", label: "Послуги" },
       { href: "/uk#design-concept", label: "Дизайн-концепт" },
-      { href: "/quick-project-estimate", label: "Quick Estimate" },
+      { href: "/quick-project-estimate", label: "Швидка оцінка" },
       { href: "/gallery", label: "Галерея" },
       { href: "/", label: "English" },
       { href: "/design-concept#start-design-concept", label: "Надіслати запит" },
+    ];
+  }
+  if (lang === "ru") {
+    return [
+      { href: urlFor("ru", "solutions"), label: "Решения" },
+      { href: urlFor("ru", "designConcept"), label: "Дизайн-концепт" },
+      { href: urlFor("ru", "quickEstimate"), label: "Быстрая оценка" },
+      { href: urlFor("ru", "projects"), label: "Галерея" },
+      { href: urlFor("ru", "contact"), label: "Контакты" },
+      { href: `${urlFor("ru", "designConcept")}#start-design-concept`, label: "Начать проект" },
     ];
   }
   const labels = {
@@ -6582,6 +6594,44 @@ function seoHeaderLinks(lang) {
 }
 
 function seoFooterColumns(lang, route = { key: "usa", path: "/" }) {
+  if (lang === "ru") {
+    return [
+      { title: "Начать", links: [
+        { href: urlFor("ru", "designConcept"), label: "Дизайн-концепт" },
+        { href: urlFor("ru", "quickEstimate"), label: "Быстрая оценка проекта" },
+        { href: consultationFormUrl("ru"), label: "Запросить консультацию" },
+        { href: urlFor("ru", "contact"), label: "Контакты" },
+      ] },
+      { title: "CAS AURUM", links: [
+        { href: urlFor("ru", "solutions"), label: "Решения" },
+        { href: urlFor("ru", "projects"), label: "Галерея" },
+        { href: urlFor("ru", "about"), label: "О компании" },
+      ] },
+      { title: "Подробно на английском", links: [
+        { href: urlFor("en", "mediaWalls"), label: "Media Walls" },
+        { href: urlFor("en", "customKitchens"), label: "Custom Kitchens" },
+        { href: urlFor("en", "wallPanels"), label: "Wall Panels" },
+        { href: urlFor("en", "planner"), label: "Technical Millwork Planner" },
+      ] },
+    ];
+  }
+  if (lang === "es") {
+    return [
+      { title: "Soluciones", links: ["mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "customFurniture"].map((key) => ({ href: urlFor("es", key), label: pageLabel(key, "es") })) },
+      { title: "Planificacion", links: [
+        { href: urlFor("es", "designConcept"), label: pageLabel("designConcept", "es") },
+        { href: urlFor("es", "quickEstimate"), label: "Quick Project Estimate" },
+        { href: urlFor("es", "planner"), label: "Planificador de carpinteria" },
+        { href: consultationFormUrl("es"), label: "Solicitar consulta" },
+      ] },
+      { title: "CAS AURUM", links: [
+        { href: urlFor("es", "projects"), label: pageLabel("projects", "es") },
+        { href: urlFor("es", "trade"), label: pageLabel("trade", "es") },
+        { href: urlFor("es", "partners"), label: pageLabel("partners", "es") },
+        { href: urlFor("es", "contact"), label: pageLabel("contact", "es") },
+      ] },
+    ];
+  }
 	  const labels = {
 	    en: ["Solutions", "Planning", "Rooms", "Service areas", "Gallery", "Ideas", "Tools", "Partnership"],
 	    es: ["Soluciones", "Planificacion", "Espacios", "Areas de servicio", "Galeria", "Ideas", "Herramientas", "Partners"],
@@ -6668,6 +6718,21 @@ function localizedCityName(slug, fallback, lang) {
   return names[lang]?.[slug] || fallback;
 }
 
+function localizedContentHref(lang, key) {
+  if (lang === "uk") return urlFor("uk", "home");
+  if (lang === "ru") {
+    if (russianMeaningfulPageKeys.has(key)) return urlFor("ru", key);
+    if (servicePageKeys.includes(key) || key === "planner" || key === "collections" || key === "partners" || key === "trade") return urlFor("ru", "quickEstimate");
+    return urlFor("ru", "home");
+  }
+  if (lang === "es") {
+    if (spanishMeaningfulPageKeys.has(key)) return urlFor("es", key);
+    if (key === "collections") return urlFor("en", "collections");
+    if (pageOrder.includes(key)) return urlFor("en", key);
+  }
+  return urlFor(lang, key);
+}
+
 function languageSwitcher(route) {
   const languageKeys = isEnglishOnlyPageKey(route.key) ? ["en"] : languageSwitcherKeys;
   return `<div class="lang" aria-label="Language">${languageKeys.map((lang) => `<a class="${route.lang === lang ? "active" : ""} track" data-event="language_changed" href="${routeUrlFor(lang, route)}" hreflang="${lang}">${langs[lang].label}</a>`).join("")}</div>`;
@@ -6685,19 +6750,19 @@ function serviceCards(route) {
   const t = copy[route.lang];
   return `<section class="section-head"><p class="eyebrow">${escapeHtml(localizedPlain("Solutions", route.lang))}</p><h2>${escapeHtml(localizedPlain("Custom interior solutions for real homes", route.lang))}</h2></section><section class="cards">${solutionPageKeys.map((key) => {
     const s = serviceContent(route.lang, key);
-    return `<a class="card" href="${urlFor(route.lang, key)}"><span>${escapeHtml(t.nav[key] || pageLabel(key, route.lang) || localized("Partnerships", route.lang))}</span><h3>${escapeHtml(s.h1)}</h3><p>${escapeHtml(s.intro)}</p></a>`;
+    return `<a class="card" href="${localizedContentHref(route.lang, key)}"><span>${escapeHtml(t.nav[key] || pageLabel(key, route.lang) || localized("Partnerships", route.lang))}</span><h3>${escapeHtml(s.h1)}</h3><p>${escapeHtml(s.intro)}</p></a>`;
   }).join("")}</section>`;
 }
 
 function moneyScopeCards(route) {
   const hp = homepagePositioning[route.lang] || homepagePositioning.en;
   const links = ["mediaWalls", "customFurniture", "customClosets", "builtIns", "wallPanels", "millwork", "trade"];
-  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localized("High-intent project scopes", route.lang))}</p><h2>${escapeHtml(hp.scopeTitle)}</h2><p>${escapeHtml(hp.scopeIntro)}</p></section><section class="cards">${hp.scopes.map((scope, index) => `<a class="card" href="${urlFor(route.lang, links[index] || "consultation")}"><span>${escapeHtml(pageLabel(links[index] || "consultation", route.lang))}</span><h3>${escapeHtml(scope)}</h3></a>`).join("")}</section>`;
+  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localized("High-intent project scopes", route.lang))}</p><h2>${escapeHtml(hp.scopeTitle)}</h2><p>${escapeHtml(hp.scopeIntro)}</p></section><section class="cards">${hp.scopes.map((scope, index) => `<a class="card" href="${localizedContentHref(route.lang, links[index] || "consultation")}"><span>${escapeHtml(pageLabel(links[index] || "consultation", route.lang))}</span><h3>${escapeHtml(scope)}</h3></a>`).join("")}</section>`;
 }
 
 function collectionsBand(route) {
   const t = copy[route.lang];
-  return `<section class="split-band"><div><p class="eyebrow">${escapeHtml(t.nav.collections)}</p><h2>${escapeHtml(localized("A premium starting point for material direction", route.lang))}</h2><p>${escapeHtml(t.collectionsIntro)}</p><a class="button secondary" href="${urlFor(route.lang, "collections")}">${escapeHtml(t.cta.collections)}</a></div>${img("premium-materials-closeup", route.lang)}</section>`;
+  return `<section class="split-band"><div><p class="eyebrow">${escapeHtml(t.nav.collections)}</p><h2>${escapeHtml(localized("A premium starting point for material direction", route.lang))}</h2><p>${escapeHtml(t.collectionsIntro)}</p><a class="button secondary" href="${localizedContentHref(route.lang, "collections")}">${escapeHtml(t.cta.collections)}</a></div>${img("premium-materials-closeup", route.lang)}</section>`;
 }
 
 function whySection(route) {
@@ -6711,7 +6776,7 @@ function homeInlineCta(route) {
 }
 
 function tradeBand(route) {
-  return `<section class="split-band reverse">${img("designer-builder-partnership", route.lang)}<div><p class="eyebrow">${escapeHtml(copy[route.lang].nav.trade)}</p><h2>${escapeHtml(copy[route.lang].services.trade.h1)}</h2><p>${escapeHtml(copy[route.lang].services.trade.body)}</p><div class="actions"><a class="button primary track" data-event="planner_preset_open" href="${plannerUrlForPreset(route.lang, "commercial_millwork")}">${escapeHtml(localizedPlain("Open Technical Planner", route.lang))}</a><a class="button secondary" href="${urlFor(route.lang, "trade")}">${escapeHtml(copy[route.lang].cta.project)}</a></div></div></section>`;
+  return `<section class="split-band reverse">${img("designer-builder-partnership", route.lang)}<div><p class="eyebrow">${escapeHtml(copy[route.lang].nav.trade)}</p><h2>${escapeHtml(copy[route.lang].services.trade.h1)}</h2><p>${escapeHtml(copy[route.lang].services.trade.body)}</p><div class="actions"><a class="button primary track" data-event="planner_preset_open" href="${plannerUrlForPreset(route.lang, "commercial_millwork")}">${escapeHtml(localizedPlain("Open Technical Planner", route.lang))}</a><a class="button secondary" href="${localizedContentHref(route.lang, "trade")}">${escapeHtml(copy[route.lang].cta.project)}</a></div></div></section>`;
 }
 
 function leadPaths(route) {
@@ -6742,9 +6807,9 @@ function internalLinks(route, key) {
       homeOffices: ["designConcept", "projects", "builtIns", "customFurniture", "wallPanels", "mediaWalls", "consultation"],
       mudrooms: ["designConcept", "projects", "customKitchens", "builtIns", "customClosets", "customFurniture", "consultation"],
 	    trade: ["designConcept", "projects", "planner", "millwork", "builtIns", "mediaWalls", "consultation"],
-	  };
+  };
   const links = map[key] || ["projects", "trade", "customFurniture", "consultation", "collections"];
-  return `<section class="internal"><h2>${escapeHtml(localized("Continue exploring", route.lang))}</h2>${links.map((k) => `<a href="${k === "consultation" ? consultationFormUrl(route.lang) : urlFor(route.lang, k)}">${escapeHtml(pageLabel(k, route.lang))}</a>`).join("")}</section>`;
+  return `<section class="internal"><h2>${escapeHtml(localized("Continue exploring", route.lang))}</h2>${links.map((k) => `<a href="${k === "consultation" ? consultationFormUrl(route.lang) : localizedContentHref(route.lang, k)}">${escapeHtml(pageLabel(k, route.lang))}</a>`).join("")}</section>`;
 }
 
 function faqBlock(lang, key, compact = false) {

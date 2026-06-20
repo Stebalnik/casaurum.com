@@ -389,7 +389,7 @@ if (coreSitemap.body.includes("casaurum.com/fr") || coreSitemap.body.includes("c
   server.kill();
   throw new Error("core sitemap should not include French, legacy UA, or deep Ukrainian URLs");
 }
-if (!coreSitemap.body.includes("https://localhost:4899/uk</loc>")) {
+if (!/<loc>https?:\/\/[^<]+\/uk<\/loc>/.test(coreSitemap.body)) {
   server.kill();
   throw new Error("compact Ukrainian landing page missing from core sitemap");
 }
