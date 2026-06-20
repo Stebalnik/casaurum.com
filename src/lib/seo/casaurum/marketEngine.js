@@ -1,4 +1,4 @@
-export const SEO_MARKET_LOCALES = ["en", "es", "fr", "ru"];
+export const SEO_MARKET_LOCALES = ["en", "es"];
 
 const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://casaurum.com").replace(/\/$/, "");
 const BRAND = "CAS AURUM";
@@ -167,7 +167,9 @@ function buildPathIndex(pages) {
   const entries = [];
   for (const page of pages) {
     entries.push([page.route, page]);
-    for (const locale of SEO_MARKET_LOCALES) entries.push([locale === "en" ? `/en${page.route}` : `/${locale}${page.route}`, { ...page, locale, route: locale === "en" ? `/en${page.route}` : `/${locale}${page.route}`, canonicalRoute: page.route }]);
+    for (const locale of SEO_MARKET_LOCALES.filter((item) => item !== "en")) {
+      entries.push([`/${locale}${page.route}`, { ...page, locale, route: `/${locale}${page.route}`, canonicalRoute: page.route }]);
+    }
   }
   return new Map(entries);
 }
@@ -467,7 +469,7 @@ function stateFaq(state, city) {
 }
 
 function hrefLangFor(route, baseUrl = BASE_URL) {
-  const alternates = Object.fromEntries(SEO_MARKET_LOCALES.map((locale) => [locale, `${baseUrl}${locale === "en" ? "/en" : `/${locale}`}${route}`]));
+  const alternates = Object.fromEntries(SEO_MARKET_LOCALES.map((locale) => [locale, `${baseUrl}${locale === "en" ? "" : `/${locale}`}${route}`]));
   alternates["x-default"] = `${baseUrl}${route}`;
   return alternates;
 }
