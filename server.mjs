@@ -3070,6 +3070,7 @@ function home(route) {
       ${startWithConceptSection(route)}
       ${homeAuthoritySections(route)}
       ${homeAudiencePaths(route)}
+      ${homeAuthorityLinkBand(route)}
       ${premiumMaterialsSection(route.lang, "solutions")}
       ${ecoConsciousSection(route.lang, "solutions")}
       ${natureIntegratedSection(route.lang, "solutions")}
@@ -3399,13 +3400,13 @@ const atlantaMoneyPagesBySlug = new Map(atlantaMoneyPages.map((page) => [page.sl
 function homeAuthoritySections(route) {
   if (route.lang !== "en") return "";
   const items = [
-    ["Design First", "Every project begins by clarifying the room, the wall, the storage problem and the feeling the space should carry. The Design Concept turns photos, goals and budget direction into a practical next step before fabrication decisions begin."],
-    ["Materials That Last", "European oak, American walnut, rift white oak, natural veneers and MDF cores are reviewed for durability, Georgia humidity, finish behavior and long-term stability."],
-    ["Smart Integration", "Hidden wiring, LED channels, AV routing, ventilation and access zones are planned early so media walls and built-ins perform better than off-the-shelf furniture."],
-    ["Built Around Real Life", "The best custom interiors work on ordinary days: morning routines, family storage, entertaining, remote work, quiet evenings and the daily touch points that reveal whether a detail is truly useful."],
-    ["For Homeowners, Designers & Builders", "Homeowners can start with photos. Designers and builders can submit drawings, finish notes, field dimensions and client goals for a more coordinated custom path."],
+    ["Design First", "Every project begins by clarifying the room, the wall, the storage problem and the decision that needs to become visible. A Design Concept turns photos, inspiration, rough dimensions and budget direction into a practical next step before fabrication decisions begin."],
+    ["Materials That Last", "Custom interiors depend on more than appearance. European oak, American walnut, rift white oak, natural veneers and MDF cores are reviewed around substrate selection, veneer direction, finish durability, humidity considerations, material stability and long-term use."],
+    ["Smart Integration Behind Clean Surfaces", "Lighting, hidden TV wiring, speakers, AV routing, media wall equipment zones, ventilation and access panels are planned early so a walnut media wall, TV panel or built-in can stay clean on the surface and serviceable behind it."],
+    ["Spaces Inspired by Nature", "Natural wood textures, daylight, indoor-outdoor continuity, plant-friendly shelving, window-adjacent built-ins and nature-inspired material palettes help interiors feel calmer without turning CAS AURUM into a landscaping or live plant installation company."],
+    ["Project-Based Interior Solutions", "The work can include TV walls, media walls, wall panels, custom furniture, built-ins, kitchens, shelving, fireplaces, closets and design concept packages planned around storage, lighting, daily use and installation constraints."],
   ];
-  return `<section class="section-head"><p class="eyebrow">Studio Authority</p><h2>Design-first custom interiors for real homes</h2><p>CAS AURUM is an architectural interior solutions studio, not a furniture catalog. The work starts with how the space should feel, how it needs to function and what details will still make sense years from now.</p><div class="actions"><a class="button primary" href="${urlFor("en", "designConcept")}#start-design-concept">Start Design Concept</a><a class="button secondary" href="${urlFor("en", "quickEstimate")}">Get Quick Project Estimate</a><a class="button secondary" href="${urlFor("en", "planner")}">Use Technical Millwork Planner</a></div></section>
+  return `<section class="section-head"><p class="eyebrow">Studio Authority</p><h2>Design-first custom interiors for real homes</h2><p>CAS AURUM is an architectural interior solutions studio, not a furniture catalog. The work starts with room photos, material behavior, storage needs, technology requirements, budget logic and the details that will still make sense years from now.</p><div class="actions"><a class="button primary track" data-event="home_authority_design_concept" href="${urlFor("en", "designConcept")}#start-design-concept">Start Design Concept</a><a class="button secondary track" data-event="home_authority_quick_estimate" href="${urlFor("en", "quickEstimate")}">Get Quick Project Estimate</a><a class="button secondary track" data-event="home_authority_planner" href="${urlFor("en", "planner")}">Technical Millwork Planner</a></div></section>
   <section class="cards authority-cards">${items.map(([title, body], index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</section>`;
 }
 
@@ -3414,25 +3415,41 @@ function homeAudiencePaths(route) {
   const audiences = [
     {
       title: "Homeowners",
-      body: "Start with room photos, rough measurements, inspiration images and the problem the space needs to solve. CAS AURUM can help decide whether a Design Concept, Quick Project Estimate or project review is the right next step.",
+      body: "Start with photos, inspiration, rough measurements and the room problem you want solved. A good first request might be a walnut media wall with concealed wiring, white oak shelving near natural light or a fireplace wall with hidden storage.",
       href: `${urlFor("en", "designConcept")}#start-design-concept`,
       label: "Start Design Concept",
     },
     {
       title: "Interior Designers",
-      body: "Send elevations, finish direction, client goals, cabinetry notes or wall dimensions when the project needs a custom media wall, panel package, built-in, closet or furniture element coordinated with the design intent.",
+      body: "Use CAS AURUM for concepts, material direction, drawings, finish coordination and fabrication-ready planning when a client needs a custom media wall, panel package, built-in, closet or furniture element coordinated with the design intent.",
       href: urlFor("en", "trade"),
       label: "Trade Collaboration",
     },
     {
       title: "Builders & Remodelers",
-      body: "Use the Technical Millwork Planner when field dimensions, cabinet modules, shop drawing needs, AV constraints or installation sequencing should be organized before production review.",
+      body: "Use CAS AURUM for defined scopes, drawings, field dimensions, cabinet modules, AV constraints, trade coordination and installation planning before production review.",
       href: urlFor("en", "planner"),
       label: "Open Planner",
     },
   ];
   return `<section class="seo-copy wide"><p class="eyebrow">For Homeowners, Designers & Builders</p><h2>Three ways to begin without guessing</h2><p>CAS AURUM keeps the first step practical. The right path depends on whether the project needs visual direction, budget framing, technical organization or trade coordination.</p></section>
   <section class="cards audience-paths">${audiences.map((item, index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p><a class="button secondary" href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a></article>`).join("")}</section>`;
+}
+
+function homeAuthorityLinkBand(route) {
+  if (route.lang !== "en") return "";
+  const links = [
+    ["/materials", "Materials"],
+    ["/smart-integration", "Smart Integration"],
+    ["/design-process", "Design Process"],
+    [urlFor("en", "mediaWalls"), "Media Walls"],
+    [urlFor("en", "wallPanels"), "Wall Panels"],
+    ["/custom-built-ins", "Custom Built-Ins"],
+    [urlFor("en", "trade"), "For Designers & Builders"],
+    [urlFor("en", "planner"), "Technical Millwork Planner"],
+    [urlFor("en", "quickEstimate"), "Quick Project Estimate"],
+  ];
+  return `<section class="internal home-authority-links"><h2>Plan the right next step</h2>${links.map(([href, label]) => `<a class="track" data-event="home_authority_internal_link" href="${escapeHtml(href)}">${escapeHtml(label)}</a>`).join("")}</section>`;
 }
 
 function localProjectHighlights(lang = "en") {
