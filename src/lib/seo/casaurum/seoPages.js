@@ -42,10 +42,10 @@ function localizedEntity(slug, title, extras = {}) {
     title,
     shortTitle: extras.shortTitle || title,
     metaDescription: extras.metaDescription || tx(
-      `${BRAND} explores ${readable.toLowerCase()} through premium materials, curated rooms, architectural detailing and high-end design inspiration.`,
+      `${BRAND} explores ${readable.toLowerCase()} through material palettes, room planning, architectural detailing and custom interior references.`,
       `${BRAND} presenta ${local(title, "es").toLowerCase()} con materiales premium, espacios curados y detalle arquitectónico.`,
       `${BRAND} explore ${local(title, "fr").toLowerCase()} avec matériaux premium, pièces curées et détails architecturaux.`,
-      `${BRAND} раскрывает ${local(title, "ru").toLowerCase()} через премиальные материалы, curated rooms и архитектурные детали.`
+      `${BRAND} раскрывает ${local(title, "ru").toLowerCase()} через материалы, планирование комнат и архитектурные детали.`
     ),
     intro: extras.intro || tx(
       `${readable} at CAS AURUM is planned as a project-specific interior direction: proportion, light, furniture, surfaces and storage are considered together rather than as separate decorative choices.`,
@@ -70,7 +70,7 @@ export const styles = [
   ["japandi", tx("Japandi Interiors", "Interiores Japandi", "Intérieurs Japandi", "Japandi интерьеры"), ["low profiles", "natural texture", "quiet storage"], ["oak", "linen", "clay"], "serene, edited, tactile"],
   ["wabi-sabi", tx("Wabi-Sabi Interiors", "Interiores Wabi-Sabi", "Intérieurs Wabi-Sabi", "Wabi-sabi интерьеры"), ["imperfect texture", "soft asymmetry", "natural patina"], ["plaster", "stone", "raw wood"], "poetic, calm, organic"],
   ["warm-minimalism", tx("Warm Minimalism", "Minimalismo Cálido", "Minimalisme Chaleureux", "Теплый минимализм"), ["soft minimal lines", "warm materials", "integrated furniture"], ["oak", "beige stone", "wool"], "minimal but welcoming"],
-  ["futuristic", tx("Futuristic Interiors", "Interiores Futuristas", "Intérieurs Futuristes", "Футуристические интерьеры"), ["seamless surfaces", "ambient tech", "sculptural forms"], ["glass", "matte black", "stone"], "forward-looking, cinematic"],
+  ["futuristic", tx("Futuristic Interiors", "Interiores Futuristas", "Intérieurs Futuristes", "Футуристические интерьеры"), ["continuous surfaces", "ambient tech", "sculptural forms"], ["glass", "matte black", "stone"], "forward-looking, cinematic"],
   ["smart-home", tx("Smart Home Interiors", "Interiores Smart Home", "Intérieurs Maison Intelligente", "Интерьеры smart home"), ["hidden technology", "lighting scenes", "automated comfort"], ["wood veneer", "acoustic panels", "matte metal"], "technical, comfortable, invisible"],
   ["natural-stone", tx("Natural Stone Interiors", "Interiores con Piedra Natural", "Intérieurs en Pierre Naturelle", "Интерьеры с натуральным камнем"), ["stone slabs", "mineral texture", "architectural weight"], ["marble", "limestone", "travertine"], "solid, timeless, premium"],
   ["bespoke", tx("Bespoke Interiors", "Interiores Bespoke", "Intérieurs Sur Mesure", "Bespoke интерьеры"), ["custom proportions", "one-of-one details", "tailored storage"], ["walnut", "stone", "leather"], "personal, crafted, exact"],
@@ -408,7 +408,7 @@ export const propertyTypes = [
 ].map((slug) => localizedEntity(slug, propertyTitle(slug), {
   shortTitle: shortPropertyTitle(slug),
   designPriorities: ["arrival sequence", "room-by-room material continuity", "storage that supports daily life"],
-  lifestyleUseCases: ["private entertaining", "family routines", "guest-ready spaces", "remote work"],
+  dailyUseCases: ["private entertaining", "family routines", "guest-ready spaces", "remote work"],
   buyerIntent: ["ideas", "inspiration", "consultation", "custom"],
   roomPlanning: ["connect primary rooms through consistent material direction", "use built-ins to make proportions feel intentional"],
   relatedPropertyTypes: relatedFrom(slug, ["villa", "penthouse", "mansion", "private-residence", "luxury-condo", "estate"], 3),
@@ -455,14 +455,14 @@ const cityMarketBriefs = {
     intro: "Atlanta luxury interiors need to balance Southern warmth with disciplined architectural detailing: custom cabinetry that feels built into the home, wall panels that improve proportion, and material choices that hold up in busy family, hospitality and developer spaces.",
     direct: "Atlanta is CAS AURUM's priority Georgia market for custom cabinetry, wall panels, built-ins, closets, kitchens and architectural millwork inquiries.",
     sections: [
-      ["Atlanta project fit", "The strongest Atlanta inquiries usually involve Buckhead residences, Sandy Springs and Alpharetta homes, developer interiors, boutique hospitality, restaurants, offices or high-end remodels where standard cabinetry would look too thin. CAS AURUM reviews drawings, room photos, measurements, material direction and budget range before recommending a practical custom path."],
+      ["Atlanta project fit", "The strongest Atlanta inquiries usually involve Buckhead residences, Sandy Springs and Alpharetta homes, developer interiors, boutique hospitality, restaurants, offices or detailed remodels where standard cabinetry would look too thin. CAS AURUM reviews drawings, room photos, measurements, material direction and budget range before recommending a practical custom path."],
       ["What matters locally", "Atlanta projects often need durable luxury: finishes that survive daily use, storage that feels architectural, and warm materials that do not turn a refined home into a cold showroom. Walnut, oak, natural stone, textured panels, concealed lighting and restrained champagne metal details tend to work well when the proportions are controlled."],
 	      ["Useful project inputs for designers", "A valuable Atlanta design request should include the property area, room dimensions, ceiling height, appliance or AV requirements, desired storage, inspiration images, and whether the scope is cabinetry, a TV wall, wall panels, closets, vanities, a kitchen or a full millwork package."],
 	      ["High-intent Atlanta scopes", "The strongest organic landing paths for Atlanta should connect luxury interior design searches to custom media walls, custom built-ins, luxury closets, wall panels and architectural millwork. These are the scopes most likely to turn style research into a project inquiry."],
 	    ],
 	  },
   miami: {
-    intro: "Miami interiors reward clean drama: stone, glass, dark wood, integrated lighting and custom storage that can feel glamorous without becoming loud. The climate, daylight and entertainment lifestyle make material selection and lighting control especially important.",
+    intro: "Miami interiors reward clean drama: stone, glass, dark wood, integrated lighting and custom storage that can feel glamorous without becoming loud. The climate, daylight and entertainment-heavy rooms make material selection and lighting control especially important.",
     direct: "Miami inquiries are best suited to villas, condos, penthouses, dressing rooms, TV walls, kitchens and hospitality-inspired interiors where custom surfaces and built-ins create a polished technical scope.",
     sections: [
       ["Miami project fit", "A Miami project request should clarify whether the space is a waterfront residence, condo, villa, private lounge, dressing room, kitchen, media wall or hospitality interior. Humidity, daylight, reflection, maintenance and evening lighting scenes should be discussed before choosing high-gloss, stone, veneer or glass-heavy directions."],
@@ -570,7 +570,7 @@ const cityProfiles = {
     scopes: ["kitchens", "wall panels", "closets", "office interiors", "built-in storage"],
   },
   dallas: {
-    propertyMix: "luxury residences, formal dining rooms, executive offices, high-end remodels and commercial lobbies",
+    propertyMix: "luxury residences, formal dining rooms, executive offices, detailed remodels and commercial lobbies",
     designMood: "crisp, confident and polished",
     constraints: "avoiding over-decoration while giving large rooms enough architectural weight",
     materials: ["dark oak", "marble-look surfaces", "walnut", "matte black", "champagne brass"],
@@ -587,7 +587,7 @@ const cityProfiles = {
     propertyMix: "estate homes, private dressing rooms, formal salons, luxury bedroom suites and one-of-one residences",
     designMood: "refined, private and jewel-like",
     constraints: "high expectations for finish quality, privacy, symmetry, hidden storage and quiet material drama",
-    materials: ["limestone", "champagne brass", "walnut", "leather", "high-end lacquer"],
+    materials: ["limestone", "champagne brass", "walnut", "leather", "satin lacquer"],
     scopes: ["bespoke furniture", "dressing rooms", "salon walls", "custom vanities", "private office millwork"],
   },
   "palm-beach": {
@@ -870,7 +870,7 @@ function cityPage(locale, city) {
 function collectionPage(locale, collection) {
   return makePage({
     pageType: "collection", locale, path: `/collections/${collection.slug}`, h1: collection.name, eyebrow: l(locale, "collections"),
-    metaTitle: `${collection.name} | ${BRAND}`, metaDescription: `${collection.name} explores ${collection.philosophy} through curated rooms, premium materials and architectural interior concepts.`,
+    metaTitle: `${collection.name} | ${BRAND}`, metaDescription: `${collection.name} explores ${collection.philosophy} through room layouts, material palettes and architectural interior concepts.`,
     intro: collectionIntro(locale, collection),
     directSummary: collectionDirect(locale, collection),
     sections: standardSections(locale, collection.name, null, null).concat([{ heading: collectionFitHeading(locale), body: collectionFitBody(locale) }]),
@@ -1882,10 +1882,10 @@ function directFor(locale, subject, type) {
 
 function hubDescription(hub, locale) {
   return {
-    en: `Explore CAS AURUM ${hub}: premium interiors, curated rooms, architectural spaces, collection directions and design inspiration for high-end properties.`,
+    en: `Explore CAS AURUM ${hub}: custom interiors, room planning, architectural spaces, collection directions and design references for detailed properties.`,
     es: `Explore ${hub} de CAS AURUM: interiores premium, espacios curados, arquitectura interior y colecciones para propiedades de alto nivel.`,
     fr: `Explorez ${hub} CAS AURUM : intérieurs premium, pièces curées, espaces architecturaux et collections pour propriétés haut de gamme.`,
-    ru: `Изучите ${hub} CAS AURUM: премиальные интерьеры, curated rooms, архитектурные пространства и коллекции для high-end недвижимости.`,
+    ru: `Изучите ${hub} CAS AURUM: интерьеры на заказ, планирование комнат, архитектурные пространства и коллекции для детальных проектов.`,
   }[locale];
 }
 
