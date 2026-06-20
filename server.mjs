@@ -89,8 +89,8 @@ const langs = {
 const navKeys = ["solutions", "designConcept", "projects", "trade", "about", "contact"];
 const solutionPageKeys = ["mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture"];
 const servicePageKeys = ["solutions", ...solutionPageKeys, "millwork", "trade"];
-const contentHubPageKeys = ["materials", "smartIntegration", "localCustomFurniture", "localArchitecturalMillwork"];
-const pageOrder = ["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "collections", "trade", "materials", "smartIntegration", "localCustomFurniture", "localArchitecturalMillwork", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
+const contentHubPageKeys = ["materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork"];
+const pageOrder = ["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "collections", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
 const promotedLanguageKeys = ["en", "es", "ru"];
 const languageSwitcherKeys = ["en", "es", "ru", "uk"];
 const spanishMeaningfulPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "customFurniture", "projects", "trade", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "privacy", "terms"]);
@@ -404,7 +404,7 @@ const slugs = {
 	  en: {
 	    home: "", wallPanels: "wall-panels", customFurniture: "custom-furniture", millwork: "architectural-millwork",
 		    designConcept: "design-concept", solutions: "solutions", mediaWalls: "media-walls", customKitchens: "custom-kitchens", builtIns: "built-ins", customClosets: "custom-closets", fireplaceWalls: "fireplace-walls", homeOffices: "home-offices", mudrooms: "mudrooms", collections: "ideas", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", quickEstimate: "quick-project-estimate", projects: "gallery",
-    materials: "materials", smartIntegration: "smart-integration", localCustomFurniture: "local-custom-furniture", localArchitecturalMillwork: "local-architectural-millwork",
+    materials: "materials", smartIntegration: "smart-integration", designProcess: "design-process", localCustomFurniture: "local-custom-furniture", localArchitecturalMillwork: "local-architectural-millwork",
     about: "about", contact: "contact", consultation: "request-consultation", measurement: "request-measurement",
     usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use",
   },
@@ -3047,12 +3047,14 @@ function home(route) {
     <section class="intro"><p class="eyebrow">CAS AURUM</p><h2>${escapeHtml(localizedPlain("What does CAS AURUM do?", route.lang))}</h2><p>${escapeHtml(copy[route.lang].home.intro)}</p></section>
       ${transformCards(route)}
       ${startWithConceptSection(route)}
+      ${homeAuthoritySections(route)}
       ${premiumMaterialsSection(route.lang, "solutions")}
       ${ecoConsciousSection(route.lang, "solutions")}
       ${natureIntegratedSection(route.lang, "solutions")}
       ${smartIntegrationSection(route.lang, "solutions")}
 	    ${clearPackagesSection(route)}
       ${homeHowItWorks(route)}
+      ${localProjectHighlights(route.lang)}
       ${homeIdeasGallery(route)}
       ${homeCompletedProjects(route)}
     ${whySection(route)}
@@ -3232,24 +3234,61 @@ function homeFinalCta(route) {
 const northAtlantaMarkets = ["Atlanta", "Buckhead", "Alpharetta", "Milton", "Roswell", "Marietta", "Sandy Springs", "Johns Creek", "Brookhaven", "Suwanee", "Duluth", "Buford", "Cumming", "Peachtree Corners", "Decatur"];
 const futureMetroExamples = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Dallas", "San Antonio", "San Diego", "Austin", "Jacksonville", "Fort Worth", "Columbus", "Charlotte", "Indianapolis", "Seattle", "Denver", "Washington", "Nashville", "Boston", "Miami", "Tampa", "Orlando", "Atlanta"];
 const reusableSolutionSet = ["TV walls", "media walls", "architectural wall panels", "custom furniture", "custom kitchens", "built-ins", "fireplaces", "shelving systems", "closets", "design concept packages", "engineering and build packages"];
+const northAtlantaProjectHighlights = [
+  {
+    title: "Modern Walnut Media Wall - Alpharetta",
+    body: "A representative Alpharetta media wall scope might combine an integrated TV wall, concealed wiring, walnut veneer, hidden equipment storage and soft LED lighting so the living room feels organized instead of equipment-led.",
+  },
+  {
+    title: "Architectural Wall Panels - Buckhead",
+    body: "A Buckhead wall panel concept may use fluted panels, quiet reveals, lighting integration and a restrained material palette to give a modern living room more depth without making the space feel overdecorated.",
+  },
+  {
+    title: "Custom Built-Ins - Milton",
+    body: "A Milton built-in package often starts with storage, shelving, natural materials and sightlines to windows or outdoor views, then moves into proportions, finish durability and how the room is used every day.",
+  },
+];
+
+function homeAuthoritySections(route) {
+  if (route.lang !== "en") return "";
+  const items = [
+    ["Design First", "Every project begins by clarifying the room, the wall, the storage problem and the feeling the space should carry. The Design Concept turns photos and goals into a practical direction before fabrication decisions begin."],
+    ["Materials & Craftsmanship", "European oak, American walnut, rift white oak, natural veneers and premium cores are selected for longevity, stability and warmth rather than for a passing trend."],
+    ["Smart Integration", "Lighting, wiring, access and equipment zones are planned early so technology disappears into the architecture instead of sitting on top of it."],
+    ["Built Around Real Life", "The best custom interiors work on ordinary days: morning routines, family storage, entertaining, remote work, quiet evenings and the daily touch points that reveal whether a detail is truly useful."],
+    ["For Homeowners, Designers & Builders", "Homeowners can start with photos. Designers and builders can submit drawings, finish notes, field dimensions and client goals for a more coordinated custom path."],
+  ];
+  return `<section class="section-head"><p class="eyebrow">Studio Authority</p><h2>Design-first custom interiors for real homes</h2><p>CAS AURUM is an architectural interior solutions studio, not a furniture catalog. The work starts with how the space should feel, how it needs to function and what details will still make sense years from now.</p></section>
+  <section class="cards authority-cards">${items.map(([title, body], index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</section>`;
+}
+
+function localProjectHighlights(lang = "en") {
+  if (lang !== "en") return "";
+  return `<section class="seo-copy wide"><p class="eyebrow">North Atlanta Project Examples</p><h2>Representative project directions for local homes</h2><p>These highlights describe the types of scopes CAS AURUM is built to review. They are project categories and planning examples, not fabricated testimonials.</p></section>
+  <section class="cards local-project-highlights">${northAtlantaProjectHighlights.map((item, index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`).join("")}</section>`;
+}
 
 function contentHubMeta(key) {
   const pages = {
     materials: {
       title: `Materials | ${BRAND}`,
-      description: "Wood species, veneers, MDF cores, finishes, humidity planning and sustainable material choices for custom interiors.",
+      description: "Wood species, veneers, MDF cores, finishes, humidity planning and responsible material choices for custom interiors.",
     },
     smartIntegration: {
       title: `Smart Integration | ${BRAND}`,
       description: "Hidden LED, AV routing, concealed wiring, ventilation and smart-home-ready millwork for clean custom interiors.",
     },
+    designProcess: {
+      title: `Design Process | ${BRAND}`,
+      description: "How CAS AURUM moves from photos and design direction to materials, engineering packages, production review and installation planning.",
+    },
     localCustomFurniture: {
       title: `Custom Furniture Atlanta | ${BRAND}`,
-      description: "Local custom furniture template for Atlanta-area homes with materials, smart integration, design concept and FAQ sections.",
+      description: "Custom furniture for Atlanta and North Atlanta homes, planned around materials, function, design direction and long-term use.",
     },
     localArchitecturalMillwork: {
       title: `Architectural Millwork Atlanta | ${BRAND}`,
-      description: "Local architectural millwork template for Atlanta-area homes, designers, builders, materials, smart integration and FAQs.",
+      description: "Architectural millwork for Atlanta-area homes, designers and builders, with materials, smart integration and local planning guidance.",
     },
   };
   return pages[key] || pages.materials;
@@ -3258,6 +3297,7 @@ function contentHubMeta(key) {
 function contentHubPage(route, key) {
   if (key === "materials") return materialsPage(route);
   if (key === "smartIntegration") return smartIntegrationPage(route);
+  if (key === "designProcess") return designProcessAuthorityPage(route);
   if (key === "localCustomFurniture") return localTemplatePage(route, "custom_furniture");
   if (key === "localArchitecturalMillwork") return localTemplatePage(route, "architectural_millwork");
   return materialsPage(route);
@@ -3265,7 +3305,7 @@ function contentHubPage(route, key) {
 
 function materialsPage(route) {
   return `
-    ${pageHero(route.lang, "Premium Materials, Built for Real Homes", "European oak, American walnut, rift white oak, natural veneers, premium MDF cores and stable substrates planned for refined, durable interiors.", "premium-materials-closeup")}
+    ${pageHero(route.lang, "Thoughtful Materials for Long-Term Living", "European oak, American walnut, rift white oak, natural veneers, premium MDF cores and stable substrates planned for refined, durable interiors.", "premium-materials-closeup")}
     ${premiumMaterialsSection("en", "materials")}
     ${ecoConsciousSection("en", "materials")}
     ${natureIntegratedSection("en", "materials")}
@@ -3281,7 +3321,7 @@ function materialsPage(route) {
 
 function smartIntegrationPage(route) {
   return `
-    ${pageHero(route.lang, "Smart Integration Behind a Clean Surface", "Technology-ready millwork for media walls, TV panels, fireplaces, built-ins and cabinetry where wires, equipment and lighting stay visually quiet.", "custom-tv-wall-panels-modern-home")}
+    ${pageHero(route.lang, "Smart Technology, Quietly Integrated", "Technology-ready millwork for media walls, TV panels, fireplaces, built-ins and cabinetry where wires, equipment and lighting stay visually quiet.", "custom-tv-wall-panels-modern-home")}
     ${smartIntegrationSection("en", "smartIntegration")}
     <section class="seo-sections">
       ${[
@@ -3297,6 +3337,31 @@ function smartIntegrationPage(route) {
   `;
 }
 
+function designProcessAuthorityPage(route) {
+  const process = [
+    ["Upload Photos", "Start with room photos, wall photos, inspiration, rough dimensions, city or ZIP code and a short note about what is not working in the space today."],
+    ["Receive Design Direction", "CAS AURUM reviews the room as a whole: proportion, storage, materials, lighting, TV or fireplace needs, circulation and the level of detail needed next."],
+    ["Material Selection", "Wood species, veneers, cores, finishes, lighting temperature, hardware and adjacent surfaces are considered together so the room feels coherent."],
+    ["Engineering Package", "When the project is ready for a deeper step, technical details can move into dimensions, elevations, shop drawing review, production notes and field conditions."],
+    ["Production & Installation", "Full realization is reviewed by scope, location, budget, site access, measurements, logistics and the partners required to execute the work properly."],
+  ];
+  return `
+    ${pageHero(route.lang, "Design Process", "A clear path from room photos to design direction, material choices, technical packages and selected realization review.", "measurement-consultation-process")}
+    <section class="seo-copy wide"><p class="eyebrow">Design First</p><h2>Clarity before fabrication</h2><p>CAS AURUM uses the Design Concept as a lower-risk starting point for homeowners, designers and builders. It helps people understand the visual direction, material story, budget logic and next step before investing in detailed drawings, production pricing or installation planning.</p></section>
+    <section class="process design-process-authority"><p class="eyebrow">Process</p><h2>From photos to a build-ready direction</h2><div>${process.map(([title, body], index) => `<article><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</div></section>
+    ${premiumMaterialsSection("en", "designProcess")}
+    ${smartIntegrationSection("en", "designProcess")}
+    ${localProjectHighlights("en")}
+    <section class="seo-sections">
+      <article><h2>Who it is for</h2><p>Homeowners use the process to see what a room could become. Designers and builders use it to clarify scope, materials, shop drawing needs, field measurements and coordination before the project becomes expensive to change.</p></article>
+      <article><h2>Budget and timeline</h2><p>Design Concept packages start from the published package pricing. Larger technical packages and realization reviews depend on room size, material level, drawings, site conditions, installation complexity and location.</p></article>
+      <article><h2>What to send</h2><p>Useful inputs include photos, wall dimensions, ceiling height, plans or drawings if available, appliance or AV notes, storage goals, preferred materials, timeline and a realistic budget range.</p></article>
+      <article><h2>What it is not</h2><p>A Design Concept is not a substitute for licensed architectural, structural, electrical, plumbing or code-required engineering documents. It is the planning step that makes the next technical decision clearer.</p></article>
+    </section>
+    ${contentHubCta("design-process")}
+  `;
+}
+
 function localTemplatePage(route, serviceId) {
   const serviceName = serviceId === "architectural_millwork" ? "Architectural Millwork" : "Custom Furniture";
   const h1 = `${serviceName} in Atlanta and North Atlanta`;
@@ -3304,19 +3369,20 @@ function localTemplatePage(route, serviceId) {
     ? ["Architectural wall panels", "Custom cabinetry", "Built-ins and shelving", "Media walls and TV walls", "Trade shop drawings", "Engineering packages"]
     : ["Custom tables and consoles", "Media units and storage pieces", "Vanities and wardrobes", "Built-ins and shelving", "Walnut and oak furniture", "Design concept packages"];
   return `
-    ${pageHero(route.lang, h1, `${serviceName} pages can be generated from reusable location data, service copy and quality-controlled sections for North Atlanta and future U.S. metro markets.`, serviceId === "architectural_millwork" ? "architectural-millwork-hotel-lobby" : "custom-furniture-bedroom-suite")}
+    ${pageHero(route.lang, h1, `${serviceName} for Atlanta-area homes should begin with the room, the materials, the way the space is used and the level of technical detail the project needs next.`, serviceId === "architectural_millwork" ? "architectural-millwork-hotel-lobby" : "custom-furniture-bedroom-suite")}
     <section class="programmatic-meta">
-      <div><span>Default Market</span><strong>North Atlanta Metro</strong></div>
-      <div><span>Template</span><strong>${escapeHtml(serviceName)}</strong></div>
-      <div><span>Canonical</span><strong>English only</strong></div>
-      <div><span>Future Cities</span><strong>Reusable data</strong></div>
+      <div><span>Primary Area</span><strong>North Atlanta Metro</strong></div>
+      <div><span>Service</span><strong>${escapeHtml(serviceName)}</strong></div>
+      <div><span>Best Start</span><strong>Photos + goals</strong></div>
+      <div><span>Next Step</span><strong>Design Concept</strong></div>
     </section>
-    <section class="seo-copy wide"><p class="eyebrow">Dynamic Local SEO</p><h2>Default areas, not hard limits</h2><p>CAS AURUM uses North Atlanta as the default market reference while keeping location logic reusable. Future pages should be created from city variables, service variables, metadata, canonical rules, FAQ blocks and sitemap eligibility rather than hand-copying thin pages.</p><div class="chip-row">${northAtlantaMarkets.map((city) => `<span class="chip">${escapeHtml(city)}</span>`).join("")}</div></section>
-    <section class="cards">${serviceCards.map((title, index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(`${title} can be localized with service-specific copy, local intake notes, material planning and a design concept CTA.`)}</p></article>`).join("")}</section>
+    <section class="seo-copy wide"><p class="eyebrow">Atlanta and North Atlanta</p><h2>Local rooms need more than a catalog solution</h2><p>Homes in Buckhead, Alpharetta, Milton, Roswell, Marietta, Sandy Springs and Johns Creek often need custom work that feels warm, measured and durable. CAS AURUM reviews photos, dimensions, existing finishes, natural light, storage needs and budget direction before recommending a Design Concept, technical package or selected project review.</p><div class="chip-row">${northAtlantaMarkets.map((city) => `<span class="chip">${escapeHtml(city)}</span>`).join("")}</div></section>
+    <section class="cards">${serviceCards.map((title, index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(`${title} should be planned around room proportions, material longevity, storage needs, field measurements and how the space will be used every day.`)}</p></article>`).join("")}</section>
     ${premiumMaterialsSection("en", serviceId)}
     ${smartIntegrationSection("en", serviceId)}
     ${startDesignConceptBridge("en")}
-    <section class="seo-copy wide"><p class="eyebrow">National Expansion Architecture</p><h2>Prepared for major U.S. metro pages</h2><p>Future city pages should include a localized H1, local intro, solution cards, material section, smart integration section, Design Concept CTA, Quick Project Estimate CTA, local FAQ, metadata under current standards, canonical handling and sitemap gating.</p><div class="chip-row">${futureMetroExamples.map((city) => `<span class="chip">${escapeHtml(city)}</span>`).join("")}</div></section>
+    ${localProjectHighlights("en")}
+    <section class="seo-copy wide"><p class="eyebrow">Selected U.S. Project Review</p><h2>Design direction can begin before a site visit</h2><p>For projects outside Georgia, CAS AURUM can review photos, drawings, measurements and material goals remotely. Full-service realization depends on scope, budget, site conditions, logistics and suitable regional coordination.</p><div class="chip-row">${futureMetroExamples.map((city) => `<span class="chip">${escapeHtml(city)}</span>`).join("")}</div></section>
     ${localTemplateFaq(serviceName)}
     ${contentHubCta(serviceId)}
   `;
@@ -3324,9 +3390,10 @@ function localTemplatePage(route, serviceId) {
 
 function localTemplateFaq(serviceName) {
   const items = [
-    [`What should a local ${serviceName.toLowerCase()} page include?`, "A useful local page should include specific service copy, city context, materials, smart integration, process steps, budget and timeline guidance, FAQs and clear CTAs."],
-    ["How does CAS AURUM avoid thin location pages?", "Location pages should be generated only when service, market, local intro, related links, metadata, FAQ and sitemap eligibility meet quality rules."],
-    ["Can future cities be added without rewriting the site?", "Yes. The market engine is designed around reusable service and location variables so future U.S. metro pages can be added by data rather than by duplicating static copy."],
+    [`What should I send for ${serviceName.toLowerCase()} in Atlanta?`, "Send room photos, rough dimensions, ceiling height, the project city or ZIP code, inspiration images, storage goals, material preferences, timeline and budget range."],
+    ["Which North Atlanta areas are a good fit?", "CAS AURUM prioritizes Atlanta and North Atlanta inquiries, including Buckhead, Alpharetta, Milton, Roswell, Marietta, Sandy Springs, Johns Creek, Brookhaven and nearby communities."],
+    ["Can the project begin remotely?", "Yes. A Design Concept or early technical review can begin from photos, drawings and measurements. Site visits and realization are reviewed by project fit."],
+    ["What affects budget and timeline?", "Size, material level, shop drawing needs, field measurements, hardware, lighting, AV requirements, installation complexity and site conditions all affect the final path."],
   ];
   return `<section class="faq"><h2>Local FAQ</h2>${items.map(([q, a]) => `<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join("")}</section>`;
 }
@@ -3338,11 +3405,11 @@ function contentHubCta(source) {
 function premiumMaterialsSection(lang = "en", context = "solutions") {
   if (lang !== "en") return "";
   const market = "North Atlanta";
-  const materials = ["European Oak", "American Walnut", "Rift White Oak", "Natural Veneers", "Premium MDF Cores", "Eco-Friendly Premium Hardwoods", "Natural Finishes", "Warm Natural Textures"];
+  const materials = ["European Oak", "American Walnut", "Rift White Oak", "Natural Veneers", "Premium MDF Cores", "Material Longevity", "Responsible Material Selection", "Low-Waste Planning"];
   return `<section class="seo-copy wide material-layer">
-    <p class="eyebrow">${escapeHtml(localizedPlain("Material-Led Design", lang))}</p>
-    <h2>${escapeHtml(localizedPlain("Premium Materials, Built for Real Homes", lang))}</h2>
-    <p>${escapeHtml(`${BRAND} plans ${reusableSolutionSet.slice(0, 8).join(", ")} with refined materials, quiet luxury, warm minimalism, architectural precision, thoughtful detailing and elevated interiors in mind. In ${market}, useful material planning must account for humidity, dimensional stability, substrate selection, veneer balancing, grain direction and fabrication quality.`)}</p>
+    <p class="eyebrow">${escapeHtml(localizedPlain("Materials & Craftsmanship", lang))}</p>
+    <h2>${escapeHtml(localizedPlain("Thoughtful Materials for Long-Term Living", lang))}</h2>
+    <p>${escapeHtml(`${BRAND} plans ${reusableSolutionSet.slice(0, 8).join(", ")} with refined materials, quiet luxury, warm minimalism, architectural precision, thoughtful detailing and elevated interiors in mind. In ${market}, useful material planning must account for humidity, dimensional stability, substrate selection, veneer balancing, grain direction and fabrication quality. The goal is timeless design over disposable trends: durable surfaces, responsible material selection, low-waste planning where accurate and custom work that still feels relevant years later.`)}</p>
     <div class="chip-row">${materials.map((item) => `<span class="chip">${escapeHtml(item)}</span>`).join("")}</div>
   </section>
   <section class="seo-sections">
@@ -3365,20 +3432,20 @@ function ecoConsciousSection(lang = "en", context = "solutions") {
 
 function natureIntegratedSection(lang = "en", context = "solutions") {
   if (lang !== "en") return "";
-  const items = ["Biophilic design", "Wellness-focused interiors", "Planter-ready millwork", "Custom shelving for plants", "Window-focused built-ins", "Sunroom cabinetry", "Garden-facing interiors", "Indoor-outdoor visual continuity"];
+  const items = ["Natural light", "Organic materials", "Wood textures", "Outdoor views", "Plant-friendly shelving", "Window-integrated storage", "Garden-facing living spaces", "Indoor-outdoor continuity"];
   return `<section class="two-col nature-layer">
-    <div><p class="eyebrow">${escapeHtml(localizedPlain("Nature-Inspired Living", lang))}</p><h2>${escapeHtml(localizedPlain("Living Nature, Integrated Into the Home", lang))}</h2><p>${escapeHtml("CAS AURUM can design millwork that supports greenery, natural light and calmer rooms: shelving planned around plants, window-focused built-ins, patio-adjacent storage, sunroom cabinetry and warm organic finishes. Live plant installation, irrigation and landscaping remain coordinated with the appropriate professionals when needed.")}</p></div>
+    <div><p class="eyebrow">${escapeHtml(localizedPlain("Nature-Inspired Living", lang))}</p><h2>${escapeHtml(localizedPlain("Spaces Inspired by Nature", lang))}</h2><p>${escapeHtml("CAS AURUM can design millwork that supports natural light, wood texture, outdoor views and calmer daily living. Plant-friendly shelving, window-integrated storage, patio-adjacent cabinetry, sunroom storage and warm organic finishes help create spaces people enjoy living in. Live plant installation, irrigation and landscaping remain coordinated with the appropriate professionals when needed.")}</p></div>
     <aside class="panel"><h3>${escapeHtml(localizedPlain("Nature-ready details", lang))}</h3><ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></aside>
   </section>`;
 }
 
 function smartIntegrationSection(lang = "en", context = "solutions") {
   if (lang !== "en") return "";
-  const relevant = new Set(["mediaWalls", "media_wall", "wallPanels", "wall_panels", "builtIns", "built_ins", "fireplaceWalls", "fireplace_wall", "customKitchens", "kitchen", "homeOffices", "home_office", "customFurniture", "custom_furniture", "millwork", "solutions", "trade", "commercial_millwork", "smartIntegration", "architectural_millwork", "materials"]);
+  const relevant = new Set(["mediaWalls", "media_wall", "wallPanels", "wall_panels", "builtIns", "built_ins", "fireplaceWalls", "fireplace_wall", "customKitchens", "kitchen", "homeOffices", "home_office", "customFurniture", "custom_furniture", "millwork", "solutions", "trade", "commercial_millwork", "smartIntegration", "designProcess", "designConcept", "architectural_millwork", "materials"]);
   if (!relevant.has(context)) return "";
   const items = ["Hidden LED integration", "Integrated TV wall panels", "Concealed wiring", "AV routing", "Smart home coordination", "Media wall engineering", "Ventilation planning", "Hidden equipment storage", "Access panels", "Fireplace integration"];
   return `<section class="two-col smart-layer">
-    <div><p class="eyebrow">${escapeHtml(localizedPlain("Technology-Ready Millwork", lang))}</p><h2>${escapeHtml(localizedPlain("Smart Integration Behind a Clean Surface", lang))}</h2><p>${escapeHtml("The strongest media walls, TV wall panels, fireplace walls, built-ins and cabinetry let technology exist without taking over the room. CAS AURUM can plan hidden LED channels, concealed wiring, AV routing, ventilation, equipment storage and access panels so the finished surface remains calm and architectural.")}</p></div>
+    <div><p class="eyebrow">${escapeHtml(localizedPlain("Technology-Ready Millwork", lang))}</p><h2>${escapeHtml(localizedPlain("Smart Technology, Quietly Integrated", lang))}</h2><p>${escapeHtml("The strongest media walls, TV wall panels, fireplace walls, built-ins and cabinetry let technology disappear into the architecture. CAS AURUM can plan hidden LED lighting, media wall wiring, AV integration, ventilation planning, hidden equipment zones and access panels so the finished surface remains calm and architectural.")}</p></div>
     <aside class="panel"><h3>${escapeHtml(localizedPlain("Integrated systems", lang))}</h3><ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></aside>
   </section>`;
 }
@@ -4338,6 +4405,9 @@ function designConceptPage(route) {
     <div data-design-concept-page data-language="${route.lang}">
       ${designConceptHero(route, t)}
       ${designConceptPositioning(route, t)}
+      ${premiumMaterialsSection(route.lang, "designConcept")}
+      ${natureIntegratedSection(route.lang, "designConcept")}
+      ${smartIntegrationSection(route.lang, "designConcept")}
       ${designConceptPackages(route, t)}
       ${designConceptPricing(route, t)}
       ${designConceptProcess(route, t)}
@@ -6077,17 +6147,19 @@ function seoMarketPageTemplate(route, page) {
     <section class="programmatic-meta">
       <div><span>Market</span><strong>${escapeHtml(marketName)}</strong></div>
       <div><span>Service</span><strong>${escapeHtml(page.service?.label || "Interior solutions")}</strong></div>
-      <div><span>Mode</span><strong>${escapeHtml(serviceModeLabel(page.serviceMode))}</strong></div>
-      <div><span>Status</span><strong>${escapeHtml(page.status)}</strong></div>
+      <div><span>Project path</span><strong>${escapeHtml(serviceModeLabel(page.serviceMode))}</strong></div>
+      <div><span>Best start</span><strong>Photos + goals</strong></div>
     </section>
     <section class="seo-copy wide">
       <p class="eyebrow">${escapeHtml("Local positioning")}</p>
       <h2>${escapeHtml(page.service ? `${page.service.label} made for ${marketName} spaces` : `Custom work planned around ${marketName} homes`)}</h2>
       <p>${escapeHtml(page.localAngle)}</p>
-      <p>${escapeHtml(page.service?.shortDescription || "Every market page is generated from controlled service, state and city data with indexation guarded by content quality, internal links, metadata and sitemap eligibility.")}</p>
+      <p>${escapeHtml(page.service?.shortDescription || `${BRAND} plans media walls, kitchens, closets, built-ins, wall panels, furniture and architectural millwork around the room, the material direction, the budget range and the way the space will be used.`)}</p>
     </section>
+    ${page.state?.id === "georgia" ? localProjectHighlights(route.lang) : ""}
     <section class="seo-sections">
       ${serviceSections.map(([heading, body]) => `<article><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></article>`).join("")}
+      ${page.state?.id === "georgia" ? `<article><h2>North Atlanta material planning</h2><p>Atlanta-area homes often need finishes that handle humidity, strong daylight, family use and seasonal changes without losing their refined character. Walnut, oak, rift white oak, natural veneers, premium cores, concealed lighting and durable hardware are reviewed with maintenance and longevity in mind.</p></article><article><h2>Local service process</h2><p>Most Georgia projects begin with photos, rough dimensions and a city or ZIP code. From there, CAS AURUM can recommend a Design Concept, Quick Project Estimate, Technical Millwork Planner or selected local review for qualified scopes in areas such as Buckhead, Alpharetta, Milton, Roswell, Marietta, Sandy Springs and Johns Creek.</p></article>` : ""}
       <article><h2>Design Concept</h2><p>Start with photos, goals and rough dimensions. CAS AURUM prepares a clear design direction with material ideas, layout guidance and a next-step project path.</p></article>
       <article><h2>Technical Planner</h2><p>Use the planner preset to organize dimensions, wall conditions, storage goals, uploads and project questions before requesting a technical package or review.</p></article>
       <article><h2>Full-Service Project Review</h2><p>${escapeHtml(ctaNote)} Scope, budget, site conditions and logistics determine whether fabrication, coordination or installation can be reviewed.</p></article>
@@ -6296,7 +6368,7 @@ function seoMarketsAdminPage() {
 <body>
 ${header({ lang: "en", key: "home", path: "/" })}
 <main id="main">
-  <section class="page-hero"><div><p class="eyebrow">SEO Market Engine</p><h1>Admin-controlled market pages</h1><p class="lede">Services, states, cities and generated service-location pages are produced from config data, then guarded by content score, indexability, canonical and sitemap eligibility.</p></div><figure>${img("premium-materials-closeup", "en")}<figcaption>Programmatic SEO, editorially controlled.</figcaption></figure></section>
+  <section class="page-hero"><div><p class="eyebrow">SEO Market Engine</p><h1>Admin-controlled market pages</h1><p class="lede">Services, states, cities and service-location pages are reviewed through content score, indexability, canonical and search publication controls.</p></div><figure>${img("premium-materials-closeup", "en")}<figcaption>Editorial search controls.</figcaption></figure></section>
   <section class="programmatic-meta">
     <div><span>Generated pages</span><strong>${seoMarketStats.total}</strong></div>
     <div><span>Indexable</span><strong>${indexableRows}</strong></div>
@@ -6447,7 +6519,7 @@ function seoIndexPage() {
 <body>
   ${header({ lang: "en", key: "home", path: "/" })}
   <main id="main">
-    <section class="page-hero"><div><p class="eyebrow">Internal SEO Control</p><h1>CAS AURUM SEO Dashboard</h1><p class="lede">Filter generated pages by type, locale, score and indexability. Use this page to decide which content to expand from Search Console, GA4 and AI referral data.</p></div><figure>${img("premium-materials-closeup", "en")}<figcaption>Internal QA view for generated landing pages.</figcaption></figure></section>
+    <section class="page-hero"><div><p class="eyebrow">Internal SEO Control</p><h1>CAS AURUM SEO Dashboard</h1><p class="lede">Filter market pages by type, locale, score and indexability. Use this page to decide which content to expand from Search Console, GA4 and AI referral data.</p></div><figure>${img("premium-materials-closeup", "en")}<figcaption>Internal QA view for landing pages.</figcaption></figure></section>
     <section class="programmatic-meta">
       <div><span>Casaurum total</span><strong>${total}</strong></div>
       <div><span>Casaurum indexable</span><strong>${indexable}</strong></div>
@@ -6662,7 +6734,7 @@ function legalContent(lang, type) {
           ["Concept Visuals and Portfolio Language", "Collection images, design concepts, material studies and visual inspiration may be illustrative. CAS AURUM does not claim fake clients, fake awards, fake showrooms, fake offices or completed projects in every listed market.", "Private project work, if available, may be shared separately and only when appropriate."],
           ["Project Inquiries", "Submitting a form does not create an obligation for CAS AURUM to accept a project, visit a property, provide installation, reserve production capacity or deliver a fixed price.", "Project availability, measurements, budget, timeline, production, installation coordination, local partners and responsibilities must be confirmed in writing."],
           ["No Contractor or Licensing Claims", "Unless specifically confirmed in writing, website content should not be read as a claim that CAS AURUM maintains offices, crews, licenses, showrooms or completed work in every city, state, province or country mentioned.", "For work outside an immediate service area, CAS AURUM may provide design direction, specifications, consultation and coordination with appropriate regional professionals or production partners."],
-          ["Intellectual Property", "The CAS AURUM name, website design, copy, collection names, imagery, generated visuals, prompts, layouts and related content are owned by or licensed to CAS AURUM. You may view the site for personal or professional evaluation, but may not copy, reproduce, resell or misrepresent the content without permission."],
+          ["Intellectual Property", "The CAS AURUM name, website design, copy, collection names, imagery, visual assets, prompts, layouts and related content are owned by or licensed to CAS AURUM. You may view the site for personal or professional evaluation, but may not copy, reproduce, resell or misrepresent the content without permission."],
           ["Submitted Materials", "If you include drawings, plans, inspiration images, file names, links or other references, you confirm that you have the right to share them with CAS AURUM for review. You grant CAS AURUM permission to use submitted materials internally to evaluate and respond to your inquiry.", "Do not submit confidential, unlawful or third-party materials you are not authorized to share."],
           ["Limitation of Liability", "The website is provided on an as-is and as-available basis. To the fullest extent permitted by law, CAS AURUM is not liable for indirect, incidental, consequential or special damages arising from website use or reliance on website content."],
           ["Changes", "CAS AURUM may update the website and these Terms of Use from time to time. Continued use of the website after updates means you accept the revised terms."],
@@ -7022,7 +7094,7 @@ function seoFooterColumns(lang, route = { key: "usa", path: "/" }) {
     { title: labels[3], links: cityLinks },
     { title: labels[4], links: [{ href: urlFor(lang, "projects"), label: pageLabel("projects", lang) }] },
     { title: labels[5], links: collectionsData.slice(0, 3).map((collection) => ({ href: collectionUrlFor(lang, collection), label: collection.name.replace(" Collection", "") })) },
-    { title: labels[6], links: [{ href: urlFor(lang, "planner"), label: footerLabel("planner") }, { href: urlFor("en", "materials"), label: footerLabel("premiumMaterials") }, { href: urlFor("en", "smartIntegration"), label: "Smart Integration" }, link("/journal/modern-interior-design-ideas", footerLabel("modernIdeas")), link("/journal/quiet-luxury-interior-design", footerLabel("quietLuxuryJournal"))] },
+    { title: labels[6], links: [{ href: urlFor(lang, "planner"), label: footerLabel("planner") }, { href: urlFor("en", "designProcess"), label: "Design Process" }, { href: urlFor("en", "materials"), label: footerLabel("premiumMaterials") }, { href: urlFor("en", "smartIntegration"), label: "Smart Integration" }, link("/journal/modern-interior-design-ideas", footerLabel("modernIdeas"))] },
     { title: labels[7], links: [{ href: urlFor(lang, "partners"), label: footerLabel("partnerProgram") }, { href: `${urlFor(lang, "partners")}#apply`, label: footerLabel("applyPartner") }, { href: urlFor(lang, "trade"), label: footerLabel("trade") }, { href: urlFor(lang, "planner"), label: footerLabel("planner") }] },
   ];
 }
@@ -9284,6 +9356,7 @@ function llmsTxt() {
     ["/custom-furniture", "Custom furniture made to fit the home"],
     ["/materials", "Premium material planning, veneers, wood species, substrates and sustainable selection"],
     ["/smart-integration", "Hidden LED, AV routing, concealed wiring and smart-home-ready millwork"],
+    ["/design-process", "Design process from photos to material direction, engineering packages and selected realization review"],
     ["/design-concept", "Design concept packages with transparent starting prices"],
     ["/millwork-planner", "Millwork Planner for early project scope"],
     ["/gallery", "Completed work and custom interior ideas"],
@@ -9477,6 +9550,7 @@ function primaryImageAssetId(route) {
 	  if (route.key === "designConcept") return "custom-tv-wall-panels-modern-home";
   if (route.key === "materials") return "premium-materials-closeup";
   if (route.key === "smartIntegration") return "custom-tv-wall-panels-modern-home";
+  if (route.key === "designProcess") return "measurement-consultation-process";
   if (route.key === "localCustomFurniture") return "custom-furniture-bedroom-suite";
   if (route.key === "localArchitecturalMillwork") return "architectural-millwork-hotel-lobby";
 	  if (["wallPanels", "customFurniture", "millwork", "solutions", "trade"].includes(route.key)) return copy[route.lang].services[route.key].asset;
@@ -9510,6 +9584,7 @@ function pageLabel(key, lang) {
 	  if (key === "quickEstimate") return "Quick Project Estimate";
   if (key === "materials") return "Materials";
   if (key === "smartIntegration") return "Smart Integration";
+  if (key === "designProcess") return "Design Process";
   if (key === "localCustomFurniture") return "Local Custom Furniture";
   if (key === "localArchitecturalMillwork") return "Local Architectural Millwork";
 	  if (key === "designConcept") return t.nav.designConcept || "Design Concept";

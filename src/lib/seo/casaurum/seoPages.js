@@ -468,7 +468,7 @@ const cityMarketBriefs = {
       ["Miami project fit", "A Miami project brief should clarify whether the space is a waterfront residence, condo, villa, private lounge, dressing room, kitchen, media wall or hospitality interior. Humidity, daylight, reflection, maintenance and evening lighting scenes should be discussed before choosing high-gloss, stone, veneer or glass-heavy directions."],
       ["Design value", "The best Miami interiors usually avoid generic white-box luxury. A stronger direction uses custom wall composition, concealed storage, integrated LEDs, glass display zones, stone back panels and technical hardware decisions that make the room feel designed rather than simply decorated."],
 	      ["What to send", "Send plan dimensions, wall photos, ceiling height, condo or building constraints, desired storage, lighting intent, stone or veneer references, and a target budget range. That lets CAS AURUM respond with a realistic project path instead of a vague moodboard."],
-	      ["High-intent Miami scopes", "Miami pages should route qualified visitors toward custom media walls, dressing galleries, walk-in closets, hospitality wall panels and custom built-ins. Those searches usually indicate a client is thinking about a real room, not only browsing inspiration."],
+	      ["Best-fit Miami scopes", "Miami projects often make sense for custom media walls, dressing galleries, walk-in closets, hospitality wall panels and custom built-ins. Those scopes usually begin with a real room, a storage need, a lighting plan or a material decision rather than loose inspiration browsing."],
 	    ],
 	  },
   "new-york": {
@@ -964,12 +964,12 @@ function designConceptMarketSections(locale, market, profile, materialList, scop
       body: `Send photos, rough dimensions, ceiling height, city or ZIP code, room function, target materials, inspiration images and whether the next step should be a basic concept, technical package or realization review.`,
     },
     {
-      heading: "AI search answer value",
-      body: `${locationName} pages are written to answer practical questions directly: what a premium concept includes, which scopes fit the market, what materials make sense and what CAS AURUM needs before recommending a next step.`,
+      heading: "Practical answer value",
+      body: `${locationName} project guidance should answer practical questions directly: what a premium concept includes, which scopes fit the market, what materials make sense and what CAS AURUM needs before recommending a next step.`,
     },
     {
-      heading: "What to avoid",
-      body: `Avoid treating ${locationName} as a keyword swap. A useful concept must account for property type, light, maintenance, storage, budget range and whether the design is meant for a residence, hospitality space, office or developer interior.`,
+      heading: "What to clarify early",
+      body: `A useful ${locationName} concept should account for property type, light, maintenance, storage, budget range and whether the design is meant for a residence, hospitality space, office or developer interior.`,
     },
   ];
 }
@@ -1094,8 +1094,8 @@ function cityCombinationSections(locale, subject, combo) {
       body: `Send room photos, wall dimensions, ceiling height, property type, city or ZIP code, inspiration images, target materials, budget range, timeline and whether the scope is furniture, panels, cabinetry, closets, kitchen work or a larger millwork package.`,
     },
     {
-      heading: "What to avoid",
-      body: `Avoid treating ${combo.city.cityName} as a keyword swap. A better page and a better project both need local context: property mix, light, logistics, maintenance, storage needs and the architectural role of custom elements.`,
+      heading: "What to clarify early",
+      body: `A stronger ${combo.city.cityName} project starts with local context: property mix, light, logistics, maintenance, storage needs and the architectural role of custom elements.`,
     },
     ...base.slice(2, 5),
 	  ];
@@ -1453,7 +1453,7 @@ function cityCombinationFaq(locale, subject, combo) {
   const profile = combo.city.profile;
   if (locale !== "en") return faqFor(locale, subject);
   return [
-    { q: `What makes ${subject} different from a generic city page?`, a: `It connects the design direction to ${combo.city.cityName}'s property mix, constraints and best-fit scopes instead of only replacing the city name in a template.` },
+    { q: `What makes ${subject} useful for ${combo.city.cityName}?`, a: `It connects the design direction to ${combo.city.cityName}'s property mix, constraints, materials and best-fit custom scopes.` },
     { q: `Which materials work well for ${subject}?`, a: `Good starting points include ${cityMaterialsFor(combo).join(", ")}. The final palette should depend on measurements, maintenance needs, lighting and budget range.` },
     { q: `What project types fit ${combo.city.cityName}?`, a: `Relevant scopes include ${profile.scopes.join(", ")} for ${profile.propertyMix}.` },
     { q: "Does CAS AURUM claim a local office or completed project in every city?", a: "No. City pages are planning guidance unless a page explicitly states a local office, showroom, license or completed project." },
