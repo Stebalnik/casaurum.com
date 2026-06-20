@@ -2361,8 +2361,12 @@ function buildProgrammaticLanguagePage(base, lang) {
   const localizedLocalQualifier = lang === "en" ? localQualifier : `${l.in} ${locationName || l.northAmerica}`;
   const titleCore = `${base.vertical}${locationName ? ` ${l.in} ${locationName}` : ""}`;
   const h1 = programmaticH1(base, lang, locationName);
-  const seoTitle = `${titleCore} | ${capitalizeWords(intentLabel(base.intent, lang))} ${capitalizeWords(objectLabel(base.objectType, lang))} Projects | CAS AURUM`;
-  const metaDescription = `${BRAND} provides ${base.service} ${localizedLocalQualifier}, with premium design direction, material specifications, consultation requests and project coordination for ${objectLabel(base.objectType, lang)} projects.`;
+  const shortLocation = locationName?.split(",")[0];
+  const englishTitle = shortLocation ? `${capitalizeWords(base.vertical)} ${shortLocation} | ${BRAND}` : `${capitalizeWords(base.vertical)} | ${BRAND}`;
+  const seoTitle = lang === "en" ? englishTitle : `${titleCore} | ${capitalizeWords(intentLabel(base.intent, lang))} ${capitalizeWords(objectLabel(base.objectType, lang))} Projects | CAS AURUM`;
+  const metaDescription = lang === "en"
+    ? `${BRAND} provides ${base.service} ${localizedLocalQualifier} with materials, planning and project coordination.`
+    : `${BRAND} provides ${base.service} ${localizedLocalQualifier}, with premium design direction, material specifications, consultation requests and project coordination for ${objectLabel(base.objectType, lang)} projects.`;
   const honestLocal = localWording(base, lang);
   const materialPhrase = materialLabel(base.material, lang);
   const introText = programmaticIntro(base, lang, localizedLocalQualifier, honestLocal);
@@ -2431,10 +2435,10 @@ function programmaticIntro(base, lang, localizedLocalQualifier, honestLocal) {
 function programmaticServiceSection(base, lang) {
   const object = objectLabel(base.objectType, lang);
   const text = {
-    en: `${base.vertical} should be treated as part of the architecture, not as a detached catalog item. A strong ${object} brief connects cabinetry, wall panels, built-ins, furniture proportions, hardware, lighting and adjacent surfaces so the result feels intentional from the first view and practical in daily use.`,
-    es: `${base.vertical} debe tratarse como parte de la arquitectura, no como un producto de catálogo separado. Un buen brief para ${object} conecta cabinetry, paneles de pared, built-ins, proporciones de mobiliario, herrajes, iluminación y superficies cercanas para que el resultado se sienta intencional y útil en el día a día.`,
-    fr: `${base.vertical} doit être traité comme une partie de l'architecture, pas comme un objet catalogue isolé. Un bon brief pour ${object} relie rangements, panneaux muraux, intégrés, proportions du mobilier, quincaillerie, lumière et surfaces voisines pour un résultat cohérent et pratique au quotidien.`,
-    ru: `${base.vertical} стоит рассматривать как часть архитектуры, а не как отдельный каталоговый элемент. Хороший brief для ${object} связывает шкафы, стеновые панели, встроенные элементы, пропорции мебели, фурнитуру, свет и соседние поверхности, чтобы результат выглядел цельно и был удобен каждый день.`,
+    en: `${base.vertical} should be treated as part of the architecture, not as a detached catalog item. A strong ${object} scope connects cabinetry, wall panels, built-ins, furniture proportions, hardware, lighting and adjacent surfaces so the result is clear from the first view and practical in daily use.`,
+    es: `${base.vertical} debe tratarse como parte de la arquitectura, no como un producto de catálogo separado. Un buen alcance para ${object} conecta cabinetry, paneles de pared, built-ins, proporciones de mobiliario, herrajes, iluminación y superficies cercanas para que el resultado sea claro y útil en el día a día.`,
+    fr: `${base.vertical} doit être traité comme une partie de l'architecture, pas comme un objet catalogue isolé. Un bon périmètre pour ${object} relie rangements, panneaux muraux, intégrés, proportions du mobilier, quincaillerie, lumière et surfaces voisines pour un résultat cohérent et pratique au quotidien.`,
+    ru: `${base.vertical} стоит рассматривать как часть архитектуры, а не как отдельный каталоговый элемент. Хороший объем для ${object} связывает шкафы, стеновые панели, встроенные элементы, пропорции мебели, фурнитуру, свет и соседние поверхности, чтобы результат выглядел цельно и был удобен каждый день.`,
   };
   return text[lang] || text.en;
 }
@@ -3056,6 +3060,7 @@ function home(route) {
       ${transformCards(route)}
       ${startWithConceptSection(route)}
       ${homeAuthoritySections(route)}
+      ${homeAudiencePaths(route)}
       ${premiumMaterialsSection(route.lang, "solutions")}
       ${ecoConsciousSection(route.lang, "solutions")}
       ${natureIntegratedSection(route.lang, "solutions")}
@@ -3244,16 +3249,24 @@ const futureMetroExamples = ["New York", "Los Angeles", "Chicago", "Houston", "P
 const reusableSolutionSet = ["TV walls", "media walls", "architectural wall panels", "custom furniture", "custom kitchens", "built-ins", "fireplaces", "shelving systems", "closets", "design concept packages", "engineering and build packages"];
 const northAtlantaProjectHighlights = [
   {
-    title: "Modern Walnut Media Wall - Alpharetta",
+    title: "Walnut Media Wall - Alpharetta",
     body: "A representative Alpharetta media wall scope might combine an integrated TV wall, concealed wiring, walnut veneer, hidden equipment storage and soft LED lighting so the living room feels organized instead of equipment-led.",
   },
   {
-    title: "Architectural Wall Panels - Buckhead",
-    body: "A Buckhead wall panel concept may use fluted panels, quiet reveals, lighting integration and a restrained material palette to give a modern living room more depth without making the space feel overdecorated.",
+    title: "Fluted Wall Panels - Buckhead",
+    body: "A Buckhead wall panel concept may use fluted panels, quiet reveals, lighting integration and a restrained material palette to give a living room or entry more depth without making the space feel overdecorated.",
   },
   {
-    title: "Custom Built-Ins - Milton",
-    body: "A Milton built-in package often starts with storage, shelving, natural materials and sightlines to windows or outdoor views, then moves into proportions, finish durability and how the room is used every day.",
+    title: "White Oak Built-Ins - Milton",
+    body: "A Milton built-in package often starts with family room storage, shelving, natural materials and sightlines to windows or outdoor views, then moves into proportions, finish durability and daily use.",
+  },
+  {
+    title: "Custom Cabinetry - Marietta",
+    body: "A Marietta renovation may need cabinetry that works with existing walls, uneven field conditions, durable finishes and practical storage before production or installation coordination begins.",
+  },
+  {
+    title: "Fireplace Feature Wall - Roswell",
+    body: "A Roswell fireplace wall might combine panels, shelves, storage, lighting and TV planning while respecting heat clearances, viewing height, wiring access and the character of the home.",
   },
 ];
 
@@ -3377,14 +3390,40 @@ const atlantaMoneyPagesBySlug = new Map(atlantaMoneyPages.map((page) => [page.sl
 function homeAuthoritySections(route) {
   if (route.lang !== "en") return "";
   const items = [
-    ["Design First", "Every project begins by clarifying the room, the wall, the storage problem and the feeling the space should carry. The Design Concept turns photos and goals into a practical direction before fabrication decisions begin."],
-    ["Materials & Craftsmanship", "European oak, American walnut, rift white oak, natural veneers and premium cores are selected for longevity, stability and warmth rather than for a passing trend."],
-    ["Smart Integration", "Lighting, wiring, access and equipment zones are planned early so technology disappears into the architecture instead of sitting on top of it."],
+    ["Design First", "Every project begins by clarifying the room, the wall, the storage problem and the feeling the space should carry. The Design Concept turns photos, goals and budget direction into a practical next step before fabrication decisions begin."],
+    ["Materials That Last", "European oak, American walnut, rift white oak, natural veneers and MDF cores are reviewed for durability, Georgia humidity, finish behavior and long-term stability."],
+    ["Smart Integration", "Hidden wiring, LED channels, AV routing, ventilation and access zones are planned early so media walls and built-ins perform better than off-the-shelf furniture."],
     ["Built Around Real Life", "The best custom interiors work on ordinary days: morning routines, family storage, entertaining, remote work, quiet evenings and the daily touch points that reveal whether a detail is truly useful."],
     ["For Homeowners, Designers & Builders", "Homeowners can start with photos. Designers and builders can submit drawings, finish notes, field dimensions and client goals for a more coordinated custom path."],
   ];
   return `<section class="section-head"><p class="eyebrow">Studio Authority</p><h2>Design-first custom interiors for real homes</h2><p>CAS AURUM is an architectural interior solutions studio, not a furniture catalog. The work starts with how the space should feel, how it needs to function and what details will still make sense years from now.</p><div class="actions"><a class="button primary" href="${urlFor("en", "designConcept")}#start-design-concept">Start Design Concept</a><a class="button secondary" href="${urlFor("en", "quickEstimate")}">Get Quick Project Estimate</a><a class="button secondary" href="${urlFor("en", "planner")}">Use Technical Millwork Planner</a></div></section>
   <section class="cards authority-cards">${items.map(([title, body], index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</section>`;
+}
+
+function homeAudiencePaths(route) {
+  if (route.lang !== "en") return "";
+  const audiences = [
+    {
+      title: "Homeowners",
+      body: "Start with room photos, rough measurements, inspiration images and the problem the space needs to solve. CAS AURUM can help decide whether a Design Concept, Quick Project Estimate or project review is the right next step.",
+      href: `${urlFor("en", "designConcept")}#start-design-concept`,
+      label: "Start Design Concept",
+    },
+    {
+      title: "Interior Designers",
+      body: "Send elevations, finish direction, client goals, cabinetry notes or wall dimensions when the project needs a custom media wall, panel package, built-in, closet or furniture element coordinated with the design intent.",
+      href: urlFor("en", "trade"),
+      label: "Trade Collaboration",
+    },
+    {
+      title: "Builders & Remodelers",
+      body: "Use the Technical Millwork Planner when field dimensions, cabinet modules, shop drawing needs, AV constraints or installation sequencing should be organized before production review.",
+      href: urlFor("en", "planner"),
+      label: "Open Planner",
+    },
+  ];
+  return `<section class="seo-copy wide"><p class="eyebrow">For Homeowners, Designers & Builders</p><h2>Three ways to begin without guessing</h2><p>CAS AURUM keeps the first step practical. The right path depends on whether the project needs visual direction, budget framing, technical organization or trade coordination.</p></section>
+  <section class="cards audience-paths">${audiences.map((item, index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p><a class="button secondary" href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a></article>`).join("")}</section>`;
 }
 
 function localProjectHighlights(lang = "en") {
@@ -3443,6 +3482,19 @@ function materialsPage(route) {
       <article><h2>Humidity and stability</h2><p>North Atlanta homes experience humidity changes that can affect wood movement, door gaps, panel seams and substrate behavior. Stable construction relies on appropriate cores, balanced veneers, acclimation, finish selection and realistic details.</p></article>
       <article><h2>Sustainability without greenwashing</h2><p>CAS AURUM avoids unverified certification claims. Responsible material planning means choosing durable materials, reducing avoidable waste through clear drawings and dimensions, and favoring work that is worth keeping instead of replacing quickly.</p></article>
     </section>
+    <section class="seo-sections">
+      <article><h2>European oak in quiet modern rooms</h2><p>European oak works well when the goal is warm minimalism without a heavy visual weight. It can support slat panels, built-ins, shelving, cabinetry fronts and furniture pieces when the grain is planned consistently across the room.</p></article>
+      <article><h2>American walnut for media walls and furniture</h2><p>Walnut brings depth to TV walls, consoles, desks, wardrobes and display cabinetry. It should be reviewed around lighting, sheen, veneer matching and adjacent floors so the finished room feels intentional rather than dark by accident.</p></article>
+      <article><h2>Rift white oak for calmer cabinetry</h2><p>Rift white oak is often chosen when a straighter grain pattern is important. It can help kitchen cabinetry, built-ins and panels feel architectural, especially when door spacing, reveals and hardware are kept quiet.</p></article>
+      <article><h2>Veneer balancing and flitch matching</h2><p>Large panels and doors need more than a pretty face veneer. Balanced construction, flitch matching, edge details and sequence planning help wide surfaces stay stable and read as one composed material field.</p></article>
+      <article><h2>Finish choices for real maintenance</h2><p>A finish should be judged by touch points, cleaning expectations, sunlight, children, pets, entertaining and daily routines. A beautiful sample is not enough if the finish will show every fingerprint or wear poorly in the room where it is used.</p></article>
+      <article><h2>Low-waste planning starts before fabrication</h2><p>Waste is reduced most effectively through accurate dimensions, clear elevations, careful material takeoffs and fewer late changes. That is why CAS AURUM emphasizes concept clarity and technical review before production decisions.</p></article>
+    </section>
+    <section class="seo-sections">
+      <article><h2>How Georgia homes affect material choices</h2><p>In Atlanta and North Atlanta, material planning should account for humid summers, conditioned interiors, sun exposure, seasonal movement and the difference between a dry sample room and a lived-in family space. Door sizes, panel widths, reveals, finish sheen and substrate selection all help manage those conditions.</p></article>
+      <article><h2>Substrates behind the visible surface</h2><p>The visible wood is only one layer of the decision. A cabinet, wall panel or media wall may need MDF, plywood, veneer balancing, edge banding, blocking or metal support depending on span, weight, finish, hardware and how the piece meets the wall or floor.</p></article>
+      <article><h2>Material decisions before pricing</h2><p>Budget depends on species, veneer method, finish level, size, hardware, lighting, installation access and revision history. Early material direction gives the estimate a real basis, while keeping enough flexibility for samples, availability and technical constraints.</p></article>
+    </section>
     <section class="two-col">
       <div class="panel"><h3>Material Planning Details</h3><ul>${["Humidity considerations and dimensional stability", "Substrate selection for painted, veneered and panelized work", "Veneer balancing, veneer matching and flitch matching", "Grain direction planning for panels, doors and built-ins", "Natural finishes and warm natural textures selected for long-term durability"].map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div>
       <div class="panel"><h3>What This Page Does Not Claim</h3><p>CAS AURUM discusses sustainable material selection and eco-conscious choices where accurate. We do not claim certifications, forestry labels or third-party environmental ratings unless they are verified for a specific material or supplier.</p></div>
@@ -3468,6 +3520,29 @@ function smartIntegrationPage(route) {
         ["Smart Home Coordination", "CAS AURUM can prepare millwork around smart-home requirements and coordinate with AV or automation professionals when the project needs specialist systems."],
         ["Serviceability", "The goal is not to bury technology permanently. The goal is to hide it visually while keeping the important parts reachable for future service, replacement or adjustment."]
       ].map(([heading, body]) => `<article><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></article>`).join("")}
+    </section>
+    <section class="seo-sections">
+      <article><h2>Why built-in technology outperforms loose furniture</h2><p>Off-the-shelf media furniture often leaves visible cords, blocked ventilation, awkward TV height and equipment that has nowhere to go. Custom millwork can resolve screen placement, storage, lighting and access as one system.</p></article>
+      <article><h2>TV walls and viewing comfort</h2><p>A TV wall should account for screen size, eye level, seating distance, glare, speaker placement and future equipment changes. A clean surface only works when the technical layer behind it remains practical.</p></article>
+      <article><h2>Fireplace coordination</h2><p>Fireplace walls need more caution than a standard panel wall. Heat, clearances, mantle proportions, TV height, material suitability and service access should be clarified before the visual direction becomes fixed.</p></article>
+      <article><h2>Built-ins with hidden equipment</h2><p>Built-ins can hold routers, receivers, game systems, speakers, chargers and lighting drivers, but equipment storage needs airflow and access. Hidden should not mean impossible to service.</p></article>
+      <article><h2>Lighting that supports the room</h2><p>LED integration can be used for shelf lighting, toe-kick glow, panel grazing, display niches or low evening ambience. The useful question is where light helps the room, not how many strips can be added.</p></article>
+      <article><h2>Coordination with specialists</h2><p>CAS AURUM can design millwork around AV, low-voltage and smart-home requirements while coordinating with the appropriate specialists when the project needs wiring, automation or system installation outside the millwork scope.</p></article>
+    </section>
+    <section class="seo-sections">
+      <article><h2>Concealed wiring is a design decision</h2><p>Wire paths affect panel seams, cabinet depth, outlet placement, removable backs, equipment zones and the final rhythm of the wall. When those routes are decided late, the visible design often has to absorb compromises. Early planning keeps cords, adapters and boxes from becoming the room's strongest visual detail.</p></article>
+      <article><h2>AV cabinets need airflow</h2><p>Receivers, amplifiers, game systems, streaming devices, routers and lighting drivers create heat. Cabinet doors, shelves, backs and toe spaces may need ventilation gaps or service openings so equipment can operate without being exposed. The right solution depends on the actual equipment list, not a generic media cabinet assumption.</p></article>
+      <article><h2>Access panels should be planned, not improvised</h2><p>A clean wall can still include access for outlets, drivers, mounts, fireplace controls, filters or equipment. The best access points feel intentional: aligned with panel joints, hidden behind doors, or placed where daily viewing angles do not call attention to them.</p></article>
+      <article><h2>Smart-home readiness without overclaiming</h2><p>CAS AURUM prepares millwork for technology and coordinates with AV or automation professionals when specialist wiring, controls or programming are required. That distinction matters. The millwork can support the system without pretending to replace licensed or specialist trades.</p></article>
+      <article><h2>Rooms where integration matters most</h2><p>Media rooms, living rooms, fireplace walls, home offices, kitchens with appliance garages, built-ins with charging storage and bedrooms with concealed screens benefit from early technology planning. In each case, the goal is the same: equipment functions properly while the room still reads as architecture.</p></article>
+      <article><h2>What to send before review</h2><p>Useful inputs include photos, wall dimensions, ceiling height, TV size, bracket type if known, fireplace details, speaker or soundbar plans, equipment list, outlet locations, inspiration images and notes from an AV provider. Better inputs reduce guesswork before a Design Concept or technical package begins.</p></article>
+    </section>
+    <section class="seo-sections">
+      <article><h2>Mounting, blocking and wall conditions</h2><p>A technology-ready wall depends on what is behind the finished surface. TV brackets, floating consoles, heavy shelves, stone-look panels, fireplace surrounds and large access panels may need blocking, framing review or contractor coordination before the millwork package is finalized.</p></article>
+      <article><h2>Future equipment changes</h2><p>Technology changes faster than millwork. A strong design leaves room for replacement screens, different streaming devices, upgraded receivers, new remotes or a revised speaker plan without forcing the whole wall to be rebuilt. Adjustable shelves, reachable cable paths and logical access zones protect the long-term usefulness of the room.</p></article>
+      <article><h2>Light temperature and material color</h2><p>Integrated lighting affects how walnut, oak, painted cabinetry, stone-look panels and wall finishes read at night. Warm light can make a room feel calm, but driver placement, dimming compatibility, glare and reflected color need to be checked before final material approval.</p></article>
+      <article><h2>Budget and timeline factors</h2><p>Smart integration can change cost and schedule through electrical coordination, AV requirements, lighting drivers, access panels, specialty hardware, fireplace constraints, site readiness and revision time. Early technical notes help separate a simple clean TV wall from a more involved media wall or fireplace feature.</p></article>
+      <article><h2>Clear handoffs protect the finish</h2><p>The cleanest results happen when millwork, electrical, AV, fireplace and construction responsibilities are identified before installation. CAS AURUM can define the millwork requirements, access needs and coordination notes so other professionals know what must be ready before finished surfaces arrive.</p></article>
     </section>
     ${startDesignConceptBridge("en")}
     ${authorityInternalLinks("smartIntegration")}
@@ -3496,6 +3571,19 @@ function designProcessAuthorityPage(route) {
       <article><h2>Budget and timeline</h2><p>Design Concept packages start from the published package pricing. Larger technical packages and realization reviews depend on room size, material level, drawings, site conditions, installation complexity and location.</p></article>
       <article><h2>What to send</h2><p>Useful inputs include photos, wall dimensions, ceiling height, plans or drawings if available, appliance or AV notes, storage goals, preferred materials, timeline and a realistic budget range.</p></article>
       <article><h2>What it is not</h2><p>A Design Concept is not a substitute for licensed architectural, structural, electrical, plumbing or code-required engineering documents. It is the planning step that makes the next technical decision clearer.</p></article>
+    </section>
+    <section class="seo-sections">
+      <article><h2>Concept phase</h2><p>The concept phase resolves the direction: wall composition, storage logic, visual weight, materials, lighting intent and what information is still missing. It is where a media wall, built-in, closet, kitchen cabinet wall or panel package becomes clear enough to discuss seriously.</p></article>
+      <article><h2>Measurements</h2><p>Rough dimensions are enough to begin, but production decisions need verified field conditions. Wall width, ceiling height, outlet locations, floor level, obstructions, appliance clearances and fireplace conditions can all affect the final scope.</p></article>
+      <article><h2>Engineering and shop drawings</h2><p>Technical packages may include elevations, dimensions, material notes, module logic, hardware planning, lighting routes, access requirements and details that designers, builders or fabrication partners need before production.</p></article>
+      <article><h2>Production planning</h2><p>Production review connects the approved direction to material availability, finish decisions, hardware, fabrication complexity, delivery constraints, site access and the responsibilities of every party involved.</p></article>
+      <article><h2>Installation coordination</h2><p>Installation planning should consider site readiness, wall conditions, floor protection, access, sequencing with other trades, AV coordination, fireplace constraints and what must be confirmed before work arrives on site.</p></article>
+      <article><h2>Typical timeline logic</h2><p>Simple concept work can move faster than a technical millwork package. Larger scopes need time for measurements, revisions, material approval, shop drawing review, production scheduling, delivery and installation coordination.</p></article>
+    </section>
+    <section class="seo-sections">
+      <article><h2>When a Quick Project Estimate helps</h2><p>The Quick Project Estimate is useful when the main question is budget direction. It helps frame the scale of a TV wall, built-in, cabinetry package, closet, wall panel feature or fireplace wall before deeper drawings are needed.</p></article>
+      <article><h2>When the Technical Millwork Planner helps</h2><p>The planner is stronger when the project already has measurements, cabinet zones, storage quantities, appliance notes, AV requirements, wall conditions or trade coordination needs. It organizes the practical information that drawings and production review rely on.</p></article>
+      <article><h2>How designers and builders enter the process</h2><p>Trade partners can begin with floor plans, elevations, finish schedules, field measurements, client inspiration, budgets and construction timelines. CAS AURUM can support the design intent with material coordination, engineering packages, shop drawing review and installation coordination where the scope fits.</p></article>
     </section>
     ${authorityInternalLinks("designProcess")}
     ${authorityFaqSection("designProcess")}
@@ -3592,6 +3680,7 @@ function atlantaMoneyPage(route, page) {
     <section class="seo-sections">
       ${sections.map(([heading, body]) => `<article><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></article>`).join("")}
     </section>
+    ${atlantaMoneyProcess(page)}
     ${premiumMaterialsSection("en", page.serviceKey)}
     ${natureIntegratedSection("en", page.serviceKey)}
     ${smartIntegrationSection("en", page.serviceKey)}
@@ -3620,12 +3709,22 @@ function atlantaMoneySections(page) {
   ];
 }
 
+function atlantaMoneyProcess(page) {
+  const steps = [
+    ["Concept", `The concept phase clarifies the ${page.serviceName} direction: proportions, storage logic, material story, lighting intent, local constraints and whether the project should stay in planning or move toward technical review.`],
+    ["Engineering", "Engineering review organizes dimensions, field conditions, access needs, AV or lighting requirements, hardware, shop drawing notes and the details a builder, installer or fabrication partner would need."],
+    ["Production", "Production planning depends on approved materials, finish direction, hardware, lead times, fabrication complexity, delivery logistics and written confirmation of scope and responsibilities."],
+    ["Installation", "Installation coordination reviews site readiness, wall conditions, protection, sequencing with other trades, fireplace or AV constraints and the practical realities of working in an occupied Atlanta-area home."],
+  ];
+  return `<section class="process atlanta-money-process"><p class="eyebrow">Project Path</p><h2>Concept, engineering, production and installation</h2><div>${steps.map(([title, body], index) => `<article><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</div></section>`;
+}
+
 function atlantaExampleText(page, item) {
   const label = displayExampleTitle(item);
-  if (/wiring|equipment|TV|LED|media|console/i.test(item)) return `${label} should be reviewed around screen size, cable paths, ventilation, access and how the wall will look when equipment is off.`;
-  if (/oak|walnut|veneer|panel|slat|fluted/i.test(item)) return `${label} require material stability, grain direction, finish durability, lighting and clear decisions about how the surface meets nearby doors, windows or cabinetry.`;
+  if (/wiring|equipment|TV|LED|media|console/i.test(item)) return `${label} needs screen size, cable paths, ventilation, access and equipment storage planned before the front surface is finalized.`;
+  if (/oak|walnut|veneer|panel|slat|fluted/i.test(item)) return `${label} needs stable substrates, grain direction, finish durability, lighting and clear decisions about how the surface meets nearby doors, windows or cabinetry.`;
   if (/shop|drawing|coordination|measure/i.test(item)) return `${label} helps designers, builders and homeowners reduce uncertainty before fabrication, delivery or installation coordination.`;
-  return `${label} can be developed through photos, dimensions, material direction and a clear Design Concept before technical decisions become expensive to change.`;
+  return `${label} should be reviewed around dimensions, storage, material direction and daily use before technical decisions become expensive to change.`;
 }
 
 function displayExampleTitle(value) {
@@ -3711,7 +3810,7 @@ function premiumMaterialsSection(lang = "en", context = "solutions") {
   return `<section class="seo-copy wide material-layer">
     <p class="eyebrow">${escapeHtml(localizedPlain("Materials & Craftsmanship", lang))}</p>
     <h2>${escapeHtml(localizedPlain("Thoughtful Materials for Long-Term Living", lang))}</h2>
-    <p>${escapeHtml(`${BRAND} plans ${reusableSolutionSet.slice(0, 8).join(", ")} with refined materials, quiet luxury, warm minimalism, architectural precision, thoughtful detailing and elevated interiors in mind. In ${market}, useful material planning must account for humidity, dimensional stability, substrate selection, veneer balancing, grain direction and fabrication quality. The goal is timeless design over disposable trends: durable surfaces, responsible material selection, low-waste planning where accurate and custom work that still feels relevant years later.`)}</p>
+    <p>${escapeHtml(`${BRAND} plans ${reusableSolutionSet.slice(0, 8).join(", ")} around material behavior, architectural precision and warm natural surfaces. In ${market}, useful material planning must account for humidity, dimensional stability, substrate selection, veneer balancing, grain direction and fabrication quality. The goal is timeless design over disposable trends: durable surfaces, responsible material selection, low-waste planning where accurate and custom work that still feels relevant years later.`)}</p>
     <div class="chip-row">${materials.map((item) => `<span class="chip">${escapeHtml(item)}</span>`).join("")}</div>
   </section>
   <section class="seo-sections">
@@ -3756,7 +3855,7 @@ function startDesignConceptBridge(lang = "en") {
   if (lang !== "en") return "";
   const steps = ["Upload Photos", "Receive Design Direction", "Material Selection", "Engineering Package", "Production & Installation"];
   return `<section class="split-band design-concept-layer">
-    <div><p class="eyebrow">${escapeHtml(localizedPlain("Start With a Design Concept", lang))}</p><h2>${escapeHtml(localizedPlain("Clarity before fabrication", lang))}</h2><p>${escapeHtml("A Design Concept is the lower-risk entry point: it turns photos, goals, material preferences and rough dimensions into a visual decision-making tool, budget-planning reference and next-step brief before fabrication or installation decisions are made.")}</p><div class="actions"><a class="button primary track" data-event="design_concept_bridge_click" href="/design-concept#start-design-concept">${escapeHtml(localizedPlain("Start Your Design Concept", lang))}</a><a class="button secondary track" data-event="quick_estimate_bridge_click" href="/quick-project-estimate">${escapeHtml("Quick Project Estimate")}</a></div></div>
+    <div><p class="eyebrow">${escapeHtml(localizedPlain("Start With a Design Concept", lang))}</p><h2>${escapeHtml(localizedPlain("Clarity before fabrication", lang))}</h2><p>${escapeHtml("A Design Concept is the lower-risk entry point: it turns photos, goals, material preferences and rough dimensions into a visual decision tool, budget-planning reference and next-step scope before fabrication or installation decisions are made.")}</p><div class="actions"><a class="button primary track" data-event="design_concept_bridge_click" href="/design-concept#start-design-concept">${escapeHtml(localizedPlain("Start Your Design Concept", lang))}</a><a class="button secondary track" data-event="quick_estimate_bridge_click" href="/quick-project-estimate">${escapeHtml("Quick Project Estimate")}</a></div></div>
     <aside class="panel"><h3>${escapeHtml(localizedPlain("Process", lang))}</h3><ol>${steps.map((step) => `<li>${escapeHtml(localizedPlain(step, lang))}</li>`).join("")}</ol></aside>
   </section>`;
 }
@@ -6420,6 +6519,7 @@ function programmaticPage(route, page) {
       <p>${escapeHtml(page.locationSection)}</p>
       <p>${escapeHtml(page.materialsSection)}</p>
     </section>
+    ${programmaticQualitySection(route, page)}
     <section class="two-col">
       <div>
         <p class="eyebrow">${escapeHtml(localized("Process", route.lang))}</p>
@@ -6449,6 +6549,30 @@ function programmaticPage(route, page) {
   `;
 }
 
+function programmaticQualitySection(route, page) {
+  const lang = route.lang;
+  if (lang !== "en") return "";
+  const items = [
+    ["Useful only with real room information", "A project page becomes useful when the visitor can connect it to photos, dimensions, storage needs, material expectations, budget range and site conditions."],
+    ["Quality over page count", "CAS AURUM does not treat every city and service phrase as a project. A page should help someone understand materials, process, cost factors, timeline and next steps before it deserves attention."],
+    ["What changes the next step", `${page.vertical} may need a Design Concept, Quick Project Estimate, Technical Millwork Planner or trade review depending on measurements, material level, AV or lighting needs, installation complexity and location.`],
+  ];
+  return `<section class="seo-sections quality-signals">${items.map(([heading, body]) => `<article><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></article>`).join("")}</section>${programmaticGeorgiaScenarioCards(page)}`;
+}
+
+function programmaticGeorgiaScenarioCards(page) {
+  if (page.state !== "Georgia") return "";
+  const scenarios = [
+    ["Buckhead remodels", "Existing walls often need precise measurements, clean transitions to older architectural details, concealed wiring and installation sequencing that respects finished floors and adjacent rooms."],
+    ["Alpharetta family rooms", "Media walls, kitchens and built-ins should handle daily storage, strong daylight, AV equipment, family use and durable finishes without making the room feel heavy."],
+    ["Milton custom homes", "Larger rooms can benefit from wall composition, rift white oak or walnut direction, fireplace coordination and early review of scale so built-ins feel proportionate."],
+    ["Marietta renovations", "Renovated homes may need cabinetry, panels or furniture that works with existing trim, uneven walls, older electrical locations and Georgia humidity."],
+    ["Roswell interiors", "Traditional-modern rooms often need warm materials, calmer hardware, furniture-fit review and details that respect existing character while improving daily use."],
+    ["Sandy Springs projects", "Built-ins, closets and custom cabinetry should clarify storage, technology access, delivery logistics and installation coordination before production decisions are made."],
+  ];
+  return `<section class="seo-sections local-scenarios">${scenarios.map(([heading, body]) => `<article><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></article>`).join("")}</section>`;
+}
+
 function seoMarketPageTemplate(route, page) {
   const marketName = page.city?.name || page.state.name;
   const ctaNote = page.marketTier === "core"
@@ -6456,10 +6580,10 @@ function seoMarketPageTemplate(route, page) {
     : "Design concepts and technical planning are available remotely. Full-service realization is reviewed for selected projects.";
   const serviceSections = page.service ? [
     ["What CAS AURUM designs and plans", page.service.longDescription],
-    ["Local use cases", `${marketName} projects may include ${page.service.serviceKeywords.join(", ")}, material direction, storage planning, lighting notes and a clear path from concept to technical review.`],
+    ["Local use cases", localUseCaseCopy(page, marketName)],
   ] : [
     ["What CAS AURUM designs and plans", "CAS AURUM creates custom media walls, kitchens, closets, built-ins, wall panels, furniture and architectural millwork solutions made around the space, materials and project goals."],
-    ["Local use cases", `${marketName} projects may begin with one wall, one room, a technical millwork package or a larger full-service review when the scope, budget and logistics make sense.`],
+    ["Local use cases", `${marketName} projects may begin with one wall, one room, a technical millwork package or a larger full-service review when the scope, budget, site access and installation logistics make sense.`],
   ];
   return `
     <section class="seo-hero seo-market-hero">
@@ -6495,6 +6619,7 @@ function seoMarketPageTemplate(route, page) {
       <article><h2>Full-Service Project Review</h2><p>${escapeHtml(ctaNote)} Scope, budget, site conditions and logistics determine whether fabrication, coordination or installation can be reviewed.</p></article>
       <article><h2>What to upload</h2><p>Useful files include wide room photos, straight-on wall photos, rough dimensions, ceiling height, inspiration images, existing plans, appliance or AV notes and the main goals for the space.</p></article>
     </section>
+    ${page.state?.id === "georgia" ? geoLocalScenarioCards(route.lang) : ""}
     ${premiumMaterialsSection(route.lang, page.service?.id || "solutions")}
     ${ecoConsciousSection(route.lang, page.service?.id || "solutions")}
     ${natureIntegratedSection(route.lang, page.service?.id || "solutions")}
@@ -6508,8 +6633,30 @@ function seoMarketPageTemplate(route, page) {
     <section class="internal"><h2>Related services</h2>${page.relatedServices.map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`).join("")}</section>
     <section class="internal"><h2>Related locations</h2>${page.relatedLocations.map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`).join("")}</section>
     <section class="faq"><h2>Frequently Asked Questions</h2>${page.faq.map(([q, a]) => `<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join("")}</section>
-    <section class="cta"><p class="eyebrow">CAS AURUM</p><h2>${escapeHtml(page.service ? `Plan ${page.service.label.toLowerCase()} for ${marketName}` : `Plan a custom project in ${marketName}`)}</h2><p>${escapeHtml("Interior and millwork solutions designed to make your space feel more personal, more thoughtful and more complete.")}</p><div class="actions"><a class="button primary track" data-event="seo_design_concept_click" href="${escapeHtml(page.ctaLinks.designConcept.href)}">Start with a Custom Design Concept</a><a class="button secondary track" data-event="seo_full_review_click" href="${escapeHtml(page.ctaLinks.review.href)}">Request Project Review</a></div></section>
+    <section class="cta"><p class="eyebrow">CAS AURUM</p><h2>${escapeHtml(page.service ? `Plan ${page.service.label.toLowerCase()} for ${marketName}` : `Plan a custom project in ${marketName}`)}</h2><p>${escapeHtml("Send photos, dimensions, location, budget direction and the main room constraint so CAS AURUM can recommend a concept, estimate, planner preset or project review path.")}</p><div class="actions"><a class="button primary track" data-event="seo_design_concept_click" href="${escapeHtml(page.ctaLinks.designConcept.href)}">Start with a Custom Design Concept</a><a class="button secondary track" data-event="seo_full_review_click" href="${escapeHtml(page.ctaLinks.review.href)}">Request Project Review</a></div></section>
   `;
+}
+
+function localUseCaseCopy(page, marketName) {
+  const keywords = page.service?.serviceKeywords?.slice(0, 5).join(", ") || "custom interiors";
+  if (page.state?.id === "georgia") {
+    return `${marketName} projects may include ${keywords}, but the useful discussion is the real room: Buckhead remodel walls, Alpharetta family rooms, Milton custom homes, Marietta renovations, Roswell traditional-modern interiors and Sandy Springs properties where measurements, humidity, daylight, wiring and installation coordination matter.`;
+  }
+  return `${marketName} projects may include ${keywords}, material direction, storage planning, lighting notes and a clear path from concept to technical review. Remote planning should also clarify measurements, local trades, delivery and installation responsibility.`;
+}
+
+function geoLocalScenarioCards(lang = "en") {
+  if (lang !== "en") return "";
+  const scenarios = [
+    ["Buckhead remodels", "Existing walls, fireplaces, outlets and finished floors often drive the custom strategy as much as the visual direction."],
+    ["Alpharetta family rooms", "Media walls and built-ins need storage, durable finishes, hidden wiring and access for devices used every week."],
+    ["Milton custom homes", "Larger rooms often need proportion control: white oak built-ins, shelving, panel rhythm and sightlines to windows or outdoor views."],
+    ["Marietta renovations", "Older or remodeled spaces may need field measurements, scribe planning, finish durability and coordination around existing conditions."],
+    ["Roswell interiors", "Traditional-modern rooms can benefit from fireplace feature walls, panels, built-ins and warm wood textures that respect the home's character."],
+    ["Sandy Springs projects", "Condo, townhouse and single-family projects may need careful delivery, access, HOA, elevator or installer coordination before production review."],
+  ];
+  return `<section class="seo-copy wide"><p class="eyebrow">Georgia Project Context</p><h2>Local scenarios that affect the scope</h2><p>Location is useful when it changes project decisions. These examples describe common planning conditions, not fabricated completed projects.</p></section>
+  <section class="cards local-scenarios">${scenarios.map(([title, body], index) => `<article class="card"><span>${String(index + 1).padStart(2, "0")}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</section>`;
 }
 
 function serviceModeLabel(mode) {

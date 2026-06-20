@@ -226,7 +226,7 @@ function buildStats(pages) {
 function createHubPage({ state, city }) {
   const route = city ? `/${city.slug}` : `/${stateRouteSlug(state)}`;
   const approved = wave1Indexable.has(route);
-  const title = city ? `Custom Interior and Millwork Solutions in ${city.name} | ${BRAND}` : `Custom Interior and Millwork Solutions in ${state.name} | ${BRAND}`;
+  const title = city ? `Custom Interiors ${city.name} | ${BRAND}` : `Custom Interiors ${state.name} | ${BRAND}`;
   const metaDescription = city
     ? `Custom media walls, kitchens, closets, built-ins and millwork planning in ${city.name}. Start with a design concept, open the planner or request project review.`
     : `Custom media walls, kitchens, closets, built-ins and architectural millwork for ${state.name} homes. Start with a design concept, planner or project review.`;
@@ -254,7 +254,7 @@ function createServicePage({ state, city, service }) {
   const approved = wave1Indexable.has(route) || wave2Indexable.has(route);
   const expansionTest = expansionNoindex.has(route);
   const label = service.label.replace(/^Custom /, "");
-  const title = city ? `Custom ${label} in ${city.name} | ${BRAND}` : `Custom ${label} ${state.name} | ${BRAND}`;
+  const title = city ? `${label} ${city.name} | ${BRAND}` : `${label} ${state.name} | ${BRAND}`;
   const metaDescription = city
     ? `Custom ${label.toLowerCase()} designed around your space, materials and project goals in ${city.name}. Start with a design concept, open the planner or request project review.`
     : `Custom ${label.toLowerCase()} for ${state.name} homes. Start with a design concept, open the planner or request project review.`;

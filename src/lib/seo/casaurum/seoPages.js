@@ -428,7 +428,7 @@ export const intents = [
   ["layout", true, ["circulation", "zoning", "room planning"]],
   ["decor", false, ["accessories", "styling", "not enough CAS AURUM-specific data"]],
   ["renovation", true, ["existing conditions", "phasing", "coordination"]],
-  ["custom", true, ["bespoke scope", "measurements", "project brief"]],
+  ["custom", true, ["custom scope", "measurements", "project direction"]],
 ].map(([slug, indexableDefault, sectionFocus]) => ({
   slug,
   title: intentTitle(slug),
@@ -447,7 +447,7 @@ const cityMarketBriefs = {
     sections: [
       ["Georgia project fit", "The strongest Georgia inquiries usually come from Atlanta, Buckhead, Alpharetta, Sandy Springs, Marietta, Roswell, Milton, Brookhaven, Johns Creek and Savannah projects where custom work needs to feel premium without becoming fragile or overdecorated."],
       ["Design concept value", "A premium design concept gives the client and project team a clear visual and material direction before custom cabinetry, wall panels, furniture or millwork are priced in detail. It helps separate serious project intent from general inspiration browsing."],
-      ["Useful brief", "A useful Georgia design concept brief should include city or ZIP code, room photos, rough dimensions, ceiling height, target materials, inspiration images, desired scope and the level of realization needed after the concept."],
+      ["Useful project inputs", "A useful Georgia design concept request should include city or ZIP code, room photos, rough dimensions, ceiling height, target materials, inspiration images, desired scope and the level of realization needed after the concept."],
       ["High-intent Georgia scopes", "The strongest organic paths for Georgia should connect design concept searches to luxury kitchens, custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork."],
     ],
   },
@@ -457,7 +457,7 @@ const cityMarketBriefs = {
     sections: [
       ["Atlanta project fit", "The strongest Atlanta inquiries usually involve Buckhead residences, Sandy Springs and Alpharetta homes, developer interiors, boutique hospitality, restaurants, offices or high-end remodels where standard cabinetry would look too thin. CAS AURUM reviews drawings, room photos, measurements, material direction and budget range before recommending a practical custom path."],
       ["What matters locally", "Atlanta projects often need durable luxury: finishes that survive daily use, storage that feels architectural, and warm materials that do not turn a refined home into a cold showroom. Walnut, oak, natural stone, textured panels, concealed lighting and restrained champagne metal details tend to work well when the proportions are controlled."],
-	      ["Useful brief for designers", "A valuable Atlanta design brief should include the property area, room dimensions, ceiling height, appliance or AV requirements, desired storage, inspiration images, and whether the scope is cabinetry, a TV wall, wall panels, closets, vanities, a kitchen or a full millwork package."],
+	      ["Useful project inputs for designers", "A valuable Atlanta design request should include the property area, room dimensions, ceiling height, appliance or AV requirements, desired storage, inspiration images, and whether the scope is cabinetry, a TV wall, wall panels, closets, vanities, a kitchen or a full millwork package."],
 	      ["High-intent Atlanta scopes", "The strongest organic landing paths for Atlanta should connect luxury interior design searches to custom media walls, custom built-ins, luxury closets, wall panels and architectural millwork. These are the scopes most likely to turn style research into a project inquiry."],
 	    ],
 	  },
@@ -465,7 +465,7 @@ const cityMarketBriefs = {
     intro: "Miami interiors reward clean drama: stone, glass, dark wood, integrated lighting and custom storage that can feel glamorous without becoming loud. The climate, daylight and entertainment lifestyle make material selection and lighting control especially important.",
     direct: "Miami inquiries are best suited to villas, condos, penthouses, dressing rooms, TV walls, kitchens and hospitality-inspired interiors where custom surfaces and built-ins create a polished technical scope.",
     sections: [
-      ["Miami project fit", "A Miami project brief should clarify whether the space is a waterfront residence, condo, villa, private lounge, dressing room, kitchen, media wall or hospitality interior. Humidity, daylight, reflection, maintenance and evening lighting scenes should be discussed before choosing high-gloss, stone, veneer or glass-heavy directions."],
+      ["Miami project fit", "A Miami project request should clarify whether the space is a waterfront residence, condo, villa, private lounge, dressing room, kitchen, media wall or hospitality interior. Humidity, daylight, reflection, maintenance and evening lighting scenes should be discussed before choosing high-gloss, stone, veneer or glass-heavy directions."],
       ["Design value", "The best Miami interiors usually avoid generic white-box luxury. A stronger direction uses custom wall composition, concealed storage, integrated LEDs, glass display zones, stone back panels and technical hardware decisions that make the room feel designed rather than simply decorated."],
 	      ["What to send", "Send plan dimensions, wall photos, ceiling height, condo or building constraints, desired storage, lighting intent, stone or veneer references, and a target budget range. That lets CAS AURUM respond with a realistic project path instead of a vague moodboard."],
 	      ["Best-fit Miami scopes", "Miami projects often make sense for custom media walls, dressing galleries, walk-in closets, hospitality wall panels and custom built-ins. Those scopes usually begin with a real room, a storage need, a lighting plan or a material decision rather than loose inspiration browsing."],
@@ -476,7 +476,7 @@ const cityMarketBriefs = {
     direct: "New York is a strong concept and coordination market for custom built-ins, wall systems, closets, media walls and refined cabinetry where every inch needs a clear purpose.",
     sections: [
       ["New York project fit", "The most useful New York scopes are usually apartments, townhouses, penthouses, private offices, wardrobes, libraries and living rooms where storage, wall composition and lighting need to work inside tight architectural limits."],
-      ["Planning priorities", "Before finishes are discussed, the technical brief should settle wall length, elevator or access constraints, ceiling height, radiator or HVAC conflicts, AV locations, door swings and whether the goal is concealed storage, display, acoustic comfort or a stronger architectural focal wall."],
+      ["Planning priorities", "Before finishes are discussed, the technical review should settle wall length, elevator or access constraints, ceiling height, radiator or HVAC conflicts, AV locations, door swings and whether the goal is concealed storage, display, acoustic comfort or a stronger architectural focal wall."],
 	      ["Material direction", "New York quiet luxury often works best with limestone, walnut, smoked oak, warm lacquer, fabric panels and very restrained metal lines. The value is not excess decoration; it is proportion, joinery logic, lighting discipline and fewer visible compromises."],
 	      ["High-intent New York scopes", "New York demand should be connected to built-ins, wardrobes, media walls, libraries, storage walls and wall systems. These are practical high-value searches because space constraints make custom work easier to justify."],
 	    ],
@@ -487,7 +487,7 @@ const cityMarketBriefs = {
     sections: [
       ["Chicago project fit", "Chicago projects often benefit from custom wall panels, built-in libraries, dining storage, office millwork, media walls and residential cabinetry that respects older architectural bones while making the interior feel current."],
       ["What matters locally", "A good Chicago concept should consider winter light, layered evening lighting, durable finishes, strong proportions and whether the interior should lean modern, Art Deco, quiet luxury or warm contemporary. The result should feel substantial, not trendy."],
-      ["Useful brief", "Send photos of the existing trim and openings, wall measurements, ceiling height, preferred wood tone, lighting goals, room function and any historic details that should be preserved or simplified. This helps avoid a design that fights the architecture."],
+      ["Useful project inputs", "Send photos of the existing trim and openings, wall measurements, ceiling height, preferred wood tone, lighting goals, room function and any historic details that should be preserved or simplified. This helps avoid a design that fights the architecture."],
     ],
 	  },
 	  "beverly-hills": {
@@ -908,7 +908,7 @@ function designConceptMarketPage(locale, market) {
     eyebrow: "Design Concepts",
     metaTitle: `${h1} | CAS AURUM`,
     metaDescription: `${BRAND} creates ${modifierLabel} interior design concepts for ${locationName} projects: material direction, custom wall panels, built-ins, closets, kitchens, media walls and millwork planning before fabrication review.`,
-    intro: `${h1} help turn inspiration into a practical project brief before custom fabrication, cabinetry or installation is reviewed. CAS AURUM focuses the concept around room photos, rough dimensions, material direction, storage needs, lighting, budget logic and the next realistic step for ${locationName}.`,
+    intro: `${h1} help turn inspiration into practical project direction before custom fabrication, cabinetry or installation is reviewed. CAS AURUM focuses the concept around room photos, rough dimensions, material direction, storage needs, lighting, budget logic and the next realistic step for ${locationName}.`,
     directSummary: `${locationName} ${modifierLabel} design concepts are useful when a client needs a clear visual and material direction for custom interiors before committing to detailed drawings, fabrication or installation.`,
     sections: designConceptMarketSections(locale, market, profile, materialList, scopeList),
     faq: designConceptMarketFaq(locale, market, profile),
@@ -1035,7 +1035,7 @@ function cityCombinationPage(locale, combo) {
   return makePage({
     pageType: combo.type, locale, path, h1, eyebrow: l(locale, "cities"),
     metaTitle: `${h1} | ${BRAND}`, metaDescription: `${BRAND} explores ${h1.toLowerCase()} for ${profile.propertyMix}, with ${materialList}, custom furniture, wall panels and architectural planning notes.`,
-    intro: `${h1} should respond to ${combo.city.cityName}'s real project context: ${profile.propertyMix}. The useful brief is not just a style label; it should connect ${focus.toLowerCase()}, materials, lighting, storage, access constraints and budget range.`,
+    intro: `${h1} should respond to ${combo.city.cityName}'s real project context: ${profile.propertyMix}. The useful direction is not just a style label; it should connect ${focus.toLowerCase()}, materials, lighting, storage, access constraints and budget range.`,
     directSummary: `${h1} works best when the concept feels ${profile.designMood}, uses materials such as ${materialList}, and solves local constraints like ${profile.constraints}.`,
     sections: cityCombinationSections(locale, h1, combo),
     faq: cityCombinationFaq(locale, h1, combo), breadcrumbs: crumb(locale, [[l(locale, "cities"), "/cities"], [combo.city.cityName, `/cities/${combo.city.slug}`], [h1, path]]),
@@ -1075,7 +1075,7 @@ function cityCombinationSections(locale, subject, combo) {
     },
     {
       heading: "Local planning constraints",
-      body: `The planning brief should account for ${profile.constraints}. These details change the best panel thickness, finish durability, hardware choice, lighting placement and how much built-in storage belongs in the room.`,
+      body: `The planning notes should account for ${profile.constraints}. These details change the best panel thickness, finish durability, hardware choice, lighting placement and how much built-in storage belongs in the room.`,
     },
 	    {
 	      heading: "Best-fit custom scopes",
@@ -1083,7 +1083,7 @@ function cityCombinationSections(locale, subject, combo) {
 	    },
 	    {
 	      heading: "Commercial project paths",
-	      body: `${combo.city.cityName} visitors with real project intent should be routed toward concrete scopes such as custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork. These pages help move broad design research into a consultation brief with photos, dimensions, budget range and timeline.`,
+		      body: `${combo.city.cityName} visitors with real project intent should be routed toward concrete scopes such as custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork. These pages help move broad design research into consultation notes with photos, dimensions, budget range and timeline.`,
 	    },
 	    {
 	      heading: "Material strategy",
@@ -1111,8 +1111,8 @@ function cityCommercialSections(locale, city) {
       body: `For organic traffic, ${city.cityName} should not only rank for broad luxury interior design terms. The page should guide qualified visitors toward concrete CAS AURUM scopes: ${scopeText}, custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork.`,
     },
     {
-      heading: "From search query to consultation brief",
-      body: `A useful ${city.cityName} inquiry should include room photos, rough dimensions, ceiling height, property type, city or ZIP code, desired service, material references, budget range and timeline. This helps separate serious project leads from general inspiration browsing.`,
+	      heading: "From search query to consultation notes",
+	      body: `A useful ${city.cityName} inquiry should include room photos, rough dimensions, ceiling height, property type, city or ZIP code, desired service, material references, budget range and timeline. This helps separate serious project leads from general inspiration browsing.`,
     },
   ];
 }
@@ -1590,28 +1590,28 @@ function articleSections(locale, title) {
       ["Design framework", "Use style, room, property type and intent together. A villa living room, penthouse kitchen and boutique hotel lobby may share a style but need different lighting, storage and furniture logic."],
       ["Material notes", "Premium interiors usually read through fewer, better materials: walnut, oak, stone, plaster, leather, wool, brass accents and matte metal used with restraint."],
       ["Comparison", "Modern is cleaner and more structural; contemporary is more current and fluid; quiet luxury is subtler; bespoke design is the most project-specific."],
-      [l(locale, "finalCta"), "A Casaurum concept can connect inspiration to a practical brief: room, location, property type, material direction, budget range and timeline."],
+      [l(locale, "finalCta"), "A Casaurum concept can connect inspiration to practical scope notes: room, location, property type, material direction, budget range and timeline."],
     ],
     es: [
       [l(locale, "direct"), `${title} empieza con una pregunta directa de diseño: cómo debe sentirse el espacio, cómo debe funcionar y qué materiales pueden sostener esa sensación sin ruido visual.`],
       ["Marco de diseño", "Use estilo, espacio, tipo de propiedad e intención juntos. Una sala de villa, una cocina de penthouse y un lobby boutique pueden compartir estilo, pero necesitan distinta lógica de luz, almacenamiento y mobiliario."],
       ["Notas de materiales", "Los interiores premium suelen leerse mejor con menos materiales y mejor elegidos: nogal, roble, piedra, yeso, cuero, lana, acentos de latón y metal mate usados con contención."],
       ["Comparación", "El estilo moderno es más limpio y estructural; el contemporáneo es más actual y fluido; el lujo discreto es más sutil; el diseño a medida es el más específico para cada proyecto."],
-      [l(locale, "finalCta"), "Un concepto Casaurum puede conectar inspiración con un brief práctico: espacio, ubicación, tipo de propiedad, dirección material, rango de presupuesto y tiempos."],
+      [l(locale, "finalCta"), "Un concepto Casaurum puede conectar inspiración con notas prácticas de alcance: espacio, ubicación, tipo de propiedad, dirección material, rango de presupuesto y tiempos."],
     ],
     fr: [
       [l(locale, "direct"), `${title} commence par une question de design directe : quelle sensation créer, comment la pièce doit fonctionner et quels matériaux peuvent porter cette intention sans bruit visuel ?`],
       ["Cadre de design", "Utilisez ensemble le style, la pièce, le type de propriété et l'intention. Un salon de villa, une cuisine de penthouse et un lobby boutique peuvent partager un style, mais demandent une logique différente de lumière, rangement et mobilier."],
       ["Notes matériaux", "Les intérieurs premium se lisent souvent mieux avec moins de matières, mais mieux choisies : noyer, chêne, pierre, plâtre, cuir, laine, accents laiton et métal mat avec retenue."],
       ["Comparaison", "Le style moderne est plus net et structurel; le contemporain est plus actuel et fluide; le luxe discret est plus subtil; le design sur mesure est le plus spécifique au projet."],
-      [l(locale, "finalCta"), "Un concept Casaurum peut relier l'inspiration à un brief pratique : pièce, lieu, type de propriété, direction matière, budget indicatif et calendrier."],
+      [l(locale, "finalCta"), "Un concept Casaurum peut relier l'inspiration à des notes de périmètre pratiques : pièce, lieu, type de propriété, direction matière, budget indicatif et calendrier."],
     ],
     ru: [
       [l(locale, "direct"), `${title} начинается с прямого дизайн-вопроса: каким должно быть ощущение комнаты, как она должна работать и какие материалы могут передать это без визуального шума.`],
       ["Дизайн-рамка", "Рассматривайте стиль, комнату, тип недвижимости и намерение вместе. Гостиная виллы, кухня пентхауса и лобби бутик-отеля могут иметь общий стиль, но разную логику света, хранения и мебели."],
       ["Заметки по материалам", "Премиальные интерьеры часто читаются лучше через меньшее количество более сильных материалов: орех, дуб, камень, штукатурка, кожа, шерсть, латунные акценты и матовый металл сдержанно."],
       ["Сравнение", "Современный стиль чище и структурнее; контемпорари актуальнее и мягче; тихая роскошь тоньше; дизайн на заказ сильнее всего зависит от конкретного проекта."],
-      [l(locale, "finalCta"), "Концепт Casaurum может связать вдохновение с практическим brief: комната, локация, тип объекта, направление материалов, бюджетный диапазон и сроки."],
+      [l(locale, "finalCta"), "Концепт Casaurum может связать вдохновение с практическими заметками по объему: комната, локация, тип объекта, направление материалов, бюджетный диапазон и сроки."],
     ],
   }[locale] || [];
   return content.map(([heading, body]) => ({ heading, body }));
@@ -1872,7 +1872,7 @@ function intentBySlug(slug) {
 
 function directFor(locale, subject, type) {
   const base = {
-    en: `${subject} should be planned as a connected custom project: style, room function, materials, lighting, furniture and storage need to support one another from the first project brief.`,
+    en: `${subject} should be planned as a connected custom project: style, room function, materials, lighting, furniture and storage need to support one another from the first project notes.`,
     es: `${subject} debe planificarse como un sistema interior completo: estilo, función, materiales, iluminación, mobiliario y almacenamiento deben trabajar juntos.`,
     fr: `${subject} doit être planifié comme un système intérieur complet : style, fonction, matériaux, lumière, mobilier et rangement doivent se répondre.`,
     ru: `${subject} стоит планировать как единую интерьерную систему: стиль, функция, материалы, свет, мебель и хранение должны работать вместе.`,
