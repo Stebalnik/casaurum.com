@@ -28,8 +28,12 @@ const paths = [
   "/partners",
   "/es/programa-partners",
   "/fr/programme-partenaires",
-  "/ru/partnerskaya-programma",
+  "/ru",
+  "/ru/dizayn-koncept",
+  "/ru/quick-project-estimate",
+  "/ru/galereya",
   "/technical-millwork-planner",
+  "/quick-project-estimate",
   "/request-consultation",
   "/request-measurement",
   "/usa",
@@ -51,7 +55,7 @@ const paths = [
   "/es/georgia/atlanta/custom-kitchen-cabinets",
   "/es/paneles-de-pared-a-medida",
   "/fr/panneaux-muraux-sur-mesure",
-  "/ru/stenovye-paneli-na-zakaz",
+  "/uk",
   "/en/design-concepts/georgia",
   "/en/design-concepts/atlanta",
   "/sitemap.xml",
@@ -84,6 +88,12 @@ for (const [path, location] of [
   ["/millwork-planner", "/technical-millwork-planner"],
   ["/projects", "/gallery"],
   ["/collections/aurum", "/ideas/aurum"],
+  ["/ua", "/uk"],
+  ["/ua/quick-project-estimate", "/uk"],
+  ["/uk/quick-project-estimate", "/uk"],
+  ["/uk/konstruktor-mebliv", "/uk"],
+  ["/ru/partnerskaya-programma", "/ru"],
+  ["/ru/stenovye-paneli-na-zakaz", "/ru"],
 ]) {
   const result = await request(path);
   if (result.status !== 301 || result.headers.location !== location) {
@@ -111,6 +121,14 @@ const homePage = await read("/");
 if (!homePage.body.includes("For Designers &amp; Builders") || !homePage.body.includes("Start Your Design Concept")) {
   server.kill();
   throw new Error("homepage should expose new navigation and Start Project CTA");
+}
+if (homePage.body.includes(">FR<") || homePage.body.includes('hreflang="fr"')) {
+  server.kill();
+  throw new Error("homepage should not promote French in the language switcher or hreflang");
+}
+if (!homePage.body.includes('href="/es" hreflang="es"') || !homePage.body.includes('href="/ru" hreflang="ru"') || !homePage.body.includes('href="/uk" hreflang="uk"')) {
+  server.kill();
+  throw new Error("homepage language switcher should expose EN, ES, RU and UK landing links");
 }
 const crmApp = await request("/crm-app");
 if (crmApp.status !== 200) {
@@ -149,6 +167,42 @@ if (!kitchenPage.body.includes("/design-concept") || !kitchenPage.body.includes(
   throw new Error("/kitchens should link into the Design Concept flow");
 }
 console.log("/design-concept sales flow ok");
+
+const ukrainianPage = await read("/uk");
+if (!ukrainianPage.body.includes("CAS AURUM українською") || !ukrainianPage.body.includes("Продовжити англійською") || ukrainianPage.body.includes('href="/uk/')) {
+  server.kill();
+  throw new Error("/uk should render a compact Ukrainian landing page without deep Ukrainian navigation");
+}
+console.log("/uk compact landing ok");
+
+const frenchPage = await read("/fr/solutions");
+if (!frenchPage.body.includes("noindex,follow") || frenchPage.body.includes(">FR<") || frenchPage.body.includes('hreflang="fr"')) {
+  server.kill();
+  throw new Error("French pages should remain accessible but noindex and not promoted");
+}
+console.log("French noindex/deprioritized ok");
+
+const plannerPage = await read("/technical-millwork-planner");
+for (const requiredText of ["Quick Project Estimate", "Technical Millwork Planner", "data-lead-form=\"quick_project_estimate\"", "data-lead-form=\"technical_millwork_planner\""]) {
+  if (!plannerPage.body.includes(requiredText)) {
+    server.kill();
+    throw new Error(`/technical-millwork-planner missing required planner text: ${requiredText}`);
+  }
+}
+if (plannerPage.body.includes(">FR<") || plannerPage.body.includes('hreflang="fr"')) {
+  server.kill();
+  throw new Error("/technical-millwork-planner should not promote French");
+}
+console.log("/technical-millwork-planner and quick estimate ok");
+
+const quickEstimatePage = await read("/quick-project-estimate");
+for (const requiredText of ["Quick Project Estimate", "Send My Quick Estimate", "data-lead-form=\"quick_project_estimate\""]) {
+  if (!quickEstimatePage.body.includes(requiredText)) {
+    server.kill();
+    throw new Error(`/quick-project-estimate missing required quick estimate text: ${requiredText}`);
+  }
+}
+console.log("/quick-project-estimate flow ok");
 
 const consultationPage = await read("/request-consultation");
 for (const requiredText of [
@@ -331,6 +385,14 @@ if (!coreSitemap.body.includes("/design-concept")) {
   server.kill();
   throw new Error("design concept page missing from core sitemap");
 }
+if (coreSitemap.body.includes("casaurum.com/fr") || coreSitemap.body.includes("casaurum.com/ua") || coreSitemap.body.includes("casaurum.com/uk/")) {
+  server.kill();
+  throw new Error("core sitemap should not include French, legacy UA, or deep Ukrainian URLs");
+}
+if (!coreSitemap.body.includes("https://localhost:4899/uk</loc>")) {
+  server.kill();
+  throw new Error("compact Ukrainian landing page missing from core sitemap");
+}
 
 const legacyProgrammaticSitemap = await read("/sitemaps/legacy-programmatic.xml");
 if (!legacyProgrammaticSitemap.body.includes("/georgia/atlanta/custom-kitchen-cabinets")) {
@@ -350,6 +412,10 @@ if (!imageSitemap.body.includes('xmlns:image="http://www.google.com/schemas/site
 if (!imageSitemap.body.includes("<image:image>") || !imageSitemap.body.includes("/images/projects/")) {
   server.kill();
   throw new Error("public project images missing from image sitemap");
+}
+if (imageSitemap.body.includes("casaurum.com/fr") || imageSitemap.body.includes("casaurum.com/ua") || imageSitemap.body.includes("casaurum.com/uk/")) {
+  server.kill();
+  throw new Error("image sitemap should not include French, legacy UA, or deep Ukrainian URLs");
 }
 if (!legacyProgrammaticSitemap.body.includes("/georgia/atlanta/luxury-custom-kitchens")) {
   server.kill();
