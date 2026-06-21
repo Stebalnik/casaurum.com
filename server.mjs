@@ -709,19 +709,19 @@ const copy = {
       desc: "Custom furniture, media walls, wall panels and architectural millwork for Atlanta homes, designers and builders.",
       h1: "CAS AURUM",
       sub: "Luxury Wall Panels, Custom Furniture & Architectural Interiors",
-      hero: "Bespoke architectural surfaces, premium millwork and custom furniture for exceptional residential and commercial spaces across North America.",
-      intro: "CAS AURUM creates custom architectural surfaces, wall panels, made-to-fit furniture and millwork for residential and commercial interiors across the United States, Canada and Mexico. Inspired by Aurum, Latin for gold, our work is built around material stability, precise proportions and durable interior details.",
-      seo: "For homeowners, interior designers, architects, builders and developers, CAS AURUM offers a focused path from design intent to custom-built interior elements. From feature walls and custom TV panels to wardrobe walls, vanities, built-ins, hotel interiors and commercial millwork, every scope begins with the architecture of the space. The result is not a catalog selection, but a room-specific plan for proportion, material, texture, lighting, storage and installation constraints across North America.",
+      hero: "Design-first media walls, wall panels, built-ins, custom furniture and architectural millwork for homes, designers and builders.",
+      intro: "CAS AURUM creates custom architectural surfaces, wall panels, made-to-fit furniture and millwork for real rooms. Inspired by Aurum, Latin for gold, our work is built around material stability, precise proportions and durable interior details.",
+      seo: "For homeowners, interior designers, architects and builders, CAS AURUM offers a focused path from design intent to custom-built interior elements. From media walls and custom TV panels to wardrobe walls, vanities, built-ins and kitchen cabinetry, every scope begins with the architecture of the space. The result is not a catalog selection, but a room-specific plan for proportion, material, texture, lighting, storage and installation constraints.",
     },
     services: {
-      wallPanels: serviceText("Luxury Wall Panels for Custom Architectural Interiors", "Luxury Wall Panels | Custom Architectural Wall Panels | CAS AURUM", "CAS AURUM creates luxury custom wall panels, architectural feature walls, wood panels and premium wall design solutions for residential and commercial interiors across North America.", "Custom wall panels transform large surfaces into architectural moments. CAS AURUM designs feature walls, TV walls, bedroom panels, office walls, lobby panels, hotel corridors and restaurant interiors with premium wood, stone-inspired surfaces, refined metal details and integrated lighting.", ["Custom feature walls and media walls", "Wood, veneer, stone, textile and matte metal finishes", "Residential, hospitality, office and development interiors", "Measurement, material direction and installation coordination"], "hero-luxury-wall-panels-living-room"),
+      wallPanels: serviceText("Architectural Wall Panels for Custom Interiors", "Custom Wall Panels | Architectural Wall Panels | CAS AURUM", "CAS AURUM creates custom wall panels, architectural feature walls, wood panels and premium wall design solutions for homes, designers and builders.", "Custom wall panels transform large surfaces into architectural moments. CAS AURUM designs feature walls, TV walls, bedroom panels, fireplace walls and built-in backdrops with premium wood, stone-inspired surfaces, refined metal details and integrated lighting.", ["Custom feature walls and media walls", "Wood, veneer, stone, textile and matte metal finishes", "Residential rooms, builder scopes and designer-led interiors", "Measurement, material direction and installation coordination"], "hero-luxury-wall-panels-living-room"),
 	      customFurniture: serviceText("Custom Furniture Built for Exact Room Dimensions", "Custom Furniture | Made-to-Fit Furniture Across North America | CAS AURUM", "Discover custom furniture by CAS AURUM, including beds, wardrobes, TV units, vanities, closets and made-to-fit furniture for homes, hotels and commercial interiors.", "Custom furniture gives a room exact proportions and a more permanent relationship to the architecture. CAS AURUM creates beds, wardrobes, TV units, vanities, closets, storage walls, tables and furniture packages around room dimensions, material direction, storage needs and installation constraints.", ["Made-to-order furniture for exact dimensions", "Coordinated wall panels, wardrobes, closets and built-ins", "Materials selected for durability, grain direction and finish performance", "Collaboration from sketches, drawings or visual references"], "custom-furniture-bedroom-suite"),
-	      millwork: serviceText("Architectural Millwork for Luxury Residential and Commercial Interiors", "Architectural Millwork | Custom Millwork & Built-Ins | CAS AURUM", "CAS AURUM creates premium architectural millwork, custom built-ins, cabinetry, closets and woodwork for luxury residential, hospitality and commercial projects.", "Architectural millwork brings structure, storage and detail into a luxury interior. CAS AURUM develops custom built-ins, premium cabinetry, closets, reception desks, wall systems, woodwork and interior architectural details for homes, hotels, restaurants, offices and development projects.", ["Custom built-ins, cabinetry, closets and reception features", "Millwork packages for designers, builders and developers", "Measured detailing for premium residential and commercial interiors", "Materials and finishes aligned with the design language"], "architectural-millwork-hotel-lobby"),
-	      solutions: serviceText("Custom Interior Elements for Real Rooms", "Custom Interior Elements | Furniture, Panels & Millwork | CAS AURUM", "CAS AURUM provides custom architectural surfaces, made-to-fit furniture, millwork and interior elements for homes, hospitality and commercial spaces across North America.", "CAS AURUM provides custom interior elements rather than generic decoration. We help shape architectural surfaces, made-to-fit furniture, millwork, material palettes, feature walls and built-ins around drawings, photos, dimensions and project constraints.", ["Custom architectural surfaces and interior elements", "Material studies, feature walls and furniture coordination", "Support for residential, hospitality and commercial spaces", "A clear path from concept direction to measurement and production"], "office-wall-panels"),
+	      millwork: serviceText("Architectural Millwork for Custom Homes", "Architectural Millwork | Custom Millwork & Built-Ins | CAS AURUM", "CAS AURUM creates architectural millwork, custom built-ins, cabinetry, closets and woodwork for homes, designers and builders.", "Architectural millwork brings structure, storage and detail into a room. CAS AURUM develops custom built-ins, cabinetry, closets, shelving systems, wall panels, media walls and interior architectural details around photos, dimensions, drawings and material direction.", ["Custom built-ins, cabinetry, closets and shelving", "Engineering packages for designers, builders and remodelers", "Measured detailing for residential rooms and trade scopes", "Materials and finishes aligned with the design language"], "architectural-millwork-hotel-lobby"),
+	      solutions: serviceText("Custom Interior Elements for Real Rooms", "Custom Interior Elements | Furniture, Panels & Millwork | CAS AURUM", "CAS AURUM provides custom architectural surfaces, made-to-fit furniture, millwork and interior elements for homes, designers and builders.", "CAS AURUM provides custom interior elements rather than generic decoration. We help shape architectural surfaces, made-to-fit furniture, millwork, material palettes, feature walls and built-ins around drawings, photos, dimensions and project constraints.", ["Custom architectural surfaces and interior elements", "Material studies, feature walls and furniture coordination", "Support for homeowners, designers, builders and architects", "A clear path from concept direction to measurement and production"], "office-wall-panels"),
 	      mediaWalls: serviceText("Custom Media Walls and Luxury TV Wall Panels", "Custom Media Walls | Luxury TV Wall Panels | CAS AURUM", "CAS AURUM designs custom media walls, luxury TV wall panels, floating consoles, storage, lighting and architectural feature walls for premium living rooms, bedrooms and lounges.", "A custom media wall turns a television, storage and wall surface into one architectural composition. CAS AURUM plans TV walls with wood, veneer, stone-inspired surfaces, floating cabinets, concealed wiring zones, display niches, integrated lighting and proportions matched to the room.", ["Luxury TV wall panels and custom media walls", "Floating consoles, storage, shelves and display niches", "Wood, stone-look, fluted, slat, lacquer and matte metal finishes", "Planning for screens, wiring, lighting and room proportions"], "custom-tv-wall-panels-modern-home"),
-	      builtIns: serviceText("Custom Built-Ins for Homes and Commercial Interiors", "Custom Built-Ins | Built-In Furniture & Millwork | CAS AURUM", "CAS AURUM creates custom built-ins, built-in furniture, libraries, storage walls, desks, wardrobes and architectural millwork for residential and commercial spaces.", "Custom built-ins solve storage, proportion and architecture at the same time. CAS AURUM develops built-in libraries, office walls, bedroom storage, living room cabinetry, benches, wardrobes, shelving and specialty millwork around measurements, daily use and material direction.", ["Built-in libraries, desks, benches, storage walls and wardrobes", "Integrated millwork for living rooms, offices, bedrooms and hospitality", "Measured planning for walls, openings, lighting and hardware", "Materials aligned with the property and design intent"], "luxury-closet-millwork"),
-	      customClosets: serviceText("Luxury Custom Closets and Walk-In Wardrobes", "Luxury Custom Closets | Walk-In Wardrobes | CAS AURUM", "CAS AURUM designs luxury custom closets, walk-in wardrobes, dressing rooms, illuminated storage and bespoke wardrobe systems for premium residences and hospitality suites.", "A luxury closet should feel like a private dressing gallery, not a standard storage product. CAS AURUM plans custom closets with wardrobe zones, drawers, shoe storage, accessory islands, mirrors, lighting, premium hardware and finishes that connect to the bedroom or suite.", ["Walk-in closets, wardrobes and private dressing rooms", "Accessory islands, shoe storage, drawers and illuminated sections", "Walnut, oak, lacquer, glass, leather, stone and refined hardware", "Useful for villas, penthouses, primary suites and hospitality rooms"], "luxury-closet-millwork"),
-	      trade: serviceText("Custom Wall Panels, Furniture and Millwork for Designers, Builders and Developers", "For Designers & Builders | Custom Millwork & Wall Panels | CAS AURUM", "CAS AURUM partners with interior designers, architects, builders and developers to create luxury wall panels, custom furniture and architectural millwork for premium projects.", "Trade professionals can submit drawings, elevations, references, finish schedules and project details for custom wall panels, furniture and millwork. CAS AURUM supports premium residential developments, hospitality interiors, restaurants, offices and private client work with a collaborative project process.", ["Work from drawings, reference images and design intent", "Support for builders, designers, architects and developers", "Residential, hospitality, restaurant, office and development scopes", "Project intake for budgets, timelines, locations and material direction"], "designer-builder-partnership"),
+	      builtIns: serviceText("Custom Built-Ins for Homes", "Custom Built-Ins | Built-In Furniture & Millwork | CAS AURUM", "CAS AURUM creates custom built-ins, built-in furniture, libraries, storage walls, desks, wardrobes and architectural millwork for homes, designers and builders.", "Custom built-ins solve storage, proportion and architecture at the same time. CAS AURUM develops built-in libraries, home office walls, bedroom storage, living room cabinetry, benches, wardrobes, shelving and specialty millwork around measurements, daily use and material direction.", ["Built-in libraries, desks, benches, storage walls and wardrobes", "Integrated millwork for living rooms, offices, bedrooms and entries", "Measured planning for walls, openings, lighting and hardware", "Materials aligned with the property and design intent"], "luxury-closet-millwork"),
+	      customClosets: serviceText("Custom Closets and Walk-In Wardrobes", "Custom Closets | Walk-In Wardrobes | CAS AURUM", "CAS AURUM designs custom closets, walk-in wardrobes, dressing rooms, illuminated storage and wardrobe systems for primary suites and family homes.", "A custom closet should feel planned, calm and precise, not like a standard storage product. CAS AURUM plans closets with wardrobe zones, drawers, shoe storage, accessory islands, mirrors, lighting, premium hardware and finishes that connect to the bedroom or suite.", ["Walk-in closets, wardrobes and private dressing rooms", "Accessory islands, shoe storage, drawers and illuminated sections", "Walnut, oak, lacquer, glass, leather, stone and refined hardware", "Useful for primary suites, family storage and dressing rooms"], "luxury-closet-millwork"),
+	      trade: serviceText("Custom Wall Panels, Furniture and Millwork for Designers and Builders", "For Designers & Builders | Custom Millwork & Wall Panels | CAS AURUM", "CAS AURUM partners with interior designers, architects, builders and remodelers to create custom wall panels, custom furniture and architectural millwork for residential projects.", "Trade professionals can submit drawings, elevations, references, finish schedules and project details for custom wall panels, furniture and millwork. CAS AURUM supports custom homes, remodels, designer-led interiors and private client work with a collaborative project process.", ["Work from drawings, reference images and design intent", "Support for builders, designers, architects and remodelers", "Residential rooms, custom homes and defined trade scopes", "Project intake for budgets, timelines, locations and material direction"], "designer-builder-partnership"),
     },
     collectionsIntro: "Five collection directions help clients and design professionals define the first material and spatial language of a project. Each collection can be adjusted by species, dimension, panel rhythm, finish and room type.",
     collections: [["Aurum Collection", "Warm stone, champagne-brass lines and composed wall surfaces."], ["Forma Collection", "Architectural geometry, clean lines and contemporary panels."], ["Noir Collection", "Dark media walls, offices and bedrooms with controlled lighting."], ["Madera Collection", "Walnut, oak and natural wood textures for residential rooms."], ["Signature Collection", "Room-specific furniture, panels and millwork for private, hospitality and commercial spaces."]],
@@ -730,8 +730,8 @@ const copy = {
       canada: ["Luxury Interiors Across Canada", "Available for projects across Canada, including custom furniture, wall panel systems, millwork and interior elements for residences, hospitality interiors and commercial spaces. French and English project communication can be supported."],
       mexico: ["Luxury Interiors Across Mexico", "Working with homeowners, developers, designers and hospitality operators across Mexico for wall panels, custom furniture, architectural millwork and project-specific interiors for coastal, urban and destination properties."],
     },
-    projects: ["Projects", "Project Portfolio Coming Soon", "CAS AURUM is preparing custom project examples, material studies and collection previews. Private residential and commercial work may be discussed upon request when the scope, privacy and project context are appropriate."],
-    about: ["About CAS AURUM", "CAS AURUM creates custom architectural surfaces, wall panels, made-to-fit furniture and millwork for interiors across North America. CAS means Custom Architectural Surfaces. AURUM is Latin for gold, representing material value, durable quality and measured detailing."],
+    projects: ["Projects", "Project Portfolio Coming Soon", "CAS AURUM is preparing custom project examples, material studies and collection previews. Private residential work may be discussed upon request when the scope, privacy and project context are appropriate."],
+    about: ["About CAS AURUM", "CAS AURUM creates custom architectural surfaces, wall panels, made-to-fit furniture and millwork for homes, designers and builders. CAS means Custom Architectural Surfaces. AURUM is Latin for gold, representing material value, durable quality and measured detailing."],
     contact: ["Contact CAS AURUM", "Have a question about wall panels, custom furniture, millwork, kitchens or a premium interior project? Send the essentials and CAS AURUM will respond with the right next step."],
     legal: { privacy: ["Privacy Policy", "This page summarizes how CAS AURUM handles information submitted through this website, including project inquiries, consultation requests and partner applications. For questions about privacy or data handling, contact CAS AURUM directly through the contact page."], terms: ["Terms of Use", "Website content is provided for general information about CAS AURUM services. Project details, availability, pricing and scope are confirmed only through written communication."] },
   },
@@ -748,11 +748,11 @@ const copy = {
       seo: "Para propietarios, interioristas, arquitectos, constructores y desarrolladores, CAS AURUM ofrece un proceso claro para convertir una intención de diseño en elementos interiores personalizados. Desde muros de TV y paneles decorativos hasta closets, cocinas a medida, vanidades y muebles integrados, cada proyecto se adapta a la arquitectura del espacio y a la forma de vivir de cada cliente.",
     },
     services: {
-      wallPanels: serviceText("Paneles decorativos a medida para interiores", "Paneles decorativos a medida | Paneles de pared | CAS AURUM", "CAS AURUM crea paneles de pared a medida, muros decorativos, paneles de madera y soluciones interiores para hogares y espacios comerciales.", "Los paneles decorativos convierten superficies amplias en detalles arquitectónicos útiles y personales. CAS AURUM diseña muros de TV, cabeceras, oficinas, lobbies, restaurantes y espacios comerciales con madera, piedra, metal refinado e iluminación integrada.", ["Muros de TV y paredes decorativas a medida", "Madera, chapa, piedra, textiles y metal mate", "Hogares, oficinas, restaurantes y espacios comerciales", "Medición, materiales y coordinación de instalación"], "hero-luxury-wall-panels-living-room"),
-      customFurniture: serviceText("Muebles a medida para espacios funcionales y personales", "Muebles a medida | CAS AURUM", "Muebles a medida, camas, armarios, unidades de TV, vanidades, closets y piezas personalizadas para hogares y espacios comerciales.", "El mobiliario a medida permite proporciones exactas y una presencia más permanente. CAS AURUM crea camas, armarios, unidades de TV, vanidades, closets, mesas y paquetes de mobiliario personalizados para espacios reales.", ["Muebles personalizados para medidas exactas", "Paneles, closets, armarios y muebles integrados coordinados", "Materiales elegidos para el uso diario y el estilo del espacio", "Trabajo desde dibujos, planos o referencias visuales"], "custom-furniture-bedroom-suite"),
-      millwork: serviceText("Carpintería arquitectónica para hogares y espacios comerciales", "Carpintería arquitectónica | CAS AURUM", "Carpintería arquitectónica, muebles integrados, gabinetes, closets y detalles de madera para proyectos residenciales y comerciales.", "La carpintería arquitectónica aporta estructura, almacenamiento y detalle. CAS AURUM desarrolla muebles integrados, closets, recepción, paneles, gabinetes y detalles de madera para hogares, restaurantes, oficinas y desarrollos.", ["Muebles integrados, closets, gabinetes y recepción", "Paquetes para diseñadores, constructores y desarrolladores", "Detalles medidos para espacios funcionales y personales", "Materiales alineados con el lenguaje del proyecto"], "architectural-millwork-hotel-lobby"),
-      solutions: serviceText("Soluciones interiores a medida para espacios reales", "Soluciones interiores a medida | CAS AURUM", "Soluciones interiores a medida, superficies arquitectónicas, muebles personalizados y elementos interiores pensados para cada espacio.", "CAS AURUM desarrolla elementos interiores personalizados, no decoración genérica. Apoyamos superficies arquitectónicas, mobiliario, carpintería, paletas de materiales y muros especiales que complementan la visión del diseñador o del cliente.", ["Superficies arquitectónicas y elementos interiores", "Estudios de materiales, paneles y muebles coordinados", "Hogares, restaurantes, oficinas y espacios comerciales", "De concepto a medición y producción"], "office-wall-panels"),
-      trade: serviceText("Paneles, muebles y carpintería para diseñadores y constructores", "Para diseñadores y constructores | CAS AURUM", "CAS AURUM colabora con diseñadores, arquitectos, constructores y desarrolladores en paneles, muebles y carpintería a medida.", "Los profesionales pueden enviar planos, elevaciones, referencias, acabados y detalles del proyecto para paneles, muebles y carpintería a medida. CAS AURUM apoya hogares, restaurantes, oficinas y desarrollos con un proceso claro de proyecto.", ["Trabajo desde planos y referencias", "Apoyo para diseñadores, arquitectos, constructores y desarrolladores", "Hogares, restaurantes, oficinas y desarrollos", "Revisión de presupuesto, tiempos, ubicación y materiales"], "designer-builder-partnership"),
+      wallPanels: serviceText("Paneles decorativos a medida para interiores", "Paneles decorativos a medida | Paneles de pared | CAS AURUM", "CAS AURUM crea paneles de pared a medida, muros decorativos, paneles de madera y soluciones interiores para hogares, diseñadores y constructores.", "Los paneles decorativos convierten superficies amplias en detalles arquitectónicos útiles y personales. CAS AURUM diseña muros de TV, cabeceras, muros de chimenea, paneles para dormitorios y fondos para muebles integrados con madera, piedra, metal refinado e iluminación integrada.", ["Muros de TV y paredes decorativas a medida", "Madera, chapa, piedra, textiles y metal mate", "Hogares, diseñadores, constructores y remodelaciones", "Medición, materiales y coordinación de instalación"], "hero-luxury-wall-panels-living-room"),
+      customFurniture: serviceText("Muebles a medida para espacios funcionales y personales", "Muebles a medida | CAS AURUM", "Muebles a medida, camas, armarios, unidades de TV, vanidades, closets y piezas personalizadas para hogares reales.", "El mobiliario a medida permite proporciones exactas y una presencia más permanente. CAS AURUM crea camas, armarios, unidades de TV, vanidades, closets, mesas y paquetes de mobiliario personalizados para espacios reales.", ["Muebles personalizados para medidas exactas", "Paneles, closets, armarios y muebles integrados coordinados", "Materiales elegidos para el uso diario y el estilo del espacio", "Trabajo desde dibujos, planos o referencias visuales"], "custom-furniture-bedroom-suite"),
+      millwork: serviceText("Carpintería arquitectónica para hogares", "Carpintería arquitectónica | CAS AURUM", "Carpintería arquitectónica, muebles integrados, gabinetes, closets y detalles de madera para hogares, diseñadores y constructores.", "La carpintería arquitectónica aporta estructura, almacenamiento y detalle. CAS AURUM desarrolla muebles integrados, closets, paneles, gabinetes, estanterías y detalles de madera para habitaciones reales.", ["Muebles integrados, closets, gabinetes y estanterías", "Paquetes para diseñadores, constructores y remodeladores", "Detalles medidos para espacios funcionales y personales", "Materiales alineados con el lenguaje del proyecto"], "architectural-millwork-hotel-lobby"),
+      solutions: serviceText("Soluciones interiores a medida para espacios reales", "Soluciones interiores a medida | CAS AURUM", "Soluciones interiores a medida, superficies arquitectónicas, muebles personalizados y elementos interiores pensados para cada espacio.", "CAS AURUM desarrolla elementos interiores personalizados, no decoración genérica. Apoyamos superficies arquitectónicas, mobiliario, carpintería, paletas de materiales y muros especiales que complementan la visión del diseñador o del cliente.", ["Superficies arquitectónicas y elementos interiores", "Estudios de materiales, paneles y muebles coordinados", "Hogares, diseñadores, constructores y remodelaciones", "De concepto a medición y producción"], "office-wall-panels"),
+      trade: serviceText("Paneles, muebles y carpintería para diseñadores y constructores", "Para diseñadores y constructores | CAS AURUM", "CAS AURUM colabora con diseñadores, arquitectos, constructores y remodeladores en paneles, muebles y carpintería a medida.", "Los profesionales pueden enviar planos, elevaciones, referencias, acabados y detalles del proyecto para paneles, muebles y carpintería a medida. CAS AURUM apoya viviendas a medida, remodelaciones, interiores dirigidos por diseñadores y trabajos para clientes privados con un proceso claro de proyecto.", ["Trabajo desde planos y referencias", "Apoyo para diseñadores, arquitectos, constructores y remodeladores", "Viviendas, remodelaciones y alcances residenciales definidos", "Revisión de presupuesto, tiempos, ubicación y materiales"], "designer-builder-partnership"),
     },
     collectionsIntro: "Cinco direcciones de colección ayudan a definir el primer lenguaje del proyecto. Cada una puede adaptarse por material, dimensión, patrón, acabado y tipo de espacio.",
     collections: [["Colección Aurum", "Materiales cálidos, proporciones cuidadas y detalles sutiles."], ["Colección Forma", "Geometría arquitectónica, líneas limpias y paneles contemporáneos."], ["Colección Noir", "Tonos profundos para muros de TV, oficinas y dormitorios."], ["Colección Madera", "Nogal, roble y texturas naturales para hogares con carácter."], ["Colección Signature", "Soluciones únicas, totalmente personalizadas para hogares, restaurantes y comercio."]],
@@ -1376,7 +1376,7 @@ function localizedPlain(value, lang) {
 	      "Each project begins with the room, your goals, photos, measurements and how the space needs to work.": "Каждый проект начинается с комнаты, ваших целей, фото, размеров и того, как пространство должно работать.",
 	      "You can start with a Design Concept before committing to drawings, production or installation.": "Можно начать с дизайн-концепта до чертежей, производства или установки.",
 	      "Review a direction and budget range first, then upgrade when the project is ready.": "Сначала посмотрите направление и бюджетный ориентир, а затем переходите дальше, когда проект готов.",
-	      "A clear workflow keeps proportions, materials, budget and timeline aligned before production begins.": "Понятный процесс помогает согласовать пропорции, материалы, бюджет и сроки до начала производства.",
+	      "Project-specific planning keeps materials, budget and timing organized before production begins.": "Планирование под конкретный проект помогает согласовать материалы, бюджет и сроки до начала производства.",
 	      "From room photos to a custom interior plan": "От фото комнаты к индивидуальному интерьерному плану",
 	      "Choose your space": "Выберите пространство",
 	      "Share your goals": "Опишите цели",
@@ -1634,13 +1634,13 @@ const projectsGalleryCopy = {
 
 const faqs = {
   wallPanels: [
-    ["What are luxury wall panels?", "Luxury wall panels are custom architectural surfaces designed around proportion, finish, lighting and use. They can create feature walls, TV walls, bedroom backdrops, lobbies and hospitality interiors."],
+    ["What are custom wall panels?", "Custom wall panels are architectural surfaces designed around proportion, finish, lighting and use. They can create feature walls, TV walls, fireplace surrounds, bedroom backdrops and built-in millwork walls."],
     ["Can CAS AURUM create custom wall panels for a TV wall?", "Yes. TV walls and media walls can include wood panels, stone-inspired surfaces, hidden storage, floating consoles, integrated lighting and cable planning."],
     ["What materials can be used for premium wall panels?", "Typical palettes include walnut, oak, veneer, stone, textured surfaces, fabric, matte metal and refined brass accents used with restraint."],
     ["Do you work with interior designers and builders?", "Yes. CAS AURUM can review drawings, elevations, measurements, references and finish schedules for trade-led projects."],
-    ["Can wall panels be designed for hotels or restaurants?", "Yes. Hospitality and commercial panels can support lobbies, restaurants, bars, corridors, offices and branded interiors."],
+    ["Can wall panels be planned with built-ins or cabinetry?", "Yes. Wall panels often work best when they are coordinated with built-ins, floating cabinets, shelves, fireplaces, media walls or adjacent custom furniture."],
     ["How does the measurement process work?", "A project can begin with photos, plans and a virtual consultation, followed by on-site measurement where the scope requires it."],
-    ["Do you serve clients across the United States, Canada and Mexico?", "Yes. CAS AURUM is positioned for projects across North America without claiming offices in every city."],
+    ["Do you serve projects outside North Atlanta?", "Yes. North Atlanta is the default market, and selected design concept or trade-led projects can be reviewed outside Georgia when the scope is a fit."],
     ["How do I request a consultation?", "Use the consultation form and share location, project type, service need, timeline, budget range and inspiration."],
   ],
   customFurniture: [
@@ -1648,17 +1648,17 @@ const faqs = {
     ["Can you create bespoke furniture for bedrooms, living rooms and closets?", "Yes. The strongest scopes often coordinate furniture with wall panels, closet millwork, lighting and material direction."],
     ["Do you work from designer drawings?", "Yes. Designers can submit drawings, elevations, inspiration images, material schedules and technical notes."],
     ["What materials and finishes are available?", "Material direction may include walnut, oak, veneer, stone, leather, textured fabrics, matte metals and refined hardware."],
-    ["Can you create furniture for hotels and commercial interiors?", "Yes. CAS AURUM can support hospitality, restaurant, office and development interiors with custom furniture and millwork."],
+    ["Can furniture be coordinated with wall panels or built-ins?", "Yes. Furniture can be planned with wall panels, shelving, closets, media walls and cabinetry so the room reads as one architectural composition."],
     ["How does the custom furniture process work?", "The process moves from consultation and measurements to material direction, drawings, production planning and installation coordination."],
     ["Can I request a virtual consultation?", "Yes. Early planning can begin virtually with photos, dimensions, plans and references."],
-    ["What budget range is typical for luxury custom furniture?", "Many premium custom scopes begin above $10,000 and increase with scale, materials and technical complexity."],
+    ["What budget range is typical for custom furniture?", "Many custom scopes begin above $10,000 and increase with scale, material selection, finish level, hardware and technical complexity."],
   ],
   millwork: [
     ["What is architectural millwork?", "Architectural millwork includes custom woodwork, built-ins, cabinetry, closets, wall systems and interior details made for a specific space."],
-    ["What is the difference between millwork and custom furniture?", "Millwork is usually integrated into the architecture, while furniture may be freestanding or semi-integrated. Many luxury projects need both."],
-    ["Can CAS AURUM create built-ins, closets and cabinetry?", "Yes. Built-ins, closets, wardrobes, premium cabinetry and reception features are core project types."],
+    ["What is the difference between millwork and custom furniture?", "Millwork is usually integrated into the architecture, while furniture may be freestanding or semi-integrated. Many residential projects need both."],
+    ["Can CAS AURUM create built-ins, closets and cabinetry?", "Yes. Built-ins, closets, wardrobes, cabinetry, shelving and wall systems are core project types."],
     ["Do you work with builders and developers?", "Yes. Builders and developers can submit plans, project details, budget range and schedule requirements."],
-    ["Can you handle hospitality or commercial millwork?", "Yes. Hotel, restaurant, lobby, office and sales-gallery scopes are suitable for premium custom millwork."],
+    ["Can millwork be coordinated with a designer or builder?", "Yes. Designers and builders can share drawings, finish schedules, measurements and site constraints so the millwork package is coordinated before production."],
     ["What files can designers submit?", "Plans, elevations, PDFs, moodboards, reference images, finish schedules, photos and measurements are all useful."],
     ["How do I start a millwork project?", "Request a consultation or submit project details with location, spaces, service need, timeline and drawings if available."],
   ],
@@ -4461,7 +4461,7 @@ function answerReadySection(lang, key) {
         title: "Trade collaboration, answered directly",
         items: [
           ["How does CAS AURUM work with designers and builders?", "Designers and builders can send plans, elevations, room photos, finish direction and project constraints so CAS AURUM can help frame a custom interior scope."],
-          ["What project types fit best?", "Best-fit scopes include wall panels, custom furniture, closets, kitchens, hospitality interiors, restaurant interiors, office interiors and developer packages."],
+          ["What project types fit best?", "Best-fit scopes include media walls, wall panels, custom furniture, closets, kitchens, built-ins, shelving systems, fireplace walls and architectural millwork packages."],
           ["What makes an inquiry useful?", "A useful trade inquiry includes drawings or photos, location, service need, budget range, timeline and decision-maker context."],
         ],
       },
@@ -4470,7 +4470,7 @@ function answerReadySection(lang, key) {
       wallPanels: { title: "Paneles de lujo, respuesta directa", items: [["¿Qué son?", "Superficies arquitectónicas a medida que mejoran proporción, materialidad, acústica e integración."], ["¿Qué afecta el precio?", "Medidas, material, complejidad, iluminación, fabricación, logística y coordinación."], ["¿Qué enviar?", "Fotos, dimensiones, referencias, ciudad o ZIP, presupuesto y tiempos."]] },
       customFurniture: { title: "Muebles a medida, respuesta directa", items: [["¿Qué son?", "Piezas planificadas para medidas, uso, almacenamiento y materiales del espacio."], ["¿Qué enviar?", "Fotos, medidas, referencias, materiales, presupuesto y tiempos."], ["¿Dónde encaja?", "Salas, dormitorios, closets, oficinas, cocinas y espacios comerciales premium."]] },
       millwork: { title: "Carpintería arquitectónica, respuesta directa", items: [["¿Qué incluye?", "Built-ins, cabinetry, paneles, closets, vanities y elementos interiores especiales."], ["¿Por qué importa?", "Une almacenamiento, superficies y mobiliario en un sistema coherente."], ["¿Qué afecta el alcance?", "Medidas, acabados, herrajes, iluminación, fabricación y coordinación."]] },
-      trade: { title: "Colaboración profesional, respuesta directa", items: [["¿Cómo funciona?", "Diseñadores y constructores pueden enviar planos, fotos y restricciones para definir un alcance custom."], ["¿Qué proyectos encajan?", "Paneles, muebles, closets, cocinas, hospitality, restaurantes, oficinas y desarrollos."], ["¿Qué enviar?", "Planos o fotos, ubicación, servicio, presupuesto, tiempos y contexto del decisor."]] },
+      trade: { title: "Colaboración profesional, respuesta directa", items: [["¿Cómo funciona?", "Diseñadores y constructores pueden enviar planos, fotos y restricciones para definir un alcance custom."], ["¿Qué proyectos encajan?", "Muros media, paneles, muebles, closets, cocinas, built-ins, estanterías, chimeneas y paquetes de carpintería arquitectónica."], ["¿Qué enviar?", "Planos o fotos, ubicación, servicio, presupuesto, tiempos y contexto del decisor."]] },
     },
     fr: {
       wallPanels: { title: "Panneaux de luxe, réponse directe", items: [["Qu'est-ce que c'est ?", "Des surfaces architecturales sur mesure qui améliorent proportion, matière, acoustique et intégration."], ["Qu'est-ce qui influence le coût ?", "Mesures, matériaux, complexité, éclairage, fabrication, logistique et coordination."], ["Quoi envoyer ?", "Photos, dimensions, références, ville ou code postal, budget et calendrier."]] },
@@ -4704,7 +4704,7 @@ function tradeLoyaltyText(lang) {
       programs: [
         { kicker: "Start", title: "Project Partner", discount: "Up to 10%", body: "For a one-time project or a first collaboration where the partner brings one qualified client or property scope.", conditions: ["1 accepted project", "Basic CRM tracking", "Discount confirmed after scope review"] },
         { kicker: "Growth", title: "Portfolio Partner", discount: "Up to 20%", body: "For designers, builders and agents who bring 5+ accepted projects or a multi-unit / multi-room package.", conditions: ["5+ projects or comparable volume", "Priority estimate review", "Project dashboard with approvals and deadlines"] },
-        { kicker: "Elite", title: "Annual Channel Partner", discount: "Up to 30%", body: "For stable referral channels with a predictable flow of qualified projects during the year.", conditions: ["5+ qualified projects per month", "Annual partner agreement", "Highest priority queue and quarterly terms review"] },
+        { kicker: "Established", title: "Annual Channel Partner", discount: "Up to 30%", body: "For stable referral channels with a predictable flow of qualified projects during the year.", conditions: ["5+ qualified projects per month", "Annual partner agreement", "Dedicated review queue and quarterly terms review"] },
       ],
       portalEyebrow: "Private partner account",
       portalTitle: "CRM, project tracking and partner management in one place",
@@ -4733,7 +4733,7 @@ function tradeLoyaltyText(lang) {
       programs: [
         { kicker: "Inicio", title: "Project Partner", discount: "Hasta 10%", body: "Para un proyecto único o primera colaboración con un cliente o scope calificado.", conditions: ["1 proyecto aceptado", "Tracking CRM básico", "Descuento confirmado después de revisar el scope"] },
         { kicker: "Crecimiento", title: "Portfolio Partner", discount: "Hasta 20%", body: "Para partners con 5+ proyectos aceptados o un paquete multi-unit / multi-room.", conditions: ["5+ proyectos o volumen comparable", "Revisión prioritaria", "Dashboard con aprobaciones y fechas"] },
-        { kicker: "Elite", title: "Annual Channel Partner", discount: "Hasta 30%", body: "Para canales con flujo estable de proyectos calificados durante el año.", conditions: ["5+ proyectos calificados al mes", "Acuerdo anual", "Máxima prioridad y revisión trimestral"] },
+        { kicker: "Establecido", title: "Annual Channel Partner", discount: "Hasta 30%", body: "Para canales con flujo estable de proyectos calificados durante el año.", conditions: ["5+ proyectos calificados al mes", "Acuerdo anual", "Cola de revisión dedicada y revisión trimestral"] },
       ],
       portalEyebrow: "Cuenta privada",
       portalTitle: "CRM, tracking de proyectos y gestión de partners en un solo lugar",
@@ -4753,7 +4753,7 @@ function tradeLoyaltyText(lang) {
       programs: [
         { kicker: "Départ", title: "Partenaire projet", discount: "Jusqu'a 10%", body: "Pour un projet ponctuel ou une première collaboration qualifiée.", conditions: ["1 projet accepté", "Suivi CRM simple", "Remise confirmée après examen de la portée"] },
         { kicker: "Growth", title: "Portfolio Partner", discount: "Jusqu'a 20%", body: "Pour partenaires avec 5+ projets acceptés ou un lot multi-unit / multi-room.", conditions: ["5+ projets ou volume comparable", "Examen prioritaire", "Dashboard avec validations et délais"] },
-        { kicker: "Elite", title: "Annual Channel Partner", discount: "Jusqu'a 30%", body: "Pour canaux réguliers avec flux prévisible de projets qualifiés.", conditions: ["5+ projets qualifiés par mois", "Accord annuel", "Priorité maximale et revue trimestrielle"] },
+        { kicker: "Établi", title: "Annual Channel Partner", discount: "Jusqu'a 30%", body: "Pour canaux réguliers avec flux prévisible de projets qualifiés.", conditions: ["5+ projets qualifiés par mois", "Accord annuel", "File de revue dédiée et revue trimestrielle"] },
       ],
       portalEyebrow: "Compte partenaire privé",
       portalTitle: "CRM, suivi projet et gestion partenaire au même endroit",
@@ -4773,7 +4773,7 @@ function tradeLoyaltyText(lang) {
       programs: [
         { kicker: "Старт", title: "Проектный партнер", discount: "До 10%", body: "Для разового проекта или первой сделки, когда партнер приводит одного квалифицированного клиента или понятный scope по объекту.", conditions: ["1 принятый проект", "Базовое CRM-сопровождение", "Скидка подтверждается после оценки scope"] },
         { kicker: "Growth", title: "Portfolio Partner", discount: "До 20%", body: "Для дизайнеров, строителей и агентов, которые приводят 5+ принятых проектов или один крупный multi-room / multi-unit пакет.", conditions: ["5+ проектов или сопоставимый объем", "Приоритетная оценка сметы", "Кабинет с согласованиями и сроками"] },
-        { kicker: "Elite", title: "Annual Channel Partner", discount: "До 30%", body: "Для стабильного канала, который на протяжении года дает прогнозируемый поток квалифицированных проектов.", conditions: ["5+ квалифицированных проектов в месяц", "Годовое партнерское соглашение", "Максимальный приоритет и квартальный пересмотр условий"] },
+        { kicker: "Established", title: "Annual Channel Partner", discount: "До 30%", body: "Для стабильного канала, который на протяжении года дает прогнозируемый поток квалифицированных проектов.", conditions: ["5+ квалифицированных проектов в месяц", "Годовое партнерское соглашение", "Отдельная очередь ревью и квартальный пересмотр условий"] },
       ],
       portalEyebrow: "Личный кабинет партнера",
       portalTitle: "CRM, трекинг проектов и партнерский менеджмент в одном месте",
@@ -4802,7 +4802,7 @@ function tradeLoyaltyText(lang) {
       programs: [
         { kicker: "Старт", title: "Проєктний партнер", discount: "До 10%", body: "Для разового проєкту або першої співпраці, коли партнер приводить одного кваліфікованого клієнта чи зрозумілий scope по об'єкту.", conditions: ["1 прийнятий проєкт", "Базовий CRM-супровід", "Знижка підтверджується після оцінки scope"] },
         { kicker: "Growth", title: "Portfolio Partner", discount: "До 20%", body: "Для дизайнерів, будівельників і агентів, які приводять 5+ прийнятих проєктів або один великий multi-room / multi-unit пакет.", conditions: ["5+ проєктів або порівняний обсяг", "Пріоритетна оцінка кошторису", "Кабінет із погодженнями та термінами"] },
-        { kicker: "Elite", title: "Annual Channel Partner", discount: "До 30%", body: "Для стабільного каналу, який протягом року дає прогнозований потік кваліфікованих проєктів.", conditions: ["5+ кваліфікованих проєктів на місяць", "Річна партнерська угода", "Максимальний пріоритет і квартальний перегляд умов"] },
+        { kicker: "Established", title: "Annual Channel Partner", discount: "До 30%", body: "Для стабільного каналу, який протягом року дає прогнозований потік кваліфікованих проєктів.", conditions: ["5+ кваліфікованих проєктів на місяць", "Річна партнерська угода", "Окрема черга рев'ю і квартальний перегляд умов"] },
       ],
       portalEyebrow: "Приватний кабінет партнера",
       portalTitle: "CRM, трекінг проєктів і партнерський менеджмент в одному місці",
@@ -4833,16 +4833,16 @@ function tradePackageText(lang) {
     en: {
       eyebrow: "Trade partnership",
       h2: "A clearer path from design intent to custom interiors",
-      summary: "CAS AURUM helps interior designers, architects, residential builders, custom home builders, general contractors, remodeling firms and developers turn drawings, references and client goals into premium wall panels, custom furniture, millwork, closet systems, kitchens and commercial interior packages. Prepared to support ASID designers and trade partners without claiming membership.",
+      summary: "CAS AURUM helps interior designers, architects, residential builders, custom home builders, general contractors and remodeling firms turn drawings, references and client goals into wall panels, media walls, custom furniture, millwork, closet systems, kitchens and built-in packages. Prepared to support ASID designers and trade partners without claiming membership.",
       cards: [
         { kicker: "01", title: "Designer support", body: "Send plans, elevations, moodboards, finish schedules or client references. We review the scope and suggest a practical custom direction for panels, furniture, millwork or cabinetry." },
         { kicker: "02", title: "Builder-ready intake", body: "For builders and remodelers, CAS AURUM can help organize field measurements, room types, materials, budget range, shop drawing needs and project timing before production or partner coordination." },
         { kicker: "03", title: "Engineering package support", body: "Trade scopes can be reviewed for architectural CAD drawings, shop drawings, engineering packages, material coordination, flitch matching, wood grain matching and installation coordination." },
       ],
       sendTitle: "What to send",
-      sendItems: ["Drawings, plans, elevations or architectural CAD files", "Room photos, field measurements or ZIP code", "Reference images, finish schedule or preferred material direction", "Service need: wall panels, custom furniture, closets, kitchen, millwork or commercial package", "Budget range, timeline and decision-maker context"],
+      sendItems: ["Drawings, plans, elevations or architectural CAD files", "Room photos, field measurements or ZIP code", "Reference images, finish schedule or preferred material direction", "Service need: media wall, wall panels, custom furniture, closets, kitchen, built-ins or millwork package", "Budget range, timeline and decision-maker context"],
       fitTitle: "Best-fit project types",
-      fitItems: ["Luxury residential renovations", "Custom kitchens and cabinetry", "Wall panels, TV walls and media walls", "Built-ins, closets, vanities and millwork", "Hospitality, restaurant, office and developer packages"],
+      fitItems: ["Custom homes and residential remodels", "Custom kitchens and cabinetry", "Wall panels, TV walls and media walls", "Built-ins, closets, shelving and vanities", "Architectural millwork and engineering packages"],
       atlantaEyebrow: "Atlanta priority",
       atlantaTitle: "Priority review for Atlanta and Georgia trade inquiries",
       atlantaText: "CAS AURUM accepts kitchen, cabinetry, wall panel, furniture and millwork inquiries across Georgia, with priority service available in Atlanta and surrounding areas. For other North American markets, we can review design direction and coordinate with appropriate regional production or installation partners where suitable.",
@@ -4853,16 +4853,16 @@ function tradePackageText(lang) {
     es: {
       eyebrow: "Colaboración profesional",
       h2: "Un camino claro desde la intención de diseño hasta interiores a medida",
-      summary: "CAS AURUM ayuda a diseñadores, arquitectos, constructores y desarrolladores a convertir planos, referencias y objetivos del cliente en paneles premium, mobiliario a medida, carpintería, closets, cocinas y paquetes interiores comerciales.",
+      summary: "CAS AURUM ayuda a diseñadores, arquitectos, constructores y remodeladores a convertir planos, referencias y objetivos del cliente en paneles, media walls, mobiliario a medida, carpintería, closets, cocinas y paquetes de built-ins.",
       cards: [
         { kicker: "01", title: "Apoyo para diseñadores", body: "Envíe planos, elevaciones, moodboards, especificaciones de acabados o referencias del cliente. Revisamos el alcance y proponemos una dirección a medida." },
         { kicker: "02", title: "Intake para constructores", body: "Ayudamos a organizar medidas, tipos de espacios, materiales, presupuesto estimado y tiempos antes de producción o coordinación con partners." },
-        { kicker: "03", title: "Paquetes premium", body: "Ideal para residencias, hotelería boutique, restaurantes, oficinas y desarrollos donde el cliente espera una historia material más elevada." },
+        { kicker: "03", title: "Paquetes técnicos", body: "Útil para viviendas a medida, remodelaciones, muros media, built-ins, cocinas, closets y alcances de carpintería con una dirección material definida." },
       ],
       sendTitle: "Qué enviar",
-      sendItems: ["Planos, dibujos o elevaciones", "Fotos del espacio, medidas o código postal", "Imágenes de referencia o colección preferida", "Servicio requerido: paneles, muebles, closets, cocina, carpintería o paquete comercial", "Presupuesto, tiempos y contexto del decisor"],
+      sendItems: ["Planos, dibujos o elevaciones", "Fotos del espacio, medidas o código postal", "Imágenes de referencia o colección preferida", "Servicio requerido: media wall, paneles, muebles, closets, cocina, built-ins o carpintería", "Presupuesto, tiempos y contexto del decisor"],
       fitTitle: "Proyectos ideales",
-      fitItems: ["Renovaciones residenciales de lujo", "Cocinas y cabinetry a medida", "Paneles, TV walls y media walls", "Built-ins, closets, vanities y carpintería", "Hoteles, restaurantes, oficinas y desarrollos"],
+      fitItems: ["Viviendas a medida y remodelaciones residenciales", "Cocinas y cabinetry a medida", "Paneles, TV walls y media walls", "Built-ins, closets, estanterías y vanities", "Carpintería arquitectónica y paquetes de ingeniería"],
       atlantaEyebrow: "Prioridad Atlanta",
       atlantaTitle: "Revisión prioritaria para proyectos profesionales en Atlanta y Georgia",
       atlantaText: "CAS AURUM acepta consultas de cocinas, cabinetry, paneles, muebles y carpintería en Georgia, con prioridad para Atlanta y alrededores. En otros mercados de Norteamérica podemos revisar la dirección de diseño y coordinar con partners regionales cuando sea adecuado.",
@@ -4873,16 +4873,16 @@ function tradePackageText(lang) {
     fr: {
       eyebrow: "Partenariat professionnel",
       h2: "Un parcours clair de l'intention design aux intérieurs sur mesure",
-      summary: "CAS AURUM aide designers, architectes, constructeurs et promoteurs à transformer dessins, références et objectifs client en panneaux premium, mobilier sur mesure, menuiserie, dressings, cuisines et lots commerciaux.",
+      summary: "CAS AURUM aide designers, architectes, constructeurs et rénovateurs à transformer dessins, références et objectifs client en panneaux, murs média, mobilier sur mesure, menuiserie, dressings, cuisines et lots de rangements intégrés.",
       cards: [
         { kicker: "01", title: "Soutien aux designers", body: "Envoyez plans, élévations, moodboards, finis ou références client. Nous examinons la portée et proposons une direction sur mesure." },
         { kicker: "02", title: "Dossier constructeur", body: "Nous aidons à organiser mesures, types de pièces, matériaux, budget et échéancier avant production ou coordination partenaire." },
-        { kicker: "03", title: "Lots premium", body: "Utile pour résidences, hôtellerie boutique, restaurants, bureaux et développements où le client attend une direction matérielle plus élevée." },
+        { kicker: "03", title: "Lots techniques", body: "Utile pour maisons sur mesure, rénovations, murs média, rangements intégrés, cuisines, dressings et portées de menuiserie avec une direction matière définie." },
       ],
       sendTitle: "Quoi envoyer",
-      sendItems: ["Plans, dessins ou élévations", "Photos, mesures ou code postal", "Images de référence ou collection préférée", "Service: panneaux, mobilier, dressings, cuisine, menuiserie ou lot commercial", "Budget, échéancier et contexte décisionnel"],
+      sendItems: ["Plans, dessins ou élévations", "Photos, mesures ou code postal", "Images de référence ou collection préférée", "Service: mur média, panneaux, mobilier, dressings, cuisine, rangements intégrés ou menuiserie", "Budget, échéancier et contexte décisionnel"],
       fitTitle: "Types de projets",
-      fitItems: ["Rénovations résidentielles de luxe", "Cuisines et cabinetry sur mesure", "Panneaux, murs TV et media walls", "Rangements, dressings, vanités et menuiserie", "Hôtellerie, restaurants, bureaux et développements"],
+      fitItems: ["Maisons sur mesure et rénovations résidentielles", "Cuisines et cabinetry sur mesure", "Panneaux, murs TV et media walls", "Rangements, dressings, étagères et vanités", "Menuiserie architecturale et dossiers techniques"],
       atlantaEyebrow: "Priorité Atlanta",
       atlantaTitle: "Examen prioritaire pour demandes professionnelles à Atlanta et en Géorgie",
       atlantaText: "CAS AURUM accepte les demandes de cuisines, cabinetry, panneaux, mobilier et menuiserie en Géorgie, avec priorité à Atlanta et aux environs. Dans les autres marchés nord-américains, nous pouvons examiner la direction design et coordonner avec des partenaires régionaux lorsque pertinent.",
@@ -4893,16 +4893,16 @@ function tradePackageText(lang) {
     ru: {
       eyebrow: "Партнерство для профессионалов",
       h2: "Понятный путь от дизайн-идеи к кастомному интерьеру",
-      summary: "CAS AURUM помогает дизайнерам, архитекторам, строителям и девелоперам превращать чертежи, референсы и задачи клиента в премиальные панели, мебель на заказ, millwork, closets, кухни и коммерческие интерьерные пакеты.",
+      summary: "CAS AURUM помогает дизайнерам, архитекторам, строителям и ремонтным компаниям превращать чертежи, референсы и задачи клиента в панели, media walls, мебель на заказ, millwork, closets, кухни и built-in пакеты.",
       cards: [
         { kicker: "01", title: "Поддержка дизайнеров", body: "Отправьте планы, elevation drawings, moodboard, спецификации отделок или референсы клиента. Мы рассмотрим scope и предложим кастомное направление." },
         { kicker: "02", title: "Intake для строителей", body: "Помогаем собрать замеры, типы помещений, материалы, бюджетный диапазон и сроки до производства или координации с партнерами." },
-        { kicker: "03", title: "Премиальные пакеты", body: "Подходит для резиденций, boutique hospitality, ресторанов, офисов и development interiors, где клиенту нужна более сильная material story." },
+        { kicker: "03", title: "Технические пакеты", body: "Подходит для частных домов, remodel projects, media walls, built-ins, кухонь, closets и millwork scope с понятной material direction." },
       ],
       sendTitle: "Что отправить",
-      sendItems: ["Чертежи, планы или elevations", "Фото помещения, размеры или ZIP code", "Референсы или предпочтительную коллекцию", "Услуга: панели, мебель, closets, кухня, millwork или commercial package", "Бюджет, сроки и контекст по decision-maker"],
+      sendItems: ["Чертежи, планы или elevations", "Фото помещения, размеры или ZIP code", "Референсы или предпочтительную коллекцию", "Услуга: media wall, панели, мебель, closets, кухня, built-ins или millwork package", "Бюджет, сроки и контекст по decision-maker"],
       fitTitle: "Лучшие типы проектов",
-      fitItems: ["Люксовые жилые renovation projects", "Кухни и cabinetry на заказ", "Wall panels, TV walls и media walls", "Built-ins, closets, vanities и millwork", "Hospitality, restaurants, offices и developer packages"],
+      fitItems: ["Частные дома и residential remodels", "Кухни и cabinetry на заказ", "Wall panels, TV walls и media walls", "Built-ins, closets, shelving и vanities", "Architectural millwork и engineering packages"],
       atlantaEyebrow: "Приоритет Atlanta",
       atlantaTitle: "Приоритетный разбор trade-заявок по Atlanta и Georgia",
       atlantaText: "CAS AURUM принимает запросы по кухням, cabinetry, панелям, мебели и millwork по Georgia, с приоритетом для Atlanta и ближайших районов. Для других рынков Северной Америки мы можем разобрать design direction и при необходимости координировать региональных партнеров.",
@@ -4913,16 +4913,16 @@ function tradePackageText(lang) {
     uk: {
       eyebrow: "Партнерство для професіоналів",
       h2: "Зрозумілий шлях від дизайн-ідеї до індивідуального інтер'єру",
-      summary: "CAS AURUM допомагає дизайнерам, архітекторам, будівельникам і девелоперам перетворювати креслення, референси та задачі клієнта на преміальні панелі, меблі на замовлення, millwork, гардеробні, кухні й комерційні інтер'єрні пакети.",
+      summary: "CAS AURUM допомагає дизайнерам, архітекторам, будівельникам і ремонтним компаніям перетворювати креслення, референси та задачі клієнта на панелі, media walls, меблі на замовлення, millwork, гардеробні, кухні й built-in пакети.",
       cards: [
         { kicker: "01", title: "Підтримка дизайнерів", body: "Надішліть плани, фасади, moodboard, специфікації оздоблення або референси клієнта. Ми розглянемо scope і запропонуємо індивідуальний напрям." },
         { kicker: "02", title: "Intake для будівельників", body: "Допомагаємо зібрати заміри, типи приміщень, матеріали, бюджетний діапазон і терміни до виробництва або координації з партнерами." },
-        { kicker: "03", title: "Преміальні пакети", body: "Підходить для резиденцій, boutique hospitality, ресторанів, офісів і development interiors, де клієнту потрібна сильніша матеріальна історія." },
+        { kicker: "03", title: "Технічні пакети", body: "Підходить для приватних будинків, remodel projects, media walls, built-ins, кухонь, гардеробних і millwork scope з чіткою material direction." },
       ],
       sendTitle: "Що надіслати",
-      sendItems: ["Креслення, плани або фасади", "Фото приміщення, розміри або ZIP code", "Референси або бажану колекцію", "Послуга: панелі, меблі, гардеробні, кухня, millwork або commercial package", "Бюджет, терміни й контекст decision-maker"],
+      sendItems: ["Креслення, плани або фасади", "Фото приміщення, розміри або ZIP code", "Референси або бажану колекцію", "Послуга: media wall, панелі, меблі, гардеробні, кухня, built-ins або millwork package", "Бюджет, терміни й контекст decision-maker"],
       fitTitle: "Найкращі типи проєктів",
-      fitItems: ["Преміальні житлові renovation projects", "Кухні та cabinetry на замовлення", "Wall panels, TV walls і media walls", "Built-ins, closets, vanities і millwork", "Hospitality, restaurants, offices і developer packages"],
+      fitItems: ["Приватні будинки та residential remodels", "Кухні та cabinetry на замовлення", "Wall panels, TV walls і media walls", "Built-ins, closets, shelving і vanities", "Architectural millwork та engineering packages"],
       atlantaEyebrow: "Пріоритет Atlanta",
       atlantaTitle: "Пріоритетний розбір trade-заявок по Atlanta і Georgia",
       atlantaText: "CAS AURUM приймає запити по кухнях, cabinetry, панелях, меблях і millwork у Georgia, з пріоритетом для Atlanta та найближчих районів. Для інших ринків Північної Америки ми можемо розібрати design direction і за потреби координувати регіональних партнерів.",
@@ -7913,8 +7913,87 @@ function leadPaths(route) {
 }
 
 function processSection(route) {
-  const steps = ["Choose your space", "Upload photos", "Share your goals", "Get a design concept", "Move to build when ready"];
-  return `<section class="process"><p class="eyebrow">${escapeHtml(localized("Process", route.lang))}</p><h2>${escapeHtml(localizedPlain("From room photos to a custom interior plan", route.lang))}</h2><div>${steps.map((s, i) => `<article><span>0${i + 1}</span><h3>${escapeHtml(localizedPlain(s, route.lang))}</h3><p>${escapeHtml(localizedPlain("A clear workflow keeps proportions, materials, budget and timeline aligned before production begins.", route.lang))}</p></article>`).join("")}</div></section>`;
+  const processByKey = {
+    mediaWalls: [
+      ["Wall photo and screen size", "Start with a straight-on wall photo, ceiling height, TV size, outlet locations and any fireplace or speaker constraints."],
+      ["Composition and storage", "Cabinetry, open shelves, display niches and closed storage are arranged around viewing height and room proportions."],
+      ["Technology planning", "Concealed wiring, AV routing, LED lighting, ventilation and access panels are reviewed before the wall is detailed."],
+      ["Materials and drawings", "Wood veneer, fluted panels, stone-look surfaces, hardware and finish direction are translated into a build-ready package."],
+      ["Production and installation", "Delivery, wall conditions, mounting points and final adjustment needs are coordinated before fabrication moves forward."],
+    ],
+    wallPanels: [
+      ["Wall conditions", "Photos, wall dimensions, openings, outlets, switches, vents and corners are reviewed before panel rhythm is proposed."],
+      ["Pattern and proportion", "Vertical, horizontal, fluted, slat or custom panel spacing is planned around the architecture instead of repeated as decoration."],
+      ["Material direction", "Veneer, oak, walnut, textile, stone-look and matte metal options are selected for durability and visual depth."],
+      ["Lighting and details", "Hidden LED channels, reveals, transitions and access points are coordinated before drawings are finalized."],
+      ["Installation planning", "Panels are planned around substrate, seams, field measurements and site access so the finished wall reads cleanly."],
+    ],
+    builtIns: [
+      ["Room use and storage", "Books, media equipment, office supplies, toys, display objects and daily storage needs are defined before layout."],
+      ["Open and closed zones", "Shelves, drawers, doors, benches and desks are balanced around the room width, ceiling height and circulation."],
+      ["Lighting and hardware", "Integrated LEDs, cable paths, pulls, hinges and adjustable shelving are selected before engineering."],
+      ["Material package", "Painted MDF, natural veneer, oak, walnut and durable finishes are matched to nearby trim, flooring and walls."],
+      ["Fit and installation", "Site conditions, baseboards, uneven walls, access and final scribing are reviewed before production."],
+    ],
+    customKitchens: [
+      ["Photos and layout", "Kitchen photos, appliance locations, plumbing, ceiling height and traffic paths are reviewed before cabinet direction."],
+      ["Storage planning", "Drawer banks, pantry zones, appliance panels, island scale and cabinet walls are mapped around daily cooking use."],
+      ["Materials and durability", "Door style, veneer direction, painted finishes, hardware, countertop coordination and humidity performance are reviewed together."],
+      ["Technical package", "Elevations, dimensions, appliance notes, lighting locations and contractor responsibilities are clarified before production."],
+      ["Coordination", "Installation timing, site access, stone work, appliances and final adjustments are coordinated with the broader project team."],
+    ],
+    customClosets: [
+      ["Inventory and dimensions", "Hanging, shoes, drawers, luggage, accessories, wall widths, ceiling height and door swings are documented first."],
+      ["Wardrobe zones", "Long hanging, double hanging, shelves, glass doors, islands and mirrors are arranged around how the closet is used."],
+      ["Lighting and hardware", "LED channels, drawer inserts, rods, pulls and soft-close hardware are selected before engineering."],
+      ["Finish direction", "Oak, walnut, lacquer, glass and metal details are reviewed for durability and connection to the bedroom."],
+      ["Install planning", "Field measurements, wall conditions, floor transitions and access are checked before fabrication."],
+    ],
+    fireplaceWalls: [
+      ["Existing fireplace review", "Fireplace type, clearances, wall width, mantel height, TV plans and nearby outlets are reviewed before design."],
+      ["Feature wall composition", "Panels, shelving, cabinetry and stone-look surfaces are balanced around the firebox and seating area."],
+      ["Heat and access", "Ventilation, service access, material suitability and wiring routes are clarified before technical drawings."],
+      ["Materials and lighting", "Wood, stone, matte surfaces and hidden LEDs are selected to keep the wall calm and durable."],
+      ["Coordination", "Installation is planned around fireplace requirements, wall substrate, mounting points and final trim details."],
+    ],
+    customFurniture: [
+      ["Reference and dimensions", "Photos, sketches, desired dimensions, room location and use case define the first furniture direction."],
+      ["Function and proportion", "Storage, seating, display, hardware and clearance needs are resolved before materials are selected."],
+      ["Material selection", "Walnut, oak, veneer, lacquer, stone, glass and fabric details are chosen for use, scale and maintenance."],
+      ["Drawings and fabrication", "The concept moves into dimensions, joinery notes, finish direction and production planning."],
+      ["Delivery planning", "Access, assembly, wall attachment, floor protection and final adjustment needs are reviewed before delivery."],
+    ],
+    millwork: [
+      ["Scope definition", "The millwork scope is separated into built-ins, wall panels, cabinetry, shelving, closets, media walls and custom furniture."],
+      ["Field conditions", "Photos, plans, dimensions, ceiling heights, outlets, HVAC locations and existing trim are reviewed before engineering."],
+      ["Material and grain planning", "Substrate, veneer direction, flitch matching, finish durability and hardware are coordinated before production."],
+      ["Engineering package", "Shop drawings, elevations, sections, access notes and installation constraints are organized for review."],
+      ["Fabrication coordination", "Production, delivery, site access, installation sequencing and final adjustments are planned with the project team."],
+    ],
+    trade: [
+      ["Drawings and intent", "Designers and builders can submit plans, elevations, room photos, finish schedules and client references."],
+      ["Scope alignment", "Media walls, wall panels, built-ins, cabinetry, closets, shelving and custom furniture are separated into defined packages."],
+      ["Material coordination", "Wood species, veneer direction, finish level, hardware, lighting and adjacent materials are reviewed early."],
+      ["Engineering review", "CAD drawings, shop drawings, field measurements and installation constraints are clarified before production."],
+      ["Project coordination", "Delivery, installation timing, approvals, site access and open questions are tracked with the trade partner."],
+    ],
+    solutions: [
+      ["Photos and priorities", "The first review starts with room photos, dimensions, inspiration and the main problem the custom work needs to solve."],
+      ["Best-fit scope", "Media walls, panels, built-ins, kitchens, closets, shelving, fireplaces and furniture are matched to the room."],
+      ["Concept direction", "Proportion, materials, storage, lighting and budget logic are clarified before moving into engineering."],
+      ["Technical planning", "Measurements, drawings, hardware, wiring, finishes and installation constraints are reviewed before production."],
+      ["Next step", "The project moves toward a design concept, quick estimate, planner review or trade package depending on readiness."],
+    ],
+  };
+  const fallback = [
+    ["Photos and dimensions", "Room photos, wall dimensions, ceiling height and existing conditions are reviewed before design direction."],
+    ["Project priorities", "Storage, lighting, material, budget and daily-use goals are clarified before drawings begin."],
+    ["Material direction", "Wood species, veneer, painted finishes, hardware and lighting are selected around the room."],
+    ["Technical review", "Measurements, access, installation constraints and coordination needs are documented before production."],
+    ["Next step", "CAS AURUM recommends the appropriate design concept, estimate or technical package based on the scope."],
+  ];
+  const steps = processByKey[route.key] || fallback;
+  return `<section class="process"><p class="eyebrow">${escapeHtml(localized("Process", route.lang))}</p><h2>${escapeHtml(localizedPlain("From room photos to a custom interior plan", route.lang))}</h2><div>${steps.map(([title, text], i) => `<article><span>0${i + 1}</span><h3>${escapeHtml(localizedPlain(title, route.lang))}</h3><p>${escapeHtml(localizedPlain(text, route.lang))}</p></article>`).join("")}</div></section>`;
 }
 
 function imageGallery(route, ids) {
@@ -8507,8 +8586,37 @@ function leadForm(route, type) {
   const label = formSubmitLabel(route.lang, type);
   const sourceUrl = type === "consultation" ? consultationFormUrl(route.lang) : routeUrlFor(route.lang, route);
   const serviceNeeded = programmaticMeta?.vertical || routeServiceName(route);
-  const services = ["Luxury interiors", "Luxury wall panels", "Custom wall panels", "Custom furniture", "Architectural millwork", "Custom kitchens", "Custom kitchen cabinets", "Kitchen remodeling coordination", "Cabinet refacing", "Cabinet refinishing", "Cabinet restoration", "Custom closets", "Built-in furniture", "Custom vanities", "Premium office interiors", "Hotel & hospitality interiors", "Restaurant interiors", "Designer / builder partnership", "Developer interior packages", "Other"];
-  const projectTypes = ["Residential", "Commercial", "Hotel / Hospitality", "Restaurant", "Office", "Development project", "Other"];
+  const services = [
+    { value: "Luxury interiors", label: "Custom interior solutions" },
+    { value: "Luxury wall panels", label: "Architectural wall panels" },
+    { value: "Custom wall panels", label: "Custom wall panels" },
+    { value: "Custom furniture", label: "Custom furniture" },
+    { value: "Architectural millwork", label: "Architectural millwork" },
+    { value: "Custom kitchens", label: "Custom kitchens" },
+    { value: "Custom kitchen cabinets", label: "Custom kitchen cabinetry" },
+    { value: "Kitchen remodeling coordination", label: "Kitchen cabinetry planning" },
+    { value: "Cabinet refacing", label: "Kitchen cabinet update review" },
+    { value: "Cabinet refinishing", label: "Cabinet finish update review" },
+    { value: "Cabinet restoration", label: "Cabinet repair or update review" },
+    { value: "Custom closets", label: "Custom closets" },
+    { value: "Built-in furniture", label: "Built-ins and shelving" },
+    { value: "Custom vanities", label: "Custom vanities" },
+    { value: "Premium office interiors", label: "Home office built-ins" },
+    { value: "Hotel & hospitality interiors", label: "Trade millwork package" },
+    { value: "Restaurant interiors", label: "Wall panel package" },
+    { value: "Designer / builder partnership", label: "Designer / builder partnership" },
+    { value: "Developer interior packages", label: "Engineering and build package" },
+    { value: "Other", label: "Other" },
+  ];
+  const projectTypes = [
+    { value: "Residential", label: "Residential" },
+    { value: "Commercial", label: "Trade-led project" },
+    { value: "Hotel / Hospitality", label: "Designer-led interior" },
+    { value: "Restaurant", label: "Wall panel or millwork scope" },
+    { value: "Office", label: "Home office / study" },
+    { value: "Development project", label: "Builder package" },
+    { value: "Other", label: "Other" },
+  ];
   const budgets = ["$10,000-$25,000", "$25,000-$50,000", "$50,000-$100,000", "$100,000+", "Not sure yet"];
   const timelines = ["ASAP", "1-3 months", "3-6 months", "6+ months"];
   if (type === "consultation") {
@@ -8541,7 +8649,7 @@ function leadForm(route, type) {
     <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(route.searchParams?.get("source_page") || sourceUrl)}">${seoSourceHiddenFields(route)}
     ${programmaticMeta ? programmaticLeadHiddenFields(programmaticMeta) : ""}
     <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
-    <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.email, "email", true, "email")}${input(f.phone, "phone", true, "tel")}${input(localized("ZIP / Postal code", route.lang), "zipCode", true)}${select(f.projectType, "projectType", projectTypes, true)}${select(f.service, "serviceNeeded", services, true, serviceNeeded)}${select(f.budget, "budget", budgets, true)}${select(f.timeline, "timeline", timelines, true)}</div>
+    <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.email, "email", true, "email")}${input(f.phone, "phone", true, "tel")}${input(localized("ZIP / Postal code", route.lang), "zipCode", true)}${selectWithValues(f.projectType, "projectType", projectTypes, true)}${selectWithValues(f.service, "serviceNeeded", services, true, serviceNeeded)}${select(f.budget, "budget", budgets, true)}${select(f.timeline, "timeline", timelines, true)}</div>
     <label>${escapeHtml(f.message)}<textarea name="message" required></textarea></label>
     <label>${escapeHtml(f.upload)}<input type="file" name="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
     <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(f.consent)}</label>
@@ -10376,7 +10484,7 @@ function localized(value, lang) {
       "Material direction": "Dirección de materiales",
       "Production planning": "Planificación de producción",
       "Installation coordination": "Coordinación de instalación",
-      "A clear premium workflow keeps proportions, materials, budget and timeline aligned before production begins.": "Un proceso claro mantiene alineados proporciones, materiales, presupuesto y tiempos antes de iniciar producción.",
+      "Project-specific planning keeps materials, budget and timing organized before production begins.": "La planificación específica del proyecto mantiene materiales, presupuesto y tiempos organizados antes de iniciar producción.",
       "Continue exploring": "Seguir explorando",
       "Tell us about the space, service need, location and timeline. CAS AURUM will review the scope and respond with the appropriate next step.": "Cuéntenos sobre el espacio, servicio requerido, ubicación y tiempos. CAS AURUM revisará el alcance y responderá con el siguiente paso apropiado.",
       "Available for projects in": "Disponible para proyectos en",
@@ -10461,7 +10569,7 @@ function localized(value, lang) {
       "Material direction": "Direction des matériaux",
       "Production planning": "Planification de production",
       "Installation coordination": "Coordination d'installation",
-      "A clear premium workflow keeps proportions, materials, budget and timeline aligned before production begins.": "Un processus premium clair aligne proportions, matériaux, budget et échéancier avant la production.",
+      "Project-specific planning keeps materials, budget and timing organized before production begins.": "La planification propre au projet organise matières, budget et calendrier avant la production.",
       "Continue exploring": "Continuer à explorer",
       "Tell us about the space, service need, location and timeline. CAS AURUM will review the scope and respond with the appropriate next step.": "Parlez-nous de l'espace, du service requis, du lieu et de l'échéancier. CAS AURUM examinera la portée et répondra avec la prochaine étape appropriée.",
       "Available for projects in": "Disponible pour projets en",
@@ -10546,7 +10654,7 @@ function localized(value, lang) {
       "Material direction": "Направление материалов",
       "Production planning": "Планирование производства",
       "Installation coordination": "Координация установки",
-      "A clear premium workflow keeps proportions, materials, budget and timeline aligned before production begins.": "Понятный процесс согласует пропорции, материалы, бюджет и сроки до начала производства.",
+      "Project-specific planning keeps materials, budget and timing organized before production begins.": "Планирование под конкретный проект помогает согласовать материалы, бюджет и сроки до начала производства.",
       "Continue exploring": "Продолжить просмотр",
       "Tell us about the space, service need, location and timeline. CAS AURUM will review the scope and respond with the appropriate next step.": "Расскажите о пространстве, нужной услуге, локации и сроках. CAS AURUM рассмотрит задачу и предложит следующий шаг.",
       "Available for projects in": "Доступно для проектов в",
@@ -10666,7 +10774,7 @@ function localized(value, lang) {
 	      "Concept review before measurements or production planning": "Разбор концепта до замеров или планирования производства",
 	      "From room photos to a custom interior plan": "От фото комнаты к индивидуальному интерьерному плану",
 	      "Choose your space": "Выберите пространство",
-	      "A clear workflow keeps proportions, materials, budget and timeline aligned before production begins.": "Понятный процесс помогает согласовать пропорции, материалы, бюджет и сроки до начала производства.",
+	      "Project-specific planning keeps materials, budget and timing organized before production begins.": "Планирование под конкретный проект помогает согласовать материалы, бюджет и сроки до начала производства.",
 	      "Get a Fixed-Price Concept": "Запросить концепт с фиксированной стартовой ценой",
 	      "Custom interior solutions": "Индивидуальные интерьерные решения",
 	      "Photo-based first step": "Первый шаг по фото",
@@ -10674,7 +10782,7 @@ function localized(value, lang) {
 	      "Each project begins with the room, your goals, photos, measurements and how the space needs to work.": "Каждый проект начинается с комнаты, ваших целей, фото, размеров и того, как пространство должно работать.",
 	      "You can start with a Design Concept before committing to drawings, production or installation.": "Можно начать с дизайн-концепта до чертежей, производства или установки.",
 	      "Review a direction and budget range first, then upgrade when the project is ready.": "Сначала посмотрите направление и бюджетный ориентир, а затем переходите дальше, когда проект готов.",
-	      "A clear workflow keeps proportions, materials, budget and timeline aligned before production begins.": "Понятный процесс помогает согласовать пропорции, материалы, бюджет и сроки до начала производства.",
+	      "Project-specific planning keeps materials, budget and timing organized before production begins.": "Планирование под конкретный проект помогает согласовать материалы, бюджет и сроки до начала производства.",
 	      "From room photos to a custom interior plan": "От фото комнаты к индивидуальному интерьерному плану",
 	      "Choose your space": "Выберите пространство",
 	      "Share your goals": "Опишите цели",

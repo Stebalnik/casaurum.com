@@ -442,23 +442,23 @@ export const intents = [
 
 const cityMarketBriefs = {
   georgia: {
-    intro: "Georgia premium interiors should connect Atlanta-market polish with practical durability for residences, hospitality spaces, offices and developer interiors. CAS AURUM treats design concepts as a low-risk way to clarify material direction, built-in scope and budget logic before fabrication or installation is reviewed.",
-    direct: "Georgia is a priority CAS AURUM market for premium design concepts, luxury interiors, custom wall panels, built-ins, closets, kitchens and architectural millwork inquiries.",
+    intro: "Georgia custom interiors should connect Atlanta-market polish with practical durability for residences, remodels and designer-led scopes. CAS AURUM treats design concepts as a low-risk way to clarify material direction, built-in scope and budget logic before fabrication or installation is reviewed.",
+    direct: "Georgia is a priority CAS AURUM market for design concepts, custom media walls, wall panels, built-ins, closets, kitchens, custom furniture and architectural millwork inquiries.",
     sections: [
       ["Georgia project fit", "The strongest Georgia inquiries usually come from Atlanta, Buckhead, Alpharetta, Sandy Springs, Marietta, Roswell, Milton, Brookhaven, Johns Creek and Savannah projects where custom work needs to feel premium without becoming fragile or overdecorated."],
       ["Design concept value", "A premium design concept gives the client and project team a clear visual and material direction before custom cabinetry, wall panels, furniture or millwork are priced in detail. It helps separate serious project intent from general inspiration browsing."],
       ["Useful project inputs", "A useful Georgia design concept request should include city or ZIP code, room photos, rough dimensions, ceiling height, target materials, inspiration images, desired scope and the level of realization needed after the concept."],
-      ["High-intent Georgia scopes", "The strongest organic paths for Georgia should connect design concept searches to luxury kitchens, custom media walls, custom built-ins, luxury closets, wall panels, custom furniture and architectural millwork."],
+      ["High-intent Georgia scopes", "The strongest organic paths for Georgia should connect design concept searches to custom kitchens, custom media walls, custom built-ins, custom closets, wall panels, custom furniture and architectural millwork."],
     ],
   },
   atlanta: {
-    intro: "Atlanta luxury interiors need to balance Southern warmth with disciplined architectural detailing: custom cabinetry that feels built into the home, wall panels that improve proportion, and material choices that hold up in busy family, hospitality and developer spaces.",
+    intro: "Atlanta custom interiors need to balance Southern warmth with disciplined architectural detailing: custom cabinetry that feels built into the home, wall panels that improve proportion, and material choices that hold up in busy family spaces.",
     direct: "Atlanta is CAS AURUM's priority Georgia market for custom cabinetry, wall panels, built-ins, closets, kitchens and architectural millwork inquiries.",
     sections: [
-      ["Atlanta project fit", "The strongest Atlanta inquiries usually involve Buckhead residences, Sandy Springs and Alpharetta homes, developer interiors, boutique hospitality, restaurants, offices or detailed remodels where standard cabinetry would look too thin. CAS AURUM reviews drawings, room photos, measurements, material direction and budget range before recommending a practical custom path."],
+      ["Atlanta project fit", "The strongest Atlanta inquiries usually involve Buckhead residences, Sandy Springs and Alpharetta homes, Milton new builds, Roswell remodels or detailed cabinetry and millwork scopes where standard products would look too thin. CAS AURUM reviews drawings, room photos, measurements, material direction and budget range before recommending a practical custom path."],
       ["What matters locally", "Atlanta projects often need durable luxury: finishes that survive daily use, storage that feels architectural, and warm materials that do not turn a refined home into a cold showroom. Walnut, oak, natural stone, textured panels, concealed lighting and restrained champagne metal details tend to work well when the proportions are controlled."],
 	      ["Useful project inputs for designers", "A valuable Atlanta design request should include the property area, room dimensions, ceiling height, appliance or AV requirements, desired storage, inspiration images, and whether the scope is cabinetry, a TV wall, wall panels, closets, vanities, a kitchen or a full millwork package."],
-	      ["High-intent Atlanta scopes", "The strongest organic landing paths for Atlanta should connect luxury interior design searches to custom media walls, custom built-ins, luxury closets, wall panels and architectural millwork. These are the scopes most likely to turn style research into a project inquiry."],
+	      ["High-intent Atlanta scopes", "The strongest organic landing paths for Atlanta should connect design concept searches to custom media walls, custom built-ins, custom closets, wall panels and architectural millwork. These are the scopes most likely to turn style research into a project inquiry."],
 	    ],
 	  },
   miami: {
@@ -514,18 +514,18 @@ const cityMarketBriefs = {
 
 const cityProfiles = {
   georgia: {
-    propertyMix: "Atlanta-area residences, Buckhead homes, Alpharetta family houses, Savannah properties, boutique hospitality, offices and developer interiors",
+    propertyMix: "Atlanta-area residences, Buckhead homes, Alpharetta family houses, Savannah properties, remodels and designer-led residential scopes",
     designMood: "premium, warm, durable and architecturally resolved",
     constraints: "regional spread, remodel phasing, family use, hospitality durability and the need to clarify concept direction before custom fabrication",
     materials: ["walnut", "white oak", "natural stone", "textured wall panels", "champagne brass"],
     scopes: ["design concepts", "luxury kitchens", "media walls", "built-ins", "closets", "architectural millwork"],
   },
   atlanta: {
-    propertyMix: "Buckhead residences, Sandy Springs remodels, Alpharetta family homes, boutique hospitality and developer interiors",
+    propertyMix: "Buckhead residences, Sandy Springs remodels, Alpharetta family homes, Milton new builds and Roswell residential projects",
     designMood: "warm, substantial and quietly polished",
     constraints: "daily family use, mixed traditional and contemporary architecture, remodel phasing and the need for durable luxury",
     materials: ["walnut", "white oak", "natural stone", "textured panels", "champagne metal"],
-    scopes: ["custom kitchens", "built-ins", "TV walls", "closets", "wall panels", "developer packages"],
+    scopes: ["custom kitchens", "built-ins", "TV walls", "closets", "wall panels", "engineering packages"],
   },
   miami: {
     propertyMix: "waterfront condos, villas, penthouses, dressing rooms, private lounges and hospitality interiors",
@@ -976,7 +976,7 @@ function designConceptMarketSections(locale, market, profile, materialList, scop
     },
     {
       heading: "What to clarify early",
-      body: `A useful ${locationName} concept should account for property type, light, maintenance, storage, budget range and whether the design is meant for a residence, hospitality space, office or developer interior.`,
+      body: `A useful ${locationName} concept should account for property type, light, maintenance, storage, budget range and whether the design is meant for a media wall, kitchen, closet, built-in, wall panel, fireplace wall or custom furniture scope.`,
     },
   ];
 }
