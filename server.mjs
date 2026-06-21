@@ -3545,16 +3545,16 @@ function localProjectHighlights(lang = "en") {
 function contentHubMeta(key) {
   const pages = {
     materials: {
-      title: `Materials | ${BRAND}`,
-      description: "Wood species, veneers, MDF cores, finishes, humidity planning and responsible material choices for custom interiors.",
+      title: `Materials for Custom Furniture & Millwork | ${BRAND}`,
+      description: "Guide to oak, walnut, veneers, MDF cores, finishes, humidity and material planning for custom interiors and millwork.",
     },
     smartIntegration: {
-      title: `Smart Integration | ${BRAND}`,
-      description: "Hidden LED, AV routing, concealed wiring, ventilation and smart-home-ready millwork for clean custom interiors.",
+      title: `Smart Integration for Media Walls & Built-Ins | ${BRAND}`,
+      description: "Hidden wiring, LED lighting, AV routing, ventilation and smart-home-ready millwork for media walls and built-ins.",
     },
     designProcess: {
-      title: `Design Process | ${BRAND}`,
-      description: "How CAS AURUM moves from photos and design direction to materials, engineering packages, production review and installation planning.",
+      title: `Custom Interior Design Process | ${BRAND}`,
+      description: "How CAS AURUM moves from photos and concepts to measurements, materials, engineering, production and installation planning.",
     },
     localCustomFurniture: {
       title: `Custom Furniture Atlanta | ${BRAND}`,
@@ -3586,11 +3586,12 @@ function materialsPage(route) {
     ${natureIntegratedSection("en", "materials")}
     <section class="seo-sections">
       <article><h2>Why Materials Matter</h2><p>Materials affect durability, appearance, maintenance and long-term performance. A TV wall, cabinet door, shelf or panel system has to survive touch points, sunlight, cleaning, humidity, hardware movement and daily use after the sample has been approved.</p></article>
+      <article><h2>Wood Species</h2><p>Wood species shape the mood and technical behavior of custom interiors. European oak, American walnut and rift white oak each bring a different grain, color range and level of visual movement to media walls, cabinetry, built-ins, closets, wall panels and furniture.</p></article>
       <article><h2>European Oak</h2><p>European oak is often selected for its warm color range, visible grain and ability to feel architectural without becoming visually heavy. It works well for shelving, slat panels, cabinetry fronts, built-ins and furniture when the grain direction is planned consistently.</p></article>
       <article><h2>American Walnut</h2><p>American walnut brings deeper color, softer movement and a warmer texture. CAS AURUM often reviews walnut for media walls, floating consoles, custom furniture, bar cabinets, offices and display pieces where the material should add depth without overpowering the room.</p></article>
       <article><h2>Rift White Oak</h2><p>Rift white oak is useful when a straighter, more linear grain is important. It can make contemporary cabinetry, wall panels and built-ins feel calmer because the surface reads as a controlled architectural field rather than a busy natural pattern.</p></article>
-      <article><h2>Veneers</h2><p>Veneers are thin natural wood layers applied to a stable core. They are used when large media walls, doors, panels and cabinetry need grain consistency, scale and better material yield than solid wood would allow across wide surfaces.</p></article>
-      <article><h2>MDF Core Construction</h2><p>MDF cores can support stable painted finishes, veneered panels, doors and cabinetry when the grade, thickness and construction method fit the project. The core affects flatness, consistency, edge detail, finish quality and humidity response.</p></article>
+      <article><h2>Natural Veneers</h2><p>Veneers are thin natural wood layers applied to a stable core. They are used when large media walls, doors, panels and cabinetry need grain consistency, scale and better material yield than solid wood would allow across wide surfaces.</p></article>
+      <article><h2>MDF Cores and Painted Finishes</h2><p>MDF cores can support stable painted finishes, veneered panels, doors and cabinetry when the grade, thickness and construction method fit the project. The core affects flatness, consistency, edge detail, finish quality and humidity response.</p></article>
     </section>
     <section class="seo-sections">
       <article><h2>European oak in quiet modern rooms</h2><p>European oak works well when the goal is warm minimalism without a heavy visual weight. It can support slat panels, built-ins, shelving, cabinetry fronts and furniture pieces when the grain is planned consistently across the room.</p></article>
@@ -3601,10 +3602,10 @@ function materialsPage(route) {
       <article><h2>Low-waste planning starts before fabrication</h2><p>Waste is reduced most effectively through accurate dimensions, clear elevations, careful material takeoffs and fewer late changes. That is why CAS AURUM emphasizes concept clarity and technical review before production decisions.</p></article>
     </section>
     <section class="seo-sections">
-      <article><h2>Georgia Humidity Considerations</h2><p>In Atlanta and North Atlanta, material planning should account for humid summers, conditioned interiors, sun exposure, expansion, contraction and the difference between a dry sample room and a lived-in family space. Door sizes, panel widths, reveals, finish sheen, substrate selection and fabrication quality all help manage those conditions.</p></article>
+      <article><h2>Georgia Humidity and Material Stability</h2><p>In Atlanta and North Atlanta, material planning should account for humid summers, conditioned interiors, sun exposure, expansion, contraction and the difference between a dry sample room and a lived-in family space. Door sizes, panel widths, reveals, finish sheen, substrate selection and fabrication quality all help manage those conditions.</p></article>
       <article><h2>Substrates behind the visible surface</h2><p>The visible wood is only one layer of the decision. A cabinet, wall panel or media wall may need MDF, plywood, veneer balancing, edge banding, blocking or metal support depending on span, weight, finish, hardware and how the piece meets the wall or floor.</p></article>
       <article><h2>Material decisions before pricing</h2><p>Budget depends on species, veneer method, finish level, size, hardware, lighting, installation access and revision history. Early material direction gives the estimate a real basis, while keeping enough flexibility for samples, availability and technical constraints.</p></article>
-      <article><h2>Sustainability</h2><p>Responsible material selection is not a slogan. It means choosing appropriate species and substrates, planning dimensions before cutting, designing pieces with a long product life, reducing avoidable waste and avoiding certification claims unless the specific product or supplier can verify them.</p></article>
+      <article><h2>Eco-Conscious Material Thinking</h2><p>Responsible material selection is not a slogan. It means choosing appropriate species and substrates, planning dimensions before cutting, designing pieces with a long product life, reducing avoidable waste and avoiding certification claims unless the specific product or supplier can verify them.</p></article>
     </section>
     <section class="two-col">
       <div class="panel"><h3>Material Planning Details</h3><ul>${["Humidity considerations and dimensional stability", "Substrate selection for painted, veneered and panelized work", "Veneer balancing, veneer matching and flitch matching", "Grain direction planning for panels, doors and built-ins", "Natural finishes and warm natural textures selected for long-term durability"].map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div>
@@ -3625,20 +3626,19 @@ function smartIntegrationPage(route) {
     <section class="seo-sections">
       ${[
         ["What Smart Integration Means", "Smart integration means the technology is planned as part of the millwork instead of being added after the wall is finished. Wires, light, speakers, equipment, ventilation and access all influence depth, panels, doors and cabinet layout."],
-        ["Hidden Wiring", "TV walls and media walls can be planned around cable paths, outlet locations, equipment needs, soundbar placement and future screen changes so cords do not become the most visible part of the room."],
+        ["Hidden TV Wiring", "TV walls and media walls can be planned around cable paths, power planning, outlet locations, equipment needs, soundbar placement and future screen changes so cords do not become the most visible part of the room."],
         ["Integrated LED Lighting", "LED channels, diffuser placement, service access, glare control, switching and color temperature are planned with the material rhythm so light supports shelves, panels, niches and evening use."],
-        ["AV Routing", "AV routing connects screens, speakers, receivers, routers, game systems and streaming devices to the places they need to operate without forcing the finished surface to carry exposed equipment."],
-        ["Equipment Ventilation", "Technology-ready millwork should allow airflow, removable panels and practical access for equipment without exposing the technical layer. Heat load matters when receivers, amplifiers and drivers sit behind doors."],
-        ["Access Panels", "The goal is not to bury technology permanently. Access panels, removable backs, aligned panel joints and reachable cabinet zones keep important components available for future service, replacement or adjustment."]
+        ["AV Routing and Equipment Zones", "AV routing connects screens, speakers, receivers, media boxes, routers, game systems and streaming devices to hidden equipment areas without forcing the finished surface to carry exposed equipment."],
+        ["Ventilation and Access Panels", "Technology-ready millwork should allow airflow, removable panels, service access and practical equipment reach without exposing the technical layer. Heat load matters when receivers, amplifiers and drivers sit behind doors."],
+        ["Future Service Access", "The goal is not to bury technology permanently. Access panels, removable backs, aligned panel joints and reachable cabinet zones keep important components available for future service, replacement or adjustment."]
       ].map(([heading, body]) => `<article><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></article>`).join("")}
     </section>
     <section class="seo-sections">
       <article><h2>Why built-in technology outperforms loose furniture</h2><p>Off-the-shelf media furniture often leaves visible cords, blocked ventilation, awkward TV height and equipment that has nowhere to go. Custom millwork can resolve screen placement, storage, lighting and access as one system.</p></article>
-      <article><h2>Media Walls</h2><p>A media wall should account for screen size, eye level, seating distance, glare, speaker placement and future equipment changes. A clean surface only works when the technical layer behind it remains practical.</p></article>
-      <article><h2>Fireplace Walls</h2><p>Fireplace walls need more caution than a standard panel wall. Heat, clearances, mantle proportions, TV height, material suitability and service access should be clarified before the visual direction becomes fixed.</p></article>
+      <article><h2>Media Walls and Fireplace Walls</h2><p>A media wall should account for screen size, eye level, seating distance, glare, speaker placement and future equipment changes. Fireplace walls add heat, clearances, mantle proportions, TV height, material suitability and service access before the visual direction becomes fixed.</p></article>
       <article><h2>Built-Ins</h2><p>Built-ins can hold routers, receivers, game systems, speakers, chargers and lighting drivers, but equipment storage needs airflow and access. Hidden should not mean impossible to service.</p></article>
       <article><h2>Lighting that supports the room</h2><p>LED integration can be used for shelf lighting, toe-kick glow, panel grazing, display niches or low evening ambience. The useful question is where light helps the room, not how many strips can be added.</p></article>
-      <article><h2>Coordination with specialists</h2><p>CAS AURUM can design millwork around AV, low-voltage and smart-home requirements while coordinating with the appropriate specialists when the project needs wiring, automation or system installation outside the millwork scope.</p></article>
+      <article><h2>Smart-Home-Ready Millwork</h2><p>CAS AURUM can design millwork around AV, low-voltage and smart-home requirements while coordinating with electricians, AV installers, low-voltage contractors or automation professionals when the project needs wiring, controls or system installation outside the millwork scope.</p></article>
     </section>
     <section class="seo-sections">
       <article><h2>Concealed wiring is a design decision</h2><p>Wire paths affect panel seams, cabinet depth, outlet placement, removable backs, equipment zones and the final rhythm of the wall. When those routes are decided late, the visible design often has to absorb compromises. Early planning keeps cords, adapters and boxes from becoming the room's strongest visual detail.</p></article>
@@ -3681,13 +3681,13 @@ function designProcessAuthorityPage(route) {
     <section class="seo-sections">
       <article><h2>Start With Photos</h2><p>Photos, rough dimensions, ceiling height, city or ZIP code, inspiration and the main problem in the room are enough to begin. Early photos reveal proportion, light, existing finishes, outlets, fireplace conditions, door swings and storage gaps.</p></article>
       <article><h2>Design Concept</h2><p>The Design Concept resolves the direction: wall composition, storage logic, visual weight, materials, lighting intent and what information is still missing. It is where a media wall, built-in, closet, kitchen cabinet wall or panel package becomes clear enough to discuss seriously.</p></article>
-      <article><h2>Measurements</h2><p>Rough dimensions are enough to begin, but production decisions need verified field conditions. Wall width, ceiling height, outlet locations, floor level, obstructions, appliance clearances and fireplace conditions can all affect the final scope.</p></article>
+      <article><h2>Measurements and Site Conditions</h2><p>Rough dimensions are enough to begin, but production decisions need verified field conditions. Wall width, ceiling height, outlet locations, floor level, obstructions, appliance clearances and fireplace conditions can all affect the final scope.</p></article>
       <article><h2>Material Selection</h2><p>Wood species, veneers, cores, finishes, lighting temperature, hardware and adjacent surfaces are considered together. Material decisions should reflect appearance, touch points, humidity, maintenance and budget before production review begins.</p></article>
       <article><h2>Engineering Package</h2><p>Technical packages may include elevations, dimensions, material notes, module logic, hardware planning, lighting routes, access requirements and details that designers, builders or fabrication partners need before production.</p></article>
       <article><h2>Production Planning</h2><p>Production review connects the approved direction to material availability, finish decisions, hardware, fabrication complexity, delivery constraints, site access and the responsibilities of every party involved.</p></article>
       <article><h2>Installation Coordination</h2><p>Installation planning should consider site readiness, wall conditions, floor protection, access, sequencing with other trades, AV coordination, fireplace constraints and what must be confirmed before work arrives on site.</p></article>
       <article><h2>What Affects Budget</h2><p>Budget is shaped by room size, material level, cabinetry or panel quantity, hardware, lighting, AV needs, drawings, field measurements, installation complexity, site access and how many decisions change after technical review begins.</p></article>
-      <article><h2>Typical Timelines</h2><p>Simple concept work can move faster than a technical millwork package. Larger scopes need time for measurements, revisions, material approval, shop drawing review, production scheduling, delivery and installation coordination.</p></article>
+      <article><h2>Typical Timeline</h2><p>Simple concept work can move faster than a technical millwork package. Larger scopes need time for measurements, revisions, material approval, shop drawing review, production scheduling, delivery and installation coordination.</p></article>
       <article><h2>For Homeowners</h2><p>Homeowners use the process to understand what is realistic before committing to fabrication. A room photo, wall dimension, storage problem, TV size, fireplace condition or inspiration image can lead to a clearer concept, estimate range or planner path.</p></article>
       <article><h2>For Designers and Builders</h2><p>Trade partners can enter with floor plans, elevations, field measurements, finish schedules, AV notes, cabinetry requirements or construction timelines. The process keeps design intent, technical details and installation responsibilities visible before production decisions are locked.</p></article>
       <article><h2>What This Process Does Not Replace</h2><p>A CAS AURUM concept or technical package is not a substitute for licensed architectural, structural, electrical, plumbing or code-required engineering documents. It organizes the interior scope so the right professionals can coordinate around a clearer package.</p></article>
@@ -3705,6 +3705,11 @@ function authorityInternalLinks(context) {
     { href: urlFor("en", "wallPanels"), label: "Wall Panels" },
     { href: urlFor("en", "builtIns"), label: "Built-Ins" },
     { href: urlFor("en", "millwork"), label: "Architectural Millwork" },
+    { href: urlFor("en", "customFurniture"), label: "Custom Furniture" },
+    { href: urlFor("en", "customKitchens"), label: "Custom Cabinetry" },
+    { href: "/kitchens", label: "Kitchen Cabinetry Guide" },
+    { href: urlFor("en", "customClosets"), label: "Custom Closets" },
+    { href: urlFor("en", "fireplaceWalls"), label: "Fireplace Walls" },
     { href: urlFor("en", "designConcept"), label: "Design Concept" },
     { href: urlFor("en", "quickEstimate"), label: "Quick Project Estimate" },
     { href: urlFor("en", "planner"), label: "Technical Millwork Planner" },
