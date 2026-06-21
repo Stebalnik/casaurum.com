@@ -1970,7 +1970,7 @@ function sanitizeVisibleText(value) {
     .replace(/\bluxury\b/gi, "custom")
     .replace(/\belite\b/gi, "trade")
     .replace(/\bVIP\b/g, "private")
-    .replace(/\bbespoke\b/gi, "custom")
+    .replace(/\bbespoke\b/gi, (match) => match[0] === match[0].toUpperCase() ? "Custom" : "custom")
     .replace(new RegExp("\\bhigh" + "-end\\b", "gi"), "custom")
     .replace(/\bexclusive\b/gi, "tailored")
     .replace(/\bde lujo\b/gi, "a medida")
@@ -2128,6 +2128,9 @@ function localizedCompletedProjectLabel(value, lang) {
     },
     "Bespoke Furniture": {
       en: "Bespoke Furniture", es: "Mobiliario a medida", fr: "Mobilier sur mesure", ru: "Мебель на заказ",
+    },
+    "Custom Furniture": {
+      en: "Custom Furniture", es: "Mobiliario a medida", fr: "Mobilier sur mesure", ru: "Мебель на заказ",
     },
     "Bathroom Vanity": {
       en: "Bathroom Vanity", es: "Vanity de baño", fr: "Meuble vasque", ru: "Тумба для ванной",
