@@ -3000,6 +3000,7 @@ function legacyRedirectTarget(path) {
     ["/hospitality-interiors", urlFor("en", "trade")],
     ["/restaurant-interiors", urlFor("en", "trade")],
     ["/office-interiors", urlFor("en", "trade")],
+    ["/developer-interiors", urlFor("en", "trade")],
     ["/developer-interior-packages", urlFor("en", "trade")],
     ["/georgia/atlanta/kitchen-cabinet-refacing", "/georgia/atlanta/custom-kitchen-cabinets"],
     ["/georgia/atlanta/cabinet-refinishing", "/georgia/atlanta/custom-kitchen-cabinets"],
