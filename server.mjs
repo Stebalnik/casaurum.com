@@ -1678,17 +1678,50 @@ Object.assign(faqs, {
     ["Can a fireplace be included?", "Yes. Fireplace media walls are reviewed around safety, clearances, materials, dimensions and equipment needs."],
     ["What should I upload?", "Room photos, wall dimensions, TV size, outlet locations, inspiration images and any measurements or sketches you have."],
     ["Can I start with a concept only?", "Yes. A Design Concept gives direction and a budget range before a build package or quote."],
+    ["Can TV wiring and AV equipment be hidden?", "Yes. Wiring paths, AV routing, ventilation, access panels and equipment zones should be planned before wall panels or cabinetry are finalized."],
+    ["What materials work well for media walls?", "Walnut, rift white oak, European oak, natural veneers, painted MDF, fluted panels, stone-look surfaces and durable finishes can work when the wall proportions are clear."],
+    ["Do you work with designers or builders on media walls?", "Yes. Designers, builders and contractors can submit drawings, wall dimensions, finish notes, AV requirements and site constraints."],
   ],
   customKitchens: [
     ["Does CAS AURUM work with kitchens?", "Yes. CAS AURUM focuses on custom kitchen cabinetry, cabinet walls, islands, pantry storage and built-in kitchen storage."],
     ["Are you a full kitchen remodeler?", "Not by default. General contracting, plumbing, electrical and full remodel scope are reviewed separately and may require other professionals."],
     ["What kitchen files help?", "Photos, rough dimensions, appliance locations, inspiration images, cabinet goals, island needs and pantry/storage priorities."],
     ["Can I request full realization?", "Yes. Full realization is reviewed by custom quote after scope, dimensions, materials and site conditions are clarified."],
+    ["What affects custom kitchen cabinetry budget?", "Cabinet count, door style, drawers, island size, appliance panels, finish level, hardware, lighting, stone coordination and installation conditions all affect budget."],
+    ["Can I start with photos only?", "Yes. Photos and rough measurements are enough to begin a Design Concept, then field measurements and engineering can follow if the scope moves forward."],
+    ["Do you provide drawings for cabinetry?", "Design + Technical packages can include elevations, material direction, production notes and engineering review for cabinetry-focused scopes."],
   ],
   fireplaceWalls: [
     ["What is a custom fireplace wall?", "A custom fireplace wall combines fireplace feature design, panels, storage, shelving, lighting and sometimes TV/media planning."],
     ["Can you add built-ins around a fireplace?", "Yes. Fireplace built-ins can include cabinets, shelves, display niches and storage planned around the room."],
     ["Do fireplace materials affect price?", "Yes. Dimensions, heat clearances, stone or wood direction, cabinetry, lighting and site conditions affect the quote."],
+    ["Can a TV be integrated above or beside the fireplace?", "Yes, when heat, viewing height, wiring, ventilation, access and wall structure are reviewed early."],
+    ["What should I send first?", "Send a straight-on wall photo, fireplace dimensions, ceiling height, wall width, TV size if relevant, outlet locations and material references."],
+    ["Do you coordinate with contractors?", "CAS AURUM can coordinate design and millwork planning with designers, builders, contractors, fireplace specialists or AV professionals when needed."],
+  ],
+  builtIns: [
+    ["What are custom built-ins?", "Custom built-ins are shelves, cabinets, desks, benches, storage walls or libraries measured and planned for a specific room."],
+    ["Can built-ins include closed storage and open shelves?", "Yes. Many projects combine lower cabinets, drawers, open shelving, display areas, lighting and hardware selected around daily use."],
+    ["What should I send before requesting built-ins?", "Send wall photos, wall width, ceiling height, nearby outlets, storage goals, inspiration images and rough budget direction."],
+    ["Can built-ins be planned around a fireplace or window?", "Yes. Fireplace walls, window walls and uneven existing conditions can be reviewed during the concept and measurement stages."],
+    ["What affects built-in pricing?", "Wall length, ceiling height, depth, cabinet count, finish level, lighting, hardware, site access and installation complexity affect budget."],
+    ["Do you provide technical drawings?", "A Design + Technical Package can support elevations, dimensions, material notes and production planning for approved scopes."],
+  ],
+  customClosets: [
+    ["Can I start a closet project with photos only?", "Yes. Photos, rough dimensions and storage goals are enough to begin a closet Design Concept."],
+    ["What should be planned before closet finishes?", "Wardrobe inventory, hanging lengths, shoe storage, drawer count, mirrors, lighting, door swings and circulation should be reviewed first."],
+    ["Can closets include integrated lighting?", "Yes. LED hanging zones, shelf lighting, mirror lighting and low-voltage access can be planned before fabrication."],
+    ["What materials work for custom closets?", "Natural veneers, painted MDF, premium MDF cores, walnut, rift white oak, glass, leather or fabric inserts and durable hardware can be reviewed by scope."],
+    ["What affects closet budget?", "Room size, cabinet height, drawers, glass doors, islands, lighting, accessories, finish level and installation access all affect pricing."],
+    ["Do you work with designers and builders?", "Yes. Designers and builders can submit plans, elevations, finish notes, site photos and schedule requirements."],
+  ],
+  trade: [
+    ["Who is the trade collaboration page for?", "It is for interior designers, architects, custom home builders, general contractors, remodeling firms and developers with defined interior or millwork scopes."],
+    ["What files should designers or builders submit?", "Plans, elevations, CAD files, PDFs, finish schedules, site photos, measurements, inspiration references and scope notes are all useful."],
+    ["Can CAS AURUM provide shop drawings?", "CAS AURUM can support concept, drawing and engineering packages where the scope requires fabrication-ready planning."],
+    ["Can materials be coordinated with a project team?", "Yes. Material direction can include veneer matching, grain direction, finish review, hardware, samples and coordination with designer or builder selections."],
+    ["Do you coordinate installation planning?", "Installation planning can be reviewed around site access, wall conditions, delivery, scheduling, field measurements and contractor responsibilities."],
+    ["Are you an ASID member?", "CAS AURUM does not claim ASID membership unless verified, but is prepared to support ASID designers and trade partners."],
   ],
   homeOffices: [
     ["What can a custom home office include?", "Built-in desks, office cabinets, shelves, library walls, equipment storage, lighting and display zones."],
@@ -4026,42 +4059,150 @@ function serviceContent(lang, key) {
 }
 
 function serviceAuthorityUpgrade(route, key) {
-  if (route.lang !== "en" || key === "trade") return "";
-  const data = {
-    solutions: ["Custom interior solutions", "a complete room or multi-room direction", "media walls, cabinetry, wall panels, built-ins, closets, fireplaces, shelving and custom furniture", "Most scopes vary by room count, material level, technical detail, installation coordination and whether the project begins as concept-only or full realization review."],
-    mediaWalls: ["Custom media walls", "an integrated TV, storage and wall composition", "TV panels, floating consoles, hidden wiring, AV routing, LED lighting, fireplace coordination and equipment access", "Most custom media wall projects vary based on wall size, finish, lighting, storage, TV size, wiring, fireplace conditions and installation complexity."],
-    customKitchens: ["Custom kitchens and cabinetry", "cabinetry, islands, pantry storage and built-in kitchen elements", "white oak cabinetry, walnut accents, premium MDF cores, appliance coordination, durable finishes and storage planning", "Kitchen cabinetry budgets vary by cabinet count, door style, core material, finish, hardware, appliance coordination, lighting and field measurements."],
-    customClosets: ["Custom closets", "a wardrobe or dressing-room system planned around daily routines", "hanging zones, drawers, shoe walls, glass doors, islands, lighting, mirrors and accessory storage", "Closet budgets vary by room size, finish level, drawer count, glass, lighting, hardware, island details and installation conditions."],
-    builtIns: ["Custom built-ins", "fixed shelving, cabinets, desks, benches or storage walls", "white oak built-ins, walnut shelving, closed storage, display zones, lighting, hardware and exact field dimensions", "Built-in budgets depend on wall length, depth, open versus closed storage, finish, lighting, hardware and site access."],
-    fireplaceWalls: ["Fireplace walls", "a fireplace feature with panels, shelves, storage, lighting or TV planning", "stone-look surfaces, wood panels, built-in cabinets, mantel details, wiring paths and clearance review", "Fireplace wall budgets vary by existing fireplace conditions, material level, TV integration, cabinetry, shelving, lighting and site constraints."],
-    wallPanels: ["Custom wall panels", "architectural surfaces that add rhythm, texture and proportion", "fluted panels, slat walls, natural veneers, bedroom headboard walls, media panels, reveals and lighting integration", "Wall panel budgets depend on surface area, panel profile, veneer or finish selection, reveals, lighting and how panels meet openings or cabinetry."],
-    homeOffices: ["Custom home offices", "a built-in work wall, library, desk or storage system", "desks, shelving, file storage, printer cabinets, display zones, lighting, cable planning and work-surface durability", "Home office budgets depend on wall size, cabinet count, work surfaces, lighting, equipment storage, finish level and technical planning."],
-    mudrooms: ["Custom mudrooms", "durable entry storage for daily transitions", "benches, drawers, hooks, shoe storage, tall cabinets, mail zones, durable finishes and family-specific storage", "Mudroom budgets vary by size, cabinet count, bench details, finish durability, hardware, site constraints and whether the scope ties into adjacent cabinetry."],
-    customFurniture: ["Custom furniture", "a freestanding or integrated piece made for a specific room", "walnut media consoles, white oak storage, vanities, wardrobes, tables, shelving, display pieces and furniture coordinated with panels or built-ins", "Custom furniture budgets vary by size, material, veneer matching, hardware, finish, installation and whether the piece connects to surrounding millwork."],
-    millwork: ["Architectural millwork", "custom cabinetry, panels, built-ins and technical interior elements", "shop drawings, CAD coordination, field measurements, flitch matching, grain direction, cabinetry, wall panels and installation planning", "Millwork budgets vary by drawings, site conditions, material level, hardware, finish schedule, lighting, fabrication complexity and coordination needs."],
-  }[key] || null;
+  if (route.lang !== "en") return "";
+  const data = coreMoneyPageAuthorityData(key);
   if (!data) return "";
-  const [title, what, materials, budget] = data;
-  return `<section class="seo-sections service-authority">
-    <article><h2>What it is</h2><p>${escapeHtml(`${title} means ${what} planned around real measurements, material performance, storage needs, budget direction and the visual role the element plays in the room.`)}</p></article>
-    <article><h2>Who it is for</h2><p>Homeowners can start with photos and goals. Interior designers, architects, builders and remodelers can submit drawings, elevations, finish notes, field measurements and client requirements for a more coordinated review.</p></article>
-    <article><h2>Materials</h2><p>${escapeHtml(`Useful material directions may include ${materials}. CAS AURUM reviews species, veneer direction, core selection, finish durability and Georgia humidity considerations where relevant.`)}</p></article>
-    <article><h2>Smart integration</h2><p>Hidden LED lighting, concealed wiring, AV routing, ventilation, access panels and equipment zones should be discussed early when the project includes technology or lighting.</p></article>
-    <article><h2>Budget range</h2><p>${escapeHtml(budget)} CAS AURUM avoids promising a fixed price before the room, materials, dimensions and site conditions are reviewed.</p></article>
-    <article><h2>Timeline</h2><p>The usual path is Design Concept, dimensions or field measurements, material selection, technical review, production planning and installation coordination when the scope is approved.</p></article>
-  </section>`;
+  const article = ({ heading, body, items }) => `<article><h2>${escapeHtml(heading)}</h2>${body ? `<p>${escapeHtml(body)}</p>` : ""}${items ? `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</article>`;
+  const articles = [
+    { heading: "What This Is", body: data.what },
+    { heading: "Who It Is For", body: "Homeowners can start with photos, goals and a rough budget direction. Interior designers, custom home builders and general contractors can send drawings, elevations, finish notes, field measurements and installation constraints for a more technical review." },
+    { heading: "Common Project Types", items: data.projectTypes },
+    { heading: "Materials & Finishes", body: data.materials },
+    { heading: "Smart Integration", body: data.smart },
+    { heading: "Design Process", body: "The typical path moves from room photos and project goals to a Design Concept, measurements, material selection, engineering review, production planning and installation coordination when the scope is approved." },
+    { heading: "What Affects Budget", body: data.budget },
+    { heading: "Typical Timeline", body: "Timing is stage based: concept direction first, then measurements, engineering, production planning and installation coordination. Exact timing depends on decisions, site access, material lead times and technical complexity." },
+    { heading: "Atlanta & North Georgia", body: data.local },
+  ];
+  const ctaLinks = [
+    { href: urlFor("en", "designConcept"), label: "Start Design Concept" },
+    { href: urlFor("en", "quickEstimate"), label: "Quick Project Estimate" },
+    { href: urlFor("en", "planner"), label: "Technical Millwork Planner" },
+    { href: urlFor("en", "materials"), label: "Materials" },
+    { href: urlFor("en", "smartIntegration"), label: "Smart Integration" },
+    { href: urlFor("en", "designProcess"), label: "Design Process" },
+    { href: urlFor("en", "trade"), label: "For Designers & Builders" },
+  ];
+  return `<section class="seo-copy wide service-authority">
+    <p class="eyebrow">Commercial project guide</p>
+    <h2>${escapeHtml(data.title)}</h2>
+    <p>${escapeHtml(data.summary)}</p>
+  </section>
+  <section class="seo-sections service-authority">${articles.map(article).join("")}</section>
+  <section class="internal"><h2>Plan the next step</h2>${ctaLinks.map((link) => `<a href="${link.href}">${escapeHtml(link.label)}</a>`).join("")}<a href="${consultationFormUrl("en")}">Submit Project Details</a></section>`;
+}
+
+function coreMoneyPageAuthorityData(key) {
+  const commonMaterials = "Relevant material directions may include European oak, American walnut, rift white oak, natural veneers, painted MDF, premium MDF cores, fluted profiles, stone-look surfaces where appropriate and durable finishes selected for daily use.";
+  const commonSmart = "Where technology is part of the scope, hidden TV wiring, LED lighting, AV routing, ventilation, access panels, equipment zones and smart-home-ready coordination should be planned before fabrication.";
+  const data = {
+    mediaWalls: {
+      title: "Custom Media Walls for Real Rooms",
+      summary: "A media wall should resolve TV placement, storage, wiring, lighting and the main wall composition before finish selections are locked.",
+      what: "A custom media wall combines TV placement, architectural panels, floating or floor-based cabinetry, display shelving, storage, wiring routes and lighting into one planned wall.",
+      projectTypes: ["TV feature walls", "Fireplace media walls", "Storage-integrated media walls", "LED backlit walls", "Slat wall media panels", "Media walls with hidden equipment storage"],
+      materials: commonMaterials,
+      smart: commonSmart,
+      budget: "Budget is affected by wall size, TV size, cabinetry, veneer or painted finish level, LED lighting, AV equipment access, fireplace conditions, wall structure and installation complexity.",
+      local: "Atlanta, Buckhead, Alpharetta, Milton, Roswell, Marietta and Sandy Springs homes often need media walls planned around existing outlets, fireplaces, strong daylight, family storage and local installer coordination.",
+    },
+    wallPanels: {
+      title: "Architectural Wall Panels With Practical Detail",
+      summary: "Wall panels should improve proportion, texture and room focus while accounting for openings, lighting, substrate and installation conditions.",
+      what: "Custom wall panels are architectural surfaces used to frame TV walls, fireplace walls, bedrooms, entries, offices, dining rooms and commercial interiors.",
+      projectTypes: ["Fluted wall panels", "Wood slat wall panels", "TV wall panel systems", "Bedroom headboard walls", "Fireplace panel surrounds", "Wall panels with concealed LED lighting"],
+      materials: commonMaterials,
+      smart: "Wall panels can support hidden LED channels, low-voltage wiring routes, access planning and clean transitions around TVs, speakers, switches, outlets and adjacent cabinetry.",
+      budget: "Budget depends on surface area, panel rhythm, profile depth, veneer matching, painted versus natural finish, lighting, site preparation, openings and how panels terminate at ceilings, floors and cabinetry.",
+      local: "Georgia humidity, existing wall conditions and remodel phasing matter. North Atlanta projects often need stable substrates, balanced veneer planning and clean field coordination.",
+    },
+    builtIns: {
+      title: "Built-Ins Planned Around Storage, Scale and Site Conditions",
+      summary: "Built-ins work best when shelving, closed storage, lighting, clearances and the room's architecture are planned together.",
+      what: "Custom built-ins are fixed shelving, cabinets, benches, desks, libraries, storage walls or display systems made to fit a specific room and wall condition.",
+      projectTypes: ["White oak built-ins around a fireplace", "Library walls", "Living room storage walls", "Window-adjacent built-ins", "Home office built-ins", "Built-in shelving with closed lower storage"],
+      materials: commonMaterials,
+      smart: "Built-ins can include hidden wiring, charging zones, LED shelf lighting, printer or equipment storage, ventilation openings and access panels when technology is part of the room.",
+      budget: "Budget changes with wall length, ceiling height, depth, cabinet count, drawer and door configuration, lighting, hardware, finish level, field measurements and delivery access.",
+      local: "Atlanta and North Georgia homes often combine older wall conditions with new storage needs, so field measurements, scribe details and installation sequencing matter.",
+    },
+    millwork: {
+      title: "Architectural Millwork for Homeowners and Trade Teams",
+      summary: "Millwork brings drawings, material direction, fabrication details and installation planning into one technical scope.",
+      what: "Architectural millwork includes custom cabinetry, wall panels, built-ins, closets, vanities, reception features, shelving systems and specialty interior elements.",
+      projectTypes: ["Residential millwork packages", "Shop drawing support", "Custom cabinetry and built-ins", "Wall panel systems", "Designer and builder collaboration", "Installation-ready engineering packages"],
+      materials: "Millwork may use European oak, American walnut, rift white oak, natural veneers, painted MDF, premium MDF cores, flitch-matched veneer, grain-direction planning, durable finishes and stable substrates.",
+      smart: "Technical millwork can be planned around LED channels, equipment access, concealed wiring, ventilation, outlet locations and coordination with AV or automation professionals.",
+      budget: "Budget depends on drawings, field measurements, cabinet count, panel complexity, veneer matching, hardware, lighting, finish schedule, site conditions and installation coordination.",
+      local: "North Atlanta millwork scopes often need clear coordination between homeowners, designers, builders, installers and site conditions before production decisions are made.",
+    },
+    customFurniture: {
+      title: "Custom Furniture Made Around Room Dimensions",
+      summary: "Custom furniture should be planned around scale, material, delivery access, storage needs and the way the piece will be used every day.",
+      what: "Custom furniture can be freestanding, semi-integrated or coordinated with surrounding millwork, such as media consoles, tables, wardrobes, vanities, storage pieces and display furniture.",
+      projectTypes: ["Walnut media consoles", "White oak storage furniture", "Custom wardrobes", "Display cabinets", "Vanities and bedroom furniture", "Furniture coordinated with wall panels or built-ins"],
+      materials: commonMaterials,
+      smart: "Furniture can include cable pass-throughs, hidden charging, LED display lighting, ventilation for equipment and hardware selected around daily use.",
+      budget: "Budget is shaped by size, joinery, veneer matching, finish level, hardware, drawers, glass, lighting, installation, stairs or elevator access and whether the piece connects to surrounding millwork.",
+      local: "Atlanta-area projects should account for delivery routes, room access, humidity, finish durability and coordination with adjacent cabinetry or renovation work.",
+    },
+    customKitchens: {
+      title: "Custom Kitchens and Custom Cabinetry",
+      summary: "Kitchen and cabinetry planning should resolve storage, appliance logic, island scale, material durability and site constraints before production pricing.",
+      what: "CAS AURUM focuses on custom kitchen cabinetry, cabinet walls, islands, pantry storage, appliance panels and built-in kitchen storage rather than presenting every inquiry as a full general-contractor remodel.",
+      projectTypes: ["Custom kitchen cabinetry", "Kitchen islands", "Pantry storage", "Appliance panels", "Floor-to-ceiling cabinet walls", "Custom cabinetry for adjacent dining or family rooms"],
+      materials: "Useful directions include rift white oak, European oak, American walnut, natural veneers, painted MDF, premium MDF cores, durable painted finishes, wood drawer interiors and hardware selected for daily use.",
+      smart: "Kitchen cabinetry can be planned around appliance garages, integrated lighting, outlet locations, charging drawers, hidden small-appliance storage and coordination with electrical or appliance professionals.",
+      budget: "Budget depends on cabinet count, door style, drawers, island size, appliance coordination, finish level, hardware, lighting, field measurements, stone coordination and installation complexity.",
+      local: "Georgia humidity, family use and remodel sequencing matter in Atlanta, Buckhead, Alpharetta, Milton, Roswell, Marietta and Sandy Springs kitchens.",
+    },
+    customClosets: {
+      title: "Custom Closets and Dressing Room Systems",
+      summary: "Closet planning starts with wardrobe inventory, circulation, lighting, access and storage hierarchy before finishes are selected.",
+      what: "A custom closet is a measured storage system for hanging, folded clothing, shoes, accessories, mirrors, drawers, islands and daily routines.",
+      projectTypes: ["Walk-in closets", "Dressing rooms", "Reach-in closet systems", "Shoe walls", "Closet islands", "Wardrobes with integrated lighting"],
+      materials: "Closets may use natural veneers, painted MDF, premium MDF cores, American walnut, rift white oak, glass fronts, leather or fabric inserts, durable finishes and hardware selected for repeated daily use.",
+      smart: "Closets can include LED hanging zones, lit shelves, mirror lighting, outlet planning, charging drawers and access coordination for low-voltage lighting components.",
+      budget: "Budget is affected by room size, cabinet height, drawer count, glass doors, islands, lighting, accessory hardware, finish level, field measurements and installation access.",
+      local: "North Atlanta closets often need practical storage for family homes, primary suites and dressing rooms while respecting existing trim, flooring and ventilation.",
+    },
+    fireplaceWalls: {
+      title: "Fireplace Walls With Storage, Panels and TV Planning",
+      summary: "A fireplace wall should handle heat clearances, material transitions, storage, shelving, lighting and TV placement before the final composition is approved.",
+      what: "A fireplace wall can combine a fireplace surround, stone-look or wood panels, built-ins, shelving, media planning, lighting and concealed storage into one focal wall.",
+      projectTypes: ["Fireplace feature walls", "TV over fireplace planning", "Built-ins around a fireplace", "Stone-look fireplace surrounds", "Wood panel fireplace walls", "LED-lit display shelving near a fireplace"],
+      materials: "Common directions include stone-look surfaces, natural veneers, European oak, American walnut, rift white oak, painted MDF, fluted panels, durable finishes and heat-aware material planning.",
+      smart: "Fireplace walls often need hidden TV wiring, AV routing, access panels, ventilation, LED lighting, speaker planning and early review of heat and clearance conditions.",
+      budget: "Budget depends on existing fireplace type, wall size, heat-clearance requirements, TV integration, cabinetry, shelves, panels, lighting, material selection and site conditions.",
+      local: "Atlanta-area fireplace projects often involve existing masonry, builder-grade fireplace walls or family rooms where storage, TV placement and installer coordination need early review.",
+    },
+    trade: {
+      title: "For Designers, Builders and Contractors",
+      summary: "Trade collaboration should make scope, drawings, materials, measurements and installation responsibilities easier to coordinate before fabrication.",
+      what: "The trade page is for interior designers, architects, custom home builders, general contractors, remodelers and developers who need concepts, drawings, material direction or fabrication-ready planning.",
+      projectTypes: ["Designer concept support", "Builder millwork packages", "Shop drawing coordination", "Material and finish coordination", "Field measurement review", "Installation planning for defined scopes"],
+      materials: "Trade scopes may include European oak, American walnut, rift white oak, natural veneers, premium MDF cores, painted finishes, flitch matching, grain matching and finish samples coordinated with the project team.",
+      smart: "CAS AURUM can coordinate millwork around LED lighting, AV paths, access panels, equipment ventilation and smart-home requirements when those details are part of the drawings or site notes.",
+      budget: "Budget depends on scope definition, drawings, revisions, materials, finish level, hardware, field measurements, installation coordination, delivery requirements and project schedule.",
+      local: "For Atlanta and North Georgia projects, trade partners can share site photos, drawings, finish schedules, builder constraints and installation timing for a clearer review.",
+    },
+  };
+  return data[key] || null;
 }
 
 function faqKeyForService(key) {
   if (key === "solutions") return "solutions";
   if (key === "mediaWalls") return "mediaWalls";
   if (key === "customKitchens") return "customKitchens";
+  if (key === "customClosets") return "customClosets";
+  if (key === "builtIns") return "builtIns";
+  if (key === "trade") return "trade";
   if (key === "fireplaceWalls") return "fireplaceWalls";
   if (key === "homeOffices") return "homeOffices";
   if (key === "mudrooms") return "mudrooms";
   if (key === "wallPanels") return "wallPanels";
-  if (["customFurniture", "customClosets"].includes(key)) return "customFurniture";
-  if (["millwork", "builtIns"].includes(key)) return "millwork";
+  if (key === "customFurniture") return "customFurniture";
+  if (key === "millwork") return "millwork";
   return "wallPanels";
 }
 
@@ -6603,6 +6744,7 @@ function programmaticPage(route, page) {
       <p>${escapeHtml(page.locationSection)}</p>
       <p>${escapeHtml(page.materialsSection)}</p>
     </section>
+    ${page.slug === "kitchens" ? serviceAuthorityUpgrade({ lang: route.lang }, "customKitchens") : ""}
     ${programmaticQualitySection(route, page)}
     <section class="two-col">
       <div>
@@ -7775,15 +7917,15 @@ function imageGallery(route, ids) {
 
 function internalLinks(route, key) {
   const map = {
-	    wallPanels: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "mediaWalls", "customFurniture", "millwork", "measurement", "collections"],
-	    customFurniture: ["designConcept", "quickEstimate", "planner", "materials", "designProcess", "projects", "customClosets", "builtIns", "mediaWalls", "millwork", "consultation", "collections"],
-	    millwork: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "builtIns", "customClosets", "trade", "customFurniture", "consultation", "collections"],
-	    solutions: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "mediaWalls", "customClosets", "builtIns", "customFurniture", "consultation", "collections"],
-	    mediaWalls: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "wallPanels", "customFurniture", "builtIns", "consultation", "collections"],
-	    builtIns: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "millwork", "customFurniture", "customClosets", "mediaWalls", "consultation"],
-	    customClosets: ["designConcept", "quickEstimate", "planner", "materials", "designProcess", "projects", "customFurniture", "builtIns", "millwork", "consultation", "collections"],
-      customKitchens: ["designConcept", "quickEstimate", "planner", "materials", "designProcess", "projects", "builtIns", "customClosets", "mudrooms", "customFurniture", "consultation"],
-      fireplaceWalls: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "mediaWalls", "builtIns", "wallPanels", "customFurniture", "consultation"],
+	    wallPanels: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "trade", "projects", "mediaWalls", "customFurniture", "millwork", "measurement"],
+	    customFurniture: ["designConcept", "quickEstimate", "planner", "materials", "designProcess", "trade", "projects", "customClosets", "builtIns", "mediaWalls", "millwork", "consultation"],
+	    millwork: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "trade", "projects", "builtIns", "customClosets", "customFurniture", "consultation"],
+	    solutions: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "trade", "projects", "mediaWalls", "customClosets", "builtIns", "customFurniture", "consultation"],
+	    mediaWalls: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "trade", "projects", "wallPanels", "customFurniture", "builtIns", "consultation"],
+	    builtIns: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "trade", "projects", "millwork", "customFurniture", "customClosets", "mediaWalls", "consultation"],
+	    customClosets: ["designConcept", "quickEstimate", "planner", "materials", "designProcess", "trade", "projects", "customFurniture", "builtIns", "millwork", "consultation"],
+      customKitchens: ["designConcept", "quickEstimate", "planner", "materials", "designProcess", "trade", "projects", "builtIns", "customClosets", "mudrooms", "customFurniture", "consultation"],
+      fireplaceWalls: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "trade", "projects", "mediaWalls", "builtIns", "wallPanels", "customFurniture", "consultation"],
       homeOffices: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "builtIns", "customFurniture", "wallPanels", "mediaWalls", "consultation"],
       mudrooms: ["designConcept", "quickEstimate", "planner", "materials", "designProcess", "projects", "customKitchens", "builtIns", "customClosets", "customFurniture", "consultation"],
 	    trade: ["designConcept", "quickEstimate", "planner", "materials", "smartIntegration", "designProcess", "projects", "millwork", "builtIns", "mediaWalls", "consultation"],
