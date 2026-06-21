@@ -91,6 +91,8 @@ const solutionPageKeys = ["mediaWalls", "customKitchens", "customClosets", "buil
 const servicePageKeys = ["solutions", ...solutionPageKeys, "millwork", "trade"];
 const contentHubPageKeys = ["materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork"];
 const pageOrder = ["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "collections", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
+const coreSitemapPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "planner", "quickEstimate", "about", "contact", "consultation", "measurement"]);
+const noindexCorePageKeys = new Set(["collections", "usa", "canada", "mexico"]);
 const promotedLanguageKeys = ["en", "es", "ru"];
 const languageSwitcherKeys = ["en", "es", "ru", "uk"];
 const spanishMeaningfulPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "customFurniture", "projects", "trade", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "privacy", "terms"]);
@@ -1824,7 +1826,8 @@ const generatedProgrammaticPageSpecs = buildGeneratedProgrammaticPageSpecs();
 const allProgrammaticPageSpecs = dedupePageSpecs([...programmaticPageSpecs, ...generatedProgrammaticPageSpecs]);
 
 const programmaticPages = buildProgrammaticPages();
-const programmaticPagesBySlug = new Map(programmaticPages.flatMap((page) => Object.keys(langs).map((lang) => [programmaticUrlFor(lang, page), page])));
+const programmaticRoutablePages = programmaticPages.filter((page) => !programmaticPathCollidesWithCoreRoute(page));
+const programmaticPagesBySlug = new Map(programmaticRoutablePages.flatMap((page) => Object.keys(langs).map((lang) => [programmaticUrlFor(lang, page), page])));
 const programmaticPagesById = new Map(programmaticPages.map((page) => [page.pageId, page]));
 
 const submissions = new Map();
@@ -2351,8 +2354,32 @@ function buildProgrammaticPages() {
     return {
       ...page,
       qualityIssues,
-      indexable: programmaticIndexStatuses.has(page.indexingStatus) && page.qualityScore >= 90 && qualityIssues.length === 0,
+      indexable: isProgrammaticIndexCandidate(page) && page.qualityScore >= 90 && qualityIssues.length === 0,
     };
+  });
+}
+
+function isProgrammaticIndexCandidate(page) {
+  if (!programmaticIndexStatuses.has(page.indexingStatus)) return false;
+  const approvedVerticals = new Set(["designConcepts", "kitchens", "kitchenCabinets", "wallPanels", "furniture", "millwork", "closets", "builtIns"]);
+  const approvedLocations = new Set(["root", "georgia", "atlanta"]);
+  const locationKey = programmaticIndexLocationKey(page);
+  if (!approvedVerticals.has(page.verticalKey)) return false;
+  if (!approvedLocations.has(locationKey)) return false;
+  return page.tier <= 1;
+}
+
+function programmaticIndexLocationKey(page) {
+  if (page.state === "Georgia" && page.city === "Atlanta") return "atlanta";
+  if (page.state === "Georgia" && !page.city) return "georgia";
+  if (!page.state && !page.province && !page.city && page.country === "North America") return "root";
+  return "other";
+}
+
+function programmaticPathCollidesWithCoreRoute(page) {
+  return Object.keys(langs).some((lang) => {
+    const programmaticPath = programmaticUrlFor(lang, page);
+    return pageOrder.some((key) => programmaticPath === urlFor(lang, key));
   });
 }
 
@@ -2920,8 +2947,32 @@ function legacyRedirectTarget(path) {
   const pairs = [
     ["/luxury-wall-panels", urlFor("en", "wallPanels")],
     ["/custom-media-walls", urlFor("en", "mediaWalls")],
+    ["/tv-walls", urlFor("en", "mediaWalls")],
+    ["/custom-tv-walls", urlFor("en", "mediaWalls")],
+    ["/integrated-tv-wall-panels", urlFor("en", "mediaWalls")],
+    ["/custom-wall-panels", urlFor("en", "wallPanels")],
+    ["/wood-slat-wall-panels", urlFor("en", "wallPanels")],
     ["/luxury-custom-closets", urlFor("en", "customClosets")],
+    ["/closets", urlFor("en", "customClosets")],
     ["/custom-built-ins", urlFor("en", "builtIns")],
+    ["/built-in-furniture", urlFor("en", "builtIns")],
+    ["/fireplaces", urlFor("en", "fireplaceWalls")],
+    ["/custom-cabinetry", urlFor("en", "customKitchens")],
+    ["/cabinet-refinishing", urlFor("en", "customKitchens")],
+    ["/kitchen-cabinet-refinishing", urlFor("en", "customKitchens")],
+    ["/cabinet-refacing", urlFor("en", "customKitchens")],
+    ["/kitchen-cabinet-refacing", urlFor("en", "customKitchens")],
+    ["/cabinet-restoration", urlFor("en", "customKitchens")],
+    ["/kitchen-cabinet-restoration", urlFor("en", "customKitchens")],
+    ["/hospitality-interiors", urlFor("en", "trade")],
+    ["/restaurant-interiors", urlFor("en", "trade")],
+    ["/office-interiors", urlFor("en", "trade")],
+    ["/developer-interior-packages", urlFor("en", "trade")],
+    ["/georgia/atlanta/kitchen-cabinet-refacing", "/georgia/atlanta/custom-kitchen-cabinets"],
+    ["/georgia/atlanta/cabinet-refinishing", "/georgia/atlanta/custom-kitchen-cabinets"],
+    ["/georgia/hospitality-interiors", urlFor("en", "trade")],
+    ["/georgia/restaurant-interiors", urlFor("en", "trade")],
+    ["/georgia/office-interiors", urlFor("en", "trade")],
     ["/interior-design-solutions", urlFor("en", "solutions")],
     ["/collections", urlFor("en", "collections")],
     ["/projects", urlFor("en", "projects")],
@@ -7000,7 +7051,7 @@ function seoIndexPage() {
         <td>${escapeHtml(issues)}</td>
       </tr>`;
     }).join("");
-  const legacyRows = programmaticPages
+  const legacyRows = programmaticRoutablePages
     .slice()
     .sort((a, b) => Number(b.indexable) - Number(a.indexable) || a.tier - b.tier || a.slug.localeCompare(b.slug))
     .map((page) => {
@@ -7012,8 +7063,8 @@ function seoIndexPage() {
   const total = casaurumSeoStats.total;
   const indexable = casaurumSeoStats.indexable;
   const review = casaurumSeoStats.noindex;
-  const legacyTotal = programmaticPages.length;
-  const legacyIndexable = programmaticPages.filter((page) => page.indexable).length;
+  const legacyTotal = programmaticRoutablePages.length;
+  const legacyIndexable = programmaticRoutablePages.filter((page) => page.indexable).length;
   const pageTypes = [...new Set(casaurumSeoPages.map((page) => page.pageType))].sort();
   const perfStatus = performance?.ok ? `Performance cache: ${performance.updatedAt || "available"}` : `Performance cache: ${performance?.error || "not connected yet"}`;
   const executive = dashboardExecutivePanel(performance);
@@ -7596,16 +7647,26 @@ function seoFooterColumns(lang, route = { key: "usa", path: "/" }) {
       planner: "Конструктор меблів", modernIdeas: "Ідеї сучасного інтер'єру", quietLuxuryJournal: "Теплі ідеї", luxuryKitchens: "Ідеї кухонь", premiumMaterials: "Матеріали", partnerProgram: "Партнерська програма", applyPartner: "Стати партнером", trade: "Для дизайнерів і будівельників",
     },
   }[lang]?.[key] || key);
-  const cityLinks = regionCityLinks(lang, marketForRoute(route)).slice(0, 6);
   return [
-	    { title: labels[0], links: ["mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture"].map((key) => ({ href: urlFor(lang, key), label: footerLabel(key) })) },
-	    { title: labels[1], links: [link("/styles/modern", footerLabel("modern")), link("/styles/quiet-luxury", footerLabel("quietLuxury")), link("/styles/organic-modern", footerLabel("organicModern")), link("/styles/luxury", footerLabel("luxury"))] },
-    { title: labels[2], links: [link("/rooms/living-room", footerLabel("livingRoom")), link("/rooms/kitchen", footerLabel("kitchen")), link("/rooms/bedroom", footerLabel("bedroom")), link("/rooms/walk-in-closet", footerLabel("walkInCloset"))] },
-    { title: labels[3], links: cityLinks },
-    { title: labels[4], links: [{ href: urlFor(lang, "projects"), label: pageLabel("projects", lang) }] },
-    { title: labels[5], links: collectionsData.slice(0, 3).map((collection) => ({ href: collectionUrlFor(lang, collection), label: collection.name.replace(" Collection", "") })) },
-    { title: labels[6], links: [{ href: urlFor(lang, "planner"), label: footerLabel("planner") }, { href: urlFor("en", "designProcess"), label: "Design Process" }, { href: urlFor("en", "materials"), label: footerLabel("premiumMaterials") }, { href: urlFor("en", "smartIntegration"), label: "Smart Integration" }, link("/journal/modern-interior-design-ideas", footerLabel("modernIdeas"))] },
-    { title: labels[7], links: [{ href: urlFor(lang, "partners"), label: footerLabel("partnerProgram") }, { href: `${urlFor(lang, "partners")}#apply`, label: footerLabel("applyPartner") }, { href: urlFor(lang, "trade"), label: footerLabel("trade") }, { href: urlFor(lang, "planner"), label: footerLabel("planner") }] },
+    { title: labels[0], links: ["mediaWalls", "wallPanels", "builtIns", "customFurniture", "customKitchens", "customClosets", "fireplaceWalls", "millwork"].map((key) => ({ href: urlFor(lang, key), label: footerLabel(key) })) },
+    { title: labels[1], links: [
+      { href: urlFor(lang, "designConcept"), label: footerLabel("designConcept") },
+      { href: urlFor(lang, "quickEstimate"), label: "Quick Project Estimate" },
+      { href: urlFor(lang, "planner"), label: footerLabel("planner") },
+      { href: urlFor("en", "designProcess"), label: "Design Process" },
+    ] },
+    { title: labels[6], links: [
+      { href: urlFor("en", "materials"), label: footerLabel("premiumMaterials") },
+      { href: urlFor("en", "smartIntegration"), label: "Smart Integration" },
+      { href: urlFor("en", "localArchitecturalMillwork"), label: "Architectural Millwork" },
+      { href: urlFor(lang, "customKitchens"), label: lang === "fr" ? "Cabinetry sur mesure" : "Custom Cabinetry" },
+    ] },
+    { title: labels[7], links: [
+      { href: urlFor(lang, "trade"), label: footerLabel("trade") },
+      { href: urlFor(lang, "projects"), label: pageLabel("projects", lang) },
+      { href: consultationFormUrl(lang), label: localized("Request Consultation", lang) },
+      { href: urlFor(lang, "contact"), label: pageLabel("contact", lang) },
+    ] },
   ];
 }
 
@@ -9632,7 +9693,7 @@ function sitemapFiles() {
 function sitemapEntries() {
   const entries = [];
   const date = currentSitemapDate();
-  for (const key of pageOrder) {
+  for (const key of pageOrder.filter(sitemapEligiblePageKey)) {
     for (const lang of pageLanguagesForKey(key)) {
       entries.push({
         group: "core",
@@ -9654,20 +9715,8 @@ function sitemapEntries() {
       alternates: { en: `${BASE_URL}${page.slug}`, "x-default": `${BASE_URL}${page.slug}` },
     });
   }
-  for (const collection of collectionsData) {
-    for (const lang of collectionLanguageKeys()) {
-      entries.push({
-        group: "collections",
-        loc: `${BASE_URL}${collectionUrlFor(lang, collection)}`,
-        lastmod: date,
-        changefreq: "monthly",
-        priority: "0.82",
-        alternates: sitemapLegacyAlternates((l) => collectionUrlFor(l, collection), collectionLanguageKeys()),
-      });
-    }
-  }
   entries.push(...seoMarketSitemapEntries(BASE_URL, date));
-  for (const page of programmaticPages.filter((item) => item.indexable)) {
+  for (const page of programmaticRoutablePages.filter((item) => item.indexable)) {
     for (const lang of programmaticLanguageKeys()) {
       entries.push({
         group: "legacy-programmatic",
@@ -9690,6 +9739,10 @@ function sitemapEntries() {
     });
   }
   return dedupeSitemapEntries(entries);
+}
+
+function sitemapEligiblePageKey(key) {
+  return coreSitemapPageKeys.has(key);
 }
 
 function sitemapUrlSetXml(entries) {
@@ -9724,7 +9777,7 @@ function sitemapImageEntries() {
     entriesByPage.set(pageUrl, entry);
   };
 
-  for (const key of pageOrder) {
+  for (const key of pageOrder.filter(sitemapEligiblePageKey)) {
     for (const lang of pageLanguagesForKey(key)) {
       const assetId = primaryImageAssetId({ key, lang });
       if (!assetId) continue;
@@ -9746,29 +9799,6 @@ function sitemapImageEntries() {
       title: page.h1,
       caption: caption(page.asset, "en"),
     });
-  }
-
-  for (const collection of collectionsData) {
-    for (const lang of collectionLanguageKeys()) {
-      const pageUrl = `${BASE_URL}${collectionUrlFor(lang, collection)}`;
-      if (collection.assetId) {
-        const asset = assetById(collection.assetId);
-        addImageEntry({
-          pageUrl,
-          imageUrl: absoluteAssetUrl(asset.src),
-          title: collection.name,
-          caption: caption(collection.assetId, lang),
-        });
-      }
-      for (const project of collection.projects || []) {
-        addImageEntry({
-          pageUrl,
-          imageUrl: absoluteAssetUrl(project.imageSrc || project.imagePath),
-          title: project.projectName,
-          caption: localizedText(project.imageAlt, lang) || localizedText(project.imageCaption, lang) || project.projectName,
-        });
-      }
-    }
   }
 
   const projectImages = publicProjectImageItems();
@@ -9909,7 +9939,7 @@ function llmsTxt() {
     ["/design-process", "Design process from photos to material direction, engineering packages and selected realization review"],
     ...atlantaMoneyPages.map((page) => [page.slug, page.h1]),
     ["/design-concept", "Design concept packages with transparent starting prices"],
-    ["/millwork-planner", "Millwork Planner for early project scope"],
+    ["/technical-millwork-planner", "Technical Millwork Planner for early project scope"],
     ["/gallery", "Completed work and custom interior ideas"],
     ["/for-designers-builders", "Designer, builder and architect collaboration"],
   ];
@@ -10010,6 +10040,7 @@ function robotsMeta(route) {
   if (route.seoMarketPage) return route.seoMarketPage.indexable ? "index,follow,max-image-preview:large,max-video-preview:-1" : "noindex,follow,max-image-preview:large,max-video-preview:-1";
   if (route.atlantaMoneyPage) return "index,follow,max-image-preview:large,max-video-preview:-1";
   if (route.casaurumSeoPage) return route.casaurumSeoPage.indexable ? "index,follow,max-image-preview:large,max-video-preview:-1" : "noindex,follow,max-image-preview:large,max-video-preview:-1";
+  if (route.collection || route.collectionAlias || noindexCorePageKeys.has(route.key)) return "noindex,follow,max-image-preview:large,max-video-preview:-1";
   if (!route.programmaticPage) return "index,follow,max-image-preview:large,max-video-preview:-1";
   return route.programmaticPage.indexable ? "index,follow,max-image-preview:large,max-video-preview:-1" : "noindex,follow,max-image-preview:large,max-video-preview:-1";
 }
@@ -12629,7 +12660,8 @@ function seoTrackingPayload(route) {
       noindexReasons: page.qualityIssues || [],
     };
   }
-  return { layer: "core", pageType: route.key, locale: route.lang, slug: routeUrlFor(route.lang, route), indexable: true };
+  const coreIndexable = !(route.collection || route.collectionAlias || noindexCorePageKeys.has(route.key));
+  return { layer: "core", pageType: route.key, locale: route.lang, slug: routeUrlFor(route.lang, route), indexable: coreIndexable };
 }
 
 function seoStatsPayload() {
@@ -12646,12 +12678,12 @@ function seoStatsPayload() {
     seoMarket: seoMarketStats,
     casaurumByType,
     legacyProgrammatic: {
-      total: programmaticPages.length,
-      indexable: programmaticPages.filter((page) => page.indexable).length,
-      noindex: programmaticPages.filter((page) => !page.indexable).length,
+      total: programmaticRoutablePages.length,
+      indexable: programmaticRoutablePages.filter((page) => page.indexable).length,
+      noindex: programmaticRoutablePages.filter((page) => !page.indexable).length,
     },
     performance: performance?.ok ? { ok: true, updatedAt: performance.updatedAt, dateRange: performance.dateRange, pageCount: Object.keys(performance.pages || {}).length } : { ok: false, error: performance?.error || "No performance cache yet" },
-    sitemapUrlCount: pageOrder.length * Object.keys(langs).length + collectionsData.length * Object.keys(langs).length + programmaticPages.filter((page) => page.indexable).length * Object.keys(langs).length + casaurumSeoStats.indexable + seoMarketStats.sitemapEligible,
+    sitemapUrlCount: sitemapEntries().length,
     nextDataSources: ["Google Search Console", "GA4 landing-page engagement", "lead attribution", "AI referral logs", "CRM close notes"],
   };
 }

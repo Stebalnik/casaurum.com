@@ -48,7 +48,6 @@ const paths = [
   "/georgia/atlanta/luxury-custom-kitchens",
   "/georgia/atlanta/premium-design-concepts",
   "/georgia/atlanta/custom-kitchen-cabinets",
-  "/georgia/atlanta/kitchen-cabinet-refacing",
   "/miami/luxury-custom-kitchens",
   "/chicago/luxury-custom-furniture",
   "/canada/toronto/luxury-custom-kitchens",
@@ -85,6 +84,15 @@ for (const [path, location] of [
   ["/custom-media-walls", "/media-walls"],
   ["/luxury-custom-closets", "/custom-closets"],
   ["/custom-built-ins", "/built-ins"],
+  ["/tv-walls", "/media-walls"],
+  ["/custom-wall-panels", "/wall-panels"],
+  ["/built-in-furniture", "/built-ins"],
+  ["/custom-cabinetry", "/custom-kitchens"],
+  ["/cabinet-refinishing", "/custom-kitchens"],
+  ["/hospitality-interiors", "/for-designers-builders"],
+  ["/restaurant-interiors", "/for-designers-builders"],
+  ["/office-interiors", "/for-designers-builders"],
+  ["/georgia/atlanta/kitchen-cabinet-refacing", "/georgia/atlanta/custom-kitchen-cabinets"],
   ["/millwork-planner", "/technical-millwork-planner"],
   ["/projects", "/gallery"],
   ["/collections/aurum", "/ideas/aurum"],
@@ -372,9 +380,17 @@ if (!sitemap.body.includes("/sitemaps/legacy-programmatic.xml")) {
   server.kill();
   throw new Error("legacy programmatic sitemap missing from sitemap index");
 }
-if (!sitemap.body.includes("/sitemaps/casaurum-combinations-1.xml")) {
+if (sitemap.body.includes("/sitemaps/casaurum-combinations-1.xml")) {
   server.kill();
-  throw new Error("casaurum combination sitemap missing from sitemap index");
+  throw new Error("casaurum combination sitemap should not be published");
+}
+if (!sitemap.body.includes("/sitemaps/casaurum-entities.xml")) {
+  server.kill();
+  throw new Error("indexable Casaurum design concept entity sitemap missing");
+}
+if (sitemap.body.includes("/sitemaps/collections.xml")) {
+  server.kill();
+  throw new Error("collections sitemap should not be published");
 }
 if (!sitemap.body.includes("/sitemaps/images.xml")) {
   server.kill();
@@ -399,10 +415,21 @@ if (!legacyProgrammaticSitemap.body.includes("/georgia/atlanta/custom-kitchen-ca
   server.kill();
   throw new Error("approved generated page missing from sitemap");
 }
-const collectionsSitemap = await read("/sitemaps/collections.xml");
-if (!collectionsSitemap.body.includes("/ideas/aurum")) {
+if (legacyProgrammaticSitemap.body.includes("cabinet-refacing") || legacyProgrammaticSitemap.body.includes("hospitality-interiors") || legacyProgrammaticSitemap.body.includes("office-interiors")) {
   server.kill();
-  throw new Error("canonical idea detail page missing from sitemap");
+  throw new Error("non-core programmatic service page should not be in sitemap");
+}
+const collectionsSitemap = await read("/sitemaps/collections.xml");
+if (collectionsSitemap.status !== 404) {
+  server.kill();
+  throw new Error("collections sitemap should return 404 after noindex cleanup");
+}
+for (const path of ["/ideas/aurum", "/en/styles/modern", "/en/rooms/living-room", "/en/journal/modern-interior-design-ideas"]) {
+  const page = await read(path);
+  if (!page.body.includes("noindex,follow")) {
+    server.kill();
+    throw new Error(`${path} should render noindex,follow`);
+  }
 }
 const imageSitemap = await read("/sitemaps/images.xml");
 if (!imageSitemap.body.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"')) {

@@ -750,8 +750,15 @@ export function getSeoQualityStatus(pageSpec) {
   if ((pageSpec.internalLinks || []).length < 5) reasons.push("less than 5 internal links");
   if (pageSpec.intentSlug && intentBySlug(pageSpec.intentSlug)?.indexableDefault === false) reasons.push("intent held for editorial review");
   if (pageSpec.combination && !pageSpec.allowlisted) reasons.push("combination not allowlisted");
+  if (!isCasaurumSeoIndexCandidate(pageSpec)) reasons.push("support page held noindex outside core authority set");
   const score = Math.max(45, 100 - reasons.length * 12 - (pageSpec.wordDepth === "thin" ? 16 : 0));
   return { qualityScore: score, indexable: score >= 80 && reasons.length === 0, reasons };
+}
+
+function isCasaurumSeoIndexCandidate(pageSpec) {
+  if (pageSpec.locale !== "en") return false;
+  if (pageSpec.pageType !== "design-concept-market") return false;
+  return ["/design-concepts/georgia", "/design-concepts/atlanta"].includes(pageSpec.path);
 }
 
 function buildCasaurumSeoPages() {
