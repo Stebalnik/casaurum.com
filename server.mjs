@@ -1358,9 +1358,8 @@ function localizedPlain(value, lang) {
       "State / service area": "État / zone de service",
     },
     ru: {
-      "How It Works": "Как это работает",
+	      "How It Works": "Как это работает",
 	      "Gallery / Ideas": "Галерея / идеи",
-	      "Existing media is reorganized by the solution a homeowner is likely researching.": "Материалы сгруппированы по решениям, которые обычно ищет владелец дома.",
 	      "Custom interior solutions": "Индивидуальные интерьерные решения",
 	      "Custom furniture, custom cabinetry and interior solutions in Atlanta and Georgia": "Мебель, корпусные решения и интерьерные проекты в Atlanta и Georgia",
 	      "Cas Aurum designs custom media walls, TV units, kitchens, closets, built-ins, wall panels, fireplace walls, home offices and custom furniture. Homeowners can start by uploading photos and ordering a design concept before moving into drawings, production or installation.": "CAS AURUM проектирует TV-стены, TV-модули, кухни, гардеробные, встроенную мебель, стеновые панели, стены с камином, домашние кабинеты и мебель на заказ. Начать можно с фото комнаты и дизайн-концепта до чертежей, производства или установки.",
@@ -3007,6 +3006,11 @@ function legacyRedirectTarget(path) {
     ["/georgia/hospitality-interiors", urlFor("en", "trade")],
     ["/georgia/restaurant-interiors", urlFor("en", "trade")],
     ["/georgia/office-interiors", urlFor("en", "trade")],
+    ["/georgia/developer-interior-packages", urlFor("en", "trade")],
+    ["/georgia/atlanta/hospitality-interiors", urlFor("en", "trade")],
+    ["/georgia/atlanta/restaurant-interiors", urlFor("en", "trade")],
+    ["/georgia/atlanta/office-interiors", urlFor("en", "trade")],
+    ["/georgia/atlanta/developer-interior-packages", urlFor("en", "trade")],
     ["/interior-design-solutions", urlFor("en", "solutions")],
     ["/collections", urlFor("en", "collections")],
     ["/projects", urlFor("en", "projects")],
@@ -3314,6 +3318,13 @@ function homeHowItWorks(route) {
 function homeIdeasGallery(route) {
   const lang = route.lang;
   const labels = solutionLabels[lang] || solutionLabels.en;
+  const galleryIntro = {
+    en: "Explore project examples by the type of space or feature you are planning: media walls, kitchens, built-ins, closets, fireplace walls, wall panels and storage-focused rooms.",
+    es: "Explore ejemplos de proyecto por el tipo de espacio o elemento que está planificando: muros media, cocinas, built-ins, closets, muros de chimenea, paneles y habitaciones con más almacenamiento.",
+    fr: "Explorez les exemples par type d'espace ou d'élément à planifier: murs média, cuisines, rangements intégrés, dressings, murs cheminée, panneaux muraux et pièces orientées rangement.",
+    ru: "Смотрите примеры по типу пространства или элемента: media walls, кухни, встроенные решения, гардеробные, стены с камином, стеновые панели и комнаты с акцентом на хранение.",
+    uk: "Перегляньте приклади за типом простору або елемента: media walls, кухні, вбудовані рішення, гардеробні, стіни з каміном, стінові панелі та кімнати з акцентом на зберігання.",
+  };
   const ideas = [
     ["Media Wall Ideas", "cas-aurum-premium-wood-stone-tv-wall-unit-led-lighting.webp", "mediaWalls"],
     ["TV Unit Ideas", "cas-aurum-premium-slatted-media-console-living-room.webp", "mediaWalls"],
@@ -3330,7 +3341,7 @@ function homeIdeasGallery(route) {
     const src = project?.src || (file.includes("-1280") ? `/images/${file}` : `/images/projects/${file}`);
     return `<a class="concept-card" href="${localizedContentHref(lang, key)}"><figure class="concept-media"><img src="${escapeHtml(src)}" alt="${escapeHtml(localizedPlain(title, lang))}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="1448" height="1086"><figcaption class="project-caption"><strong>${escapeHtml(labels[key])}</strong><span>${escapeHtml(localizedPlain(title, lang))}</span></figcaption></figure><div><span>${escapeHtml(labels.gallery)}</span><h3>${escapeHtml(localizedPlain(title, lang))}</h3><p>${escapeHtml(solutionCardText(key, lang))}</p></div></a>`;
   }).join("");
-  return `<section class="section-head" id="gallery"><p class="eyebrow">${escapeHtml(labels.gallery)}</p><h2>${escapeHtml(localizedPlain("Gallery / Ideas", lang))}</h2><p>${escapeHtml(localizedPlain("Existing media is reorganized by the solution a homeowner is likely researching.", lang))}</p></section><section class="concept-grid">${cards}</section>`;
+  return `<section class="section-head" id="gallery"><p class="eyebrow">${escapeHtml(labels.gallery)}</p><h2>${escapeHtml(localizedPlain("Gallery / Ideas", lang))}</h2><p>${escapeHtml(galleryIntro[lang] || galleryIntro.en)}</p></section><section class="concept-grid">${cards}</section>`;
 }
 
 function homeFinalCta(route) {
