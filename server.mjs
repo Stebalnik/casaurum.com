@@ -83,7 +83,9 @@ const langs = {
   es: { label: "ES", name: "Español", prefix: "/es", locale: "es_MX" },
   fr: { label: "FR", name: "Français", prefix: "/fr", locale: "fr_CA" },
   ru: { label: "RU", name: "Русский", prefix: "/ru", locale: "ru_RU" },
-  uk: { label: "UK", name: "Українська", prefix: "/uk", locale: "uk_UA" },
+  uk: { label: "UA", name: "Українська", prefix: "/ua", locale: "uk_UA" },
+  ar: { label: "AR", name: "العربية", prefix: "/ar", locale: "ar_AE" },
+  zh: { label: "ZH", name: "简体中文", prefix: "/zh", locale: "zh_CN" },
 };
 
 const navKeys = ["solutions", "designConcept", "projects", "trade", "about", "contact"];
@@ -93,13 +95,17 @@ const contentHubPageKeys = ["materials", "smartIntegration", "designProcess", "l
 const pageOrder = ["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "collections", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
 const coreSitemapPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "mudrooms", "customFurniture", "millwork", "projects", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "planner", "quickEstimate", "about", "contact", "consultation", "measurement"]);
 const noindexCorePageKeys = new Set(["collections", "homeOffices", "usa", "canada", "mexico"]);
-const promotedLanguageKeys = ["en", "es", "ru"];
-const languageSwitcherKeys = ["en", "es", "ru", "uk"];
+const promotedLanguageKeys = ["en", "es", "fr", "ru", "uk", "ar", "zh"];
+const languageSwitcherKeys = [];
 const spanishMeaningfulPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "customFurniture", "projects", "trade", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "privacy", "terms"]);
-const russianMeaningfulPageKeys = new Set(["home", "solutions", "designConcept", "projects", "quickEstimate", "about", "contact", "consultation", "privacy", "terms"]);
-const ukrainianMeaningfulPageKeys = new Set(["home"]);
+const frenchMeaningfulPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "customFurniture", "projects", "trade", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "privacy", "terms"]);
+const compactLocalizedCorePageKeys = new Set(["home", "designConcept", "mediaWalls", "wallPanels", "builtIns", "customFurniture", "customKitchens", "customClosets", "materials", "smartIntegration", "designProcess", "contact", "consultation", "quickEstimate", "planner", "privacy", "terms"]);
+const russianMeaningfulPageKeys = new Set(compactLocalizedCorePageKeys);
+const ukrainianMeaningfulPageKeys = new Set(compactLocalizedCorePageKeys);
+const arabicMeaningfulPageKeys = new Set(["home", "designConcept", "mediaWalls", "wallPanels", "builtIns", "customFurniture", "customKitchens", "customClosets", "quickEstimate", "planner", "contact", "consultation", "privacy", "terms"]);
+const chineseMeaningfulPageKeys = new Set(["home", "designConcept", "mediaWalls", "wallPanels", "builtIns", "customFurniture", "customKitchens", "customClosets", "quickEstimate", "planner", "contact", "consultation", "privacy", "terms"]);
 const programmaticIndexStatuses = new Set(["approved"]);
-const englishOnlyPageKeys = new Set(contentHubPageKeys);
+const englishOnlyPageKeys = new Set(["localCustomFurniture", "localArchitecturalMillwork"]);
 const plannerPresets = {
   kitchen: {
     type: "kitchen",
@@ -413,26 +419,44 @@ const slugs = {
 	  es: {
 	    home: "", wallPanels: "paneles-de-pared-a-medida", customFurniture: "muebles-a-medida", millwork: "carpinteria-arquitectonica",
 		    designConcept: "concepto-de-diseno", solutions: "soluciones", mediaWalls: "muros-media-a-medida", customKitchens: "cocinas-a-medida", builtIns: "muebles-integrados-a-medida", customClosets: "closets-a-medida", fireplaceWalls: "muros-de-chimenea", homeOffices: "oficinas-en-casa", mudrooms: "mudrooms-y-entradas", collections: "ideas", trade: "para-disenadores-y-constructores", partners: "programa-partners", planner: "planificador-de-carpinteria", quickEstimate: "quick-project-estimate", projects: "galeria",
+    materials: "materiales", smartIntegration: "integracion-inteligente", designProcess: "proceso-de-diseno", localCustomFurniture: "muebles-locales-a-medida", localArchitecturalMillwork: "carpinteria-arquitectonica-local",
     about: "sobre-nosotros", contact: "contacto", consultation: "solicitar-consulta", measurement: "solicitar-medicion",
     usa: "estados-unidos", canada: "canada", mexico: "mexico", privacy: "politica-de-privacidad", terms: "terminos-de-uso",
   },
 	  fr: {
 	    home: "", wallPanels: "panneaux-muraux-sur-mesure", customFurniture: "meubles-sur-mesure", millwork: "menuiserie-architecturale",
 		    designConcept: "concept-design-interieur", solutions: "solutions", mediaWalls: "murs-media-sur-mesure", customKitchens: "cuisines-sur-mesure", builtIns: "rangements-integres-sur-mesure", customClosets: "dressings-sur-mesure", fireplaceWalls: "murs-cheminee", homeOffices: "bureaux-a-domicile", mudrooms: "entrees-et-mudrooms", collections: "idees", trade: "pour-designers-constructeurs", partners: "programme-partenaires", planner: "planificateur-menuiserie", quickEstimate: "quick-project-estimate", projects: "galerie",
+    materials: "materiaux", smartIntegration: "integration-intelligente", designProcess: "processus-design", localCustomFurniture: "mobilier-local-sur-mesure", localArchitecturalMillwork: "menuiserie-architecturale-locale",
     about: "a-propos", contact: "contact", consultation: "demander-consultation", measurement: "demander-mesure",
     usa: "etats-unis", canada: "canada", mexico: "mexique", privacy: "politique-confidentialite", terms: "conditions-utilisation",
   },
 	  ru: {
 	    home: "", wallPanels: "stenovye-paneli-na-zakaz", customFurniture: "mebel-na-zakaz", millwork: "arhitekturnaya-stolyarka",
 		    designConcept: "dizayn-koncept", solutions: "resheniya", mediaWalls: "media-steny-na-zakaz", customKitchens: "kuhni-na-zakaz", builtIns: "vstroennaya-mebel-na-zakaz", customClosets: "garderobnye-na-zakaz", fireplaceWalls: "steny-s-kaminom", homeOffices: "domashnie-kabinety", mudrooms: "prihozhie-na-zakaz", collections: "idei", trade: "dlya-dizaynerov-i-zastroyschikov", partners: "partnerskaya-programma", planner: "konstruktor-mebeli", quickEstimate: "quick-project-estimate", projects: "galereya",
+    materials: "materialy", smartIntegration: "umnaya-integraciya", designProcess: "process-dizayna", localCustomFurniture: "lokalnaya-mebel-na-zakaz", localArchitecturalMillwork: "lokalnaya-arhitekturnaya-stolyarka",
     about: "o-kompanii", contact: "kontakty", consultation: "zaprosit-konsultaciyu", measurement: "zaprosit-zamer",
     usa: "ssha", canada: "kanada", mexico: "meksika", privacy: "politika-konfidencialnosti", terms: "usloviya-ispolzovaniya",
   },
   uk: {
     home: "", wallPanels: "stinovi-paneli-na-zamovlennya", customFurniture: "mebli-na-zamovlennya", millwork: "arhitekturna-stolyarka",
     designConcept: "dizayn-kontsept", solutions: "rishennya", mediaWalls: "media-stiny-na-zamovlennya", customKitchens: "kuhni-na-zamovlennya", builtIns: "vbudovani-mebli-na-zamovlennya", customClosets: "garderobni-na-zamovlennya", fireplaceWalls: "stiny-z-kaminom", homeOffices: "domashni-kabineti", mudrooms: "peredpokoyi-na-zamovlennya", collections: "ideyi", trade: "dlya-dyzayneriv-i-zabudovnykiv", partners: "partnerska-programa", planner: "konstruktor-mebliv", quickEstimate: "quick-project-estimate", projects: "galereya",
+    materials: "materialy", smartIntegration: "rozumna-integraciya", designProcess: "proces-dyzaynu", localCustomFurniture: "lokalni-mebli-na-zamovlennya", localArchitecturalMillwork: "lokalna-arhitekturna-stolyarka",
     about: "pro-kompaniyu", contact: "kontakty", consultation: "zaprosyty-konsultaciyu", measurement: "zaprosyty-zamir",
     usa: "ssha", canada: "kanada", mexico: "meksyka", privacy: "polityka-konfidenciynosti", terms: "umovy-korystuvannya",
+  },
+  ar: {
+    home: "", wallPanels: "wall-panels", customFurniture: "custom-furniture", millwork: "architectural-millwork",
+    designConcept: "design-concept", solutions: "solutions", mediaWalls: "media-walls", customKitchens: "custom-kitchens", builtIns: "built-ins", customClosets: "custom-closets", fireplaceWalls: "fireplace-walls", homeOffices: "home-offices", mudrooms: "mudrooms", collections: "ideas", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", quickEstimate: "quick-project-estimate", projects: "gallery",
+    materials: "materials", smartIntegration: "smart-integration", designProcess: "design-process", localCustomFurniture: "local-custom-furniture", localArchitecturalMillwork: "local-architectural-millwork",
+    about: "about", contact: "contact", consultation: "request-consultation", measurement: "request-measurement",
+    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use",
+  },
+  zh: {
+    home: "", wallPanels: "wall-panels", customFurniture: "custom-furniture", millwork: "architectural-millwork",
+    designConcept: "design-concept", solutions: "solutions", mediaWalls: "media-walls", customKitchens: "custom-kitchens", builtIns: "built-ins", customClosets: "custom-closets", fireplaceWalls: "fireplace-walls", homeOffices: "home-offices", mudrooms: "mudrooms", collections: "ideas", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", quickEstimate: "quick-project-estimate", projects: "gallery",
+    materials: "materials", smartIntegration: "smart-integration", designProcess: "design-process", localCustomFurniture: "local-custom-furniture", localArchitecturalMillwork: "local-architectural-millwork",
+    about: "about", contact: "contact", consultation: "request-consultation", measurement: "request-measurement",
+    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use",
   },
 };
 
@@ -1114,6 +1138,158 @@ copy.uk = {
   about: ["Про CAS AURUM", "CAS AURUM створює індивідуальні архітектурні поверхні, стінові панелі, меблі на замовлення та преміальну столярку для інтер'єрів."],
   contact: ["Контакти CAS AURUM", "Маєте питання про стінові панелі, меблі на замовлення, столярку, кухні чи преміальний інтер'єрний проєкт? Надішліть основне, і CAS AURUM запропонує правильний наступний крок."],
   legal: { privacy: ["Політика конфіденційності", "Ця сторінка пояснює, як CAS AURUM обробляє інформацію, надіслану через сайт."], terms: ["Умови користування", "Контент сайту наданий для загальної інформації про послуги CAS AURUM. Деталі проєкту, доступність, ціни та обсяг підтверджуються письмово."] },
+};
+
+homepagePositioning.ar = {
+  h1: "تصميمات داخلية معمارية بمستوى القصور والإقامات الخاصة",
+  sub: "CAS AURUM يطوّر جدران ميديا فاخرة، خزائن مخصصة، ألواح حائط معمارية، مطابخ، غرف ملابس وتشطيبات بمستوى مقتنيات خاصة لعملاء دوليين ومساكن راقية.",
+  primaryCta: "طلب مراجعة خاصة",
+  secondaryCta: "استكشاف الأعمال المختارة",
+  microcopy: "أرسل صور المساحة، المقاسات، المخططات أو المراجع. نراجع مستوى الخدمة، المواد، التعقيد الهندسي والجدول الزمني قبل تأكيد أي نطاق.",
+  scopeTitle: "نطاقات مناسبة لمستوى Ultra-Luxury / International Client Tier",
+  scopeIntro: "الأسعار الأعلى ترتبط بنطاق واضح: خدمة كونسيرج، مواد مستوردة ممتازة، هندسة معقدة، تنسيق white-glove، مساكن خاصة كبيرة، جداول عاجلة وإدارة مشروع عالية اللمسة.",
+  scopes: [
+    "جدران ميديا statement للمجالس والإقامات الخاصة",
+    "خزائن وغرف ملابس بمستوى collector-grade",
+    "ألواح حائط معمارية وتشطيبات مواد نادرة",
+    "مطابخ وخزائن مخصصة لمساكن كبيرة",
+    "Built-ins ومكتبات بمستوى bespoke",
+    "تنسيق white-glove للعملاء الدوليين",
+    "عملية تصميم كونسيرج من الصور إلى النطاق الفني",
+  ],
+  inlineCtaTitle: "هل لديكم إقامة خاصة أو مساحة statement تحتاج إلى اتجاه معماري؟",
+  inlineCtaText: "شاركوا الصور، المقاسات، مستوى المواد والجدول الزمني. سنوضح ما إذا كان النطاق يناسب Ultra-Luxury / International Client Tier.",
+  why: [
+    ["مستوى القصور", "نراجع النسب، المواد، الإضاءة والتفاصيل كتركيب معماري متكامل لا كقطعة منفصلة."],
+    ["مواد فائقة الجودة", "الخشب، الحجر، القشرة، المعادن، الزجاج والجلد تُختار حسب الندرة، الأداء وملاءمة المساحة."],
+    ["هندسة معقدة", "نخطط للإخفاء، الفتحات، الإضاءة، الأجهزة، التهوية والتفاصيل الفنية قبل الإنتاج."],
+    ["خدمة دولية", "يمكن مراجعة طلبات العملاء الدوليين مع توضيح مسار التصميم، الشحن، التنسيق والتنفيذ المناسب."],
+    ["تنسيق white-glove", "النطاقات الكبيرة أو العاجلة قد تتطلب إدارة عالية اللمسة وتنسيق مواد وشركاء."],
+    ["عملية كونسيرج", "نبدأ بالصور والمقاسات ثم نحدد مستوى الخدمة، المخاطر، المواد والخطوة التالية بوضوح."],
+  ],
+};
+
+homepagePositioning.zh = {
+  h1: "高端定制室内木作与空间解决方案",
+  sub: "CAS AURUM 规划媒体墙、墙板、柜体、嵌入式收纳、厨房、衣帽间和设计概念包，注重材料质量、流程清晰和长期住宅价值。",
+  primaryCta: "获取项目评估",
+  secondaryCta: "查看精选方向",
+  microcopy: "发送空间照片、尺寸、图纸或参考图。我们会根据范围、材料、工期和技术复杂度建议下一步。",
+  scopeTitle: "适合评估的定制项目",
+  scopeIntro: "适合希望把空间做得更实用、更耐看、更有长期价值的业主：从媒体墙、墙板到柜体、厨房和衣帽间。",
+  scopes: [
+    "定制媒体墙和电视背景墙",
+    "墙板、木饰面和重点墙面",
+    "嵌入式柜体和收纳系统",
+    "厨房柜体和餐边柜规划",
+    "衣帽间、衣柜和展示收纳",
+    "定制家具和设计概念包",
+    "清晰材料方向和预算范围评估",
+  ],
+  inlineCtaTitle: "有想改造的墙面、房间或柜体吗？",
+  inlineCtaText: "发送照片、尺寸和参考图，CAS AURUM 会帮助判断设计方向、材料范围和下一步流程。",
+  why: [
+    ["按空间定制", "从实际尺寸、使用习惯、收纳需求和房屋风格出发，而不是套用标准产品。"],
+    ["材料质量", "木皮、木材、石材、金属、玻璃和五金根据耐用性、比例和视觉效果选择。"],
+    ["流程清晰", "先确认照片、尺寸、材料方向和预算逻辑，再进入设计、技术包或项目评估。"],
+    ["长期价值", "好的柜体、墙板和内置系统能提升日常使用体验，也更有利于住宅长期价值。"],
+    ["技术规划", "提前考虑灯光、走线、通风、五金、开合和安装条件。"],
+    ["设计协作", "可与业主、设计师、建筑商一起整理图纸、材料和项目范围。"],
+  ],
+};
+
+solutionLabels.ar = {
+  mediaWalls: "جدران ميديا فاخرة",
+  customKitchens: "مطابخ مخصصة",
+  customClosets: "غرف ملابس وخزائن",
+  builtIns: "حلول Built-In",
+  fireplaceWalls: "جدران مدفأة",
+  wallPanels: "ألواح حائط معمارية",
+  homeOffices: "مكاتب منزلية",
+  mudrooms: "مداخل وتخزين",
+  customFurniture: "أثاث مخصص",
+  solutions: "حلول داخلية",
+  designConcept: "مفهوم تصميم",
+  gallery: "المعرض",
+  howItWorks: "العملية",
+  startProject: "ابدأ المشروع",
+};
+
+solutionLabels.zh = {
+  mediaWalls: "媒体墙与电视柜",
+  customKitchens: "定制厨房",
+  customClosets: "衣帽间与衣柜",
+  builtIns: "嵌入式柜体",
+  fireplaceWalls: "壁炉墙",
+  wallPanels: "墙板",
+  homeOffices: "家庭办公室",
+  mudrooms: "玄关收纳",
+  customFurniture: "定制家具",
+  solutions: "空间方案",
+  designConcept: "设计概念",
+  gallery: "案例方向",
+  howItWorks: "流程",
+  startProject: "开始项目",
+};
+
+solutionCopy.ar = {
+  homeTitle: "CAS AURUM | تصميم داخلي معماري فاخر للإقامات الخاصة",
+  homeDesc: "جدران ميديا، ألواح حائط، خزائن، مطابخ، غرف ملابس وتشطيبات bespoke بمستوى Ultra-Luxury / International Client Tier.",
+  homeHero: "تصميمات داخلية بمستوى القصور، مواد فائقة الجودة، تنسيق white-glove وخدمة كونسيرج للعملاء الدوليين.",
+  homeIntro: "CAS AURUM يراجع مشاريع الإقامات الخاصة والمساحات الفاخرة حسب النطاق، المواد، التعقيد الهندسي، الجدول الزمني ومستوى التنسيق المطلوب.",
+  finalHeadline: "جاهزون لتحديد اتجاه معماري فاخر؟",
+  finalText: "ابدأوا بالصور والمقاسات ومراجع المواد للحصول على خطوة واضحة.",
+};
+
+solutionCopy.zh = {
+  homeTitle: "CAS AURUM | 高端定制室内木作、媒体墙与柜体",
+  homeDesc: "定制媒体墙、墙板、柜体、嵌入式收纳、厨房、衣帽间和设计概念包，强调材料质量和长期住宅价值。",
+  homeHero: "从媒体墙、墙板、柜体到厨房和衣帽间，让空间更实用、更精致、更耐看。",
+  homeIntro: "CAS AURUM 帮助业主用照片、尺寸和参考图开始项目，先明确设计方向、材料范围和预算逻辑，再决定下一步。",
+  finalHeadline: "想看看空间可以怎样升级？",
+  finalText: "发送空间照片，先从清晰的设计概念开始。",
+};
+
+copy.ar = {
+  ...copy.en,
+  nav: { designConcept: "مفهوم تصميم", wallPanels: "ألواح حائط", customFurniture: "أثاث مخصص", millwork: "Millwork معماري", solutions: "حلول داخلية", projects: "المعرض", collections: "أفكار", trade: "للمصممين والمطورين", about: "عن CAS AURUM", contact: "تواصل" },
+  cta: { consult: "طلب مراجعة خاصة", measure: "رفع الصور", collections: "استكشاف المعرض", project: "إرسال تفاصيل المشروع", discuss: "مناقشة المشروع", start: "بدء مشروع فاخر" },
+  form: formCopy("ar"),
+  home: {
+    title: solutionCopy.ar.homeTitle,
+    desc: solutionCopy.ar.homeDesc,
+    h1: "CAS AURUM",
+    sub: solutionCopy.ar.homeHero,
+    hero: solutionCopy.ar.homeIntro,
+    intro: solutionCopy.ar.homeIntro,
+    seo: "CAS AURUM يقدم حلول داخلية معمارية فاخرة للإقامات الخاصة والعملاء الدوليين، مع ربط التكلفة بالنطاق المرئي مثل المواد المستوردة، الهندسة المعقدة، التنسيق white-glove وإدارة المشروع عالية اللمسة.",
+  },
+  regions: copy.en.regions,
+  projects: ["المعرض", "اتجاهات مشاريع مختارة", "يمكن مراجعة الاتجاهات والمواد ونطاقات الإقامات الخاصة عند الطلب."],
+  about: ["عن CAS AURUM", "CAS AURUM يطوّر جدران ميديا، ألواح حائط، أثاث، خزائن وتشطيبات bespoke للمساكن الراقية والمساحات الخاصة."],
+  contact: ["تواصل مع CAS AURUM", "أرسلوا صور المساحة، الموقع، مستوى المواد، الجدول الزمني ونوع الخدمة المطلوبة لنقترح الخطوة المناسبة."],
+  legal: { privacy: ["سياسة الخصوصية", "توضح هذه الصفحة كيف يتعامل CAS AURUM مع المعلومات المرسلة عبر الموقع."], terms: ["شروط الاستخدام", "محتوى الموقع معلوماتي. يتم تأكيد النطاق، السعر، الجدول الزمني والتوافر كتابةً."] },
+};
+
+copy.zh = {
+  ...copy.en,
+  nav: { designConcept: "设计概念", wallPanels: "墙板", customFurniture: "定制家具", millwork: "建筑木作", solutions: "空间方案", projects: "案例方向", collections: "灵感", trade: "设计师与建造方", about: "关于", contact: "联系" },
+  cta: { consult: "获取设计评估", measure: "上传照片", collections: "查看案例方向", project: "提交项目资料", discuss: "讨论项目", start: "开始定制项目" },
+  form: formCopy("zh"),
+  home: {
+    title: solutionCopy.zh.homeTitle,
+    desc: solutionCopy.zh.homeDesc,
+    h1: "CAS AURUM",
+    sub: solutionCopy.zh.homeHero,
+    hero: solutionCopy.zh.homeIntro,
+    intro: solutionCopy.zh.homeIntro,
+    seo: "CAS AURUM 规划定制室内木作、媒体墙、墙板、柜体、嵌入式收纳、厨房和衣帽间。项目从照片、尺寸、材料方向和预算逻辑开始，注重清晰流程和长期住宅价值。",
+  },
+  regions: copy.en.regions,
+  projects: ["案例方向", "精选项目方向", "CAS AURUM 可根据空间、材料和预算范围讨论适合的定制方向。"],
+  about: ["关于 CAS AURUM", "CAS AURUM 提供定制媒体墙、墙板、柜体、厨房、衣帽间、嵌入式系统和设计概念规划。"],
+  contact: ["联系 CAS AURUM", "发送空间照片、位置、材料偏好、时间计划和项目目标，我们会建议合适的下一步。"],
+  legal: { privacy: ["隐私政策", "本页面说明 CAS AURUM 如何处理通过网站提交的信息。"], terms: ["使用条款", "网站内容仅供一般信息参考。项目范围、价格、时间和可用性以书面确认为准。"] },
 };
 
 applyCustomInteriorPositioning();
@@ -2867,6 +3043,10 @@ const server = http.createServer(async (request, response) => {
     if (path === "/api/crm-auth/me" && request.method === "GET") return handleCrmWebMe(request, response);
     if (path.startsWith("/api/crm-app/")) return await handleCrmAppApi(request, response, url, path);
     if (path === "/health") return json(response, { status: "ok", brand: BRAND });
+    const autoLocaleTarget = autoLocaleRedirectTarget(request, path);
+    if (autoLocaleTarget) return redirect(response, autoLocaleTarget, 302, {
+      Vary: "Accept-Language, User-Agent",
+    });
     const legacyTarget = legacyRedirectTarget(path);
     if (legacyTarget && isRedirectableMethod(request.method)) return redirect(response, `${legacyTarget}${url.search || ""}`, 301);
     const route = resolveRoute(path);
@@ -2929,6 +3109,39 @@ function isRedirectableMethod(method) {
   return method === "GET" || method === "HEAD";
 }
 
+function autoLocaleRedirectTarget(request, path) {
+  if (!isRedirectableMethod(request.method)) return "";
+  if (path !== "/") return "";
+  if (isCrawlerRequest(request)) return "";
+  const lang = preferredLocaleFromAcceptLanguage(request.headers["accept-language"] || "");
+  return lang && lang !== "en" ? urlFor(lang, "home") : "";
+}
+
+function preferredLocaleFromAcceptLanguage(header) {
+  const supported = new Set(["es", "fr", "ru", "uk", "ar", "zh"]);
+  const matches = String(header)
+    .split(",")
+    .map((part, index) => {
+      const [tag, ...params] = part.trim().split(";");
+      const q = params.map((param) => param.trim()).find((param) => param.startsWith("q="));
+      return { tag: tag.toLowerCase(), q: q ? Number(q.slice(2)) || 0 : 1, index };
+    })
+    .filter((item) => item.tag && item.q > 0)
+    .sort((a, b) => b.q - a.q || a.index - b.index);
+  for (const { tag } of matches) {
+    const primary = tag.split("-")[0];
+    if (primary === "uk") return "uk";
+    if (primary === "zh" || tag === "zh-hans" || tag === "zh-cn") return "zh";
+    if (supported.has(primary)) return primary;
+  }
+  return "en";
+}
+
+function isCrawlerRequest(request) {
+  const ua = String(request.headers["user-agent"] || "").toLowerCase();
+  return /(bot|crawler|spider|slurp|bingpreview|duckduckbot|yandex|baiduspider|google-inspectiontool|googleother|chatgpt-user|gptbot|perplexity|claude|ccbot|applebot|facebookexternalhit|linkedinbot|twitterbot)/.test(ua);
+}
+
 function resolvePlannerAliasRoute(localPath, lang, path) {
   if (localPath === "/quick-project-estimate") return { lang, key: "quickEstimate", path };
   const aliases = new Set(["/millwork-planner", "/technical-millwork-planner", `/${slugs[lang].planner}`]);
@@ -2936,8 +3149,11 @@ function resolvePlannerAliasRoute(localPath, lang, path) {
 }
 
 function localizedStrategyRedirect(route) {
-  if (!route || route.lang === "en" || route.lang === "fr") return "";
-  if (route.lang === "uk") return route.key === "home" ? "" : urlFor("uk", "home");
+  if (!route || route.lang === "en") return "";
+  if (route.lang === "fr" && !isMeaningfulLocalizedRoute("fr", route)) return urlFor("fr", "home");
+  if (route.lang === "uk" && !isMeaningfulLocalizedRoute("uk", route)) return urlFor("uk", "home");
+  if (route.lang === "ar" && !isMeaningfulLocalizedRoute("ar", route)) return urlFor("ar", "home");
+  if (route.lang === "zh" && !isMeaningfulLocalizedRoute("zh", route)) return urlFor("zh", "home");
   if (route.lang === "ru" && !isMeaningfulLocalizedRoute("ru", route)) return urlFor("ru", "home");
   if (route.lang === "es" && !isMeaningfulLocalizedRoute("es", route)) return routeEnglishEquivalent(route);
   return "";
@@ -2956,8 +3172,21 @@ function isMeaningfulLocalizedRoute(lang, route) {
   if (!route) return false;
   if (lang === "en") return true;
   if (route.atlantaMoneyPage) return false;
-  if (lang === "fr") return false;
-  if (lang === "uk") return route.key === "home";
+  if (lang === "fr") {
+    if (route.collection || route.programmaticPage || route.seoMarketPage || route.seoAlias) return false;
+    if (!route.key || !pageOrder.includes(route.key)) return false;
+    return frenchMeaningfulPageKeys.has(route.key);
+  }
+  if (lang === "uk") {
+    if (route.collection || route.programmaticPage || route.seoMarketPage || route.seoAlias) return false;
+    if (!route.key || !pageOrder.includes(route.key)) return false;
+    return ukrainianMeaningfulPageKeys.has(route.key);
+  }
+  if (lang === "ar" || lang === "zh") {
+    if (route.collection || route.programmaticPage || route.seoMarketPage || route.seoAlias) return false;
+    if (!route.key || !pageOrder.includes(route.key)) return false;
+    return lang === "ar" ? arabicMeaningfulPageKeys.has(route.key) : chineseMeaningfulPageKeys.has(route.key);
+  }
   if (route.collection) return lang === "es" || lang === "ru";
   if (route.programmaticPage || route.seoMarketPage || route.seoAlias) return lang === "es";
   if (!route.key || !pageOrder.includes(route.key)) return false;
@@ -2967,7 +3196,8 @@ function isMeaningfulLocalizedRoute(lang, route) {
 }
 
 function legacyRedirectTarget(path) {
-  if (path === "/ua" || path.startsWith("/ua/")) return "/uk";
+  if (path === "/uk") return "/ua";
+  if (path.startsWith("/uk/")) return cleanPath(`/ua/${path.slice(4)}`);
   const collectionRedirects = [
     [/^\/collections\/([^/]+)$/i, (slug) => `/ideas/${slug}`],
     [/^\/en\/collections\/([^/]+)$/i, (slug) => `/ideas/${slug}`],
@@ -3199,10 +3429,10 @@ function ukrainianLandingPage(route) {
         <p class="eyebrow">CAS AURUM українською</p>
         <h1>Індивідуальні інтер'єрні рішення під ваш простір</h1>
         <h2>TV-стіни, медіа-стіни, кухні, меблі на замовлення, стінові панелі та дизайн-концепти для дому, який хочеться проживати щодня.</h2>
-        <p class="lede">Це коротка українська сторінка для першого знайомства з CAS AURUM. Повна версія сайту доступна англійською, а заявку можна надіслати через форму CAS AURUM.</p>
+        <p class="lede">Це коротка українська сторінка для першого знайомства з CAS AURUM. Заявку можна надіслати через форму CAS AURUM, а основні сторінки доступні українською.</p>
         <div class="actions">
-          <a class="button primary track" data-event="uk_start_project_clicked" href="/design-concept#start-design-concept">Надіслати запит</a>
-          <a class="button secondary track" data-event="uk_continue_english_clicked" href="/">Продовжити англійською</a>
+          <a class="button primary track" data-event="uk_start_project_clicked" href="${urlFor("uk", "designConcept")}#start-design-concept">Надіслати запит</a>
+          <a class="button secondary track" data-event="uk_quick_estimate_clicked" href="${urlFor("uk", "quickEstimate")}">Швидка оцінка</a>
         </div>
       </div>
     </section>
@@ -3217,7 +3447,7 @@ function ukrainianLandingPage(route) {
         <p class="eyebrow">Дизайн-концепт</p>
         <h2>Можна почати з фото, без креслень і точних розмірів</h2>
         <p>Дизайн-концепт допомагає побачити напрям: композицію, матеріали, приблизний обсяг і наступний крок перед виробництвом або детальною оцінкою.</p>
-        <div class="actions"><a class="button primary" href="/design-concept#start-design-concept">Почати з дизайн-концепту</a><a class="button secondary" href="/quick-project-estimate">Швидка оцінка проєкту</a></div>
+        <div class="actions"><a class="button primary" href="${urlFor("uk", "designConcept")}#start-design-concept">Почати з дизайн-концепту</a><a class="button secondary" href="${urlFor("uk", "quickEstimate")}">Швидка оцінка проєкту</a></div>
       </div>
       <aside class="panel">
         <h3>Як почати</h3>
@@ -3227,8 +3457,8 @@ function ukrainianLandingPage(route) {
     <section class="cta" id="start-project">
       <p class="eyebrow">Почати проєкт</p>
       <h2>Надішліть фото простору і короткий опис</h2>
-      <p>Команда CAS AURUM розгляне запит і підкаже, чи краще почати з дизайн-концепту, швидкої оцінки або технічного планувальника англійською.</p>
-      <div class="actions"><a class="button primary" href="/design-concept#start-design-concept">Надіслати запит</a><a class="button secondary" href="/">Продовжити англійською</a></div>
+      <p>Команда CAS AURUM розгляне запит і підкаже, чи краще почати з дизайн-концепту, швидкої оцінки або технічного планувальника.</p>
+      <div class="actions"><a class="button primary" href="${urlFor("uk", "designConcept")}#start-design-concept">Надіслати запит</a><a class="button secondary" href="${urlFor("uk", "planner")}">Технічний планувальник</a></div>
     </section>
   `;
 }
@@ -5175,6 +5405,7 @@ function designConceptFormSection(route, t) {
       <p class="eyebrow">${escapeHtml(t.formEyebrow)}</p>
       <h2>${escapeHtml(t.formTitle)}</h2>
       <p>${escapeHtml(t.formIntro)}</p>
+      ${localeTierNotice(route.lang)}
       ${designConceptLeadForm(route, t)}
     </div>
   </section>`;
@@ -5200,6 +5431,7 @@ function designConceptLeadForm(route, t) {
     <input type="hidden" name="estimate_basis" value="package_type + project_type">
     <input type="hidden" name="measurement_requested" value="no">
     <input type="hidden" name="page_source" value="${urlFor(route.lang, "designConcept")}">
+    ${localeTierHiddenFields(route.lang)}
     ${seoSourceHiddenFields(route)}
     <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
     <div class="form-step">
@@ -6295,6 +6527,12 @@ function quickEstimateLanguageExtras(lang) {
 }
 
 const quickEstimateTranslations = {
+  ar: {
+    title: "تقدير سريع للمشروع", guided: "تقدير موجه", preliminaryRange: "نطاق مبدئي للمشروع", liveRange: "النطاق المبدئي", heroTitle: "احصلوا على نطاق مبدئي", heroIntro: "اختاروا نوع المشروع، أجيبوا عن أسئلة بسيطة وارفعوا الصور. للمشاريع الدولية الفاخرة نوضح مستوى الخدمة والمواد والتنسيق قبل تأكيد أي سعر.", pathQuickDesc: "للبداية السريعة مع صور ومعلومات أساسية.", pathQuickCta: "الحصول على تقدير سريع", pathTechnicalKicker: "نطاق متقدم", pathTechnicalTitle: "المخطط الفني للـ Millwork", pathTechnicalDesc: "للأبعاد، المواد، الإضاءة، الوحدات والتفاصيل الفنية.", pathTechnicalCta: "استخدام المخطط الفني", steps: ["نوع المشروع", "الغرفة / المساحة", "الحجم التقريبي", "التخطيط المرئي", "أسئلة النطاق", "النتيجة والتواصل"], progress: "الخطوة {step} من 6", sizeQuestion: "هل تعرفون عرض الجدار وارتفاع السقف؟", sizeModes: { approximate: "لا، استخدموا حجماً تقريبياً", exact: "نعم، يمكنني إدخال الأبعاد", unknown: "غير متأكد" }, exactFields: { width: "عرض الجدار بالقدم", height: "ارتفاع السقف بالقدم", depth: "عمق اختياري", walls: "عدد الجدران" }, resultNote: "السعر النهائي يعتمد على المقاسات، المواد، التعقيد الهندسي، التنسيق white-glove، الموقع والجدول الزمني.", includedTitle: "قد يشمل هذا النطاق المبدئي", fields: { name: "الاسم", email: "البريد الإلكتروني", phone: "الهاتف", zip: "الموقع / ZIP", timeline: "الجدول الزمني", budget: "نطاق الميزانية التقريبي", notes: "ملاحظات المشروع", upload: "رفع الصور" }, notesPlaceholder: "اكتبوا ما تريدون تغييره، مستوى المواد، المساحة وأي تفاصيل مهمة.", send: "إرسال التقدير السريع", designConcept: "طلب مفهوم تصميم", back: "رجوع", reset: "إعادة", next: "التالي", summary: { project: "المشروع", room: "المساحة", layout: "التخطيط", confidence: "الدقة", note: "هذا تقدير مبدئي فقط. CAS AURUM يراجع الصور، الأبعاد، المواد، مستوى الخدمة وشروط التنفيذ قبل السعر النهائي." }, seoTitle: "تقدير سريع للمشروع | CAS AURUM", metaDescription: "ابدأوا بتقدير سريع لجدران الميديا، الألواح، الخزائن، built-ins والمشاريع الفاخرة مع صور ونطاق مبدئي.", h1: "تقدير سريع للمشاريع الداخلية الفاخرة", intro: "ابدأوا بتقدير مبدئي لجدار ميديا، ألواح حائط، خزائن، built-ins أو نطاق داخلي فاخر. الأسعار الأعلى ترتبط بنطاق واضح مثل خدمة كونسيرج، مواد مستوردة ممتازة، هندسة معقدة وتنسيق white-glove.", seoAside: "صور + نطاق واضح", seoAsideText: "مناسب للمشاريع الفاخرة، الإقامات الخاصة والعملاء الدوليين.", seoBodyTitle: "نقطة بداية واضحة قبل التسعير النهائي", seoBody: "يستخدم CAS AURUM التقدير السريع لفهم الصور، الحجم، المواد، مستوى الخدمة، التعقيد الهندسي والجدول الزمني قبل أي تأكيد نهائي.", faqTitle: "أسئلة التقدير السريع", confidence: { low: "منخفضة", medium: "متوسطة", high: "عالية" },
+  },
+  zh: {
+    title: "快速项目评估", guided: "引导式评估", preliminaryRange: "项目初步范围", liveRange: "实时初步范围", heroTitle: "获取初步预算范围", heroIntro: "选择项目类型，回答几个直观问题并上传照片。无需完整图纸或专业木作术语即可开始。", pathQuickDesc: "适合还不确定从哪里开始的业主。上传照片后获得初步预算范围。", pathQuickCta: "获取快速评估", pathTechnicalKicker: "进阶范围", pathTechnicalTitle: "技术木作规划器", pathTechnicalDesc: "适合详细范围、设计师、建造方和进阶规划。可添加尺寸、模块、材料、灯光和项目备注。", pathTechnicalCta: "使用技术规划器", steps: ["选择项目类型", "选择房间 / 区域", "大致尺寸", "视觉布局", "简单功能问题", "结果与联系"], progress: "第 {step} 步，共 6 步", sizeQuestion: "您知道墙宽和层高吗？", sizeModes: { approximate: "不知道，使用大致尺寸", exact: "知道，可以输入尺寸", unknown: "不确定" }, exactFields: { width: "墙宽（英尺）", height: "层高（英尺）", depth: "可选深度", walls: "墙面数量" }, resultNote: "最终价格取决于现场尺寸、材料、项目细节和安装条件。", includedTitle: "此初步范围可能包括", fields: { name: "姓名", email: "电子邮箱", phone: "电话", zip: "邮编 / 项目位置", timeline: "时间计划", budget: "大致预算范围", notes: "项目备注", upload: "上传照片" }, notesPlaceholder: "请说明想改变什么、喜欢什么，以及空间中的重要信息。", send: "发送快速评估", designConcept: "申请设计概念", back: "返回", reset: "重置", next: "下一步", summary: { project: "项目", room: "房间", layout: "布局", confidence: "可信度", note: "此公开评估仅为初步范围。CAS AURUM 会在最终定价前审核照片、尺寸、材料和安装条件。" }, seoTitle: "快速项目评估 | 定制媒体墙、墙板与木作 | CAS AURUM", metaDescription: "获取定制媒体墙、墙板、衣帽间、浴室柜、办公室嵌入式柜体和室内木作的快速评估。上传照片并获得初步预算范围。", h1: "定制木作与室内功能项目快速评估", intro: "不确定从哪里开始？使用快速项目评估，为媒体墙、墙板、柜体、衣帽间或定制家具获得初步预算范围。上传照片后，我们会根据材料、尺寸和流程建议下一步。", seoAside: "照片 + 简单选择", seoAsideText: "适用于媒体墙、墙板、嵌入式柜体、衣帽间和定制家具。", seoBodyTitle: "一个清晰实用的项目起点", seoBody: "快速评估帮助整理空间照片、尺寸、材料方向、预算范围和长期住宅价值，再决定是否进入设计概念包或技术规划。", faqTitle: "快速评估常见问题", confidence: { low: "低", medium: "中", high: "高" },
+  },
   es: {
     title: "Estimación Rápida del Proyecto", guided: "Estimación guiada", preliminaryRange: "Rango preliminar del proyecto", liveRange: "Rango preliminar en vivo", heroTitle: "Obtenga un rango preliminar", heroIntro: "Elija el tipo de proyecto, responda preguntas visuales sencillas y suba fotos. No necesita planos, pies cuadrados exactos ni conocer terminología técnica de carpintería para empezar.", pathQuickDesc: "Para propietarios que no saben por dónde comenzar. Responda unas preguntas simples, suba fotos y reciba un rango preliminar.", pathQuickCta: "Obtener estimación rápida", pathTechnicalKicker: "Alcance avanzado", pathTechnicalTitle: "Planificador técnico de carpintería", pathTechnicalDesc: "Para alcances detallados, diseñadores, constructores y planificación avanzada. Agregue dimensiones, módulos, materiales, iluminación y notas del proyecto.", pathTechnicalCta: "Usar planificador técnico", steps: ["Elegir tipo de proyecto", "Elegir habitación / área", "Tamaño aproximado", "Distribución visual", "Preguntas simples", "Resultado y contacto"], progress: "Paso {step} de 6", sizeQuestion: "¿Conoce el ancho de la pared y la altura del techo?", sizeModes: { approximate: "No, usar tamaño aproximado", exact: "Sí, puedo ingresar dimensiones", unknown: "No estoy seguro" }, exactFields: { width: "Ancho de pared en ft", height: "Altura de techo en ft", depth: "Profundidad opcional", walls: "Número de paredes" }, resultNote: "El precio final depende de mediciones en sitio, materiales, detalles del proyecto y condiciones de instalación.", includedTitle: "Este rango preliminar puede incluir", fields: { name: "Nombre", email: "Email", phone: "Teléfono", zip: "ZIP / ubicación del proyecto", timeline: "Plazo", budget: "Rango de presupuesto aproximado", notes: "Notas del proyecto", upload: "Subir fotos" }, notesPlaceholder: "Cuéntenos qué quiere cambiar, qué le gusta y cualquier detalle importante del espacio.", send: "Enviar mi estimación rápida", designConcept: "Solicitar concepto de diseño", back: "Atrás", reset: "Reiniciar", next: "Siguiente", summary: { project: "Proyecto", room: "Habitación", layout: "Distribución", confidence: "Confianza", note: "Esta estimación pública muestra solo un rango preliminar. CAS AURUM revisa fotos, dimensiones, materiales y condiciones de instalación antes del precio final." }, seoTitle: "Estimación Rápida del Proyecto | Muros de TV, Paneles y Carpintería | CAS AURUM", metaDescription: "Obtenga una estimación rápida para muros de TV, paneles, closets, vanities, muebles integrados de oficina y carpintería interior. Suba fotos y reciba un rango preliminar.", h1: "Estimación rápida para carpintería e interiores a medida", intro: "¿No sabe por dónde empezar? Use nuestra Estimación Rápida del Proyecto para obtener un rango preliminar para su elemento interior a medida. Elija el tipo de proyecto, responda preguntas sencillas, suba fotos del espacio y CAS AURUM revisará su solicitud. No necesita planos técnicos, metraje exacto ni experiencia en carpintería.", seoAside: "Fotos + elecciones simples", seoAsideText: "Para estimaciones de muros de TV, paneles, muebles integrados, closets y vanities a medida.", seoBodyTitle: "Un punto de partida simple para estimar su proyecto", seoBody: "Use esta guía como primer paso para una estimación rápida de proyecto, muebles a medida, carpintería, muros de TV en Georgia, paneles en Atlanta, muebles integrados en Atlanta y closets a medida en Atlanta.", faqTitle: "Preguntas sobre la estimación rápida", confidence: { low: "Baja", medium: "Media", high: "Alta" },
   },
@@ -6381,6 +6619,7 @@ function quickEstimateWizard(route, sourcePage = "/technical-millwork-planner") 
         <p class="eyebrow">${escapeHtml(q.title)}</p>
         <h2>${escapeHtml(q.heroTitle)}</h2>
         <p>${escapeHtml(q.heroIntro)}</p>
+        ${localeTierNotice(route.lang)}
       </div>
       <div class="quick-estimate-grid">
         <form class="lead-form quick-estimate-form" data-lead-form="quick_project_estimate">
@@ -6402,6 +6641,7 @@ function quickEstimateWizard(route, sourcePage = "/technical-millwork-planner") 
           <input type="hidden" name="confidence" data-quick-field="confidence" value="medium">
           <input type="hidden" name="estimate_json" data-quick-field="estimateJson" value="">
           <input type="hidden" name="message" data-quick-field="message" value="">
+          ${localeTierHiddenFields(route.lang)}
           <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
           <div class="quick-progress"><span data-quick-progress-label>${escapeHtml(q.progress.replace("{step}", "1"))}</span><div><i data-quick-progress-bar></i></div></div>
           <fieldset class="quick-step" data-quick-step="1">
@@ -6499,12 +6739,24 @@ function quickChoice(name, label, checked = false, value = label) {
   return `<label class="quick-choice" for="${escapeHtml(id)}"><input id="${escapeHtml(id)}" type="radio" name="${escapeHtml(name)}_choice" value="${escapeHtml(value)}"${checked ? " checked" : ""}><span>${escapeHtml(label)}</span></label>`;
 }
 
+function localeTierNotice(lang) {
+  if (lang !== "ar") return "";
+  return `<div class="panel tier-notice"><p class="eyebrow">Ultra-Luxury / International Client Tier</p><p>${escapeHtml("This tier is tied to visible scope: concierge service, premium imported materials, complex engineering, white-glove coordination, larger private residences, urgent timelines and high-touch project management. Pricing is confirmed after CAS AURUM reviews the actual project details.")}</p></div>`;
+}
+
+function localeTierHiddenFields(lang) {
+  if (lang !== "ar") return "";
+  return `<input type="hidden" name="clientTier" value="Ultra-Luxury / International Client Tier"><input type="hidden" name="tierBasis" value="Visible scope: concierge service, premium imported materials, complex engineering, white-glove coordination, larger private residences, urgent timelines, high-touch project management">`;
+}
+
 function quickLabel(q, group, value) {
   return q?.[group]?.[value] || value;
 }
 
 function quickOptionLabel(value, lang) {
   const maps = {
+    ar: { "ASAP": "في أقرب وقت", "1-3 months": "1-3 أشهر", "3-6 months": "3-6 أشهر", "6+ months": "6+ أشهر", "Planning only": "تخطيط فقط", "Under $10,000": "أقل من $10,000", "Not sure": "غير متأكد", "Not sure yet": "غير متأكد بعد", "No cabinets": "بدون خزائن", "Lower cabinet only": "خزائن سفلية فقط", "Tall side cabinets": "خزائن جانبية طويلة", "Both lower and tall cabinets": "خزائن سفلية وطويلة", "No": "لا", "Simple lighting": "إضاءة بسيطة", "Premium lighting": "إضاءة ممتازة", "Few shelves": "بعض الرفوف", "Many shelves": "رفوف كثيرة", "Mirror": "مرآة", "Stone-look": "مظهر حجري", "Both": "كلاهما", "1 hidden door": "باب مخفي واحد", "2 hidden doors": "بابان مخفيان", "3 hidden doors": "3 أبواب مخفية", "One wall": "جدار واحد", "Two walls": "جداران", "Full room": "الغرفة كاملة", "Yes": "نعم", "I only have photos": "لدي صور فقط" },
+    zh: { "ASAP": "尽快", "1-3 months": "1-3 个月", "3-6 months": "3-6 个月", "6+ months": "6 个月以上", "Planning only": "仅规划", "Under $10,000": "低于 $10,000", "Not sure": "不确定", "Not sure yet": "暂不确定", "No cabinets": "不需要柜体", "Lower cabinet only": "仅下柜", "Tall side cabinets": "高柜", "Both lower and tall cabinets": "下柜和高柜", "No": "否", "Simple lighting": "简单灯光", "Premium lighting": "高级灯光", "Few shelves": "少量层板", "Many shelves": "较多层板", "Mirror": "镜面", "Stone-look": "石材效果", "Both": "两者都要", "1 hidden door": "1 扇隐形门", "2 hidden doors": "2 扇隐形门", "3 hidden doors": "3 扇隐形门", "One wall": "一面墙", "Two walls": "两面墙", "Full room": "整个房间", "Yes": "是", "I only have photos": "只有照片" },
     es: { "ASAP": "Lo antes posible", "1-3 months": "1-3 meses", "3-6 months": "3-6 meses", "6+ months": "6+ meses", "Planning only": "Solo planificación", "Under $10,000": "Menos de $10,000", "Not sure": "No estoy seguro", "Not sure yet": "No estoy seguro", "No cabinets": "Sin gabinetes", "Lower cabinet only": "Solo gabinete bajo", "Tall side cabinets": "Gabinetes altos laterales", "Both lower and tall cabinets": "Gabinetes bajos y altos", "No": "No", "Simple lighting": "Iluminación simple", "Premium lighting": "Iluminación avanzada", "Few shelves": "Algunas repisas", "Many shelves": "Muchas repisas", "Mirror": "Espejo", "Stone-look": "Tipo piedra", "Both": "Ambos", "1 hidden door": "1 puerta oculta", "2 hidden doors": "2 puertas ocultas", "3 hidden doors": "3 puertas ocultas", "One wall": "Una pared", "Two walls": "Dos paredes", "Full room": "Habitación completa", "Yes": "Sí", "I only have photos": "Solo tengo fotos" },
     fr: { "ASAP": "Dès que possible", "1-3 months": "1-3 mois", "3-6 months": "3-6 mois", "6+ months": "6+ mois", "Planning only": "Planification seulement", "Under $10,000": "Moins de 10 000 $", "Not sure": "Je ne sais pas", "Not sure yet": "Je ne sais pas", "No cabinets": "Sans meubles", "Lower cabinet only": "Meuble bas seulement", "Tall side cabinets": "Colonnes latérales", "Both lower and tall cabinets": "Meubles bas et colonnes", "No": "Non", "Simple lighting": "Éclairage simple", "Premium lighting": "Éclairage premium", "Few shelves": "Quelques étagères", "Many shelves": "Beaucoup d'étagères", "Mirror": "Miroir", "Stone-look": "Effet pierre", "Both": "Les deux", "1 hidden door": "1 porte dissimulée", "2 hidden doors": "2 portes dissimulées", "3 hidden doors": "3 portes dissimulées", "One wall": "Un mur", "Two walls": "Deux murs", "Full room": "Pièce complète", "Yes": "Oui", "I only have photos": "J'ai seulement des photos" },
     ru: { "ASAP": "Как можно скорее", "1-3 months": "1-3 месяца", "3-6 months": "3-6 месяцев", "6+ months": "6+ месяцев", "Planning only": "Только планирование", "Under $10,000": "До $10,000", "Not sure": "Не уверен(а)", "Not sure yet": "Пока не уверен(а)", "No cabinets": "Без шкафов", "Lower cabinet only": "Только нижняя тумба", "Tall side cabinets": "Высокие боковые шкафы", "Both lower and tall cabinets": "Нижние и высокие шкафы", "No": "Нет", "Simple lighting": "Простая подсветка", "Premium lighting": "Расширенная подсветка", "Few shelves": "Несколько полок", "Many shelves": "Много полок", "Mirror": "Зеркало", "Stone-look": "Под камень", "Both": "Оба варианта", "1 hidden door": "1 скрытая дверь", "2 hidden doors": "2 скрытые двери", "3 hidden doors": "3 скрытые двери", "One wall": "Одна стена", "Two walls": "Две стены", "Full room": "Вся комната", "Yes": "Да", "I only have photos": "Есть только фото" },
@@ -6538,7 +6790,7 @@ function quickProjectEstimatePage(route) {
         <p>${escapeHtml(q.seoAsideText)}</p>
       </aside>
     </section>
-    ${quickEstimateWizard(route, "/quick-project-estimate")}
+    ${quickEstimateWizard(route, urlFor(route.lang, "quickEstimate"))}
     <section class="seo-copy wide">
       <h2>${escapeHtml(q.seoBodyTitle)}</h2>
       <p>${escapeHtml(q.seoBody)}</p>
@@ -6596,7 +6848,7 @@ function technicalPlannerPage(route) {
       </aside>
     </section>
     ${plannerPathCards(route)}
-    ${quickEstimateWizard(route, "/technical-millwork-planner")}
+    ${quickEstimateWizard(route, urlFor(route.lang, "planner"))}
     <section class="technical-planner-anchor" id="technical-millwork-planner">
       <div class="section-head">
         <p class="eyebrow">${escapeHtml(plannerCopy.advancedEyebrow)}</p>
@@ -7609,7 +7861,7 @@ function layout(route, title, description, body) {
   const robots = robotsMeta(route);
   const preloadImage = imagePreloadForRoute(route);
   return `<!doctype html>
-<html lang="${lang}">
+<html lang="${htmlLangFor(lang)}" dir="${lang === "ar" ? "rtl" : "ltr"}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7659,7 +7911,7 @@ function layout(route, title, description, body) {
 function header(route) {
   const t = copy[route.lang];
   const nav = seoHeaderLinks(route.lang);
-  const ctaHref = route.lang === "uk" ? "/design-concept#start-design-concept" : `${urlFor(route.lang, "designConcept")}#start-design-concept`;
+  const ctaHref = `${urlFor(route.lang, "designConcept")}#start-design-concept`;
   const ctaLabel = route.lang === "uk" ? "Надіслати запит" : (solutionLabels[route.lang] || solutionLabels.en).startProject;
   return `<header class="site-header">
     <a class="brand track" data-event="cta_clicked" href="${urlFor(route.lang, "home")}" aria-label="CAS AURUM home"><img class="brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a>
@@ -7673,28 +7925,28 @@ function footer(route) {
   const t = copy[route.lang];
   if (route.lang === "uk") {
     return `<footer class="site-footer">
-      <div><a class="brand" href="/uk"><img class="brand-lockup footer-brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a><p>Індивідуальні інтер'єрні рішення, дизайн-концепти, TV-стіни, кухні, меблі та стінові панелі.</p></div>
-      <div><h3>Почати</h3><a href="/design-concept#start-design-concept">Надіслати запит</a><a href="/quick-project-estimate">Швидка оцінка проєкту</a><a href="/gallery">Галерея</a><a href="/">Продовжити англійською</a></div>
-      <div><h3>${escapeHtml(localized("Languages", route.lang))}</h3>${languageSwitcher(route)}<a href="/privacy-policy">Політика конфіденційності</a><a href="/terms-of-use">Умови використання</a></div>
+      <div><a class="brand" href="${urlFor("uk", "home")}"><img class="brand-lockup footer-brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a><p>Індивідуальні інтер'єрні рішення, дизайн-концепти, TV-стіни, кухні, меблі та стінові панелі.</p></div>
+      <div><h3>Почати</h3><a href="${urlFor("uk", "designConcept")}#start-design-concept">Надіслати запит</a><a href="${urlFor("uk", "quickEstimate")}">Швидка оцінка проєкту</a><a href="${urlFor("uk", "mediaWalls")}">Медіа-стіни</a></div>
+      <div><h3>Юридична інформація</h3><a href="${urlFor("uk", "privacy")}">Політика конфіденційності</a><a href="${urlFor("uk", "terms")}">Умови використання</a></div>
     </footer>`;
   }
   const seo = seoFooterColumns(route.lang, route);
   return `<footer class="site-footer">
     <div><a class="brand" href="${urlFor(route.lang, "home")}"><img class="brand-lockup footer-brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a><p>${escapeHtml(t.home.hero)}</p></div>
     ${seo.map((column) => `<div><h3>${escapeHtml(column.title)}</h3>${column.links.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}</div>`).join("")}
-    <div><h3>${escapeHtml(localized("Languages", route.lang))}</h3>${languageSwitcher(route)}<a href="${urlFor(route.lang, "privacy")}">${escapeHtml(copy[route.lang].legal.privacy[0])}</a><a href="${urlFor(route.lang, "terms")}">${escapeHtml(copy[route.lang].legal.terms[0])}</a></div>
+    <div><h3>${escapeHtml(localized("Legal", route.lang))}</h3><a href="${urlFor(route.lang, "privacy")}">${escapeHtml(copy[route.lang].legal.privacy[0])}</a><a href="${urlFor(route.lang, "terms")}">${escapeHtml(copy[route.lang].legal.terms[0])}</a></div>
   </footer>`;
 }
 
 function seoHeaderLinks(lang) {
   if (lang === "uk") {
     return [
-      { href: "/uk#services", label: "Послуги" },
-      { href: "/uk#design-concept", label: "Дизайн-концепт" },
-      { href: "/quick-project-estimate", label: "Швидка оцінка" },
-      { href: "/gallery", label: "Галерея" },
-      { href: "/", label: "English" },
-      { href: "/design-concept#start-design-concept", label: "Надіслати запит" },
+      { href: `${urlFor("uk", "home")}#services`, label: "Послуги" },
+      { href: urlFor("uk", "designConcept"), label: "Дизайн-концепт" },
+      { href: urlFor("uk", "quickEstimate"), label: "Швидка оцінка" },
+      { href: urlFor("uk", "mediaWalls"), label: "Медіа-стіни" },
+      { href: urlFor("uk", "contact"), label: "Контакти" },
+      { href: `${urlFor("uk", "designConcept")}#start-design-concept`, label: "Надіслати запит" },
     ];
   }
   if (lang === "ru") {
@@ -7861,7 +8113,22 @@ function localizedCityName(slug, fallback, lang) {
 }
 
 function localizedContentHref(lang, key) {
-  if (lang === "uk") return urlFor("uk", "home");
+  if (lang === "uk") {
+    if (ukrainianMeaningfulPageKeys.has(key)) return urlFor("uk", key);
+    return urlFor("uk", "home");
+  }
+  if (lang === "ar") {
+    if (arabicMeaningfulPageKeys.has(key)) return urlFor("ar", key);
+    return urlFor("ar", "home");
+  }
+  if (lang === "zh") {
+    if (chineseMeaningfulPageKeys.has(key)) return urlFor("zh", key);
+    return urlFor("zh", "home");
+  }
+  if (lang === "fr") {
+    if (frenchMeaningfulPageKeys.has(key)) return urlFor("fr", key);
+    return urlFor("fr", "home");
+  }
   if (lang === "ru") {
     if (russianMeaningfulPageKeys.has(key)) return urlFor("ru", key);
     if (servicePageKeys.includes(key) || key === "planner" || key === "collections" || key === "partners" || key === "trade") return urlFor("ru", "quickEstimate");
@@ -7876,8 +8143,7 @@ function localizedContentHref(lang, key) {
 }
 
 function languageSwitcher(route) {
-  const languageKeys = isEnglishOnlyPageKey(route.key) || route.atlantaMoneyPage ? ["en"] : languageSwitcherKeys;
-  return `<div class="lang" aria-label="Language">${languageKeys.map((lang) => `<a class="${route.lang === lang ? "active" : ""} track" data-event="language_changed" href="${routeUrlFor(lang, route)}" hreflang="${lang}">${langs[lang].label}</a>`).join("")}</div>`;
+  return "";
 }
 
 function pageHero(lang, h1, text, assetId) {
@@ -8599,6 +8865,8 @@ function leadForm(route, type) {
   const programmaticMeta = route.programmaticPage ? pageForLanguage(route.programmaticPage, route.lang) : null;
   const label = formSubmitLabel(route.lang, type);
   const sourceUrl = type === "consultation" ? consultationFormUrl(route.lang) : routeUrlFor(route.lang, route);
+  const tierNotice = localeTierNotice(route.lang);
+  const tierFields = localeTierHiddenFields(route.lang);
   const serviceNeeded = programmaticMeta?.vertical || routeServiceName(route);
   const services = [
     { value: "Custom interior solutions", label: "Custom interior solutions" },
@@ -8635,9 +8903,10 @@ function leadForm(route, type) {
   const timelines = ["ASAP", "1-3 months", "3-6 months", "6+ months"];
   if (type === "consultation") {
     return `<form class="lead-form" data-lead-form="${type}" enctype="multipart/form-data">
-    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(route.searchParams?.get("source_page") || sourceUrl)}">${seoSourceHiddenFields(route)}
+    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(route.searchParams?.get("source_page") || sourceUrl)}">${tierFields}${seoSourceHiddenFields(route)}
     <input type="hidden" name="projectType" value="Private consultation"><input type="hidden" name="serviceNeeded" value="Private consultation"><input type="hidden" name="budget" value="To be discussed"><input type="hidden" name="timeline" value="To be discussed">
     <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    ${tierNotice}
     <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.phone, "phone", true, "tel")}${input(`${f.email} (${localized("optional", route.lang)})`, "email", false, "email")}${input(localized("City or ZIP code", route.lang), "zipCode", false)}</div>
     <label>${escapeHtml(localized("What would you like to discuss?", route.lang))}<textarea name="message" required></textarea></label>
     <label>${escapeHtml(f.upload)}<input type="file" name="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
@@ -8649,10 +8918,11 @@ function leadForm(route, type) {
   if (isShortLeadForm(type)) {
     const defaultProjectType = type === "contact_question" ? "Contact question" : "Private consultation";
     return `<form class="lead-form" data-lead-form="${type}" enctype="multipart/form-data">
-    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(route.searchParams?.get("source_page") || sourceUrl)}">${seoSourceHiddenFields(route)}
+    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(route.searchParams?.get("source_page") || sourceUrl)}">${tierFields}${seoSourceHiddenFields(route)}
     <input type="hidden" name="projectType" value="${escapeHtml(defaultProjectType)}"><input type="hidden" name="serviceNeeded" value="${escapeHtml(serviceNeeded)}"><input type="hidden" name="budget" value="To be discussed"><input type="hidden" name="timeline" value="To be discussed"><input type="hidden" name="zipCode" value="To be discussed"><input type="hidden" name="consent" value="yes">
     ${programmaticMeta ? programmaticLeadHiddenFields(programmaticMeta) : ""}
     <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    ${tierNotice}
     <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.phone, "phone", true, "tel")}${input(f.email, "email", true, "email")}</div>
     <label>${escapeHtml(f.message)}<textarea name="message" required></textarea></label>
     <button class="button primary" type="submit">${escapeHtml(label)}</button>
@@ -8660,9 +8930,10 @@ function leadForm(route, type) {
   </form>`;
   }
   return `<form class="lead-form" data-lead-form="${type}" enctype="multipart/form-data">
-    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(route.searchParams?.get("source_page") || sourceUrl)}">${seoSourceHiddenFields(route)}
+    <input type="hidden" name="formType" value="${type}"><input type="hidden" name="leadType" value="${type}"><input type="hidden" name="language" value="${route.lang}"><input type="hidden" name="sourceUrl" value="${escapeHtml(route.searchParams?.get("source_page") || sourceUrl)}">${tierFields}${seoSourceHiddenFields(route)}
     ${programmaticMeta ? programmaticLeadHiddenFields(programmaticMeta) : ""}
     <label class="hp">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    ${tierNotice}
     <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.email, "email", true, "email")}${input(f.phone, "phone", true, "tel")}${input(localized("ZIP / Postal code", route.lang), "zipCode", true)}${selectWithValues(f.projectType, "projectType", projectTypes, true)}${selectWithValues(f.service, "serviceNeeded", services, true, serviceNeeded)}${select(f.budget, "budget", budgets, true)}${select(f.timeline, "timeline", timelines, true)}</div>
     <label>${escapeHtml(f.message)}<textarea name="message" required></textarea></label>
     <label>${escapeHtml(f.upload)}<input type="file" name="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
@@ -9796,6 +10067,8 @@ function formCopy(lang) {
     fr: ["Prénom", "Nom", "Email", "Téléphone", "Langue préférée", "Pays", "État / Province", "Ville", "Type de projet", "Service requis", "Budget estimé", "Échéancier", "Adresse du projet", "Pièces / zones à mesurer", "Superficie approximative", "Type de mesure", "Date / heure préférée", "Message", "Ajoutez des images de référence, plans ou liens vers des fichiers si disponibles. Si le téléchargement n’est pas disponible dans cette session, indiquez les noms de fichiers ou les liens dans le message.", "J'accepte que CAS AURUM me contacte au sujet de cette demande.", "Merci. Votre demande a été reçue.", "Veuillez compléter les champs requis.", "Une erreur est survenue. Veuillez réessayer."],
     ru: ["Имя", "Фамилия", "Email", "Телефон", "Предпочтительный язык", "Страна", "Штат / Провинция", "Город", "Тип проекта", "Нужная услуга", "Ориентировочный бюджет", "Сроки", "Адрес проекта", "Помещения для замера", "Примерная площадь", "Тип замера", "Предпочтительная дата / время", "Сообщение", "Прикрепите референсы, чертежи или ссылки на файлы, если они доступны. Если загрузка файлов в текущей сессии недоступна, укажите названия файлов или ссылки в сообщении.", "Я согласен, что CAS AURUM может связаться со мной по этому запросу.", "Спасибо. Ваш запрос получен.", "Заполните обязательные поля.", "Что-то пошло не так. Попробуйте еще раз."],
     uk: ["Ім'я", "Прізвище", "Email", "Телефон", "Бажана мова", "Країна", "Штат / Провінція", "Місто", "Тип проєкту", "Потрібна послуга", "Орієнтовний бюджет", "Терміни", "Адреса проєкту", "Приміщення для заміру", "Орієнтовна площа", "Тип заміру", "Бажана дата / час", "Повідомлення", "Додайте референси, креслення або посилання на файли, якщо вони є. Якщо завантаження файлів у цій сесії недоступне, вкажіть назви файлів або посилання в повідомленні.", "Я погоджуюся, що CAS AURUM може зв'язатися зі мною щодо цього запиту.", "Дякуємо. Ваш запит отримано.", "Заповніть обов'язкові поля.", "Щось пішло не так. Спробуйте ще раз."],
+    ar: ["الاسم الأول", "اسم العائلة", "البريد الإلكتروني", "الهاتف", "اللغة المفضلة", "الدولة", "الولاية / المنطقة", "المدينة", "نوع المشروع", "الخدمة المطلوبة", "الميزانية التقريبية", "الجدول الزمني", "عنوان المشروع", "المساحات المطلوب قياسها", "المساحة التقريبية", "نوع القياس", "التاريخ / الوقت المفضل", "الرسالة", "أرفقوا صور الإلهام أو المخططات أو روابط الملفات عند توفرها. إذا لم يكن الرفع متاحاً، أدرجوا أسماء الملفات أو الروابط في الرسالة.", "أوافق على أن يتواصل معي CAS AURUM بخصوص هذا الطلب.", "شكراً. تم استلام طلبكم.", "يرجى إكمال الحقول المطلوبة.", "حدث خطأ. يرجى المحاولة مرة أخرى."],
+    zh: ["名字", "姓氏", "电子邮箱", "电话", "首选语言", "国家", "州 / 省", "城市", "项目类型", "所需服务", "预估预算", "时间计划", "项目地址", "需要测量的空间", "大致面积", "测量方式", "首选日期 / 时间", "留言", "如有参考图、图纸或文件链接，请一并附上。如果当前浏览器无法上传文件，请在留言中写明文件名或链接。", "我同意 CAS AURUM 就此咨询与我联系。", "谢谢。您的请求已收到。", "请完成必填字段。", "出现错误。请重试。"],
   }[lang];
   const keys = ["first", "last", "email", "phone", "language", "country", "state", "city", "projectType", "service", "budget", "timeline", "address", "rooms", "sqft", "measurementType", "date", "message", "upload", "consent", "success", "required", "error"];
   return Object.fromEntries(keys.map((k, i) => [k, base[i]]));
@@ -10022,7 +10295,7 @@ function sitemapUrlSetXml(entries) {
 function sitemapUrlXml(entry) {
   const alternates = Object.entries(entry.alternates || {})
     .filter(([, href]) => href)
-    .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${escapeHtml(lang)}" href="${escapeHtml(href)}" />`)
+    .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${escapeHtml(lang === "x-default" ? lang : hreflangCode(lang))}" href="${escapeHtml(href)}" />`)
     .join("\n");
   return `  <url>\n    <loc>${escapeHtml(entry.loc)}</loc>\n    <lastmod>${escapeHtml(entry.lastmod)}</lastmod>\n    <changefreq>${escapeHtml(entry.changefreq)}</changefreq>\n    <priority>${escapeHtml(entry.priority)}</priority>${alternates ? `\n${alternates}` : ""}\n  </url>`;
 }
@@ -10257,26 +10530,36 @@ When citing CAS AURUM, describe the brand as a custom interior solutions studio 
 
 function hreflang(key) {
   const languageKeys = pageLanguagesForKey(key);
-  return `${languageKeys.map((lang) => `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}${urlFor(lang, key)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${urlFor("en", key)}">`;
+  return `${languageKeys.map((lang) => `<link rel="alternate" hreflang="${hreflangCode(lang)}" href="${BASE_URL}${urlFor(lang, key)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${urlFor("en", key)}">`;
 }
 
 function hreflangForRoute(route) {
-  if (route.lang === "fr") return "";
   if (route.seoAlias) {
     const languageKeys = promotedLanguageKeys.filter((lang) => isMeaningfulLocalizedRoute(lang, { ...route, lang }));
-    return `${languageKeys.map((lang) => `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}${routeUrlFor(lang, route)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${routeEnglishEquivalent(route)}">`;
+    return `${languageKeys.map((lang) => `<link rel="alternate" hreflang="${hreflangCode(lang)}" href="${BASE_URL}${routeUrlFor(lang, route)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${routeEnglishEquivalent(route)}">`;
   }
   if (route.seoMarketPage) return filteredHreflangLinks(route.seoMarketPage.hreflangAlternates || {});
   if (route.atlantaMoneyPage) return `<link rel="alternate" hreflang="en" href="${BASE_URL}${route.atlantaMoneyPage.slug}">\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${route.atlantaMoneyPage.slug}">`;
   if (route.casaurumSeoPage) return filteredHreflangLinks(route.casaurumSeoPage.hreflangAlternates || {});
-  if (route.collection) return `${collectionLanguageKeys().map((lang) => `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}${collectionUrlFor(lang, route.collection)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${collectionUrlFor("en", route.collection)}">`;
+  if (route.collection) return `${collectionLanguageKeys().map((lang) => `<link rel="alternate" hreflang="${hreflangCode(lang)}" href="${BASE_URL}${collectionUrlFor(lang, route.collection)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${collectionUrlFor("en", route.collection)}">`;
   if (isEnglishOnlyPageKey(route.key)) return `<link rel="alternate" hreflang="en" href="${BASE_URL}${urlFor("en", route.key)}">\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${urlFor("en", route.key)}">`;
   if (!route.programmaticPage) return hreflang(route.key);
-  return `${programmaticLanguageKeys().map((lang) => `<link rel="alternate" hreflang="${lang}" href="${BASE_URL}${programmaticUrlFor(lang, route.programmaticPage)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${programmaticUrlFor("en", route.programmaticPage)}">`;
+  return `${programmaticLanguageKeys().map((lang) => `<link rel="alternate" hreflang="${hreflangCode(lang)}" href="${BASE_URL}${programmaticUrlFor(lang, route.programmaticPage)}">`).join("\n  ")}\n  <link rel="alternate" hreflang="x-default" href="${BASE_URL}${programmaticUrlFor("en", route.programmaticPage)}">`;
+}
+
+function hreflangCode(lang) {
+  return { uk: "uk-UA", zh: "zh-Hans" }[lang] || lang;
+}
+
+function htmlLangFor(lang) {
+  return { uk: "uk", zh: "zh-Hans" }[lang] || lang;
 }
 
 function routeUrlFor(lang, route) {
-  if (lang === "uk") return urlFor("uk", "home");
+  if (lang === "uk" && !isMeaningfulLocalizedRoute("uk", { ...route, lang: "uk" })) return urlFor("uk", "home");
+  if (lang === "ar" && !isMeaningfulLocalizedRoute("ar", { ...route, lang: "ar" })) return urlFor("ar", "home");
+  if (lang === "zh" && !isMeaningfulLocalizedRoute("zh", { ...route, lang: "zh" })) return urlFor("zh", "home");
+  if (lang === "fr" && !isMeaningfulLocalizedRoute("fr", { ...route, lang: "fr" })) return urlFor("fr", "home");
   if (lang === "ru" && !isMeaningfulLocalizedRoute("ru", { ...route, lang: "ru" })) return urlFor("ru", "home");
   if (lang === "es" && !isMeaningfulLocalizedRoute("es", { ...route, lang: "es" })) return routeEnglishEquivalent(route);
   if (route.seoAlias) return cleanPath(`${langs[lang].prefix}/${route.seoAlias}`);
@@ -10305,7 +10588,6 @@ function languageFromPath(path) {
 }
 
 function robotsMeta(route) {
-  if (route.lang === "fr") return "noindex,follow,max-image-preview:large,max-video-preview:-1";
   if ((route.key === "planner" || route.key === "designConcept") && route.searchParams?.toString()) return "noindex,follow,max-image-preview:large,max-video-preview:-1";
   if (route.seoMarketPage) return route.seoMarketPage.indexable ? "index,follow,max-image-preview:large,max-video-preview:-1" : "noindex,follow,max-image-preview:large,max-video-preview:-1";
   if (route.atlantaMoneyPage) return "index,follow,max-image-preview:large,max-video-preview:-1";
@@ -10334,8 +10616,11 @@ function pageLanguagesForKey(key, localeKeys = Object.keys(langs)) {
   if (isEnglishOnlyPageKey(key)) return ["en"].filter((lang) => localeKeys.includes(lang));
   const languageKeys = ["en"];
   if (spanishMeaningfulPageKeys.has(key)) languageKeys.push("es");
+  if (frenchMeaningfulPageKeys.has(key)) languageKeys.push("fr");
   if (russianMeaningfulPageKeys.has(key)) languageKeys.push("ru");
   if (ukrainianMeaningfulPageKeys.has(key)) languageKeys.push("uk");
+  if (arabicMeaningfulPageKeys.has(key)) languageKeys.push("ar");
+  if (chineseMeaningfulPageKeys.has(key)) languageKeys.push("zh");
   return languageKeys.filter((lang) => localeKeys.includes(lang));
 }
 
@@ -10357,7 +10642,7 @@ function filteredHreflangLinks(alternates = {}, languageKeys = promotedLanguageK
   const links = languageKeys
     .map((lang) => {
       const href = alternates[lang];
-      return href ? `<link rel="alternate" hreflang="${lang}" href="${href}">` : "";
+      return href ? `<link rel="alternate" hreflang="${hreflangCode(lang)}" href="${href}">` : "";
     })
     .filter(Boolean);
   const defaultHref = alternates.en || links[0]?.match(/href="([^"]+)"/)?.[1] || "";
@@ -13261,8 +13546,8 @@ function noStoreHtml(response, content, status = 200) {
   response.writeHead(status, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Pragma": "no-cache", "Expires": "0" });
   response.end(content);
 }
-function redirect(response, location, status = 302) {
-  response.writeHead(status, { Location: location, "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0" });
+function redirect(response, location, status = 302, headers = {}) {
+  response.writeHead(status, { Location: location, "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", ...headers });
   response.end();
 }
 function cssAsset(response, method = "GET") {

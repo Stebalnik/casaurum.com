@@ -31,7 +31,12 @@ const paths = [
   "/ru",
   "/ru/dizayn-koncept",
   "/ru/quick-project-estimate",
-  "/ru/galereya",
+  "/ua",
+  "/ua/dizayn-kontsept",
+  "/ar",
+  "/ar/quick-project-estimate",
+  "/zh",
+  "/zh/quick-project-estimate",
   "/technical-millwork-planner",
   "/quick-project-estimate",
   "/request-consultation",
@@ -54,7 +59,6 @@ const paths = [
   "/es/georgia/atlanta/custom-kitchen-cabinets",
   "/es/paneles-de-pared-a-medida",
   "/fr/panneaux-muraux-sur-mesure",
-  "/uk",
   "/en/design-concepts/georgia",
   "/en/design-concepts/atlanta",
   "/sitemap.xml",
@@ -96,12 +100,9 @@ for (const [path, location] of [
   ["/millwork-planner", "/technical-millwork-planner"],
   ["/projects", "/gallery"],
   ["/collections/aurum", "/ideas/aurum"],
-  ["/ua", "/uk"],
-  ["/ua/quick-project-estimate", "/uk"],
-  ["/uk/quick-project-estimate", "/uk"],
-  ["/uk/konstruktor-mebliv", "/uk"],
+  ["/uk", "/ua"],
+  ["/uk/quick-project-estimate", "/ua/quick-project-estimate"],
   ["/ru/partnerskaya-programma", "/ru"],
-  ["/ru/stenovye-paneli-na-zakaz", "/ru"],
 ]) {
   const result = await request(path);
   if (result.status !== 301 || result.headers.location !== location) {
@@ -110,6 +111,40 @@ for (const [path, location] of [
   }
   console.log(`${path} legacy redirect ok`);
 }
+
+for (const [acceptLanguage, location] of [
+  ["es", "/es"],
+  ["fr", "/fr"],
+  ["ru", "/ru"],
+  ["uk", "/ua"],
+  ["uk-UA", "/ua"],
+  ["ar", "/ar"],
+  ["zh", "/zh"],
+  ["zh-CN", "/zh"],
+]) {
+  const result = await request("/", { "Accept-Language": acceptLanguage });
+  if (result.status !== 302 || result.headers.location !== location) {
+    server.kill();
+    throw new Error(`Accept-Language ${acceptLanguage} should redirect to ${location}, returned ${result.status} ${result.headers.location || ""}`);
+  }
+  console.log(`Accept-Language ${acceptLanguage} ok`);
+}
+const defaultLocale = await request("/");
+if (defaultLocale.status !== 200) {
+  server.kill();
+  throw new Error(`default/no Accept-Language should render English /, returned ${defaultLocale.status}`);
+}
+const botLocale = await request("/", { "Accept-Language": "es", "User-Agent": "Googlebot" });
+if (botLocale.status !== 200) {
+  server.kill();
+  throw new Error(`bot Accept-Language should not redirect, returned ${botLocale.status}`);
+}
+const robotsLocale = await request("/robots.txt", { "Accept-Language": "es" });
+if (robotsLocale.status !== 200) {
+  server.kill();
+  throw new Error(`robots.txt should not locale redirect, returned ${robotsLocale.status}`);
+}
+console.log("Accept-Language detection ok");
 
 const seoIndex = await request("/seo-index");
 if (seoIndex.status !== 401) {
@@ -130,13 +165,19 @@ if (!homePage.body.includes("For Designers &amp; Builders") || !homePage.body.in
   server.kill();
   throw new Error("homepage should expose new navigation and Start Project CTA");
 }
-if (homePage.body.includes(">FR<") || homePage.body.includes('hreflang="fr"')) {
+if (homePage.body.includes('class="lang"') || homePage.body.includes('data-event="language_changed"') || homePage.body.includes(">FR<")) {
   server.kill();
-  throw new Error("homepage should not promote French in the language switcher or hreflang");
+  throw new Error("homepage should not render a visible language switcher");
 }
-if (!homePage.body.includes('href="/es" hreflang="es"') || !homePage.body.includes('href="/ru" hreflang="ru"') || !homePage.body.includes('href="/uk" hreflang="uk"')) {
+for (const hreflang of ['hreflang="en"', 'hreflang="es"', 'hreflang="fr"', 'hreflang="ru"', 'hreflang="uk-UA"', 'hreflang="ar"', 'hreflang="zh-Hans"', 'hreflang="x-default"']) {
+  if (!homePage.body.includes(hreflang)) {
+    server.kill();
+    throw new Error(`homepage missing ${hreflang}`);
+  }
+}
+if (homePage.body.includes("/uk")) {
   server.kill();
-  throw new Error("homepage language switcher should expose EN, ES, RU and UK landing links");
+  throw new Error("homepage should not expose legacy /uk URLs");
 }
 const crmApp = await request("/crm-app");
 if (crmApp.status !== 200) {
@@ -176,19 +217,19 @@ if (!kitchenPage.body.includes("/design-concept") || !kitchenPage.body.includes(
 }
 console.log("/design-concept sales flow ok");
 
-const ukrainianPage = await read("/uk");
-if (!ukrainianPage.body.includes("CAS AURUM українською") || !ukrainianPage.body.includes("Продовжити англійською") || ukrainianPage.body.includes('href="/uk/')) {
+const ukrainianPage = await read("/ua");
+if (!ukrainianPage.body.includes("CAS AURUM українською") || !ukrainianPage.body.includes("/ua/dizayn-kontsept") || ukrainianPage.body.includes("Продовжити англійською") || ukrainianPage.body.includes('href="/uk')) {
   server.kill();
-  throw new Error("/uk should render a compact Ukrainian landing page without deep Ukrainian navigation");
+  throw new Error("/ua should render a compact Ukrainian landing page without visible English language switching or /uk URLs");
 }
-console.log("/uk compact landing ok");
+console.log("/ua compact landing ok");
 
 const frenchPage = await read("/fr/solutions");
-if (!frenchPage.body.includes("noindex,follow") || frenchPage.body.includes(">FR<") || frenchPage.body.includes('hreflang="fr"')) {
+if (frenchPage.body.includes("noindex,follow") || frenchPage.body.includes(">FR<") || !frenchPage.body.includes('hreflang="fr"')) {
   server.kill();
-  throw new Error("French pages should remain accessible but noindex and not promoted");
+  throw new Error("French core pages should be accessible, indexable and represented in hreflang without a visible switcher");
 }
-console.log("French noindex/deprioritized ok");
+console.log("French localized hreflang ok");
 
 const plannerPage = await read("/technical-millwork-planner");
 for (const requiredText of ["Quick Project Estimate", "Technical Millwork Planner", "data-lead-form=\"quick_project_estimate\"", "data-lead-form=\"technical_millwork_planner\""]) {
@@ -197,9 +238,9 @@ for (const requiredText of ["Quick Project Estimate", "Technical Millwork Planne
     throw new Error(`/technical-millwork-planner missing required planner text: ${requiredText}`);
   }
 }
-if (plannerPage.body.includes(">FR<") || plannerPage.body.includes('hreflang="fr"')) {
+if (plannerPage.body.includes(">FR<") || plannerPage.body.includes('class="lang"')) {
   server.kill();
-  throw new Error("/technical-millwork-planner should not promote French");
+  throw new Error("/technical-millwork-planner should not render a visible language switcher");
 }
 console.log("/technical-millwork-planner and quick estimate ok");
 
@@ -401,13 +442,19 @@ if (!coreSitemap.body.includes("/design-concept")) {
   server.kill();
   throw new Error("design concept page missing from core sitemap");
 }
-if (coreSitemap.body.includes("casaurum.com/fr") || coreSitemap.body.includes("casaurum.com/ua") || coreSitemap.body.includes("casaurum.com/uk/")) {
+if (coreSitemap.body.includes("casaurum.com/uk")) {
   server.kill();
-  throw new Error("core sitemap should not include French, legacy UA, or deep Ukrainian URLs");
+  throw new Error("core sitemap should not include legacy /uk URLs");
 }
-if (!/<loc>https?:\/\/[^<]+\/uk<\/loc>/.test(coreSitemap.body)) {
+for (const expected of ["/es", "/fr", "/ru", "/ua", "/ar", "/zh"]) {
+  if (!coreSitemap.body.includes(expected)) {
+    server.kill();
+    throw new Error(`core sitemap missing localized route ${expected}`);
+  }
+}
+if (!coreSitemap.body.includes('hreflang="uk-UA"') || !coreSitemap.body.includes('hreflang="zh-Hans"')) {
   server.kill();
-  throw new Error("compact Ukrainian landing page missing from core sitemap");
+  throw new Error("core sitemap missing uk-UA or zh-Hans alternates");
 }
 
 const legacyProgrammaticSitemap = await read("/sitemaps/legacy-programmatic.xml");
@@ -440,9 +487,9 @@ if (!imageSitemap.body.includes("<image:image>") || !imageSitemap.body.includes(
   server.kill();
   throw new Error("public project images missing from image sitemap");
 }
-if (imageSitemap.body.includes("casaurum.com/fr") || imageSitemap.body.includes("casaurum.com/ua") || imageSitemap.body.includes("casaurum.com/uk/")) {
+if (imageSitemap.body.includes("casaurum.com/uk")) {
   server.kill();
-  throw new Error("image sitemap should not include French, legacy UA, or deep Ukrainian URLs");
+  throw new Error("image sitemap should not include legacy /uk URLs");
 }
 if (!legacyProgrammaticSitemap.body.includes("/georgia/atlanta/luxury-custom-kitchens")) {
   server.kill();
@@ -467,9 +514,9 @@ console.log("programmatic review robots ok");
 
 server.kill();
 
-function request(path) {
+function request(path, headers = {}) {
   return new Promise((resolve, reject) => {
-    const req = http.get({ hostname: "127.0.0.1", port, path }, (res) => {
+    const req = http.get({ hostname: "127.0.0.1", port, path, headers }, (res) => {
       res.resume();
       res.on("end", () => resolve({ status: res.statusCode, headers: res.headers }));
     });
@@ -480,9 +527,9 @@ function request(path) {
   });
 }
 
-function read(path) {
+function read(path, headers = {}) {
   return new Promise((resolve, reject) => {
-    const req = http.get({ hostname: "127.0.0.1", port, path }, (res) => {
+    const req = http.get({ hostname: "127.0.0.1", port, path, headers }, (res) => {
       let body = "";
       res.setEncoding("utf8");
       res.on("data", (chunk) => (body += chunk));
