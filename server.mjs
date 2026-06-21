@@ -91,8 +91,8 @@ const solutionPageKeys = ["mediaWalls", "customKitchens", "customClosets", "buil
 const servicePageKeys = ["solutions", ...solutionPageKeys, "millwork", "trade"];
 const contentHubPageKeys = ["materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork"];
 const pageOrder = ["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "collections", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
-const coreSitemapPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "planner", "quickEstimate", "about", "contact", "consultation", "measurement"]);
-const noindexCorePageKeys = new Set(["collections", "usa", "canada", "mexico"]);
+const coreSitemapPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "mudrooms", "customFurniture", "millwork", "projects", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "planner", "quickEstimate", "about", "contact", "consultation", "measurement"]);
+const noindexCorePageKeys = new Set(["collections", "homeOffices", "usa", "canada", "mexico"]);
 const promotedLanguageKeys = ["en", "es", "ru"];
 const languageSwitcherKeys = ["en", "es", "ru", "uk"];
 const spanishMeaningfulPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "customFurniture", "projects", "trade", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "privacy", "terms"]);
@@ -583,7 +583,7 @@ const collectionImageSpecs = {
   },
   "/images/collections/signature-02-hotel-lobby.webp": {
     prompt: "Ultra realistic professional architectural photography of a Las Vegas luxury boutique hotel lobby, large-scale wide shot, sculptural bespoke reception desk made of natural stone and refined wood, dramatic custom wall panel installation behind the desk, polished stone floor, premium lounge seating in the foreground, warm architectural ceiling lighting, grand arrival atmosphere, memorable hospitality design, no guests, no staff, refined commercial luxury, finished interior, editorial magazine quality, 8k.",
-    alt: "Las Vegas luxury hotel lobby with sculptural reception desk and dramatic custom wall panels.",
+    alt: "Architectural millwork with custom wood wall panels, refined reception detailing and warm lighting.",
   },
   "/images/collections/signature-03-private-villa-dressing-gallery.webp": {
     prompt: "Professional ultra realistic luxury interior photography of a Miami private villa dressing gallery, central perspective down a long elegant dressing room, illuminated wardrobe walls on both sides with glass doors and soft beige lacquer panels, bespoke accessory island with natural stone top in the center, subtle champagne metal handles and frame details, mirror or seating niche at the end of the room, polished stone floor, soft glamorous lighting, private fashion boutique atmosphere, refined villa luxury, finished bespoke interior, editorial quality, 8k.",
@@ -1656,7 +1656,7 @@ const faqs = {
     ["What is architectural millwork?", "Architectural millwork includes custom woodwork, built-ins, cabinetry, closets, wall systems and interior details made for a specific space."],
     ["What is the difference between millwork and custom furniture?", "Millwork is usually integrated into the architecture, while furniture may be freestanding or semi-integrated. Many residential projects need both."],
     ["Can CAS AURUM create built-ins, closets and cabinetry?", "Yes. Built-ins, closets, wardrobes, cabinetry, shelving and wall systems are core project types."],
-    ["Do you work with builders and developers?", "Yes. Builders and developers can submit plans, project details, budget range and schedule requirements."],
+    ["Do you work with builders and remodelers?", "Yes. Builders, remodelers and designers can submit plans, project details, budget range and schedule requirements."],
     ["Can millwork be coordinated with a designer or builder?", "Yes. Designers and builders can share drawings, finish schedules, measurements and site constraints so the millwork package is coordinated before production."],
     ["What files can designers submit?", "Plans, elevations, PDFs, moodboards, reference images, finish schedules, photos and measurements are all useful."],
     ["How do I start a millwork project?", "Request a consultation or submit project details with location, spaces, service need, timeline and drawings if available."],
@@ -8601,8 +8601,8 @@ function leadForm(route, type) {
   const sourceUrl = type === "consultation" ? consultationFormUrl(route.lang) : routeUrlFor(route.lang, route);
   const serviceNeeded = programmaticMeta?.vertical || routeServiceName(route);
   const services = [
-    { value: "Luxury interiors", label: "Custom interior solutions" },
-    { value: "Luxury wall panels", label: "Architectural wall panels" },
+    { value: "Custom interior solutions", label: "Custom interior solutions" },
+    { value: "Architectural wall panels", label: "Architectural wall panels" },
     { value: "Custom wall panels", label: "Custom wall panels" },
     { value: "Custom furniture", label: "Custom furniture" },
     { value: "Architectural millwork", label: "Architectural millwork" },
@@ -8615,11 +8615,11 @@ function leadForm(route, type) {
     { value: "Custom closets", label: "Custom closets" },
     { value: "Built-in furniture", label: "Built-ins and shelving" },
     { value: "Custom vanities", label: "Custom vanities" },
-    { value: "Premium office interiors", label: "Home office built-ins" },
-    { value: "Hotel & hospitality interiors", label: "Trade millwork package" },
-    { value: "Restaurant interiors", label: "Wall panel package" },
+    { value: "Home office built-ins", label: "Home office built-ins" },
+    { value: "Trade millwork package", label: "Trade millwork package" },
+    { value: "Wall panel package", label: "Wall panel package" },
     { value: "Designer / builder partnership", label: "Designer / builder partnership" },
-    { value: "Developer interior packages", label: "Engineering and build package" },
+    { value: "Engineering and build package", label: "Engineering and build package" },
     { value: "Other", label: "Other" },
   ];
   const projectTypes = [
@@ -10418,7 +10418,7 @@ function alt(id, lang) {
   const map = {
     "hero-luxury-wall-panels-living-room": { en: "Luxury walnut wall panels and custom media wall in a refined CAS AURUM living room concept.", es: "Paneles de pared de nogal y muro de TV a medida en un concepto de sala CAS AURUM.", fr: "Panneaux muraux en noyer de luxe et mur multimédia sur mesure dans un concept de salon CAS AURUM.", ru: "Стеновые панели из ореха и TV-зона на заказ в концепции гостиной CAS AURUM." },
     "custom-furniture-bedroom-suite": { en: "Bespoke walnut bedroom furniture with integrated wall panels and custom nightstands by CAS AURUM.", es: "Muebles de dormitorio de nogal a medida con paneles integrados y mesas de noche personalizadas de CAS AURUM.", fr: "Mobilier de chambre en noyer sur mesure avec panneaux intégrés et chevets personnalisés par CAS AURUM.", ru: "Мебель для спальни из ореха на заказ с интегрированными панелями и кастомными тумбами CAS AURUM." },
-    "architectural-millwork-hotel-lobby": { en: "Luxury hotel lobby with custom architectural millwork, wood wall panels and a bespoke reception desk.", es: "Lobby de hotel con carpintería arquitectónica a medida, paneles de madera y recepción personalizada.", fr: "Hall d'hôtel de luxe avec menuiserie architecturale sur mesure, panneaux en bois et comptoir d'accueil personnalisé.", ru: "Лобби отеля с архитектурной столяркой, деревянными панелями и стойкой ресепшн на заказ." },
+    "architectural-millwork-hotel-lobby": { en: "Architectural millwork with custom wood wall panels, refined reception detailing and warm lighting.", es: "Carpintería arquitectónica con paneles de madera a medida, detalles refinados y luz cálida.", fr: "Menuiserie architecturale avec panneaux bois sur mesure, détails raffinés et éclairage chaleureux.", ru: "Архитектурная столярка с деревянными панелями, точной деталировкой и теплым светом." },
     "custom-tv-wall-panels-modern-home": { en: "Custom TV wall panels with integrated wood, stone surfaces and floating media furniture.", es: "Paneles de pared para TV a medida con madera integrada, superficies de piedra y mueble flotante.", fr: "Panneaux muraux TV sur mesure avec bois intégré, surfaces en pierre et meuble multimédia suspendu.", ru: "Стеновые панели для TV-зоны с деревом, камнем и подвесной мебелью." },
     "luxury-closet-millwork": { en: "Bespoke walk-in closet with walnut millwork, custom wardrobes and integrated lighting.", es: "Vestidor a medida con carpintería de nogal, armarios personalizados e iluminación integrada.", fr: "Dressing sur mesure avec menuiserie en noyer, armoires personnalisées et éclairage intégré.", ru: "Гардеробная на заказ с отделкой из ореха, индивидуальными шкафами и встроенной подсветкой." },
     "premium-materials-closeup": { en: "Premium walnut, brass, stone, leather and fabric materials for luxury custom interiors.", es: "Materiales de nogal, latón, piedra, cuero y tela para interiores a medida.", fr: "Matériaux premium en noyer, laiton, pierre, cuir et tissu pour intérieurs de luxe sur mesure.", ru: "Материалы для интерьеров на заказ: орех, латунь, камень, кожа и ткань." },
