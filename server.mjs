@@ -1332,8 +1332,8 @@ function applyCustomInteriorPositioning() {
     copy[lang].home.intro = homeText.homeIntro;
     copy[lang].home.seo = localizedPlain("Cas Aurum designs custom media walls, TV units, kitchens, closets, built-ins, wall panels, fireplace walls, home offices and custom furniture. Homeowners can start by uploading photos and ordering a design concept before moving into drawings, production or installation.", lang);
     copy[lang].collectionsIntro = localizedPlain("Ideas are organized by solution category so you can explore media wall, kitchen, closet, built-in, fireplace wall, wall panel, home office, mudroom and custom furniture directions.", lang);
-    copy[lang].about = [localizedPlain("About CAS AURUM", lang), localizedPlain("CAS AURUM designs custom interior solutions for real homes: media walls, TV units, custom kitchens, closets, built-ins, wall panels, fireplace walls, home offices, mudrooms and custom furniture. The first step can begin with room photos and a clear design concept.", lang)];
-    copy[lang].contact = [localizedPlain("Start a CAS AURUM Project", lang), localizedPlain("Send photos, goals, location and a budget direction. CAS AURUM will help you choose the right next step: Design Concept, Design + Build Package or Full Realization review.", lang)];
+    copy[lang].about = [localizedPlain("About CAS AURUM", lang), lang === "en" ? "CAS AURUM designs custom media walls, kitchens, closets, built-ins, wall panels and furniture, starting with room photos and a clear design concept." : localizedPlain("CAS AURUM designs custom interior solutions for real homes: media walls, TV units, custom kitchens, closets, built-ins, wall panels, fireplace walls, home offices, mudrooms and custom furniture. The first step can begin with room photos and a clear design concept.", lang)];
+    copy[lang].contact = [localizedPlain("Start a CAS AURUM Project", lang), lang === "en" ? "Send photos, goals, location and budget direction. CAS AURUM will recommend the right next step for design, planning or project review." : localizedPlain("Send photos, goals, location and a budget direction. CAS AURUM will help you choose the right next step: Design Concept, Design + Build Package or Full Realization review.", lang)];
     copy[lang].services = customServiceContent(lang);
     homepagePositioning[lang] = homePositioningCopy(lang);
   }
@@ -1703,7 +1703,7 @@ const projectsGalleryCopy = {
     title: "Completed Projects",
     desc: "Explore completed CAS AURUM work across custom cabinetry, architectural millwork, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and refined interior details.",
     metaTitle: `Completed Projects | ${BRAND}`,
-    metaDesc: "Explore completed CAS AURUM custom interiors, millwork, cabinetry, media walls, kitchens, vanities, reception desks, bar cabinets, tables, ceilings and premium interior details.",
+    metaDesc: "Explore completed CAS AURUM interiors: millwork, cabinetry, media walls, kitchens, vanities, bar cabinets and refined custom details.",
     primaryCta: "Request a Consultation",
     secondaryCta: "Explore Collections",
     noteTitle: "Built for real homes",
@@ -5293,7 +5293,7 @@ function designConceptMeta(lang) {
     uk: "Пакети дизайн-концепту інтер'єру | CAS AURUM",
   };
   const descriptions = {
-    en: "Upload room photos and start with a Design Concept for a media wall, TV unit, custom kitchen, closet, built-in, wall panels, fireplace wall, home office, mudroom or custom furniture.",
+    en: "Upload room photos and start with a Design Concept for a media wall, kitchen, closet, built-in, wall panels, fireplace, office or custom furniture.",
     es: "Sube fotos y empieza con un concepto para muro media, TV unit, cocina, closet, built-ins, paneles, chimenea, oficina, mudroom o muebles a medida.",
     fr: "Ajoutez des photos et commencez par un concept pour mur media, meuble TV, cuisine, dressing, rangements, panneaux, cheminee, bureau, entree ou mobilier.",
     ru: "Загрузите фото и начните с дизайн-концепта для TV-стены, TV-модуля, кухни, гардеробной, встроенной мебели, панелей, стены с камином, кабинета, прихожей или мебели.",
@@ -6404,8 +6404,8 @@ function quickEstimateText(lang) {
     reset: "Reset",
     next: "Next",
     summary: { project: "Project", room: "Room", layout: "Layout", confidence: "Confidence", note: "This public estimate shows a preliminary range only. CAS AURUM reviews photos, dimensions, materials and installation conditions before final pricing." },
-    seoTitle: "Quick Project Estimate | Custom Millwork, Media Walls & Wall Panels | CAS AURUM",
-    metaDescription: "Get a quick project estimate for custom media walls, wall panels, closets, bathroom vanities, office built-ins and interior millwork. Upload photos and receive a preliminary budget range.",
+    seoTitle: "Quick Project Estimate | Custom Millwork | CAS AURUM",
+    metaDescription: "Get a quick estimate for custom media walls, wall panels, closets, vanities, built-ins and millwork. Upload photos for a preliminary range.",
     h1: "Quick Project Estimate for Custom Millwork & Interior Features",
     intro: "Not sure where to start? Use our Quick Project Estimate to get a preliminary budget range for your custom interior feature. Choose your project type, answer a few simple questions, upload photos of your space, and CAS AURUM will review your request. You do not need technical drawings, exact square footage, or millwork experience to begin.",
     seoAside: "Photos + simple choices",
@@ -13639,7 +13639,7 @@ function loadEnvFile(path) {
 function css() {
   return `
   :root{--ivory:#f6f0e7;--warm:#e4d8c8;--charcoal:#15120e;--soft:#afa28e;--line:rgba(246,240,231,.18);--gold:#c4a15f;--walnut:#6e5138;--oak:#b79b74;--stone:#d4c8b8;--black:#090807;--green:#26352f;color-scheme:dark;font-family:Inter,Avenir Next,Segoe UI,sans-serif}
-  *{box-sizing:border-box}body{margin:0;background:var(--charcoal);color:var(--ivory);line-height:1.55}a{color:inherit}img{display:block;width:100%;height:100%;object-fit:cover}.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:99;background:var(--ivory);color:var(--charcoal);padding:10px}
+  *{box-sizing:border-box}body{margin:0;background:var(--charcoal);color:var(--ivory);line-height:1.55}a{color:inherit}img{display:block;width:100%;height:100%;object-fit:cover}[hidden]{display:none!important}.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:99;background:var(--ivory);color:var(--charcoal);padding:10px}
   .site-header{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:16px clamp(18px,4vw,64px);background:rgba(21,18,14,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
   .brand{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap}.brand-lockup{width:118px;height:auto;object-fit:contain;flex:0 0 auto}.footer-brand-lockup{width:150px}nav{display:flex;justify-content:center;gap:18px;font-size:13px;color:var(--warm)}nav a,.site-footer a{text-decoration:none}.header-cta,.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border:1px solid var(--gold);text-decoration:none;font-weight:700;font-size:13px}.header-cta,.button.primary{background:var(--gold);color:var(--black)}.button.secondary{background:transparent;color:var(--ivory);border-color:var(--line)}.menu-button{display:none}
   section{padding:clamp(42px,7vw,92px) clamp(18px,5vw,72px)}.hero{width:auto;max-width:none;min-height:auto;margin:clamp(18px,3vw,42px) clamp(18px,4vw,72px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.85fr);align-items:stretch;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#100e0b}.hero-media{height:clamp(390px,43vw,560px);min-width:0;min-height:0;margin:0}.hero-video{position:relative;overflow:hidden;background:#080706}.hero-video video{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:cover}.hero-video img{height:100%;min-width:0;min-height:0}.hero-copy{min-width:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4.8vw,68px);background:linear-gradient(135deg,#1a1712,#24342c)}.hero h1{font-size:clamp(38px,5.2vw,74px)}.hero h2{font-size:clamp(26px,3vw,42px)}.eyebrow{margin:0 0 14px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}h1,h2,h3{font-family:Georgia,Times New Roman,serif;font-weight:500;line-height:1.06;margin:0}h1{font-size:clamp(42px,7vw,92px)}h2{font-size:clamp(28px,4vw,52px)}h3{font-size:23px}p{color:var(--warm)}.lede{font-size:clamp(18px,2vw,22px);max-width:760px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
