@@ -325,6 +325,7 @@ const designConceptLead = await postMultipart("/api/design-concept-lead", {
   project_stage: "photos",
   lead_type_classification: "homeowner",
   language: "en",
+  zone_count: "2",
   client_name: "Smoke Concept",
   email: "smoke-concept@example.com",
   phone: "+1 555 0102",
@@ -344,13 +345,16 @@ const designConceptLeadJson = JSON.parse(designConceptLead.body || "{}");
 const savedDesignConceptLead = getLead(designConceptLeadJson.id);
 if (
   !savedDesignConceptLead?.measurement_requested ||
-  savedDesignConceptLead.exact_price !== "$895" ||
-  savedDesignConceptLead.base_price !== "$792 per zone first order" ||
-  savedDesignConceptLead.estimated_price_label !== "$792 per zone first order" ||
+  savedDesignConceptLead.zone_count !== 2 ||
+  savedDesignConceptLead.exact_price !== "$1,790" ||
+  savedDesignConceptLead.base_price !== "$1,584" ||
+  savedDesignConceptLead.estimated_price_label !== "$1,584 first order total" ||
+  savedDesignConceptLead.first_order_price_total !== "$1,584" ||
+  savedDesignConceptLead.standard_price_total !== "$1,980" ||
   savedDesignConceptLead.estimated_timeline_label !== "confirmed after intake" ||
   savedDesignConceptLead.estimate_basis !== "package_type + project_type" ||
   savedDesignConceptLead.measurement_surcharge_rate !== "13%" ||
-  savedDesignConceptLead.measurement_surcharge_amount !== "$103"
+  savedDesignConceptLead.measurement_surcharge_amount !== "$206"
 ) {
   server.kill();
   throw new Error(`/api/design-concept-lead should save internal 13% measurement surcharge, saved ${JSON.stringify(savedDesignConceptLead || {})}`);

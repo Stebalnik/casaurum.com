@@ -71,6 +71,9 @@ const SEO_PERFORMANCE_CACHE_TTL_MS = Number(process.env.SEO_PERFORMANCE_CACHE_TT
 const MAX_DESIGN_CONCEPT_UPLOAD_BYTES = Number(process.env.MAX_DESIGN_CONCEPT_UPLOAD_MB || 35) * 1024 * 1024;
 const MAX_DESIGN_CONCEPT_FILES = Number(process.env.MAX_DESIGN_CONCEPT_FILES || 12);
 const DESIGN_CONCEPT_MEASUREMENT_SURCHARGE_RATE = 0.13;
+const DESIGN_PROJECT_STANDARD_ZONE_PRICE = 990;
+const DESIGN_PROJECT_FIRST_ORDER_ZONE_PRICE = 792;
+const DESIGN_PROJECT_MAX_ZONES = 20;
 const STATIC_ASSET_VERSION = "20260619a";
 const SITE_CSS_PATH = `/site-${STATIC_ASSET_VERSION}.css`;
 const CLIENT_JS_PATH = `/client-${STATIC_ASSET_VERSION}.js`;
@@ -1682,16 +1685,16 @@ function localizedPlain(value, lang) {
   };
   const dictionary = {
     es: {
-      "Ideas": "Ideas", "Start Your Design Concept": "Iniciar concepto de diseno", "Upload Photos": "Subir fotos", "Request Project Review": "Solicitar revision del proyecto", "Custom Interior Solutions Designed Around Your Space": "Soluciones interiores a medida para tu espacio", "Explore Solutions": "Explorar soluciones", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Empieza con fotos del espacio y recibe un concepto claro antes de decidir que construir.", "What Do You Want To Transform?": "Que quieres transformar?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Elige el espacio o elemento que quieres mejorar. Cada solucion puede empezar con fotos y un concepto.", "Ready to See What Your Space Could Become?": "Listo para ver en que puede convertirse tu espacio?", "Upload photos of your room and start with a clear design concept.": "Sube fotos de tu habitacion y empieza con un concepto claro.", "Designed around your space": "Disenado para tu espacio", "Concept before drawings": "Concepto antes de planos", "No pressure to build immediately": "Sin presion para construir de inmediato", "Custom solutions for real homes": "Soluciones a medida para hogares reales", "Design + build logic": "Diseño y realización con pasos claros", "Useful for homeowners and trade pros": "Util para propietarios y profesionales",
+	      "Ideas": "Ideas", "Start Your Design Concept": "Iniciar concepto de diseno", "Upload Photos": "Subir fotos", "Request Project Review": "Solicitar revision del proyecto", "Custom Interior Solutions Designed Around Your Space": "Soluciones interiores a medida para tu espacio", "Explore Solutions": "Explorar soluciones", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Empieza con fotos del espacio y recibe un concepto claro antes de decidir que construir.", "What Do You Want To Transform?": "Que quieres transformar?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Elige el espacio o elemento que quieres mejorar. Cada solucion puede empezar con fotos y un concepto.", "Ready to See What Your Space Could Become?": "Listo para ver en que puede convertirse tu espacio?", "Upload photos of your room and start with a clear design concept.": "Sube fotos de tu habitacion y empieza con un concepto claro.", "Designed around your space": "Disenado para tu espacio", "Concept before drawings": "Concepto antes de planos", "No pressure to build immediately": "Sin presion para construir de inmediato", "Custom solutions for real homes": "Soluciones a medida para hogares reales", "Design + build logic": "Diseño y realización con pasos claros", "Useful for homeowners and trade pros": "Util para propietarios y profesionales", "Number of zones": "Cantidad de zonas",
     },
     fr: {
-      "Ideas": "Idees", "Start Your Design Concept": "Demarrer le concept design", "Upload Photos": "Ajouter des photos", "Request Project Review": "Demander une revue du projet", "Custom Interior Solutions Designed Around Your Space": "Solutions interieures sur mesure autour de votre espace", "Explore Solutions": "Explorer les solutions", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Commencez avec des photos de votre espace et recevez un concept clair avant de decider de construire.", "What Do You Want To Transform?": "Que voulez-vous transformer ?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Choisissez la piece ou l'element a ameliorer. Chaque solution peut commencer avec photos et concept.", "Ready to See What Your Space Could Become?": "Pret a voir ce que votre espace pourrait devenir ?", "Upload photos of your room and start with a clear design concept.": "Ajoutez des photos et commencez par un concept clair.", "Designed around your space": "Pense autour de votre espace", "Concept before drawings": "Concept avant dessins", "No pressure to build immediately": "Aucune pression pour construire tout de suite", "Custom solutions for real homes": "Solutions sur mesure pour vrais logements", "Design + build logic": "Logique design + build", "Useful for homeowners and trade pros": "Utile pour proprietaires et pros",
+	      "Ideas": "Idees", "Start Your Design Concept": "Demarrer le concept design", "Upload Photos": "Ajouter des photos", "Request Project Review": "Demander une revue du projet", "Custom Interior Solutions Designed Around Your Space": "Solutions interieures sur mesure autour de votre espace", "Explore Solutions": "Explorer les solutions", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Commencez avec des photos de votre espace et recevez un concept clair avant de decider de construire.", "What Do You Want To Transform?": "Que voulez-vous transformer ?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Choisissez la piece ou l'element a ameliorer. Chaque solution peut commencer avec photos et concept.", "Ready to See What Your Space Could Become?": "Pret a voir ce que votre espace pourrait devenir ?", "Upload photos of your room and start with a clear design concept.": "Ajoutez des photos et commencez par un concept clair.", "Designed around your space": "Pense autour de votre espace", "Concept before drawings": "Concept avant dessins", "No pressure to build immediately": "Aucune pression pour construire tout de suite", "Custom solutions for real homes": "Solutions sur mesure pour vrais logements", "Design + build logic": "Logique design + build", "Useful for homeowners and trade pros": "Utile pour proprietaires et pros", "Number of zones": "Nombre de zones",
     },
     ru: {
-      "Ideas": "Идеи", "Start Your Design Concept": "Начать дизайн-концепт", "Upload Photos": "Загрузить фото", "Request Project Review": "Запросить разбор проекта", "Custom Interior Solutions Designed Around Your Space": "Индивидуальные интерьерные решения под ваше пространство", "Explore Solutions": "Смотреть решения", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Начните с фото пространства и получите понятный дизайн-концепт до решения о производстве.", "What Do You Want To Transform?": "Что вы хотите изменить?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Выберите комнату или элемент. Каждое решение может начаться с фото и дизайн-концепта.", "Ready to See What Your Space Could Become?": "Готовы увидеть, каким может стать ваше пространство?", "Upload photos of your room and start with a clear design concept.": "Загрузите фото комнаты и начните с понятного дизайн-концепта.", "Designed around your space": "Спроектировано под пространство", "Concept before drawings": "Концепт до чертежей", "No pressure to build immediately": "Без давления начинать производство сразу", "Custom solutions for real homes": "Индивидуальные решения для реальных домов", "Design + build logic": "Понятный путь от идеи к реализации", "Useful for homeowners and trade pros": "Удобно владельцам, дизайнерам и строителям",
+	      "Ideas": "Идеи", "Start Your Design Concept": "Начать дизайн-концепт", "Upload Photos": "Загрузить фото", "Request Project Review": "Запросить разбор проекта", "Custom Interior Solutions Designed Around Your Space": "Индивидуальные интерьерные решения под ваше пространство", "Explore Solutions": "Смотреть решения", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Начните с фото пространства и получите понятный дизайн-концепт до решения о производстве.", "What Do You Want To Transform?": "Что вы хотите изменить?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Выберите комнату или элемент. Каждое решение может начаться с фото и дизайн-концепта.", "Ready to See What Your Space Could Become?": "Готовы увидеть, каким может стать ваше пространство?", "Upload photos of your room and start with a clear design concept.": "Загрузите фото комнаты и начните с понятного дизайн-концепта.", "Designed around your space": "Спроектировано под пространство", "Concept before drawings": "Концепт до чертежей", "No pressure to build immediately": "Без давления начинать производство сразу", "Custom solutions for real homes": "Индивидуальные решения для реальных домов", "Design + build logic": "Понятный путь от идеи к реализации", "Useful for homeowners and trade pros": "Удобно владельцам, дизайнерам и строителям", "Number of zones": "Количество зон",
     },
     uk: {
-      "Ideas": "Ідеї", "Start Your Design Concept": "Почати дизайн-концепт", "Upload Photos": "Завантажити фото", "Request Project Review": "Запросити розбір проєкту", "Custom Interior Solutions Designed Around Your Space": "Індивідуальні інтер'єрні рішення під ваш простір", "Explore Solutions": "Переглянути рішення", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Почніть із фото простору й отримайте зрозумілий дизайн-концепт до рішення про виробництво.", "What Do You Want To Transform?": "Що ви хочете змінити?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Оберіть кімнату або елемент. Кожне рішення може початися з фото та дизайн-концепту.", "Ready to See What Your Space Could Become?": "Готові побачити, яким може стати ваш простір?", "Upload photos of your room and start with a clear design concept.": "Завантажте фото кімнати й почніть із зрозумілого дизайн-концепту.", "Designed around your space": "Спроєктовано під простір", "Concept before drawings": "Концепт до креслень", "No pressure to build immediately": "Без тиску починати виробництво одразу", "Custom solutions for real homes": "Індивідуальні рішення для реальних домів", "Design + build logic": "Зрозумілий шлях від ідеї до реалізації", "Useful for homeowners and trade pros": "Зручно власникам, дизайнерам і будівельникам",
+	      "Ideas": "Ідеї", "Start Your Design Concept": "Почати дизайн-концепт", "Upload Photos": "Завантажити фото", "Request Project Review": "Запросити розбір проєкту", "Custom Interior Solutions Designed Around Your Space": "Індивідуальні інтер'єрні рішення під ваш простір", "Explore Solutions": "Переглянути рішення", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Почніть із фото простору й отримайте зрозумілий дизайн-концепт до рішення про виробництво.", "What Do You Want To Transform?": "Що ви хочете змінити?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Оберіть кімнату або елемент. Кожне рішення може початися з фото та дизайн-концепту.", "Ready to See What Your Space Could Become?": "Готові побачити, яким може стати ваш простір?", "Upload photos of your room and start with a clear design concept.": "Завантажте фото кімнати й почніть із зрозумілого дизайн-концепту.", "Designed around your space": "Спроєктовано під простір", "Concept before drawings": "Концепт до креслень", "No pressure to build immediately": "Без тиску починати виробництво одразу", "Custom solutions for real homes": "Індивідуальні рішення для реальних домів", "Design + build logic": "Зрозумілий шлях від ідеї до реалізації", "Useful for homeowners and trade pros": "Зручно власникам, дизайнерам і будівельникам", "Number of zones": "Кількість зон",
     },
   };
   const translated = dictionary[lang]?.[value] || serviceDictionary[lang]?.[value] || commonDictionary[lang]?.[value];
@@ -5412,7 +5415,7 @@ function designConceptFormSection(route, t) {
 
 function designConceptLeadForm(route, t) {
   const sourcePage = route.searchParams?.get("source_page") || route.searchParams?.get("route") || urlFor(route.lang, "designConcept");
-  const defaultEstimate = localizedDesignConceptEstimate(designConceptPricingFallback("design_concept"), route.lang);
+  const defaultEstimate = designConceptOfferFor("design_concept", "", false, 1);
   return `<form class="lead-form design-concept-form" data-design-concept-form data-lead-form="design_concept_flow" data-endpoint="/api/design-concept-lead" enctype="multipart/form-data">
     <input type="hidden" name="formType" value="design_concept_flow">
     <input type="hidden" name="leadType" value="design_concept_flow">
@@ -5429,6 +5432,8 @@ function designConceptLeadForm(route, t) {
     <input type="hidden" name="estimate_microcopy" value="${escapeHtml(defaultEstimate.microcopy)}">
     <input type="hidden" name="estimate_basis" value="package_type + project_type">
     <input type="hidden" name="measurement_requested" value="no">
+    <input type="hidden" name="standard_price_total" value="${escapeHtml(defaultEstimate.standardPriceTotal)}">
+    <input type="hidden" name="first_order_price_total" value="${escapeHtml(defaultEstimate.firstOrderPriceTotal)}">
     <input type="hidden" name="page_source" value="${urlFor(route.lang, "designConcept")}">
     ${localeTierHiddenFields(route.lang)}
     ${seoSourceHiddenFields(route)}
@@ -5436,7 +5441,10 @@ function designConceptLeadForm(route, t) {
     <div class="form-step">
       <span>01</span>
       <h3>${escapeHtml(t.formSteps.package)}</h3>
-      ${selectWithValues(t.fields.packageType, "package_type", designConceptOptionSet(t.packageOptions), true, "design_concept", "data-package-type")}
+      <div class="form-grid">
+        ${selectWithValues(t.fields.packageType, "package_type", designConceptOptionSet(t.packageOptions), true, "design_concept", "data-package-type")}
+        ${input(localizedPlain("Number of zones", route.lang), "zone_count", true, "number", `min="1" max="${DESIGN_PROJECT_MAX_ZONES}" step="1" value="1" data-zone-count`)}
+      </div>
       <p class="form-hint" data-package-help>${escapeHtml(t.packageHelp.design_concept)}</p>
       <div class="selection-summary" data-concept-selection-summary>
         <div><span data-selected-price-label>${escapeHtml(t.selectionLabels.price)}</span><strong data-selected-price>${escapeHtml(defaultEstimate.priceLabel)}</strong></div>
@@ -9264,11 +9272,12 @@ function normalizeDesignConceptLeadPayload(payload, request) {
   const leadTypeClassification = normalizeDesignConceptValue(payload.lead_type_classification || payload.leadTypeClassification, designConceptLeadTypeOptions("en").map(([value]) => value));
   const uploadedFiles = designConceptUploadedFiles(payload);
   const measurementRequested = truthyFormValue(payload.needs_measurement || payload.needsMeasurement || payload.measurement_requested || payload.measurementRequested);
+  const zoneCount = normalizeDesignZoneCount(payload.zone_count || payload.zoneCount || payload.design_zone_count);
   const dimensionLength = String(payload.dimension_length || payload.dimensions || "").trim();
   const dimensionWidthDepth = String(payload.dimension_width_depth || payload.project_depth || payload.wall_width || "").trim();
   const dimensionHeight = String(payload.dimension_height || payload.ceiling_height || payload.ceilingHeight || "").trim();
   const dimensionsComplete = Boolean(dimensionLength && dimensionWidthDepth && dimensionHeight);
-  const selectedOffer = designConceptOfferFor(packageType, projectType, measurementRequested);
+  const selectedOffer = designConceptOfferFor(packageType, projectType, measurementRequested, zoneCount);
   const hasPhotos = uploadedFiles.some((file) => !file.field || file.field === "project_photos");
   const baseRequired = {
     package_type: packageType,
@@ -9280,6 +9289,7 @@ function normalizeDesignConceptLeadPayload(payload, request) {
     project_stage: projectStage,
     lead_type_classification: leadTypeClassification,
     project_description: payload.project_description || payload.projectDescription,
+    zone_count: zoneCount,
     desired_style: desiredStyle,
     timeline: timelineValue,
     budget_range: budgetValue,
@@ -9350,6 +9360,12 @@ function normalizeDesignConceptLeadPayload(payload, request) {
     projectCategory: projectCategoryForDesignConcept(projectType),
     leadTemperature: leadTemperatureForStage(projectStage),
     project_description: String(payload.project_description || payload.projectDescription || "").trim(),
+    zone_count: zoneCount,
+    zoneCount,
+    standard_zone_price: formatUsdPrice(DESIGN_PROJECT_STANDARD_ZONE_PRICE),
+    first_order_zone_price: formatUsdPrice(DESIGN_PROJECT_FIRST_ORDER_ZONE_PRICE),
+    standard_price_total: selectedOffer.standardPriceTotal,
+    first_order_price_total: selectedOffer.firstOrderPriceTotal,
     dimension_length: dimensionLength,
     dimension_width_depth: dimensionWidthDepth,
     dimension_height: dimensionHeight,
@@ -9451,13 +9467,36 @@ function truthyFormValue(value) {
   return ["1", "true", "yes", "on"].includes(String(value || "").trim().toLowerCase());
 }
 
-function designConceptOfferFor(packageType, projectType, measurementRequested = false) {
+function normalizeDesignZoneCount(value) {
+  const parsed = Number.parseInt(String(value || "1"), 10);
+  if (!Number.isFinite(parsed) || parsed < 1) return 1;
+  return Math.min(parsed, DESIGN_PROJECT_MAX_ZONES);
+}
+
+function designConceptOfferFor(packageType, projectType, measurementRequested = false, zoneCountInput = 1) {
   const normalizedPackage = packageType || "design_concept";
   const normalizedProject = normalizeDesignConceptProjectType(projectType);
   const matrix = designConceptPricingMatrix();
   const packageConfig = matrix[normalizedPackage] || matrix.design_concept;
   const offer = normalizedProject ? packageConfig[normalizedProject] || packageConfig.other || packageConfig._fallback : packageConfig._fallback;
-  const normalizedOffer = { ...offer, price: offer.priceLabel, timeline: offer.timelineLabel, basePrice: offer.priceLabel, measurementSurchargeAmount: "" };
+  const zoneCount = normalizeDesignZoneCount(zoneCountInput);
+  const firstOrderTotal = DESIGN_PROJECT_FIRST_ORDER_ZONE_PRICE * zoneCount;
+  const standardTotal = DESIGN_PROJECT_STANDARD_ZONE_PRICE * zoneCount;
+  const firstOrderTotalLabel = formatUsdPrice(firstOrderTotal);
+  const standardTotalLabel = formatUsdPrice(standardTotal);
+  const zoneLabel = zoneCount === 1 ? "1 zone" : `${zoneCount} zones`;
+  const normalizedOffer = {
+    ...offer,
+    zoneCount,
+    price: firstOrderTotalLabel,
+    timeline: offer.timelineLabel,
+    priceLabel: `${firstOrderTotalLabel} first order total`,
+    basePrice: `${firstOrderTotalLabel} first order total`,
+    standardPriceTotal: standardTotalLabel,
+    firstOrderPriceTotal: firstOrderTotalLabel,
+    measurementSurchargeAmount: "",
+    microcopy: `${offer.microcopy} ${zoneLabel}: first order total ${firstOrderTotalLabel}; standard design price ${standardTotalLabel}.`,
+  };
   return measurementRequested ? designConceptOfferWithMeasurement(normalizedOffer) : normalizedOffer;
 }
 
@@ -9543,6 +9582,9 @@ function designConceptLeadSummary(lead) {
   return [
     `Package type: ${lead.packageLabel}`,
     `Project type: ${lead.projectType}`,
+    `Zones: ${lead.zone_count || 1}`,
+    `First order total: ${lead.first_order_price_total || "-"}`,
+    `Standard total: ${lead.standard_price_total || "-"}`,
     `Estimated price / range: ${lead.estimated_price_label || lead.base_price || "-"}`,
     `Estimated timing / review timing: ${lead.estimated_timeline_label || lead.quoted_timeline || "-"}`,
     lead.estimate_microcopy ? `Estimate note: ${lead.estimate_microcopy}` : "",
@@ -11456,6 +11498,7 @@ function clientJs() {
 	    const lengthInput = form.querySelector('[name=dimension_length]');
 	    const widthDepthInput = form.querySelector('[name=dimension_width_depth]');
 	    const heightInput = form.querySelector('[name=dimension_height]');
+	    const zoneCountInput = form.querySelector('[name=zone_count]');
 	    const measurementCheck = form.querySelector('[name=needs_measurement]');
 	    const measurementRequestedInput = form.querySelector('[name=measurement_requested]');
 	    const exactPriceInput = form.querySelector('[name=exact_price]');
@@ -11465,6 +11508,8 @@ function clientJs() {
 	    const estimatedPriceInput = form.querySelector('[name=estimated_price_label]');
 	    const estimatedTimelineInput = form.querySelector('[name=estimated_timeline_label]');
 	    const estimateMicrocopyInput = form.querySelector('[name=estimate_microcopy]');
+	    const standardTotalInput = form.querySelector('[name=standard_price_total]');
+	    const firstOrderTotalInput = form.querySelector('[name=first_order_price_total]');
 	    const selectedPrice = form.querySelector('[data-selected-price]');
 	    const selectedTimeline = form.querySelector('[data-selected-timeline]');
 	    const selectedPriceLabel = form.querySelector('[data-selected-price-label]');
@@ -11474,6 +11519,14 @@ function clientJs() {
 	    const pricingMatrices = ${JSON.stringify(designConceptPricingMatricesByLang())};
 	    const pageLang = document.documentElement.lang || 'en';
 	    const pricingMatrix = pricingMatrices[pageLang] || pricingMatrices[pageLang.slice(0, 2)] || pricingMatrices.en;
+	    const designConceptUi = {
+	      en: { totalPrice: 'Total first order design price', timing: 'Timing', zoneSingular: '1 zone', zonePlural: 'zones', firstOrderTotal: 'first order total', standardPrice: 'standard design price' },
+	      es: { totalPrice: 'Precio total del primer pedido de diseño', timing: 'Tiempo', zoneSingular: '1 zona', zonePlural: 'zonas', firstOrderTotal: 'total del primer pedido', standardPrice: 'precio estándar de diseño' },
+	      fr: { totalPrice: 'Prix total de la première commande design', timing: 'Délai', zoneSingular: '1 zone', zonePlural: 'zones', firstOrderTotal: 'total première commande', standardPrice: 'prix design standard' },
+	      ru: { totalPrice: 'Итоговая цена первого дизайн-заказа', timing: 'Срок', zoneSingular: '1 зона', zonePlural: 'зон', firstOrderTotal: 'итого за первый дизайн-заказ', standardPrice: 'стандартная цена дизайна' },
+	      uk: { totalPrice: 'Підсумкова ціна першого дизайн-замовлення', timing: 'Термін', zoneSingular: '1 зона', zonePlural: 'зон', firstOrderTotal: 'разом за перше дизайн-замовлення', standardPrice: 'стандартна ціна дизайну' }
+	    };
+	    const conceptUi = designConceptUi[pageLang] || designConceptUi[pageLang.slice(0, 2)] || designConceptUi.en;
 		    const help = {
 		      design_concept: 'One visual design concept for one zone. Photos, dimensions, preferences and budget are collected before design work begins.'
 		    };
@@ -11501,18 +11554,34 @@ function clientJs() {
 	      const packageConfig = pricingMatrix[packageValue] || pricingMatrix.design_concept;
 	      return (projectValue && packageConfig[projectValue]) || packageConfig._fallback || packageConfig.other || pricingMatrix.design_concept._fallback;
 	    }
+	    function money(amount){
+	      return '$' + Math.round(amount).toLocaleString('en-US');
+	    }
+	    function zoneCountValue(){
+	      const parsed = parseInt(zoneCountInput?.value || '1', 10);
+	      if (!Number.isFinite(parsed) || parsed < 1) return 1;
+	      return Math.min(parsed, ${DESIGN_PROJECT_MAX_ZONES});
+	    }
 		    function priceLabelForPackage(packageValue){
-		      return 'First order design price';
+		      return conceptUi.totalPrice;
 		    }
 		    function timelineLabelForPackage(packageValue){
-		      return 'Timing';
+		      return conceptUi.timing;
 		    }
 	    function syncPackage(){
 	      const packageValue = packageSelect ? packageSelect.value : 'design_concept';
 	      const projectValue = projectSelect ? projectSelect.value : '';
 	      const offer = estimateFor(packageValue, projectValue);
+	      const zoneCount = zoneCountValue();
 	      const needsMeasurement = Boolean(measurementCheck && measurementCheck.checked);
-	      const displayPrice = offer.priceLabel || '';
+	      const firstOrderTotal = ${DESIGN_PROJECT_FIRST_ORDER_ZONE_PRICE} * zoneCount;
+	      const standardTotal = ${DESIGN_PROJECT_STANDARD_ZONE_PRICE} * zoneCount;
+	      const surcharge = needsMeasurement ? Math.round(firstOrderTotal * ${DESIGN_CONCEPT_MEASUREMENT_SURCHARGE_RATE}) : 0;
+	      const displayPrice = money(firstOrderTotal) + ' ' + conceptUi.firstOrderTotal;
+	      const internalPrice = money(firstOrderTotal + surcharge);
+	      const standardPrice = money(standardTotal);
+	      const zoneLabel = zoneCount === 1 ? conceptUi.zoneSingular : zoneCount + ' ' + conceptUi.zonePlural;
+	      const calculatedMicrocopy = (offer.microcopy || '') + ' ' + zoneLabel + ': ' + conceptUi.firstOrderTotal + ' ' + money(firstOrderTotal) + '; ' + conceptUi.standardPrice + ' ' + standardPrice + '.';
 	      const displayTimeline = offer.timelineLabel || '';
 	      if (packageHelp) packageHelp.textContent = help[packageValue] || help.design_concept;
 	      if (dimensionsHelp) dimensionsHelp.textContent = dimensionHelp[packageValue] || dimensionHelp.design_concept;
@@ -11521,24 +11590,27 @@ function clientJs() {
 	      setInputLabel(lengthInput, labels[0]);
 	      setInputLabel(widthDepthInput, labels[1]);
 	      setInputLabel(heightInput, labels[2]);
-	      if (exactPriceInput) exactPriceInput.value = displayPrice || '';
+	      if (exactPriceInput) exactPriceInput.value = internalPrice || '';
 	      if (quotedTimelineInput) quotedTimelineInput.value = displayTimeline || '';
 	      if (selectedPackageInput) selectedPackageInput.value = packageValue || '';
 	      if (selectedProjectInput) selectedProjectInput.value = projectValue || '';
 	      if (estimatedPriceInput) estimatedPriceInput.value = displayPrice || '';
 	      if (estimatedTimelineInput) estimatedTimelineInput.value = displayTimeline || '';
-	      if (estimateMicrocopyInput) estimateMicrocopyInput.value = offer.microcopy || '';
+	      if (estimateMicrocopyInput) estimateMicrocopyInput.value = calculatedMicrocopy;
+	      if (standardTotalInput) standardTotalInput.value = standardPrice;
+	      if (firstOrderTotalInput) firstOrderTotalInput.value = money(firstOrderTotal);
 	      if (measurementRequestedInput) measurementRequestedInput.value = needsMeasurement ? 'yes' : 'no';
 	      if (selectedPriceLabel) selectedPriceLabel.textContent = priceLabelForPackage(packageValue);
 	      if (selectedTimelineLabel) selectedTimelineLabel.textContent = timelineLabelForPackage(packageValue);
 	      if (selectedPrice) selectedPrice.textContent = displayPrice || '-';
 	      if (selectedTimeline) selectedTimeline.textContent = displayTimeline || '-';
-	      if (estimateMicrocopy) estimateMicrocopy.textContent = offer.microcopy || '';
+	      if (estimateMicrocopy) estimateMicrocopy.textContent = calculatedMicrocopy;
 		      if (priceNote) priceNote.textContent = 'The first design order receives 20% off: $792 per zone instead of $990 per zone. If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost.';
-	      track('design_concept_level_selected', { package_type: packageValue, project_type: projectValue, estimated_price_label: displayPrice || '', estimated_timeline_label: displayTimeline || '', needs_measurement: needsMeasurement ? 'yes' : 'no' });
+	      track('design_concept_level_selected', { package_type: packageValue, project_type: projectValue, zone_count: zoneCount, estimated_price_label: displayPrice || '', estimated_timeline_label: displayTimeline || '', needs_measurement: needsMeasurement ? 'yes' : 'no' });
 	    }
 	    if (packageSelect) packageSelect.addEventListener('change', syncPackage);
 	    if (projectSelect) projectSelect.addEventListener('change', syncPackage);
+	    if (zoneCountInput) zoneCountInput.addEventListener('input', syncPackage);
 	    if (measurementCheck) measurementCheck.addEventListener('change', syncPackage);
 	    form.addEventListener('focusin', () => {
 	      if (form.dataset.started) return;
