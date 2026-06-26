@@ -442,12 +442,12 @@ export const intents = [
 
 const cityMarketBriefs = {
   georgia: {
-    intro: "Georgia custom interiors should connect Atlanta-market polish with practical durability for residences, remodels and designer-led scopes. CAS AURUM treats design concepts as a low-risk way to clarify material direction, built-in scope and budget logic before fabrication or installation is reviewed.",
+    intro: "Georgia custom interiors should connect Atlanta-market polish with practical durability for residences, remodels and designer-led scopes. CAS AURUM treats design concepts as a low-risk way to clarify visual direction, built-in scope and budget logic before fabrication or installation is reviewed.",
     direct: "Georgia is a priority CAS AURUM market for design concepts, custom media walls, wall panels, built-ins, closets, kitchens, custom furniture and architectural millwork inquiries.",
     sections: [
       ["Georgia project fit", "The strongest Georgia inquiries usually come from Atlanta, Buckhead, Alpharetta, Sandy Springs, Marietta, Roswell, Milton, Brookhaven, Johns Creek and Savannah projects where custom work needs to feel premium without becoming fragile or overdecorated."],
-      ["Design concept value", "A premium design concept gives the client and project team a clear visual and material direction before custom cabinetry, wall panels, furniture or millwork are priced in detail. It helps separate serious project intent from general inspiration browsing."],
-      ["Useful project inputs", "A useful Georgia design concept request should include city or ZIP code, room photos, rough dimensions, ceiling height, target materials, inspiration images, desired scope and the level of realization needed after the concept."],
+      ["Design concept value", "A premium design concept gives the client and project team a clear visual, color and texture direction before custom cabinetry, wall panels, furniture or millwork are priced in detail. It helps separate serious project intent from general inspiration browsing."],
+      ["Useful project inputs", "A useful Georgia design concept request should include city or ZIP code, room photos, rough dimensions, ceiling height, target colors and textures, inspiration images, desired scope and the level of realization needed after the concept."],
       ["High-intent Georgia scopes", "The strongest organic paths for Georgia should connect design concept searches to custom kitchens, custom media walls, custom built-ins, custom closets, wall panels, custom furniture and architectural millwork."],
     ],
   },
@@ -968,7 +968,7 @@ function designConceptMarketSections(locale, market, profile, materialList, scop
     },
     {
       heading: "What to send",
-      body: `Send photos, rough dimensions, ceiling height, city or ZIP code, room function, target materials, inspiration images and whether the next step should be a basic concept, technical package or realization review.`,
+      body: `Send photos, rough dimensions, ceiling height, city or ZIP code, room function, target colors and textures, inspiration images and whether the next step should be a basic concept, technical package or realization review.`,
     },
     {
       heading: "Practical answer value",
@@ -985,10 +985,10 @@ function designConceptMarketFaq(locale, market, profile) {
   const locationName = market.locationName;
   if (locale !== "en") return faqFor(locale, designConceptMarketH1(locale, market));
   return [
-    { q: `What is included in a ${locationName} premium design concept?`, a: "A useful concept can include visual direction, material mood, wall or furniture composition, basic layout notes, storage priorities, lighting direction and a recommended next step." },
+    { q: `What is included in a ${locationName} premium design concept?`, a: "A useful concept can include visual direction, color and texture mood, wall or furniture composition, basic layout notes, storage priorities, lighting direction and a recommended next step." },
     { q: `Is a design concept the same as fabrication drawings?`, a: "No. A concept is the lower-risk planning step before detailed shop drawings, engineering, production pricing, field measurement or installation coordination." },
     { q: `Which projects fit ${locationName}?`, a: `Relevant scopes include ${profile.scopes.join(", ")} for ${profile.propertyMix}.` },
-    { q: "What should I send before requesting a design concept?", a: "Send room photos, rough dimensions, ceiling height, city or ZIP code, target materials, inspiration images, timeline and whether you want concept-only or a path toward realization." },
+    { q: "What should I send before requesting a design concept?", a: "Send room photos, rough dimensions, ceiling height, city or ZIP code, target colors and textures, inspiration images, timeline and whether you want concept-only or a path toward realization." },
     { q: "Does CAS AURUM claim a local office or completed project in every city?", a: "No. Market pages are planning guidance unless a page explicitly states a local office, showroom, license or completed project." },
   ];
 }

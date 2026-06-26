@@ -188,12 +188,14 @@ console.log("homepage navigation and CRM app ok");
 
 const designConceptPage = await read("/design-concept");
 for (const requiredText of [
-  "One Zone Design Project",
-  "$990 per zone",
-  "$792 per zone",
-  "Order Design Project",
+  "Design Concept for Custom Interior Features",
+  "One Wall Design Concept",
+  "$450",
+  "Signature Wall Concept",
+  "$750",
+  "Order Design Concept",
+  "100% of the design fee",
   "The design stage does not include exact material selection",
-  "I need CAS AURUM to help arrange measurement for this project.",
   "Paid concept work starts only after a conversation and written confirmation.",
   "data-design-concept-form",
   "FAQPage",
@@ -209,10 +211,12 @@ if (designConceptPage.body.includes("13%")) {
 }
 const ruDesignConceptPage = await read("/ru/dizayn-koncept");
 for (const requiredText of [
-  "Дизайн-проект одной зоны",
-  "Количество зон",
-  "$792 за зону",
-  "предварительным бюджетным ориентиром",
+  "Дизайн-концепт",
+  "One Wall Design Concept",
+  "$450",
+  "Signature Wall Concept",
+  "$750",
+  "бюджетный ориентир",
   "Точные материалы",
 ]) {
   if (!ruDesignConceptPage.body.includes(requiredText)) {
@@ -224,6 +228,8 @@ for (const forbiddenText of [
   "понятное направление с материалами",
   "Paquetes de concepto",
   "One Zone Design Project</option>",
+  "Количество зон",
+  "$792 за зону",
   '<option value="phone">Phone</option>',
   '<option value="email">Email</option>',
 ]) {
@@ -343,23 +349,24 @@ if (lead.status !== 200) {
 console.log("/api/lead ok");
 
 const designConceptLead = await postMultipart("/api/design-concept-lead", {
-  leadType: "design_concept_flow",
-  formType: "design_concept_flow",
-  package_type: "design_concept",
+  leadType: "design_concept",
+  formType: "design_concept",
+  package_type: "signature_wall_concept",
   project_type: "media_wall",
   project_stage: "photos",
   lead_type_classification: "homeowner",
   language: "en",
-  zone_count: "2",
   client_name: "Smoke Concept",
   email: "smoke-concept@example.com",
   phone: "+1 555 0102",
   project_location: "Atlanta, GA",
   project_description: "Smoke test design concept.",
+  dimension_length: "12 ft",
+  dimension_width_depth: "18 in",
+  dimension_height: "9 ft",
   desired_style: "warm_natural",
   timeline: "planning_only",
   budget_range: "not_sure",
-  needs_measurement: "yes",
   consent: "on",
 }, [{ field: "project_photos", filename: "room.jpg", type: "image/jpeg", content: "fake image bytes" }]);
 if (designConceptLead.status !== 200) {
@@ -369,20 +376,20 @@ if (designConceptLead.status !== 200) {
 const designConceptLeadJson = JSON.parse(designConceptLead.body || "{}");
 const savedDesignConceptLead = getLead(designConceptLeadJson.id);
 if (
-  !savedDesignConceptLead?.measurement_requested ||
-  savedDesignConceptLead.zone_count !== 2 ||
-  savedDesignConceptLead.exact_price !== "$1,790" ||
-  savedDesignConceptLead.base_price !== "$1,584" ||
-  savedDesignConceptLead.estimated_price_label !== "$1,584 first order total" ||
-  savedDesignConceptLead.first_order_price_total !== "$1,584" ||
-  savedDesignConceptLead.standard_price_total !== "$1,980" ||
+  savedDesignConceptLead?.leadType !== "design_concept" ||
+  savedDesignConceptLead.package_type !== "signature_wall_concept" ||
+  savedDesignConceptLead.designFee !== 750 ||
+  savedDesignConceptLead.exact_price !== "$750" ||
+  savedDesignConceptLead.base_price !== "$750" ||
+  savedDesignConceptLead.estimated_price_label !== "$750" ||
   savedDesignConceptLead.estimated_timeline_label !== "confirmed after intake" ||
-  savedDesignConceptLead.estimate_basis !== "package_type + project_type" ||
-  savedDesignConceptLead.measurement_surcharge_rate !== "13%" ||
-  savedDesignConceptLead.measurement_surcharge_amount !== "$206"
+  savedDesignConceptLead.estimate_basis !== "design_concept_package" ||
+  savedDesignConceptLead.realizationCredit !== "100_percent_design_fee_credit" ||
+  savedDesignConceptLead.materialsIncluded !== false ||
+  savedDesignConceptLead.exactMaterialSelectionIncluded !== false
 ) {
   server.kill();
-  throw new Error(`/api/design-concept-lead should save internal 13% measurement surcharge, saved ${JSON.stringify(savedDesignConceptLead || {})}`);
+  throw new Error(`/api/design-concept-lead should save the selected design concept package and credit policy, saved ${JSON.stringify(savedDesignConceptLead || {})}`);
 }
 const uploadedConceptFile = await request(`/uploads/design-concepts/${designConceptLeadJson.id}/01-room.jpg`);
 if (uploadedConceptFile.status !== 200) {
@@ -392,9 +399,9 @@ if (uploadedConceptFile.status !== 200) {
 console.log("/api/design-concept-lead ok");
 
 const invalidTechnicalConceptLead = await postMultipart("/api/design-concept-lead", {
-  leadType: "design_concept_flow",
-  formType: "design_concept_flow",
-  package_type: "design_concept",
+  leadType: "design_concept",
+  formType: "design_concept",
+  package_type: "one_wall_design_concept",
   project_type: "media_wall",
   project_stage: "measurements",
   lead_type_classification: "homeowner",
@@ -416,9 +423,9 @@ if (invalidTechnicalConceptLead.status !== 400 || !invalidTechnicalConceptLead.b
 console.log("/api/design-concept-lead dimension validation ok");
 
 const invalidDesignConceptLead = await post("/api/design-concept-lead", {
-  leadType: "design_concept_flow",
-  formType: "design_concept_flow",
-  package_type: "design_concept",
+  leadType: "design_concept",
+  formType: "design_concept",
+  package_type: "one_wall_design_concept",
   project_type: "media_wall",
   project_stage: "photos",
   lead_type_classification: "homeowner",
@@ -428,6 +435,9 @@ const invalidDesignConceptLead = await post("/api/design-concept-lead", {
   phone: "+1 555 0104",
   project_location: "Atlanta, GA",
   project_description: "Smoke test design concept without photos.",
+  dimension_length: "12 ft",
+  dimension_width_depth: "18 in",
+  dimension_height: "9 ft",
   desired_style: "warm_natural",
   timeline: "planning_only",
   budget_range: "not_sure",
