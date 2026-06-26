@@ -38,7 +38,7 @@ NODE_ENV=production PORT=4888 NEXT_PUBLIC_SITE_URL=https://casaurum.com SITE_HOS
 
 ## Environment
 
-Copy `.env.example` and configure local secrets. Leads are written to an encrypted local SQLite database at `data/casaurum-crm.sqlite`. If the database write fails, submissions fall back to `leads/leads.ndjson`. SMTP email delivery is optional.
+Copy `.env.example` and configure local secrets. Leads are written to an encrypted local SQLite database at `data/casaurum-crm.sqlite`. If the database write fails, submissions fall back to `leads/leads.ndjson`. The Telegram bot reads new local leads and sends notifications. SMTP email delivery is disabled unless `LEAD_EMAIL_DELIVERY_ENABLED=true`.
 
 Important variables:
 
@@ -55,6 +55,7 @@ Important variables:
 - `SMTP_USER`
 - `SMTP_PASS`
 - `SMTP_FROM`
+- `LEAD_EMAIL_DELIVERY_ENABLED`
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_GA_ID`
 - `NEXT_PUBLIC_GTM_ID`

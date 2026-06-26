@@ -6823,7 +6823,7 @@ function technicalPlannerPage(route) {
     ...Object.values(presets).map((item) => [item.type, item.label]),
   ];
   const heroTitle = plannerCopy.title;
-  const heroSubtitle = plannerCopy.subtitle;
+  const heroSubtitle = plannerCopy.technicalIntro;
   const moduleGroups = [
     ["Cabinet types", [
       ["baseCabinet", "Base cabinet", "Floor cabinet for drawers, doors, sinks, appliances or lower storage runs.", "all"],
@@ -6846,8 +6846,6 @@ function technicalPlannerPage(route) {
         <p data-planner-confidence>${escapeHtml(plannerCopy.emptyRange)}</p>
       </aside>
     </section>
-    ${plannerPathCards(route)}
-    ${quickEstimateWizard(route, urlFor(route.lang, "planner"))}
     <section class="technical-planner-anchor" id="technical-millwork-planner">
       <div class="section-head">
         <p class="eyebrow">${escapeHtml(plannerCopy.advancedEyebrow)}</p>
@@ -6989,7 +6987,7 @@ function technicalPlannerPage(route) {
             <label>${escapeHtml(localized("Project notes", lang))}<textarea name="designerNotes" placeholder="${escapeHtml(localized("Room, client goals, drawings available, material direction to review.", lang))}"></textarea></label>
             <label>${escapeHtml(localized("Helpful files", lang))}<input type="file" name="project_files" data-planner-files multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"><small data-planner-file-help>${escapeHtml(preset?.uploadGuidance || localized("Attach photos, drawings or references when available.", lang))}</small></label>
             <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(copy[lang].form.consent)}</label>
-            <button class="button primary" type="submit" data-planner-cta>${escapeHtml(preset?.ctaLabel || localized("Start Your Design Concept", lang))}</button>
+            <button class="button primary" type="submit" data-planner-cta>${escapeHtml(preset?.ctaLabel || localized("Send Project Scope", lang))}</button>
             <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </section>
@@ -9015,7 +9013,7 @@ function formSubmitLabel(lang, type) {
     designer_builder_project_submission: copy[lang].cta.project,
     commercial_project_request: "Submit Commercial Project",
     contact_question: localized("Ask CAS AURUM", lang),
-    technical_millwork_planner: localized("Start Your Design Concept", lang),
+    technical_millwork_planner: localized("Send Project Scope", lang),
   };
   return labels[type] || (type === "consultation" ? copy[lang].cta.consult : copy[lang].cta.measure);
 }
@@ -9871,6 +9869,7 @@ async function persistLead(lead) {
 }
 
 async function deliverLeadEmail(lead) {
+  if (process.env.LEAD_EMAIL_DELIVERY_ENABLED !== "true") return;
   const to = process.env.CONTACT_TO_EMAIL || DEFAULT_CONTACT_EMAIL;
   const smtpReady = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS && to;
   if (!smtpReady) {
@@ -12206,7 +12205,7 @@ function plannerJs() {
       if (requiredEl) requiredEl.innerHTML = listHtml(preset?.requiredInputs);
       if (measurementsEl) measurementsEl.innerHTML = listHtml(preset?.measurementFields || ['width', 'height', 'depth or room length when relevant']);
       if (questionsEl) questionsEl.innerHTML = listHtml(preset?.projectQuestions || ['What are you planning?', 'What dimensions or drawings are available?', 'Do you need design direction, technical review or both?']);
-      if (ctaEl) ctaEl.textContent = preset?.ctaLabel || 'Start Your Design Concept';
+      if (ctaEl) ctaEl.textContent = preset?.ctaLabel || 'Send Project Scope';
       if (fileHelpEl) fileHelpEl.textContent = preset?.uploadGuidance || 'Attach photos, drawings or references when available.';
       if (fileInputEl) fileInputEl.required = Boolean(preset && preset.requiredInputs?.some(item => /photo|drawing|inspiration|reference/i.test(item)));
       if (plannerHidden.mode) plannerHidden.mode.value = entryMode;
