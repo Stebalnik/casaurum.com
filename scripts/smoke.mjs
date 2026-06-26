@@ -207,6 +207,31 @@ if (designConceptPage.body.includes("13%")) {
   server.kill();
   throw new Error("/design-concept should not show the internal measurement surcharge percentage");
 }
+const ruDesignConceptPage = await read("/ru/dizayn-koncept");
+for (const requiredText of [
+  "Дизайн-проект одной зоны",
+  "Количество зон",
+  "$792 за зону",
+  "предварительным бюджетным ориентиром",
+  "Точные материалы",
+]) {
+  if (!ruDesignConceptPage.body.includes(requiredText)) {
+    server.kill();
+    throw new Error(`/ru/dizayn-koncept missing required localized text: ${requiredText}`);
+  }
+}
+for (const forbiddenText of [
+  "понятное направление с материалами",
+  "Paquetes de concepto",
+  "One Zone Design Project</option>",
+  '<option value="phone">Phone</option>',
+  '<option value="email">Email</option>',
+]) {
+  if (ruDesignConceptPage.body.includes(forbiddenText)) {
+    server.kill();
+    throw new Error(`/ru/dizayn-koncept should not render stale or mixed-language text: ${forbiddenText}`);
+  }
+}
 const startConceptRedirect = await request("/start-design-concept");
 if (startConceptRedirect.status !== 302) {
   server.kill();

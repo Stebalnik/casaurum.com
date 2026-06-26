@@ -1685,16 +1685,16 @@ function localizedPlain(value, lang) {
   };
   const dictionary = {
     es: {
-	      "Ideas": "Ideas", "Start Your Design Concept": "Iniciar concepto de diseno", "Upload Photos": "Subir fotos", "Request Project Review": "Solicitar revision del proyecto", "Custom Interior Solutions Designed Around Your Space": "Soluciones interiores a medida para tu espacio", "Explore Solutions": "Explorar soluciones", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Empieza con fotos del espacio y recibe un concepto claro antes de decidir que construir.", "What Do You Want To Transform?": "Que quieres transformar?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Elige el espacio o elemento que quieres mejorar. Cada solucion puede empezar con fotos y un concepto.", "Ready to See What Your Space Could Become?": "Listo para ver en que puede convertirse tu espacio?", "Upload photos of your room and start with a clear design concept.": "Sube fotos de tu habitacion y empieza con un concepto claro.", "Designed around your space": "Disenado para tu espacio", "Concept before drawings": "Concepto antes de planos", "No pressure to build immediately": "Sin presion para construir de inmediato", "Custom solutions for real homes": "Soluciones a medida para hogares reales", "Design + build logic": "Diseño y realización con pasos claros", "Useful for homeowners and trade pros": "Util para propietarios y profesionales", "Number of zones": "Cantidad de zonas",
+	      "Ideas": "Ideas", "Start Your Design Concept": "Iniciar concepto de diseno", "Upload Photos": "Subir fotos", "Receive Design Direction": "Recibir dirección de diseño", "Define Colors & Textures": "Definir colores y texturas", "Engineering Package": "Paquete de ingeniería", "Production & Installation": "Producción e instalación", "Request Project Review": "Solicitar revision del proyecto", "Custom Interior Solutions Designed Around Your Space": "Soluciones interiores a medida para tu espacio", "Explore Solutions": "Explorar soluciones", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Empieza con fotos del espacio y recibe un concepto claro antes de decidir que construir.", "What Do You Want To Transform?": "Que quieres transformar?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Elige el espacio o elemento que quieres mejorar. Cada solucion puede empezar con fotos y un concepto.", "Ready to See What Your Space Could Become?": "Listo para ver en que puede convertirse tu espacio?", "Upload photos of your room and start with a clear design concept.": "Sube fotos de tu habitacion y empieza con un concepto claro.", "Designed around your space": "Disenado para tu espacio", "Concept before drawings": "Concepto antes de planos", "No pressure to build immediately": "Sin presion para construir de inmediato", "Custom solutions for real homes": "Soluciones a medida para hogares reales", "Design + build logic": "Diseño y realización con pasos claros", "Useful for homeowners and trade pros": "Util para propietarios y profesionales", "Number of zones": "Cantidad de zonas",
     },
     fr: {
-	      "Ideas": "Idees", "Start Your Design Concept": "Demarrer le concept design", "Upload Photos": "Ajouter des photos", "Request Project Review": "Demander une revue du projet", "Custom Interior Solutions Designed Around Your Space": "Solutions interieures sur mesure autour de votre espace", "Explore Solutions": "Explorer les solutions", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Commencez avec des photos de votre espace et recevez un concept clair avant de decider de construire.", "What Do You Want To Transform?": "Que voulez-vous transformer ?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Choisissez la piece ou l'element a ameliorer. Chaque solution peut commencer avec photos et concept.", "Ready to See What Your Space Could Become?": "Pret a voir ce que votre espace pourrait devenir ?", "Upload photos of your room and start with a clear design concept.": "Ajoutez des photos et commencez par un concept clair.", "Designed around your space": "Pense autour de votre espace", "Concept before drawings": "Concept avant dessins", "No pressure to build immediately": "Aucune pression pour construire tout de suite", "Custom solutions for real homes": "Solutions sur mesure pour vrais logements", "Design + build logic": "Logique design + build", "Useful for homeowners and trade pros": "Utile pour proprietaires et pros", "Number of zones": "Nombre de zones",
+	      "Ideas": "Idees", "Start Your Design Concept": "Demarrer le concept design", "Upload Photos": "Ajouter des photos", "Receive Design Direction": "Recevoir la direction design", "Define Colors & Textures": "Définir couleurs et textures", "Engineering Package": "Dossier d'ingénierie", "Production & Installation": "Production et installation", "Request Project Review": "Demander une revue du projet", "Custom Interior Solutions Designed Around Your Space": "Solutions interieures sur mesure autour de votre espace", "Explore Solutions": "Explorer les solutions", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Commencez avec des photos de votre espace et recevez un concept clair avant de decider de construire.", "What Do You Want To Transform?": "Que voulez-vous transformer ?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Choisissez la piece ou l'element a ameliorer. Chaque solution peut commencer avec photos et concept.", "Ready to See What Your Space Could Become?": "Pret a voir ce que votre espace pourrait devenir ?", "Upload photos of your room and start with a clear design concept.": "Ajoutez des photos et commencez par un concept clair.", "Designed around your space": "Pense autour de votre espace", "Concept before drawings": "Concept avant dessins", "No pressure to build immediately": "Aucune pression pour construire tout de suite", "Custom solutions for real homes": "Solutions sur mesure pour vrais logements", "Design + build logic": "Logique design + build", "Useful for homeowners and trade pros": "Utile pour proprietaires et pros", "Number of zones": "Nombre de zones",
     },
     ru: {
-	      "Ideas": "Идеи", "Start Your Design Concept": "Начать дизайн-концепт", "Upload Photos": "Загрузить фото", "Request Project Review": "Запросить разбор проекта", "Custom Interior Solutions Designed Around Your Space": "Индивидуальные интерьерные решения под ваше пространство", "Explore Solutions": "Смотреть решения", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Начните с фото пространства и получите понятный дизайн-концепт до решения о производстве.", "What Do You Want To Transform?": "Что вы хотите изменить?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Выберите комнату или элемент. Каждое решение может начаться с фото и дизайн-концепта.", "Ready to See What Your Space Could Become?": "Готовы увидеть, каким может стать ваше пространство?", "Upload photos of your room and start with a clear design concept.": "Загрузите фото комнаты и начните с понятного дизайн-концепта.", "Designed around your space": "Спроектировано под пространство", "Concept before drawings": "Концепт до чертежей", "No pressure to build immediately": "Без давления начинать производство сразу", "Custom solutions for real homes": "Индивидуальные решения для реальных домов", "Design + build logic": "Понятный путь от идеи к реализации", "Useful for homeowners and trade pros": "Удобно владельцам, дизайнерам и строителям", "Number of zones": "Количество зон",
+		      "Ideas": "Идеи", "Start Your Design Concept": "Начать дизайн-концепт", "Upload Photos": "Загрузить фото", "Receive Design Direction": "Получить дизайн-направление", "Define Colors & Textures": "Определить цвета и фактуры", "Engineering Package": "Инженерный пакет", "Production & Installation": "Производство и монтаж", "Request Project Review": "Запросить разбор проекта", "Custom Interior Solutions Designed Around Your Space": "Индивидуальные интерьерные решения под ваше пространство", "Explore Solutions": "Смотреть решения", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Начните с фото пространства и получите понятный дизайн-концепт до решения о производстве.", "What Do You Want To Transform?": "Что вы хотите изменить?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Выберите комнату или элемент. Каждое решение может начаться с фото и дизайн-концепта.", "Ready to See What Your Space Could Become?": "Готовы увидеть, каким может стать ваше пространство?", "Upload photos of your room and start with a clear design concept.": "Загрузите фото комнаты и начните с понятного дизайн-концепта.", "Designed around your space": "Спроектировано под пространство", "Concept before drawings": "Концепт до чертежей", "No pressure to build immediately": "Без давления начинать производство сразу", "Custom solutions for real homes": "Индивидуальные решения для реальных домов", "Design + build logic": "Понятный путь от идеи к реализации", "Useful for homeowners and trade pros": "Удобно владельцам, дизайнерам и строителям", "Number of zones": "Количество зон",
     },
     uk: {
-	      "Ideas": "Ідеї", "Start Your Design Concept": "Почати дизайн-концепт", "Upload Photos": "Завантажити фото", "Request Project Review": "Запросити розбір проєкту", "Custom Interior Solutions Designed Around Your Space": "Індивідуальні інтер'єрні рішення під ваш простір", "Explore Solutions": "Переглянути рішення", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Почніть із фото простору й отримайте зрозумілий дизайн-концепт до рішення про виробництво.", "What Do You Want To Transform?": "Що ви хочете змінити?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Оберіть кімнату або елемент. Кожне рішення може початися з фото та дизайн-концепту.", "Ready to See What Your Space Could Become?": "Готові побачити, яким може стати ваш простір?", "Upload photos of your room and start with a clear design concept.": "Завантажте фото кімнати й почніть із зрозумілого дизайн-концепту.", "Designed around your space": "Спроєктовано під простір", "Concept before drawings": "Концепт до креслень", "No pressure to build immediately": "Без тиску починати виробництво одразу", "Custom solutions for real homes": "Індивідуальні рішення для реальних домів", "Design + build logic": "Зрозумілий шлях від ідеї до реалізації", "Useful for homeowners and trade pros": "Зручно власникам, дизайнерам і будівельникам", "Number of zones": "Кількість зон",
+		      "Ideas": "Ідеї", "Start Your Design Concept": "Почати дизайн-концепт", "Upload Photos": "Завантажити фото", "Receive Design Direction": "Отримати дизайн-напрям", "Define Colors & Textures": "Визначити кольори та фактури", "Engineering Package": "Інженерний пакет", "Production & Installation": "Виробництво й монтаж", "Request Project Review": "Запросити розбір проєкту", "Custom Interior Solutions Designed Around Your Space": "Індивідуальні інтер'єрні рішення під ваш простір", "Explore Solutions": "Переглянути рішення", "Start with photos of your space and receive a clear design concept before deciding what to build next.": "Почніть із фото простору й отримайте зрозумілий дизайн-концепт до рішення про виробництво.", "What Do You Want To Transform?": "Що ви хочете змінити?", "Choose the room or feature you want to improve. Each solution can begin with uploaded photos and a design concept.": "Оберіть кімнату або елемент. Кожне рішення може початися з фото та дизайн-концепту.", "Ready to See What Your Space Could Become?": "Готові побачити, яким може стати ваш простір?", "Upload photos of your room and start with a clear design concept.": "Завантажте фото кімнати й почніть із зрозумілого дизайн-концепту.", "Designed around your space": "Спроєктовано під простір", "Concept before drawings": "Концепт до креслень", "No pressure to build immediately": "Без тиску починати виробництво одразу", "Custom solutions for real homes": "Індивідуальні рішення для реальних домів", "Design + build logic": "Зрозумілий шлях від ідеї до реалізації", "Useful for homeowners and trade pros": "Зручно власникам, дизайнерам і будівельникам", "Number of zones": "Кількість зон",
     },
   };
   const translated = dictionary[lang]?.[value] || serviceDictionary[lang]?.[value] || commonDictionary[lang]?.[value];
@@ -3525,7 +3525,7 @@ function solutionCardText(key, lang) {
 
 function startWithConceptSection(route) {
   const lang = route.lang;
-  const steps = ["Upload Photos", "Receive Design Direction", "Material Selection", "Engineering Package", "Production & Installation"];
+  const steps = ["Upload Photos", "Receive Design Direction", "Define Colors & Textures", "Engineering Package", "Production & Installation"];
   return `<section class="split-band" id="design-concept">
     <div><p class="eyebrow">${escapeHtml(localizedPlain("Start With a Design Concept", lang))}</p><h2>${escapeHtml(localizedPlain("You do not need to commit to a full build right away.", lang))}</h2><p>${escapeHtml(localizedPlain("Start with photos of your space and receive a clear design concept before deciding what to build next.", lang))}</p><div class="actions"><a class="button primary track" data-event="start_with_photos_clicked" href="${urlFor(lang, "designConcept")}#start-design-concept">${escapeHtml(localizedPlain("Start With Photos", lang))}</a><a class="button secondary track" data-event="planner_opened" href="${urlFor(lang, "planner")}">${escapeHtml(localizedPlain("Plan My Space", lang))}</a></div></div>
     <aside class="panel"><h3>${escapeHtml(localizedPlain("A clear path from idea to build", lang))}</h3><ol>${steps.map((step) => `<li>${escapeHtml(localizedPlain(step, lang))}</li>`).join("")}</ol></aside>
@@ -4222,9 +4222,9 @@ function smartIntegrationSection(lang = "en", context = "solutions") {
 
 function startDesignConceptBridge(lang = "en") {
   if (lang !== "en") return "";
-  const steps = ["Upload Photos", "Receive Design Direction", "Material Selection", "Engineering Package", "Production & Installation"];
+  const steps = ["Upload Photos", "Receive Design Direction", "Define Colors & Textures", "Engineering Package", "Production & Installation"];
   return `<section class="split-band design-concept-layer">
-    <div><p class="eyebrow">${escapeHtml(localizedPlain("Start With a Design Concept", lang))}</p><h2>${escapeHtml(localizedPlain("Clarity before fabrication", lang))}</h2><p>${escapeHtml("A Design Concept is the lower-risk entry point: it turns photos, goals, material preferences and rough dimensions into a visual decision tool, budget-planning reference and next-step scope before fabrication or installation decisions are made.")}</p><div class="actions"><a class="button primary track" data-event="design_concept_bridge_click" href="/design-concept#start-design-concept">${escapeHtml(localizedPlain("Start Your Design Concept", lang))}</a><a class="button secondary track" data-event="quick_estimate_bridge_click" href="/quick-project-estimate">${escapeHtml("Quick Project Estimate")}</a></div></div>
+    <div><p class="eyebrow">${escapeHtml(localizedPlain("Start With a Design Concept", lang))}</p><h2>${escapeHtml(localizedPlain("Clarity before fabrication", lang))}</h2><p>${escapeHtml("A Design Concept is the lower-risk entry point: it turns photos, goals, color and texture preferences, and rough dimensions into a visual decision tool, budget-planning reference and next-step scope before fabrication or installation decisions are made.")}</p><div class="actions"><a class="button primary track" data-event="design_concept_bridge_click" href="/design-concept#start-design-concept">${escapeHtml(localizedPlain("Start Your Design Concept", lang))}</a><a class="button secondary track" data-event="quick_estimate_bridge_click" href="/quick-project-estimate">${escapeHtml("Quick Project Estimate")}</a></div></div>
     <aside class="panel"><h3>${escapeHtml(localizedPlain("Process", lang))}</h3><ol>${steps.map((step) => `<li>${escapeHtml(localizedPlain(step, lang))}</li>`).join("")}</ol></aside>
   </section>`;
 }
@@ -5289,18 +5289,18 @@ function formPage(route, type) {
 
 function designConceptMeta(lang) {
   const titles = {
-    en: "Design Concept for Custom Interior Solutions | CAS AURUM",
-    es: "Paquetes de concepto de diseño interior | CAS AURUM",
-    fr: "Forfaits de concept design interieur | CAS AURUM",
-    ru: "Пакеты дизайн-концепта интерьера | CAS AURUM",
-    uk: "Пакети дизайн-концепту інтер'єру | CAS AURUM",
+    en: "One Zone Design Project | CAS AURUM",
+    es: "Proyecto de diseño de una zona | CAS AURUM",
+    fr: "Projet de design d'une zone | CAS AURUM",
+    ru: "Дизайн-проект одной зоны | CAS AURUM",
+    uk: "Дизайн-проєкт однієї зони | CAS AURUM",
   };
   const descriptions = {
-    en: "Upload room photos and start with a Design Concept for a media wall, kitchen, closet, built-in, wall panels, fireplace, office or custom furniture.",
-    es: "Sube fotos y empieza con un concepto para muro media, TV unit, cocina, closet, built-ins, paneles, chimenea, oficina, mudroom o muebles a medida.",
-    fr: "Ajoutez des photos et commencez par un concept pour mur media, meuble TV, cuisine, dressing, rangements, panneaux, cheminee, bureau, entree ou mobilier.",
-    ru: "Загрузите фото и начните с дизайн-концепта для TV-стены, TV-модуля, кухни, гардеробной, встроенной мебели, панелей, стены с камином, кабинета, прихожей или мебели.",
-    uk: "Завантажте фото й почніть із дизайн-концепту для TV-стіни, TV-модуля, кухні, гардеробної, вбудованих меблів, панелей, стіни з каміном, кабінету, передпокою або меблів.",
+    en: "Upload photos of one room, wall, closet, kitchen or built-in zone and receive a visual direction with colors, textures, layout ideas and preliminary budget orientation.",
+    es: "Suba fotos de una habitación, pared, vestidor, cocina o zona empotrada y reciba dirección visual con colores, texturas, ideas de distribución y orientación presupuestaria preliminar.",
+    fr: "Téléchargez des photos d'une pièce, d'un mur, d'un dressing, d'une cuisine ou d'une zone intégrée et recevez une direction visuelle avec couleurs, textures, idées d'agencement et orientation budgétaire préliminaire.",
+    ru: "Загрузите фото комнаты, стены, гардеробной, кухни или встроенной зоны и получите визуальное направление с цветами, фактурами, идеями планировки и предварительным бюджетным ориентиром.",
+    uk: "Завантажте фото кімнати, стіни, гардеробної, кухні або вбудованої зони й отримайте візуальний напрям із кольорами, фактурами, ідеями планування та попереднім бюджетним орієнтиром.",
   };
   return { title: titles[lang] || titles.en, description: descriptions[lang] || descriptions.en };
 }
@@ -5462,7 +5462,7 @@ function designConceptLeadForm(route, t) {
     <div class="form-step">
       <span>03</span>
       <h3>${escapeHtml(t.formSteps.contact)}</h3>
-      <div class="form-grid">${input(t.fields.clientName, "client_name", true)}${input(t.fields.email, "email", true, "email")}${input(t.fields.phone, "phone", true, "tel")}${selectWithValues(localizedPlain("Preferred contact method", route.lang), "preferred_contact_method", designConceptOptionSet([["phone", "Phone"], ["email", "Email"], ["text", "Text / SMS"], ["whatsapp", "WhatsApp"]]), true)}${input(t.fields.location, "project_location", true)}${input(localizedPlain("State / service area", route.lang), "service_area", false)}</div>
+      <div class="form-grid">${input(t.fields.clientName, "client_name", true)}${input(t.fields.email, "email", true, "email")}${input(t.fields.phone, "phone", true, "tel")}${selectWithValues(localizedPlain("Preferred contact method", route.lang), "preferred_contact_method", designConceptOptionSet(designConceptContactMethodOptions(route.lang)), true)}${input(t.fields.location, "project_location", true)}${input(localizedPlain("State / service area", route.lang), "service_area", false)}</div>
     </div>
     <div class="form-step">
       <span>04</span>
@@ -5517,7 +5517,7 @@ function serviceCtaSection(route, label, key = "") {
   const secondaryHref = technicalPage ? urlFor(route.lang, "designConcept") : plannerHref;
   const secondaryLabel = technicalPage ? "Request Design Concept" : "Open Technical Planner";
   const secondaryEvent = technicalPage ? "design_concept_service_cta_clicked" : "planner_preset_open";
-  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Start with clarity", route.lang))}</p><h2>${escapeHtml(localized("Begin with a design concept or request a full project review", route.lang))}</h2><p>${escapeHtml(localized("A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.", route.lang))}</p><div class="actions"><a class="button primary track" data-event="${primaryEvent}" href="${primaryHref}">${escapeHtml(localizedPlain(primaryLabel, route.lang))}</a><a class="button secondary track" data-event="${secondaryEvent}" href="${secondaryHref}">${escapeHtml(localizedPlain(secondaryLabel, route.lang))}</a></div></section>`;
+  return `<section class="cta"><p class="eyebrow">${escapeHtml(localized("Start with clarity", route.lang))}</p><h2>${escapeHtml(localized("Begin with a design concept or request a full project review", route.lang))}</h2><p>${escapeHtml(localized("A fixed-price concept is the low-risk way to test visual direction, colors, textures and approximate scope before custom fabrication or installation is reviewed.", route.lang))}</p><div class="actions"><a class="button primary track" data-event="${primaryEvent}" href="${primaryHref}">${escapeHtml(localizedPlain(primaryLabel, route.lang))}</a><a class="button secondary track" data-event="${secondaryEvent}" href="${secondaryHref}">${escapeHtml(localizedPlain(secondaryLabel, route.lang))}</a></div></section>`;
 }
 
 function designConceptText(lang) {
@@ -5579,184 +5579,184 @@ function designConceptText(lang) {
       faq: designConceptFaqData("en"),
     },
     es: {
-      heroEyebrow: "Paquetes de concepto",
-      heroPrimary: "Iniciar concepto",
-      heroSecondary: "Comparar paquetes",
-      heroCaption: "Un inicio claro para media walls, closets, cocinas, built-ins y espacios personales.",
-      positioningEyebrow: "Inicio de bajo riesgo",
-      positioningTitle: "Antes de fabricar, aclare la direccion",
-      positioningText: "Antes de invertir en fabricacion, cabinetry o instalacion, comience con una direccion de diseno clara. Los paquetes ayudan a propietarios, designers y builders a entender potencial visual, materiales y siguiente paso.",
-      packagesEyebrow: "Niveles de servicio",
+      heroEyebrow: "Proyecto de diseño de una zona",
+      heroPrimary: "Iniciar proyecto de diseño",
+      heroSecondary: "Ver precios",
+      heroCaption: "Un concepto visual enfocado para una pared, zona empotrada o área destacada definida.",
+      positioningEyebrow: "Concepto antes de realización",
+      positioningTitle: "Aclare la dirección visual antes de elegir materiales exactos",
+      positioningText: "Un Proyecto de Diseño de Una Zona define colores, texturas, ambiente, atmósfera, composición y concepto general para un área definida. Los materiales exactos, marcas, códigos de producto, proveedores, planos de taller, planos de producción, ingeniería y estimación final de fabricación se trabajan después, durante la realización.",
+      packagesEyebrow: "Alcance de diseño",
       pricingEyebrow: "Precios transparentes",
       processEyebrow: "Proceso",
-      formEyebrow: "Intake de proyecto",
+      formEyebrow: "Entrada del proyecto",
       faqTitle: "Preguntas frecuentes",
       continueTitle: "Seguir explorando CAS AURUM",
-      formSteps: { package: "Elegir paquete", project: "Tipo de proyecto", contact: "Contacto y ubicacion", files: "Subir fotos", dimensions: "Compartir medidas", details: "Presupuesto, plazo y descripcion" },
+      formSteps: { package: "Confirmar proyecto de diseño", project: "Tipo de zona", contact: "Contacto y ubicación", files: "Subir fotos", dimensions: "Medidas", details: "Presupuesto, plazo y descripción" },
       fields: designConceptFieldLabels("es"),
-      selectionLabels: { price: "Precio inicial estimado", timeline: "Tiempo estimado", estimateDisclaimer: "Es una estimación inicial según paquete y tipo de proyecto. CAS AURUM revisa fotos, dimensiones, ubicación y alcance antes de confirmar precio y plazo finales.", reviewFirst: "No se cobra online en este paso. CAS AURUM primero revisa sus fotos, tipo de proyecto y ubicación. Si la solicitud encaja, confirmamos paquete, plazo y precio inicial final, y luego enviamos link de pago o invoice." },
-      packageHelp: { design_concept: "Las fotos son obligatorias. Las medidas son opcionales para concepto visual.", design_technical: "Las dimensiones son obligatorias para el paquete tecnico.", realization_review: "La realizacion se revisa individualmente segun ubicacion, alcance y disponibilidad." },
-      dimensionsHint: { design_concept: "Para concepto visual, agregue largo, ancho/profundidad y altura solo si ya los tiene.", design_technical: "Dimensiones y altura de techo son obligatorias para revision tecnica.", realization_review: "Las dimensiones son recomendadas. Ubicacion, presupuesto y plazo son obligatorios." },
-      fileHint: "Las fotos del proyecto son obligatorias. Las referencias visuales son opcionales.",
+      selectionLabels: { price: "Precio del primer pedido de diseño", timeline: "Tiempo", estimateDisclaimer: "Una zona significa un área definida del proyecto, como una pared de TV, pared de chimenea, pared detrás de cama, foyer, pared de tocador, frente de closet, pared empotrada de oficina, pared destacada de cocina, pared de comedor o grupo de paredes de pasillo.", reviewFirst: "El primer pedido de diseño recibe 20% de descuento: $792 por zona en lugar de $990 por zona. Si el cliente encarga la realización completa con CAS AURUM, la tarifa del proyecto de diseño se acredita al costo final." },
+      packageHelp: { design_concept: "Un concepto visual para una zona. Fotos, dimensiones, preferencias y presupuesto se recopilan antes de iniciar el trabajo de diseño." },
+      dimensionsHint: { design_concept: "Comparta las medidas principales de la zona o solicite ayuda para medición para que CAS AURUM pueda aclarar la dirección visual antes del concepto." },
+      fileHint: "Las fotos del proyecto son obligatorias para que CAS AURUM vea la pared, habitación, closet, cocina o zona empotrada real. Las referencias son opcionales.",
       consent: "Acepto que CAS AURUM me contacte sobre esta solicitud.",
-      packageOptions: [["design_concept", "One Zone Design Project"]],
+      packageOptions: [["design_concept", "Proyecto de diseño de una zona"]],
       projectTypeOptions: designConceptProjectOptions("es"),
       styleOptions: designConceptStyleOptions("es"),
       timelineOptions: designConceptTimelineOptions("es"),
       budgetOptions: designConceptBudgetOptions("es"),
       packages: designConceptPackagesData("es"),
       pricing: designConceptPricingData("es"),
-      steps: ["Subir fotos", "Elegir paquete", "Compartir medidas si necesita paquete tecnico", "CAS AURUM prepara el concepto", "Revisar la direccion", "Subir a paquete tecnico o realizacion si hace falta"],
-      stepText: ["Comparta fotos que muestren proporciones y restricciones.", "Elija el nivel que corresponde a la decision siguiente.", "Los paquetes tecnicos necesitan medidas para ser utiles.", "CAS AURUM estudia espacio, materiales y estilo.", "Reciba una direccion clara para avanzar.", "Puede pasar a tecnica preliminar o revision de realizacion."],
+      steps: ["Recopilar información", "Aclarar dirección", "Confirmar una zona", "Crear el concepto visual", "Revisar una corrección", "Pasar a realización si se aprueba"],
+      stepText: ["Antes del diseño, CAS AURUM recopila fotos, dimensiones, preferencias y presupuesto para la zona definida.", "Se aclaran estilo, colores, texturas, ambiente, atmósfera y dirección visual deseada.", "CAS AURUM confirma la dirección de diseño de una zona antes de crear el concepto visual.", "El proyecto incluye un concepto visual para una zona con paleta de color, dirección de texturas, composición y distribución de los elementos principales.", "Se incluye una revisión dentro de la dirección aprobada, sin prometer múltiples conceptos ni muchas opciones.", "La selección exacta de materiales, marcas, proveedores, planos de taller, planos de producción, ingeniería y estimación final sucede después, durante la realización."],
       faq: designConceptFaqData("es"),
     },
     fr: {
-      heroEyebrow: "Forfaits concept",
-      heroPrimary: "Demarrer le concept",
-      heroSecondary: "Comparer les forfaits",
-      heroCaption: "Un depart clair pour murs media, dressings, cuisines, integres et espaces personnels.",
-      positioningEyebrow: "Depart a faible risque",
-      positioningTitle: "Avant fabrication, clarifiez la direction",
-      positioningText: "Avant d'investir dans fabrication, cabinetry ou installation, commencez par une direction de design claire. Les forfaits aident proprietaires, designers et builders a comprendre potentiel visuel, matieres et prochaine etape.",
-      packagesEyebrow: "Niveaux de service",
+      heroEyebrow: "Projet de design d'une zone",
+      heroPrimary: "Commencer le projet de design",
+      heroSecondary: "Voir les prix",
+      heroCaption: "Un concept visuel ciblé pour un mur, une zone intégrée ou un espace accent défini.",
+      positioningEyebrow: "Concept avant réalisation",
+      positioningTitle: "Clarifiez la direction visuelle avant les matériaux exacts",
+      positioningText: "Un Projet de Design d'Une Zone définit les couleurs, textures, ambiance, atmosphère, composition et concept général pour une zone définie. Les matériaux exacts, marques, codes produit, fournisseurs, plans d'atelier, plans de production, ingénierie et estimation finale de fabrication sont traités plus tard, pendant la réalisation.",
+      packagesEyebrow: "Périmètre design",
       pricingEyebrow: "Prix transparents",
       processEyebrow: "Processus",
-      formEyebrow: "Intake projet",
+      formEyebrow: "Entrée projet",
       faqTitle: "Questions frequentes",
       continueTitle: "Continuer avec CAS AURUM",
-      formSteps: { package: "Choisir le forfait", project: "Type de projet", contact: "Contact et lieu", files: "Ajouter photos", dimensions: "Partager dimensions", details: "Budget, calendrier et description" },
+      formSteps: { package: "Confirmer le projet de design", project: "Type de zone", contact: "Contact et lieu", files: "Ajouter photos", dimensions: "Dimensions", details: "Budget, calendrier et description" },
       fields: designConceptFieldLabels("fr"),
-      selectionLabels: { price: "Prix de départ estimé", timeline: "Délai estimé", estimateDisclaimer: "Il s'agit d'une estimation de départ selon le forfait et le type de projet. CAS AURUM vérifie photos, dimensions, lieu et périmètre avant de confirmer le prix et le délai finaux.", reviewFirst: "Aucun paiement en ligne n'est demandé à cette étape. CAS AURUM examine d'abord vos photos, le type de projet et le lieu. Si la demande convient, nous confirmons forfait, délai et prix de départ final, puis envoyons un lien de paiement ou une facture." },
-      packageHelp: { design_concept: "Les photos sont obligatoires. Les dimensions sont optionnelles pour un concept visuel.", design_technical: "Les dimensions sont obligatoires pour un forfait technique.", realization_review: "La realisation est examinee individuellement selon lieu, portee et disponibilite." },
-      dimensionsHint: { design_concept: "Pour un concept visuel, ajoutez longueur, largeur/profondeur et hauteur seulement si vous les avez.", design_technical: "Dimensions et hauteur sous plafond sont obligatoires pour la revue technique.", realization_review: "Dimensions recommandees. Lieu, budget et calendrier sont obligatoires." },
-      fileHint: "Les photos du projet sont obligatoires. Les images d'inspiration sont optionnelles.",
+      selectionLabels: { price: "Prix de la première commande design", timeline: "Délai", estimateDisclaimer: "Une zone signifie une zone de projet définie, par exemple mur TV, mur cheminée, mur derrière le lit, foyer, mur vasque, façade de dressing, mur intégré de bureau, mur accent de cuisine, mur salle à manger ou groupe de murs de couloir.", reviewFirst: "La première commande design reçoit 20% de remise: 792 $ par zone au lieu de 990 $ par zone. Si le client commande la réalisation complète avec CAS AURUM, les frais du projet de design sont crédités sur le coût final." },
+      packageHelp: { design_concept: "Un concept visuel pour une zone. Photos, dimensions, préférences et budget sont recueillis avant le début du travail de design." },
+      dimensionsHint: { design_concept: "Partagez les dimensions principales de la zone ou demandez une aide de mesure afin que CAS AURUM clarifie la direction visuelle avant le concept." },
+      fileHint: "Les photos du projet sont obligatoires pour que CAS AURUM voie le mur, la pièce, le dressing, la cuisine ou la zone intégrée réelle. Les références sont optionnelles.",
       consent: "J'accepte que CAS AURUM me contacte au sujet de cette demande.",
-      packageOptions: [["design_concept", "One Zone Design Project"]],
+      packageOptions: [["design_concept", "Projet de design d'une zone"]],
       projectTypeOptions: designConceptProjectOptions("fr"),
       styleOptions: designConceptStyleOptions("fr"),
       timelineOptions: designConceptTimelineOptions("fr"),
       budgetOptions: designConceptBudgetOptions("fr"),
       packages: designConceptPackagesData("fr"),
       pricing: designConceptPricingData("fr"),
-      steps: ["Ajouter photos", "Choisir le forfait", "Partager dimensions si le forfait technique est necessaire", "CAS AURUM prepare le concept", "Revoir la direction", "Passer a technique ou realisation si necessaire"],
-      stepText: ["Montrez proportions et contraintes.", "Choisissez le niveau adapte.", "La technique demande des dimensions.", "CAS AURUM etudie espace, matieres et style.", "Recevez une direction claire.", "Passez a la suite si le projet le demande."],
+      steps: ["Recueillir les informations", "Clarifier la direction", "Confirmer une zone", "Créer le concept visuel", "Revoir une correction", "Passer à la réalisation si approuvé"],
+      stepText: ["Avant le design, CAS AURUM recueille photos, dimensions, préférences et budget pour la zone définie.", "Le style, les couleurs, textures, ambiance, atmosphère et direction visuelle souhaitée sont clarifiés avec le client.", "CAS AURUM confirme la direction de design d'une zone avant de créer le concept visuel.", "Le projet comprend un concept visuel pour une zone avec palette de couleurs, direction de textures, composition et agencement des éléments principaux.", "Une révision est incluse dans la direction approuvée, sans promettre plusieurs concepts ni beaucoup d'options.", "La sélection exacte des matériaux, marques, fournisseurs, plans d'atelier, plans de production, ingénierie et estimation finale se fait plus tard, pendant la réalisation."],
       faq: designConceptFaqData("fr"),
     },
     ru: {
-      heroEyebrow: "Пакеты дизайн-концепта",
-      heroPrimary: "Начать дизайн-концепт",
-      heroSecondary: "Сравнить пакеты",
-      heroCaption: "Понятный старт для TV-стен, гардеробных, кухонь, встроенной мебели и персональных комнат.",
-      positioningEyebrow: "Низкий риск старта",
-      positioningTitle: "До производства уточните дизайн-направление",
-      positioningText: "Перед инвестициями в производство, корпусную мебель или монтаж начните с ясного дизайн-направления. Пакеты помогают владельцам, дизайнерам и строителям понять визуальный потенциал, материалы и примерный путь проекта.",
-      packagesEyebrow: "Уровни сервиса",
-      pricingEyebrow: "Прозрачные стартовые цены",
+      heroEyebrow: "Дизайн-проект одной зоны",
+      heroPrimary: "Начать дизайн-проект",
+      heroSecondary: "Смотреть цены",
+      heroCaption: "Фокусный визуальный концепт для одной определенной стены, встроенной зоны или акцентной области.",
+      positioningEyebrow: "Концепт до реализации",
+      positioningTitle: "Уточните визуальное направление до выбора точных материалов",
+      positioningText: "Дизайн-проект одной зоны определяет цвета, фактуры, настроение, атмосферу, композицию и общую дизайн-концепцию для одной зоны. Точные материалы, бренды, коды продуктов, поставщики, рабочие чертежи, производственные чертежи, инженерия и финальная смета производства прорабатываются позже, на этапе реализации.",
+      packagesEyebrow: "Объем дизайна",
+      pricingEyebrow: "Прозрачные цены",
       processEyebrow: "Процесс",
       formEyebrow: "Заявка по проекту",
       faqTitle: "Частые вопросы",
       continueTitle: "Продолжить изучение CAS AURUM",
-      formSteps: { package: "Выберите пакет", project: "Тип проекта", contact: "Контакт и локация", files: "Загрузите фото", dimensions: "Укажите размеры", details: "Бюджет, сроки и описание" },
+      formSteps: { package: "Подтвердите дизайн-проект", project: "Тип зоны", contact: "Контакт и локация", files: "Загрузите фото", dimensions: "Размеры", details: "Бюджет, сроки и описание" },
       fields: designConceptFieldLabels("ru"),
-      selectionLabels: { price: "Ориентировочная стартовая цена", timeline: "Ориентировочные сроки", estimateDisclaimer: "Это стартовая оценка по пакету и типу проекта. CAS AURUM проверяет фото, размеры, локацию и объем перед подтверждением финальной цены и сроков.", reviewFirst: "На этом шаге онлайн-оплата не взимается. CAS AURUM сначала смотрит фото, тип проекта и локацию. Если запрос подходит, мы подтверждаем пакет, сроки и финальную стартовую цену, затем отправляем ссылку на оплату или счет." },
-      packageHelp: { design_concept: "Фото обязательны. Размеры для визуального концепта необязательны.", design_technical: "Для технического пакета размеры обязательны.", realization_review: "Полная реализация рассматривается индивидуально по локации, объему и доступности." },
-      dimensionsHint: { design_concept: "Для визуального концепта укажите длину, ширину/глубину и высоту только если они уже есть.", design_technical: "Для технического пакета обязательны длина, ширина/глубина и высота/высота потолка.", realization_review: "Размеры рекомендуются. Локация, бюджет и желаемые сроки обязательны." },
+      selectionLabels: { price: "Цена первого дизайн-заказа", timeline: "Срок", estimateDisclaimer: "Одна зона означает одну определенную область проекта: TV-стена или медиа-стена, стена с камином, стена за кроватью, стена в фойе, зона умывальника, фасад гардеробной, встроенная офисная стена, акцентная зона кухни, стена столовой или группа стен коридора.", reviewFirst: "Первый дизайн-заказ получает скидку 20%: $792 за зону вместо $990 за зону. Если клиент заказывает полную реализацию у CAS AURUM, стоимость дизайн-проекта засчитывается в финальную стоимость проекта." },
+      packageHelp: { design_concept: "Один визуальный дизайн-концепт для одной зоны. Фото, размеры, предпочтения и бюджет собираются до начала дизайн-работы." },
+      dimensionsHint: { design_concept: "Укажите основные размеры зоны или запросите помощь с замером, чтобы CAS AURUM мог уточнить визуальное направление до создания концепта." },
       fileHint: "Фото проекта обязательны, чтобы CAS AURUM видел реальную стену, комнату, гардеробную, кухню или встроенную зону. Референсы необязательны.",
       consent: "Я согласен, что CAS AURUM может связаться со мной по этой заявке.",
-      packageOptions: [["design_concept", "One Zone Design Project"]],
+      packageOptions: [["design_concept", "Дизайн-проект одной зоны"]],
       projectTypeOptions: designConceptProjectOptions("ru"),
       styleOptions: designConceptStyleOptions("ru"),
       timelineOptions: designConceptTimelineOptions("ru"),
       budgetOptions: designConceptBudgetOptions("ru"),
       packages: designConceptPackagesData("ru"),
       pricing: designConceptPricingData("ru"),
-      steps: ["Загрузить фото", "Выбрать пакет", "Передать размеры, если нужен технический пакет", "CAS AURUM готовит концепт", "Рассмотреть дизайн-направление", "Перейти к техническому пакету или полному разбору"],
-      stepText: ["Покажите пространство и ограничения.", "Выберите уровень детализации.", "Технический пакет требует размеров.", "CAS AURUM изучает пространство, материалы и стиль.", "Получите понятное направление.", "При необходимости переходите на следующий уровень."],
+      steps: ["Собрать данные проекта", "Уточнить направление", "Подтвердить одну зону", "Создать визуальный концепт", "Внести одну правку", "Перейти к реализации при одобрении"],
+      stepText: ["Перед началом дизайн-работы CAS AURUM собирает фото, размеры, предпочтения и бюджет по определенной зоне.", "Стиль, цвета, фактуры, настроение, атмосфера и желаемое визуальное направление уточняются с клиентом.", "CAS AURUM подтверждает направление дизайна одной зоны до создания визуального концепта.", "Проект включает один визуальный концепт для одной зоны с цветовой палитрой, направлением фактур, композицией и расположением основных визуальных элементов.", "Включена одна правка в рамках утвержденного направления, без обещания нескольких концептов или множества вариантов.", "Точный выбор материалов, брендов, поставщиков, рабочие чертежи, производственные чертежи, инженерия и финальная смета происходят позже, на этапе реализации."],
       faq: designConceptFaqData("ru"),
     },
     uk: {
-      heroEyebrow: "Пакети дизайн-концепту",
-      heroPrimary: "Почати дизайн-концепт",
-      heroSecondary: "Порівняти пакети",
-      heroCaption: "Зрозумілий старт для TV-стін, гардеробних, кухонь, вбудованих меблів і персональних кімнат.",
-      positioningEyebrow: "Низький ризик старту",
-      positioningTitle: "До виробництва уточніть дизайн-напрям",
-      positioningText: "Перед інвестиціями у виробництво, корпусні меблі або монтаж почніть із ясного дизайн-напряму. Пакети допомагають власникам, дизайнерам і будівельникам зрозуміти візуальний потенціал, матеріали й приблизний шлях проєкту.",
-      packagesEyebrow: "Рівні сервісу",
-      pricingEyebrow: "Прозорі стартові ціни",
+      heroEyebrow: "Дизайн-проєкт однієї зони",
+      heroPrimary: "Почати дизайн-проєкт",
+      heroSecondary: "Дивитися ціни",
+      heroCaption: "Фокусний візуальний концепт для однієї визначеної стіни, вбудованої зони або акцентної ділянки.",
+      positioningEyebrow: "Концепт до реалізації",
+      positioningTitle: "Уточніть візуальний напрям до вибору точних матеріалів",
+      positioningText: "Дизайн-проєкт однієї зони визначає кольори, фактури, настрій, атмосферу, композицію та загальну дизайн-концепцію для однієї зони. Точні матеріали, бренди, коди продуктів, постачальники, робочі креслення, виробничі креслення, інженерія та фінальний кошторис виробництва опрацьовуються пізніше, на етапі реалізації.",
+      packagesEyebrow: "Обсяг дизайну",
+      pricingEyebrow: "Прозорі ціни",
       processEyebrow: "Процес",
       formEyebrow: "Заявка по проєкту",
       faqTitle: "Поширені питання",
       continueTitle: "Продовжити вивчення CAS AURUM",
-      formSteps: { package: "Оберіть пакет", project: "Тип проєкту", contact: "Контакт і локація", files: "Завантажте фото", dimensions: "Вкажіть розміри", details: "Бюджет, терміни й опис" },
+      formSteps: { package: "Підтвердьте дизайн-проєкт", project: "Тип зони", contact: "Контакт і локація", files: "Завантажте фото", dimensions: "Розміри", details: "Бюджет, терміни й опис" },
       fields: designConceptFieldLabels("uk"),
-      selectionLabels: { price: "Орієнтовна стартова ціна", timeline: "Орієнтовні терміни", estimateDisclaimer: "Це стартова оцінка за пакетом і типом проєкту. CAS AURUM перевіряє фото, розміри, локацію та обсяг перед підтвердженням фінальної ціни й термінів.", reviewFirst: "На цьому кроці онлайн-оплата не стягується. CAS AURUM спочатку переглядає фото, тип проєкту й локацію. Якщо запит підходить, ми підтверджуємо пакет, терміни та фінальну стартову ціну, а потім надсилаємо посилання на оплату або рахунок." },
-      packageHelp: { design_concept: "Фото обов'язкові. Розміри для візуального концепту необов'язкові.", design_technical: "Для технічного пакета розміри обов'язкові.", realization_review: "Повна реалізація розглядається індивідуально за локацією, обсягом і доступністю." },
-      dimensionsHint: { design_concept: "Для візуального концепту вкажіть довжину, ширину/глибину й висоту тільки якщо вони вже є.", design_technical: "Для технічного пакета обов'язкові довжина, ширина/глибина і висота/висота стелі.", realization_review: "Розміри рекомендовані. Локація, бюджет і бажані терміни обов'язкові." },
+      selectionLabels: { price: "Ціна першого дизайн-замовлення", timeline: "Термін", estimateDisclaimer: "Одна зона означає одну визначену область проєкту: TV-стіна або медіа-стіна, стіна з каміном, стіна за ліжком, стіна у фоє, зона умивальника, фасад гардеробної, вбудована офісна стіна, акцентна зона кухні, стіна їдальні або група стін коридору.", reviewFirst: "Перше дизайн-замовлення отримує знижку 20%: $792 за зону замість $990 за зону. Якщо клієнт замовляє повну реалізацію у CAS AURUM, вартість дизайн-проєкту зараховується у фінальну вартість проєкту." },
+      packageHelp: { design_concept: "Один візуальний дизайн-концепт для однієї зони. Фото, розміри, вподобання та бюджет збираються до початку дизайн-роботи." },
+      dimensionsHint: { design_concept: "Вкажіть основні розміри зони або запросіть допомогу із заміром, щоб CAS AURUM міг уточнити візуальний напрям до створення концепту." },
       fileHint: "Фото проєкту обов'язкові, щоб CAS AURUM бачив реальну стіну, кімнату, гардеробну, кухню або вбудовану зону. Референси необов'язкові.",
       consent: "Я погоджуюся, що CAS AURUM може зв'язатися зі мною щодо цієї заявки.",
-      packageOptions: [["design_concept", "One Zone Design Project"]],
+      packageOptions: [["design_concept", "Дизайн-проєкт однієї зони"]],
       projectTypeOptions: designConceptProjectOptions("uk"),
       styleOptions: designConceptStyleOptions("uk"),
       timelineOptions: designConceptTimelineOptions("uk"),
       budgetOptions: designConceptBudgetOptions("uk"),
       packages: designConceptPackagesData("uk"),
       pricing: designConceptPricingData("uk"),
-      steps: ["Завантажити фото", "Обрати пакет", "Передати розміри, якщо потрібен технічний пакет", "CAS AURUM готує концепт", "Розглянути дизайн-напрям", "Перейти до технічного пакета або повного розбору"],
-      stepText: ["Покажіть простір і обмеження.", "Оберіть рівень деталізації.", "Технічний пакет потребує розмірів.", "CAS AURUM вивчає простір, матеріали й стиль.", "Отримайте зрозумілий напрям.", "За потреби переходьте на наступний рівень."],
+      steps: ["Зібрати дані проєкту", "Уточнити напрям", "Підтвердити одну зону", "Створити візуальний концепт", "Внести одну правку", "Перейти до реалізації після схвалення"],
+      stepText: ["Перед початком дизайн-роботи CAS AURUM збирає фото, розміри, вподобання та бюджет для визначеної зони.", "Стиль, кольори, фактури, настрій, атмосфера та бажаний візуальний напрям уточнюються з клієнтом.", "CAS AURUM підтверджує напрям дизайну однієї зони до створення візуального концепту.", "Проєкт включає один візуальний концепт для однієї зони з палітрою кольорів, напрямом фактур, композицією та розташуванням основних візуальних елементів.", "Включена одна правка в межах затвердженого напряму, без обіцянки кількох концептів або багатьох варіантів.", "Точний вибір матеріалів, брендів, постачальників, робочі креслення, виробничі креслення, інженерія та фінальний кошторис відбуваються пізніше, на етапі реалізації."],
       faq: designConceptFaqData("uk"),
     },
   };
   const sharedTranslations = {
     es: {
-      heroTitle: "Comience con fotos y un concepto de diseño claro",
-      heroText: "Suba fotos de su habitación, pared, closet, cocina o zona integrada. CAS AURUM preparará una dirección clara con materiales, ideas de distribución y guía presupuestaria.",
-      packagesTitle: "Elija su paquete",
-      packagesText: "Seleccione el nivel de detalle que necesita ahora. Puede empezar con un concepto visual y avanzar a un paquete diseño + realización o revisión completa cuando el alcance esté listo.",
-      pricingTitle: "Precios iniciales transparentes",
-      pricingText: "El precio final depende de la complejidad, número de zonas, nivel de detalle y si se requiere documentación técnica.",
+      heroTitle: "Proyecto de diseño de una zona",
+      heroText: "Suba fotos de su habitación, pared, vestidor, cocina o zona empotrada. CAS AURUM preparará una dirección visual clara con colores, texturas, ideas de distribución y una orientación presupuestaria preliminar.",
+      packagesTitle: "Un precio de proyecto de diseño",
+      packagesText: "El Proyecto de Diseño de Una Zona cuesta $990 por zona. El primer pedido de diseño recibe 20% de descuento, con precio inicial de $792 por zona.",
+      pricingTitle: "Precio de diseño y crédito",
+      pricingText: "Si el cliente encarga la realización completa con CAS AURUM, la tarifa del proyecto de diseño se acredita al costo final del proyecto.",
       processTitle: "Cómo funciona",
-      formTitle: "Iniciar concepto de diseño",
-      formIntro: "Elija un paquete, comparta el espacio, suba fotos y describa la dirección que quiere que CAS AURUM revise.",
+      formTitle: "Iniciar proyecto de diseño de una zona",
+      formIntro: "Comparta la zona definida, fotos, dimensiones, preferencias, presupuesto y atmósfera que quiere que CAS AURUM revise antes del concepto visual.",
       submit: "Enviar proyecto para revisión",
       reviewHint: "CAS AURUM revisa primero la solicitud. El trabajo pagado empieza solo después de una conversación y confirmación escrita.",
     },
     fr: {
-      heroTitle: "Commencez avec des photos et un concept clair",
-      heroText: "Ajoutez des photos de votre pièce, mur, dressing, cuisine ou zone intégrée. CAS AURUM préparera une direction claire avec matières, idées d'agencement et indication budgétaire.",
-      packagesTitle: "Choisissez votre forfait",
-      packagesText: "Sélectionnez le niveau de détail nécessaire maintenant. Vous pouvez commencer par un concept visuel puis évoluer vers un forfait design + réalisation ou une revue complète lorsque le périmètre est prêt.",
-      pricingTitle: "Prix de départ transparents",
-      pricingText: "Le prix final dépend de la complexité, du nombre de zones, du niveau de détail et du besoin éventuel de documentation technique.",
+      heroTitle: "Projet de design d'une zone",
+      heroText: "Téléchargez des photos de votre pièce, mur, dressing, cuisine ou zone intégrée. CAS AURUM préparera une direction visuelle claire avec des couleurs, des textures, des idées d'agencement et une orientation budgétaire préliminaire.",
+      packagesTitle: "Un seul prix de projet de design",
+      packagesText: "Le Projet de Design d'Une Zone coûte 990 $ par zone. La première commande design reçoit 20% de remise, soit 792 $ par zone.",
+      pricingTitle: "Prix design et crédit",
+      pricingText: "Si le client commande la réalisation complète avec CAS AURUM, les frais du projet de design sont crédités sur le coût final du projet.",
       processTitle: "Comment ça fonctionne",
-      formTitle: "Démarrer le concept design",
-      formIntro: "Choisissez un forfait, partagez l'espace, ajoutez des photos et décrivez la direction que CAS AURUM doit examiner.",
+      formTitle: "Commencer le projet de design d'une zone",
+      formIntro: "Partagez la zone définie, photos, dimensions, préférences, budget et atmosphère que CAS AURUM doit examiner avant le concept visuel.",
       submit: "Envoyer le projet pour revue",
       reviewHint: "CAS AURUM examine d'abord la demande. Le travail payant commence seulement après conversation et confirmation écrite.",
     },
     ru: {
-      heroTitle: "Начните с фото и понятного дизайн-концепта",
-      heroText: "Загрузите фото комнаты, стены, гардеробной, кухни или встроенной зоны. CAS AURUM подготовит понятное направление с материалами, идеями планировки и бюджетным ориентиром.",
-      packagesTitle: "Выберите пакет",
-      packagesText: "Выберите уровень детализации, который нужен сейчас. Можно начать с визуального концепта и перейти к пакету дизайн + реализация или полному разбору, когда объем проекта понятен.",
-      pricingTitle: "Прозрачные стартовые цены",
-      pricingText: "Финальная цена зависит от сложности, количества зон, уровня детализации и необходимости технической документации.",
+      heroTitle: "Дизайн-проект одной зоны",
+      heroText: "Загрузите фото комнаты, стены, гардеробной, кухни или встроенной зоны. CAS AURUM подготовит понятное визуальное направление с цветами, фактурами, идеями планировки и предварительным бюджетным ориентиром.",
+      packagesTitle: "Единая цена дизайн-проекта",
+      packagesText: "Дизайн-проект одной зоны стоит $990 за зону. Первый дизайн-заказ получает скидку 20%, итоговая цена первого заказа - $792 за зону.",
+      pricingTitle: "Цена дизайна и зачет",
+      pricingText: "Если клиент заказывает полную реализацию у CAS AURUM, стоимость дизайн-проекта засчитывается в финальную стоимость проекта.",
       processTitle: "Как это работает",
-      formTitle: "Начать дизайн-концепт",
-      formIntro: "Выберите пакет, опишите пространство, загрузите фото и направление, которое должен рассмотреть CAS AURUM.",
+      formTitle: "Начать дизайн-проект одной зоны",
+      formIntro: "Опишите определенную зону, загрузите фото, размеры, предпочтения, бюджет и атмосферу, которые CAS AURUM должен рассмотреть до визуального концепта.",
       submit: "Отправить проект на разбор",
       reviewHint: "CAS AURUM сначала рассматривает заявку. Платная работа начинается только после разговора и письменного подтверждения.",
     },
     uk: {
-      heroTitle: "Почніть із фото та зрозумілого дизайн-концепту",
-      heroText: "Завантажте фото кімнати, стіни, гардеробної, кухні або вбудованої зони. CAS AURUM підготує зрозумілий напрям із матеріалами, ідеями планування та бюджетним орієнтиром.",
-      packagesTitle: "Оберіть пакет",
-      packagesText: "Оберіть рівень деталізації, який потрібен зараз. Можна почати з візуального концепту й перейти до пакета дизайн + реалізація або повного розбору, коли обсяг проєкту зрозумілий.",
-      pricingTitle: "Прозорі стартові ціни",
-      pricingText: "Фінальна ціна залежить від складності, кількості зон, рівня деталізації та потреби в технічній документації.",
+      heroTitle: "Дизайн-проєкт однієї зони",
+      heroText: "Завантажте фото кімнати, стіни, гардеробної, кухні або вбудованої зони. CAS AURUM підготує зрозумілий візуальний напрям із кольорами, фактурами, ідеями планування та попереднім бюджетним орієнтиром.",
+      packagesTitle: "Єдина ціна дизайн-проєкту",
+      packagesText: "Дизайн-проєкт однієї зони коштує $990 за зону. Перше дизайн-замовлення отримує знижку 20%, підсумкова ціна першого замовлення - $792 за зону.",
+      pricingTitle: "Ціна дизайну та зарахування",
+      pricingText: "Якщо клієнт замовляє повну реалізацію у CAS AURUM, вартість дизайн-проєкту зараховується у фінальну вартість проєкту.",
       processTitle: "Як це працює",
-      formTitle: "Почати дизайн-концепт",
-      formIntro: "Оберіть пакет, опишіть простір, завантажте фото й напрям, який має розглянути CAS AURUM.",
+      formTitle: "Почати дизайн-проєкт однієї зони",
+      formIntro: "Опишіть визначену зону, завантажте фото, розміри, вподобання, бюджет і атмосферу, які CAS AURUM має розглянути до візуального концепту.",
       submit: "Надіслати проєкт на розбір",
       reviewHint: "CAS AURUM спочатку розглядає заявку. Платна робота починається тільки після розмови й письмового підтвердження.",
     },
@@ -5766,11 +5766,11 @@ function designConceptText(lang) {
 
 function designConceptFieldLabels(lang) {
   const labels = {
-    en: { packageType: "Package type", projectType: "Project type", clientName: "Name", email: "Email", phone: "Phone (optional)", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height", needsMeasurement: "I need CAS AURUM to help arrange measurement for this project." },
-    es: { packageType: "Tipo de paquete", projectType: "Tipo de proyecto", clientName: "Nombre", email: "Email", phone: "Teléfono (opcional)", location: "Ubicación del proyecto", description: "Descripción del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imágenes de inspiración (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo", needsMeasurement: "Necesito que CAS AURUM ayude a coordinar la medición de este proyecto." },
-    fr: { packageType: "Type de forfait", projectType: "Type de projet", clientName: "Nom", email: "Email", phone: "Téléphone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaité", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond", needsMeasurement: "J'ai besoin que CAS AURUM aide à organiser les mesures pour ce projet." },
-    ru: { packageType: "Тип пакета", projectType: "Тип проекта", clientName: "Имя", email: "Email", phone: "Телефон (необязательно)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (необязательно)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка", needsMeasurement: "Мне нужно, чтобы CAS AURUM помог организовать замер для этого проекта." },
-    uk: { packageType: "Тип пакета", projectType: "Тип проєкту", clientName: "Ім'я", email: "Email", phone: "Телефон (необов'язково)", location: "Локація проєкту", description: "Опис проєкту", desiredStyle: "Бажаний стиль", timeline: "Терміни", budget: "Бюджет", photos: "Обов'язкові фото проєкту", inspiration: "Референси (необов'язково)", length: "Довжина", widthDepth: "Ширина / глибина", height: "Висота / висота стелі", needsMeasurement: "Мені потрібно, щоб CAS AURUM допоміг організувати замір для цього проєкту." },
+    en: { packageType: "Design project", projectType: "Zone type", clientName: "Name", email: "Email", phone: "Phone (optional)", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height", needsMeasurement: "I need CAS AURUM to help arrange measurement for this project." },
+    es: { packageType: "Proyecto de diseño", projectType: "Tipo de zona", clientName: "Nombre", email: "Correo electrónico", phone: "Teléfono (opcional)", location: "Ubicación del proyecto", description: "Descripción del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imágenes de inspiración (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo", needsMeasurement: "Necesito que CAS AURUM ayude a coordinar la medición de este proyecto." },
+    fr: { packageType: "Projet de design", projectType: "Type de zone", clientName: "Nom", email: "Courriel", phone: "Téléphone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaité", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond", needsMeasurement: "J'ai besoin que CAS AURUM aide à organiser les mesures pour ce projet." },
+    ru: { packageType: "Дизайн-проект", projectType: "Тип зоны", clientName: "Имя", email: "Эл. почта", phone: "Телефон (необязательно)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (необязательно)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка", needsMeasurement: "Мне нужно, чтобы CAS AURUM помог организовать замер для этого проекта." },
+    uk: { packageType: "Дизайн-проєкт", projectType: "Тип зони", clientName: "Ім'я", email: "Ел. пошта", phone: "Телефон (необов'язково)", location: "Локація проєкту", description: "Опис проєкту", desiredStyle: "Бажаний стиль", timeline: "Терміни", budget: "Бюджет", photos: "Обов'язкові фото проєкту", inspiration: "Референси (необов'язково)", length: "Довжина", widthDepth: "Ширина / глибина", height: "Висота / висота стелі", needsMeasurement: "Мені потрібно, щоб CAS AURUM допоміг організувати замір для цього проєкту." },
   };
   return labels[lang] || labels.en;
 }
@@ -5778,10 +5778,10 @@ function designConceptFieldLabels(lang) {
 function designConceptProjectOptions(lang) {
   const labels = {
     en: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
-    es: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
-    fr: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
-    ru: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
-    uk: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
+    es: ["Pared de TV / pared multimedia", "Pared de chimenea", "Pared detrás de cama", "Pared de foyer", "Pared de tocador de baño", "Frente de closet", "Pared empotrada de oficina", "Pared destacada de cocina / bajo barra", "Pared de comedor", "Grupo de paredes de pasillo"],
+    fr: ["Mur TV / mur média", "Mur cheminée", "Mur derrière le lit", "Mur de foyer", "Mur vasque de salle de bain", "Façade de dressing", "Mur intégré de bureau", "Mur accent cuisine / sous bar", "Mur salle à manger", "Groupe de murs de couloir"],
+    ru: ["TV-стена / медиа-стена", "Стена с камином", "Стена за кроватью", "Стена в фойе", "Стена зоны умывальника", "Фасад шкафа / гардеробной", "Встроенная офисная стена", "Акцентная стена кухни / зона под баром", "Стена в столовой", "Группа стен в коридоре"],
+    uk: ["TV-стіна / медіа-стіна", "Стіна з каміном", "Стіна за ліжком", "Стіна у фоє", "Стіна зони умивальника", "Фасад шафи / гардеробної", "Вбудована офісна стіна", "Акцентна стіна кухні / зона під баром", "Стіна в їдальні", "Група стін у коридорі"],
   }[lang] || {};
   const values = [
     ["media_wall", "TV wall / media wall"],
@@ -5824,6 +5824,7 @@ function designConceptEstimate(priceLabel, timelineLabel, microcopy) {
 function localizedDesignConceptEstimate(estimate, lang) {
   const priceLabels = {
     es: {
+      "$792 per zone first order": "$792 por zona en el primer pedido",
       "from $490": "desde $490",
       "from $590": "desde $590",
       "from $690": "desde $690",
@@ -5846,6 +5847,7 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "reviewed after scope": "se revisa tras definir el alcance",
     },
     fr: {
+      "$792 per zone first order": "792 $ par zone pour la première commande",
       "from $490": "à partir de 490 $",
       "from $590": "à partir de 590 $",
       "from $690": "à partir de 690 $",
@@ -5868,6 +5870,7 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "reviewed after scope": "revu après définition du périmètre",
     },
     ru: {
+      "$792 per zone first order": "$792 за зону для первого заказа",
       "from $490": "от $490",
       "from $590": "от $590",
       "from $690": "от $690",
@@ -5887,9 +5890,10 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "from $2,500": "от $2,500",
       "custom quote": "индивидуальный расчет",
       "to be confirmed after review": "подтверждается после разбора",
-      "reviewed after scope": "рассматривается после уточнения scope",
+      "reviewed after scope": "рассматривается после уточнения объема",
     },
     uk: {
+      "$792 per zone first order": "$792 за зону для першого замовлення",
       "from $490": "від $490",
       "from $590": "від $590",
       "from $690": "від $690",
@@ -5909,11 +5913,12 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "from $2,500": "від $2,500",
       "custom quote": "індивідуальний розрахунок",
       "to be confirmed after review": "підтверджується після розбору",
-      "reviewed after scope": "розглядається після уточнення scope",
+      "reviewed after scope": "розглядається після уточнення обсягу",
     },
   };
   const timelineLabels = {
     es: {
+      "confirmed after intake": "se confirma después de la entrada del proyecto",
       "3-5 business days": "3-5 días hábiles",
       "3-7 business days": "3-7 días hábiles",
       "4-6 business days": "4-6 días hábiles",
@@ -5926,6 +5931,7 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "depends on selected package": "depende del paquete elegido",
     },
     fr: {
+      "confirmed after intake": "confirmé après l'entrée projet",
       "3-5 business days": "3-5 jours ouvrés",
       "3-7 business days": "3-7 jours ouvrés",
       "4-6 business days": "4-6 jours ouvrés",
@@ -5938,6 +5944,7 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "depends on selected package": "selon le forfait choisi",
     },
     ru: {
+      "confirmed after intake": "подтверждается после разбора заявки",
       "3-5 business days": "3-5 рабочих дней",
       "3-7 business days": "3-7 рабочих дней",
       "4-6 business days": "4-6 рабочих дней",
@@ -5950,6 +5957,7 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "depends on selected package": "зависит от выбранного пакета",
     },
     uk: {
+      "confirmed after intake": "підтверджується після розбору заявки",
       "3-5 business days": "3-5 робочих днів",
       "3-7 business days": "3-7 робочих днів",
       "4-6 business days": "4-6 робочих днів",
@@ -5962,14 +5970,29 @@ function localizedDesignConceptEstimate(estimate, lang) {
       "depends on selected package": "залежить від обраного пакета",
     },
   };
+  const microcopyLabels = {
+    es: {
+      "First design orders receive 20% off the standard $990 per zone price. The design project fee is credited toward the final project cost if the client orders full project realization with CAS AURUM.": "El primer pedido de diseño recibe 20% de descuento sobre el precio estándar de $990 por zona. La tarifa del proyecto de diseño se acredita al costo final si el cliente encarga la realización completa con CAS AURUM.",
+    },
+    fr: {
+      "First design orders receive 20% off the standard $990 per zone price. The design project fee is credited toward the final project cost if the client orders full project realization with CAS AURUM.": "La première commande design reçoit 20% de remise sur le prix standard de 990 $ par zone. Les frais du projet de design sont crédités sur le coût final si le client commande la réalisation complète avec CAS AURUM.",
+    },
+    ru: {
+      "First design orders receive 20% off the standard $990 per zone price. The design project fee is credited toward the final project cost if the client orders full project realization with CAS AURUM.": "Первый дизайн-заказ получает скидку 20% от стандартной цены $990 за зону. Стоимость дизайн-проекта засчитывается в финальную стоимость, если клиент заказывает полную реализацию у CAS AURUM.",
+    },
+    uk: {
+      "First design orders receive 20% off the standard $990 per zone price. The design project fee is credited toward the final project cost if the client orders full project realization with CAS AURUM.": "Перше дизайн-замовлення отримує знижку 20% від стандартної ціни $990 за зону. Вартість дизайн-проєкту зараховується у фінальну вартість, якщо клієнт замовляє повну реалізацію у CAS AURUM.",
+    },
+  };
   const priceLabel = priceLabels[lang]?.[estimate.priceLabel] || estimate.priceLabel;
   const timelineLabel = timelineLabels[lang]?.[estimate.timelineLabel] || estimate.timelineLabel;
+  const microcopy = microcopyLabels[lang]?.[estimate.microcopy] || localizedPlain(estimate.microcopy, lang);
   return {
     ...estimate,
     priceLabel,
     timelineLabel,
     label: priceLabel,
-    microcopy: localizedPlain(estimate.microcopy, lang),
+    microcopy,
   };
 }
 
@@ -6031,8 +6054,40 @@ function designConceptPackagesData(lang) {
         { value: "design_concept", kicker: "One zone", title: "One Zone Design Project", price: "$990 per zone", bestFor: "For one defined project area that needs a clear visual direction before realization.", inputs: "Photos, dimensions, preferences, desired style, colors, textures, atmosphere and budget are collected before design work begins.", deliverables: "One visual design concept for one zone, color palette and texture direction, composition and layout of main visual elements, plus one revision within the approved direction.", timeline: "Confirmed after intake", cta: "Order Design Project" },
       ],
     },
+    es: {
+      inputsTitle: "Información requerida",
+      deliverablesTitle: "Entregables",
+      timelineTitle: "Tiempo",
+      items: [
+        { value: "design_concept", kicker: "Una zona", title: "Proyecto de diseño de una zona", price: "$990 por zona", bestFor: "Para un área definida que necesita una dirección visual clara antes de la realización.", inputs: "Fotos, dimensiones, preferencias, estilo deseado, colores, texturas, atmósfera y presupuesto se recopilan antes de iniciar el diseño.", deliverables: "Un concepto visual para una zona, paleta de color y dirección de texturas, composición y distribución de los elementos principales, más una revisión dentro de la dirección aprobada.", timeline: "Confirmado después de la entrada del proyecto", cta: "Pedir proyecto de diseño" },
+      ],
+    },
+    fr: {
+      inputsTitle: "Informations requises",
+      deliverablesTitle: "Livrables",
+      timelineTitle: "Délai",
+      items: [
+        { value: "design_concept", kicker: "Une zone", title: "Projet de design d'une zone", price: "990 $ par zone", bestFor: "Pour une zone définie qui nécessite une direction visuelle claire avant la réalisation.", inputs: "Photos, dimensions, préférences, style souhaité, couleurs, textures, atmosphère et budget sont recueillis avant le début du design.", deliverables: "Un concept visuel pour une zone, palette de couleurs et direction de textures, composition et agencement des éléments principaux, plus une révision dans la direction approuvée.", timeline: "Confirmé après l'entrée projet", cta: "Commander le projet de design" },
+      ],
+    },
+    ru: {
+      inputsTitle: "Что нужно собрать",
+      deliverablesTitle: "Что входит",
+      timelineTitle: "Срок",
+      items: [
+        { value: "design_concept", kicker: "Одна зона", title: "Дизайн-проект одной зоны", price: "$990 за зону", bestFor: "Для одной определенной области проекта, где нужно ясное визуальное направление до реализации.", inputs: "Фото, размеры, предпочтения, желаемый стиль, цвета, фактуры, атмосфера и бюджет собираются до начала дизайн-работы.", deliverables: "Один визуальный дизайн-концепт для одной зоны, цветовая палитра и направление фактур, композиция и расположение основных визуальных элементов, плюс одна правка в рамках утвержденного направления.", timeline: "Подтверждается после разбора заявки", cta: "Заказать дизайн-проект" },
+      ],
+    },
+    uk: {
+      inputsTitle: "Що потрібно зібрати",
+      deliverablesTitle: "Що входить",
+      timelineTitle: "Термін",
+      items: [
+        { value: "design_concept", kicker: "Одна зона", title: "Дизайн-проєкт однієї зони", price: "$990 за зону", bestFor: "Для однієї визначеної області проєкту, де потрібен ясний візуальний напрям до реалізації.", inputs: "Фото, розміри, вподобання, бажаний стиль, кольори, фактури, атмосфера та бюджет збираються до початку дизайн-роботи.", deliverables: "Один візуальний дизайн-концепт для однієї зони, палітра кольорів і напрям фактур, композиція та розташування основних візуальних елементів, плюс одна правка в межах затвердженого напряму.", timeline: "Підтверджується після розбору заявки", cta: "Замовити дизайн-проєкт" },
+      ],
+    },
   };
-  const selected = data.en;
+  const selected = data[lang] || data.en;
   return selected.items.map((item) => ({
     ...item,
     inputsTitle: selected.inputsTitle,
@@ -6047,9 +6102,34 @@ function designConceptPricingData(lang) {
       { title: "One Zone Design Project", price: "$990 per zone", timeline: "standard design project price" },
       { title: "First Order Discount", price: "$792 per zone", timeline: "20% off first design order" },
       { title: "Credit Toward Realization", price: "credited", timeline: "applied toward final project cost if CAS AURUM completes realization" },
+      { title: "24-Hour Realization Offer", price: "15% off", timeline: "additional discount on the approved CAS AURUM realization scope if ordered within 24 hours after receiving the design" },
+    ],
+    es: [
+      { title: "Proyecto de diseño de una zona", price: "$990 por zona", timeline: "precio estándar del proyecto de diseño" },
+      { title: "Descuento del primer pedido", price: "$792 por zona", timeline: "20% de descuento en el primer pedido de diseño" },
+      { title: "Crédito hacia realización", price: "acreditado", timeline: "se aplica al costo final si CAS AURUM completa la realización" },
+      { title: "Oferta de realización en 24 horas", price: "15% menos", timeline: "descuento adicional sobre el alcance de realización aprobado por CAS AURUM si se ordena dentro de 24 horas después de recibir el diseño" },
+    ],
+    fr: [
+      { title: "Projet de design d'une zone", price: "990 $ par zone", timeline: "prix standard du projet de design" },
+      { title: "Remise première commande", price: "792 $ par zone", timeline: "20% de remise sur la première commande design" },
+      { title: "Crédit vers réalisation", price: "crédité", timeline: "appliqué au coût final si CAS AURUM réalise le projet" },
+      { title: "Offre réalisation 24 heures", price: "15% de remise", timeline: "remise supplémentaire sur le périmètre de réalisation CAS AURUM approuvé si commandé dans les 24 heures après réception du design" },
+    ],
+    ru: [
+      { title: "Дизайн-проект одной зоны", price: "$990 за зону", timeline: "стандартная цена дизайн-проекта" },
+      { title: "Скидка на первый заказ", price: "$792 за зону", timeline: "20% скидка на первый дизайн-заказ" },
+      { title: "Зачет в реализацию", price: "засчитывается", timeline: "применяется к финальной стоимости, если CAS AURUM выполняет реализацию" },
+      { title: "Предложение реализации за 24 часа", price: "скидка 15%", timeline: "дополнительная скидка на утвержденный объем реализации CAS AURUM, если заказ оформлен в течение 24 часов после получения дизайна" },
+    ],
+    uk: [
+      { title: "Дизайн-проєкт однієї зони", price: "$990 за зону", timeline: "стандартна ціна дизайн-проєкту" },
+      { title: "Знижка на перше замовлення", price: "$792 за зону", timeline: "20% знижка на перше дизайн-замовлення" },
+      { title: "Зарахування в реалізацію", price: "зараховується", timeline: "застосовується до фінальної вартості, якщо CAS AURUM виконує реалізацію" },
+      { title: "Пропозиція реалізації за 24 години", price: "знижка 15%", timeline: "додаткова знижка на затверджений обсяг реалізації CAS AURUM, якщо замовлення оформлене протягом 24 годин після отримання дизайну" },
     ],
   };
-  return data.en;
+  return data[lang] || data.en;
 }
 
 function designConceptFaqData(lang) {
@@ -6061,53 +6141,58 @@ function designConceptFaqData(lang) {
     ["When are exact materials selected?", "Exact material selection happens later during the realization stage. At the design stage, CAS AURUM defines colors, textures, mood, atmosphere, visual direction, composition and the general design concept."],
     ["Can I order only a design project without fabrication?", "Yes. The one-zone design project is a standalone first step before any fabrication, cabinetry or installation commitment."],
     ["Can the design fee be credited toward realization?", "Yes. If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost."],
+    ["How does the 24-hour realization offer work?", "If the client orders realization within 24 hours after receiving the design, CAS AURUM may apply an additional 15% discount to the approved CAS AURUM realization scope. It does not automatically apply to third-party services, permits, engineering, appliances, plumbing, electrical work or out-of-scope items unless agreed."],
     ["Do you create multiple concepts or many options?", "No. Each one-zone design project includes one visual design concept and one revision within the approved direction."],
     ["Can designers/builders use this service for their clients?", "Yes. Designers and builders can submit photos, dimensions, preferences, budget and client goals to clarify visual direction before realization planning."],
   ];
   const localizedFaqs = {
     es: [
       ["¿Qué fotos debo subir?", "Suba fotos amplias de toda la habitación o pared, detalles de esquinas y obstáculos, transiciones de techo y piso, cabinetry o equipos AV existentes, y cualquier referencia que muestre la sensación deseada."],
-      ["¿Necesito medidas exactas?", "Para un concepto de diseño de Nivel 1, las medidas ayudan pero no son obligatorias. Para un paquete diseño + realización, las dimensiones y la altura de techo son necesarias para que la dirección técnica sea útil."],
-      ["¿Puedo pedir solo un concepto sin fabricación?", "Sí. El concepto de diseño funciona como un primer paso independiente y de bajo riesgo antes de comprometerse con fabricación, cabinetry o instalación."],
-      ["¿El costo del concepto se puede acreditar a un proyecto mayor?", "En proyectos seleccionados, CAS AURUM puede revisar un crédito del concepto hacia un paquete técnico o alcance de realización. Esto se confirma por escrito después de revisar el proyecto."],
-      ["¿Qué incluye el paquete técnico?", "Puede incluir dirección de layout, notas preliminares de fabricación, planificación de materiales y orientación de producción donde aplique. No sustituye documentos arquitectónicos, estructurales o de código con licencia."],
-      ["¿Es un documento arquitectónico o de ingeniería sellado?", "No. Es un paquete técnico preliminar para dirección de diseño y fabricación. No es arquitectura sellada, ingeniería estructural ni documentación requerida por código."],
-      ["¿CAS AURUM puede fabricar e instalar el proyecto?", "Diseño + realización está disponible para proyectos seleccionados en Atlanta y por acuerdo especial en otras ubicaciones. Cada proyecto se revisa por ubicación, alcance, presupuesto, calendario y disponibilidad."],
-      ["¿Qué tan rápido recibiré mi concepto?", "La mayoría de los conceptos de Nivel 1 se preparan en 3-5 días hábiles. Conceptos de habitaciones, cocinas y built-ins complejos pueden tomar 4-7 días hábiles. Los paquetes técnicos suelen tomar 7-14 días hábiles."],
-      ["¿Diseñadores y builders pueden usar este servicio para sus clientes?", "Sí. Diseñadores y builders pueden enviar fotos, planos, medidas, inspiración y objetivos del cliente para aclarar la dirección visual o preparar un paquete técnico preliminar."],
+      ["¿Qué es una zona?", "Una zona significa un área definida: pared de TV o multimedia, pared de chimenea, pared detrás de cama, foyer, pared de tocador, frente de closet, pared empotrada de oficina, pared destacada de cocina o bajo barra, pared de comedor o grupo de paredes de pasillo."],
+      ["¿Qué incluye un proyecto de diseño?", "Cada proyecto de una zona incluye un concepto visual, paleta de color y dirección de texturas, composición y distribución de los elementos principales, y una revisión dentro de la dirección aprobada."],
+      ["¿Qué no incluye el proyecto de diseño?", "La etapa de diseño no incluye selección exacta de materiales, marcas, códigos de producto, proveedores, muestras, planos de taller, planos de producción, ingeniería, permisos, mediciones en campo ni estimación final de fabricación."],
+      ["¿Cuándo se eligen los materiales exactos?", "La selección exacta sucede después, durante la realización. En la etapa de diseño, CAS AURUM define colores, texturas, ambiente, atmósfera, dirección visual, composición y concepto general."],
+      ["¿Puedo pedir solo el proyecto de diseño sin fabricación?", "Sí. El proyecto de diseño de una zona es un primer paso independiente antes de cualquier compromiso de fabricación, cabinetry o instalación."],
+      ["¿La tarifa de diseño se acredita hacia la realización?", "Sí. Si el cliente encarga la realización completa con CAS AURUM, la tarifa del proyecto de diseño se acredita al costo final."],
+      ["¿Cómo funciona la oferta de realización en 24 horas?", "Si el cliente encarga la realización dentro de 24 horas después de recibir el diseño, CAS AURUM puede aplicar 15% de descuento adicional al alcance de realización CAS AURUM aprobado. No se aplica automáticamente a servicios de terceros, permisos, ingeniería, electrodomésticos, plomería, electricidad ni trabajos fuera del alcance salvo acuerdo."],
+      ["¿Crean múltiples conceptos o muchas opciones?", "No. Cada proyecto de una zona incluye un concepto visual y una revisión dentro de la dirección aprobada."],
+      ["¿Diseñadores y constructores pueden usar este servicio?", "Sí. Pueden enviar fotos, dimensiones, preferencias, presupuesto y objetivos del cliente para aclarar la dirección visual antes de planificar la realización."],
     ],
     fr: [
       ["Quelles photos dois-je ajouter ?", "Ajoutez des photos larges de toute la pièce ou du mur, des vues rapprochées des angles et obstacles, des transitions plafond/sol, de la menuiserie ou des équipements AV existants, ainsi que les inspirations qui expriment l'ambiance souhaitée."],
-      ["Faut-il des mesures exactes ?", "Pour un concept design de Niveau 1, les mesures sont utiles mais pas obligatoires. Pour un forfait design + réalisation, les dimensions et la hauteur sous plafond sont nécessaires pour rendre la direction technique utile."],
-      ["Puis-je commander seulement un concept sans fabrication ?", "Oui. Le concept design est un premier pas indépendant et à faible risque avant tout engagement de fabrication, cabinetry ou installation."],
-      ["Le prix du concept peut-il être crédité vers un projet plus large ?", "Pour certains projets plus importants, CAS AURUM peut examiner un crédit du concept vers un forfait technique ou un périmètre de réalisation. Cela se confirme par écrit après revue du projet."],
-      ["Que comprend le forfait technique ?", "Il peut inclure une direction d'agencement, des notes préliminaires de fabrication, une logique matières et une orientation de production selon le cas. Il ne remplace pas des documents architecturaux, structurels ou réglementaires signés."],
-      ["Est-ce un document architectural ou d'ingénierie tamponné ?", "Non. C'est un forfait technique préliminaire pour la direction design et fabrication. Ce n'est pas une architecture tamponnée, une ingénierie structurelle ni une documentation exigée par le code."],
-      ["CAS AURUM peut-il fabriquer et installer le projet ?", "Design + réalisation est disponible pour certains projets à Atlanta et par arrangement spécial dans d'autres lieux. Chaque projet est examiné selon lieu, périmètre, budget, calendrier et disponibilité."],
-      ["Quand vais-je recevoir mon concept ?", "La plupart des concepts de Niveau 1 sont préparés en 3-5 jours ouvrés. Les concepts de pièces, cuisines et built-ins complexes peuvent prendre 4-7 jours ouvrés. Les forfaits techniques prennent généralement 7-14 jours ouvrés."],
-      ["Les designers et constructeurs peuvent-ils utiliser ce service pour leurs clients ?", "Oui. Designers et constructeurs peuvent envoyer photos, plans, mesures, inspirations et objectifs client pour clarifier la direction visuelle ou préparer un forfait technique préliminaire."],
+      ["Qu'est-ce qu'une zone ?", "Une zone signifie une zone de projet définie: mur TV ou média, mur cheminée, mur derrière le lit, foyer, mur vasque, façade de dressing, mur intégré de bureau, mur accent cuisine ou sous bar, mur salle à manger ou groupe de murs de couloir."],
+      ["Que comprend un projet de design ?", "Chaque projet d'une zone comprend un concept visuel, une palette de couleurs et direction de textures, la composition et l'agencement des éléments principaux, et une révision dans la direction approuvée."],
+      ["Que n'inclut pas le projet de design ?", "L'étape design n'inclut pas la sélection exacte des matériaux, marques, codes produit, fournisseurs, échantillons, plans d'atelier, plans de production, ingénierie, permis, mesures sur site ni estimation finale de fabrication."],
+      ["Quand les matériaux exacts sont-ils choisis ?", "La sélection exacte se fait plus tard, pendant la réalisation. À l'étape design, CAS AURUM définit couleurs, textures, ambiance, atmosphère, direction visuelle, composition et concept général."],
+      ["Puis-je commander seulement le projet de design sans fabrication ?", "Oui. Le projet de design d'une zone est une première étape indépendante avant tout engagement de fabrication, menuiserie ou installation."],
+      ["Les frais de design peuvent-ils être crédités vers la réalisation ?", "Oui. Si le client commande la réalisation complète avec CAS AURUM, les frais du projet de design sont crédités sur le coût final."],
+      ["Comment fonctionne l'offre réalisation 24 heures ?", "Si le client commande la réalisation dans les 24 heures après réception du design, CAS AURUM peut appliquer 15% de remise supplémentaire au périmètre de réalisation CAS AURUM approuvé. Elle ne s'applique pas automatiquement aux services tiers, permis, ingénierie, appareils, plomberie, électricité ou éléments hors périmètre sauf accord."],
+      ["Créez-vous plusieurs concepts ou beaucoup d'options ?", "Non. Chaque projet d'une zone comprend un concept visuel et une révision dans la direction approuvée."],
+      ["Les designers et constructeurs peuvent-ils utiliser ce service ?", "Oui. Ils peuvent envoyer photos, dimensions, préférences, budget et objectifs client pour clarifier la direction visuelle avant la planification de réalisation."],
     ],
     ru: [
       ["Какие фото нужно загрузить?", "Загрузите общие фото всей комнаты или стены, крупные фото углов и препятствий, переходы потолка и пола, существующую мебель или AV-оборудование, а также референсы, которые передают желаемое настроение."],
-      ["Нужны ли точные размеры?", "Для дизайн-концепта Уровня 1 размеры полезны, но не обязательны. Для пакета дизайн + реализация нужны размеры и высота потолка, чтобы техническое направление было действительно полезным."],
-      ["Можно заказать только дизайн-концепт без производства?", "Да. Дизайн-концепт создан как самостоятельный первый шаг с низким риском до обязательств по производству, cabinetry или установке."],
-      ["Можно ли зачесть стоимость концепта в большой проект?", "Для отдельных крупных проектов CAS AURUM может рассмотреть зачет концепта в технический пакет или объем реализации. Это подтверждается письменно после разбора проекта."],
-      ["Что входит в технический пакет?", "Пакет может включать направление планировки, предварительные производственные заметки, планирование материалов и производственную логику, где это применимо. Он не заменяет лицензированные архитектурные, конструктивные или обязательные инженерные документы."],
-      ["Это stamped архитектурный или инженерный документ?", "Нет. Это предварительный технический пакет для дизайн- и производственного направления. Он не является stamped architecture, structural engineering или обязательной code-документацией."],
-      ["CAS AURUM может изготовить и установить проект?", "Дизайн и реализация доступны для выбранных проектов в Atlanta и по отдельной договоренности в других локациях. Каждый проект рассматривается по локации, объему, бюджету, графику и доступности."],
-      ["Как быстро я получу концепт?", "Большинство концептов Уровня 1 готовятся за 3-5 рабочих дней. Комнаты, кухни и сложные встроенные элементы могут занять 4-7 рабочих дней. Технические пакеты обычно занимают 7-14 рабочих дней."],
-      ["Дизайнеры и строители могут использовать сервис для своих клиентов?", "Да. Дизайнеры и строители могут отправить фото, планы, размеры, референсы и цели клиента, чтобы уточнить визуальное направление или подготовить предварительный технический пакет."],
+      ["Что такое одна зона?", "Одна зона означает одну определенную область проекта: TV-стена или медиа-стена, стена с камином, стена за кроватью, стена в фойе, зона умывальника, фасад гардеробной, встроенная офисная стена, акцентная зона кухни или под баром, стена столовой или группа стен коридора."],
+      ["Что входит в один дизайн-проект?", "Каждый дизайн-проект одной зоны включает один визуальный концепт, цветовую палитру и направление фактур, композицию и расположение основных визуальных элементов, а также одну правку в рамках утвержденного направления."],
+      ["Что не входит в дизайн-проект?", "На этапе дизайна не входят точный выбор материалов, бренды, коды продуктов, поставщики, образцы, рабочие чертежи, производственные чертежи, инженерия, разрешительная документация, финальная смета производства, выездные замеры, электрика, сантехника и неограниченные правки."],
+      ["Когда выбираются точные материалы?", "Точный выбор материалов происходит позже, на этапе реализации. На этапе дизайна CAS AURUM определяет цвета, фактуры, настроение, атмосферу, визуальное направление, композицию и общую концепцию."],
+      ["Можно заказать только дизайн-проект без производства?", "Да. Дизайн-проект одной зоны - самостоятельный первый шаг до обязательств по производству, столярке или монтажу."],
+      ["Стоимость дизайна можно зачесть в реализацию?", "Да. Если клиент заказывает полную реализацию у CAS AURUM, стоимость дизайн-проекта засчитывается в финальную стоимость проекта."],
+      ["Как работает предложение реализации за 24 часа?", "Если клиент заказывает реализацию в течение 24 часов после получения дизайна, CAS AURUM может применить дополнительную скидку 15% к утвержденному объему реализации CAS AURUM. Она не применяется автоматически к сторонним услугам, разрешениям, инженерии, технике, сантехнике, электрике или работам вне объема без отдельного согласования."],
+      ["Вы создаете несколько концептов или много вариантов?", "Нет. Каждый дизайн-проект одной зоны включает один визуальный концепт и одну правку в рамках утвержденного направления."],
+      ["Дизайнеры и строители могут использовать этот сервис?", "Да. Дизайнеры и строители могут отправить фото, размеры, предпочтения, бюджет и цели клиента, чтобы уточнить визуальное направление до планирования реализации."],
     ],
     uk: [
       ["Які фото потрібно завантажити?", "Завантажте загальні фото всієї кімнати або стіни, крупні фото кутів і перешкод, переходи стелі та підлоги, наявні меблі або AV-обладнання, а також референси, які передають бажаний настрій."],
-      ["Чи потрібні точні розміри?", "Для дизайн-концепту Рівня 1 розміри корисні, але не обов'язкові. Для пакета дизайн + реалізація потрібні розміри й висота стелі, щоб технічний напрям був справді корисним."],
-      ["Можна замовити тільки дизайн-концепт без виробництва?", "Так. Дизайн-концепт створений як самостійний перший крок із низьким ризиком до зобов'язань щодо виробництва, cabinetry або монтажу."],
-      ["Чи можна зарахувати вартість концепту в більший проєкт?", "Для окремих великих проєктів CAS AURUM може розглянути зарахування концепту в технічний пакет або scope реалізації. Це підтверджується письмово після розбору проєкту."],
-      ["Що входить у технічний пакет?", "Пакет може включати layout-напрям, попередні виробничі нотатки, планування матеріалів і виробничу логіку, де це застосовно. Він не замінює ліцензовані архітектурні, конструктивні або code-required документи."],
-      ["Це stamped архітектурний або інженерний документ?", "Ні. Це попередній технічний пакет для дизайн- і виробничого напряму. Він не є stamped architecture, structural engineering або обов'язковою code-документацією."],
-      ["CAS AURUM може виготовити й встановити проєкт?", "Design + Realization доступний для вибраних проєктів в Atlanta і за окремою домовленістю в інших локаціях. Кожен проєкт розглядається за локацією, scope, бюджетом, графіком і доступністю."],
-      ["Як швидко я отримаю концепт?", "Більшість концептів Рівня 1 готуються за 3-5 робочих днів. Кімнати, кухні та складні built-ins можуть зайняти 4-7 робочих днів. Технічні пакети зазвичай займають 7-14 робочих днів."],
-      ["Дизайнери й будівельники можуть використовувати сервіс для своїх клієнтів?", "Так. Дизайнери й будівельники можуть надіслати фото, плани, розміри, референси й цілі клієнта, щоб уточнити візуальний напрям або підготувати попередній технічний пакет."],
+      ["Що таке одна зона?", "Одна зона означає одну визначену область проєкту: TV-стіна або медіа-стіна, стіна з каміном, стіна за ліжком, стіна у фоє, зона умивальника, фасад гардеробної, вбудована офісна стіна, акцентна зона кухні або під баром, стіна їдальні чи група стін коридору."],
+      ["Що входить в один дизайн-проєкт?", "Кожен дизайн-проєкт однієї зони включає один візуальний концепт, палітру кольорів і напрям фактур, композицію та розташування основних візуальних елементів, а також одну правку в межах затвердженого напряму."],
+      ["Що не входить у дизайн-проєкт?", "На етапі дизайну не входять точний вибір матеріалів, бренди, коди продуктів, постачальники, зразки, робочі креслення, виробничі креслення, інженерія, дозвільна документація, фінальний кошторис виробництва, виїзні заміри, електрика, сантехніка та необмежені правки."],
+      ["Коли обираються точні матеріали?", "Точний вибір матеріалів відбувається пізніше, на етапі реалізації. На етапі дизайну CAS AURUM визначає кольори, фактури, настрій, атмосферу, візуальний напрям, композицію та загальну концепцію."],
+      ["Можна замовити тільки дизайн-проєкт без виробництва?", "Так. Дизайн-проєкт однієї зони - самостійний перший крок до зобов'язань щодо виробництва, столярки або монтажу."],
+      ["Вартість дизайну можна зарахувати в реалізацію?", "Так. Якщо клієнт замовляє повну реалізацію у CAS AURUM, вартість дизайн-проєкту зараховується у фінальну вартість проєкту."],
+      ["Як працює пропозиція реалізації за 24 години?", "Якщо клієнт замовляє реалізацію протягом 24 годин після отримання дизайну, CAS AURUM може застосувати додаткову знижку 15% до затвердженого обсягу реалізації CAS AURUM. Вона не застосовується автоматично до сторонніх послуг, дозволів, інженерії, техніки, сантехніки, електрики або робіт поза обсягом без окремого погодження."],
+      ["Ви створюєте кілька концептів або багато варіантів?", "Ні. Кожен дизайн-проєкт однієї зони включає один візуальний концепт і одну правку в межах затвердженого напряму."],
+      ["Дизайнери й будівельники можуть використовувати цей сервіс?", "Так. Дизайнери й будівельники можуть надіслати фото, розміри, вподобання, бюджет і цілі клієнта, щоб уточнити візуальний напрям до планування реалізації."],
     ],
   };
   return localizedFaqs[lang] || en;
@@ -6115,6 +6200,16 @@ function designConceptFaqData(lang) {
 
 function designConceptOptionSet(options) {
   return options.map(([value, label]) => ({ value, label }));
+}
+
+function designConceptContactMethodOptions(lang) {
+  const labels = {
+    es: ["Teléfono", "Correo electrónico", "Mensaje / SMS", "WhatsApp"],
+    fr: ["Téléphone", "Courriel", "Message / SMS", "WhatsApp"],
+    ru: ["Телефон", "Эл. почта", "Сообщение / SMS", "WhatsApp"],
+    uk: ["Телефон", "Ел. пошта", "Повідомлення / SMS", "WhatsApp"],
+  }[lang] || [];
+  return [["phone", "Phone"], ["email", "Email"], ["text", "Text / SMS"], ["whatsapp", "WhatsApp"]].map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function fileInput(label, name, required) {
@@ -11116,7 +11211,7 @@ function localized(value, lang) {
       "Start Your Design Concept": "Iniciar concepto de diseño",
       "Start with clarity": "Empiece con claridad",
       "Begin with a design concept or request a full project review": "Empiece con un concepto de diseño o solicite una revisión completa",
-      "A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.": "Un concepto con precio fijo permite probar dirección visual, materiales y alcance aproximado antes de revisar fabricación o instalación a medida.",
+      "A fixed-price concept is the low-risk way to test visual direction, colors, textures and approximate scope before custom fabrication or installation is reviewed.": "Un concepto con precio fijo permite probar dirección visual, colores, texturas y alcance aproximado antes de revisar fabricación o instalación a medida.",
       "Planner preset": "Preset del planificador",
       "Start with a blank planner": "Empezar con planificador en blanco",
       "Project setup": "Configuración del proyecto",
@@ -11172,7 +11267,7 @@ function localized(value, lang) {
       "Start Your Design Concept": "Démarrer le concept design",
       "Start with clarity": "Commencer avec clarté",
       "Begin with a design concept or request a full project review": "Commencez par un concept design ou demandez une revue complète",
-      "A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.": "Un concept à prix fixe est une manière à faible risque de tester direction visuelle, matières et portée approximative avant revue fabrication ou installation.",
+      "A fixed-price concept is the low-risk way to test visual direction, colors, textures and approximate scope before custom fabrication or installation is reviewed.": "Un concept à prix fixe permet de tester direction visuelle, couleurs, textures et portée approximative avant revue fabrication ou installation.",
       "Planner preset": "Preset du planificateur",
       "Start with a blank planner": "Commencer avec un planificateur vierge",
       "Project setup": "Configuration du projet",
@@ -11228,7 +11323,7 @@ function localized(value, lang) {
       "Start Your Design Concept": "Начать дизайн-концепт",
       "Start with clarity": "Начните с ясности",
       "Begin with a design concept or request a full project review": "Начните с дизайн-концепта или запросите полный разбор проекта",
-      "A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.": "Концепт с фиксированной стартовой ценой помогает без лишнего риска проверить визуальное направление, материалы и примерный объем до разбора производства или монтажа.",
+      "A fixed-price concept is the low-risk way to test visual direction, colors, textures and approximate scope before custom fabrication or installation is reviewed.": "Концепт с фиксированной ценой помогает без лишнего риска проверить визуальное направление, цвета, фактуры и примерный объем до разбора производства или монтажа.",
       "Planner preset": "Шаблон планировщика",
       "Start with a blank planner": "Начать с пустого планировщика",
       "Project setup": "Настройка проекта",
@@ -11284,7 +11379,7 @@ function localized(value, lang) {
       "Start Your Design Concept": "Почати дизайн-концепт",
       "Start with clarity": "Почніть із ясності",
       "Begin with a design concept or request a full project review": "Почніть із дизайн-концепту або запросіть повний розбір проєкту",
-      "A fixed-price concept is the low-risk way to test visual direction, materials and approximate scope before custom fabrication or installation is reviewed.": "Концепт із фіксованою стартовою ціною допомагає без зайвого ризику перевірити візуальний напрям, матеріали й орієнтовний обсяг до розбору виробництва або монтажу.",
+      "A fixed-price concept is the low-risk way to test visual direction, colors, textures and approximate scope before custom fabrication or installation is reviewed.": "Концепт із фіксованою ціною допомагає без зайвого ризику перевірити візуальний напрям, кольори, фактури й орієнтовний обсяг до розбору виробництва або монтажу.",
       "Planner preset": "Preset планувальника",
       "Start with a blank planner": "Почати з порожнього планувальника",
       "Project setup": "Налаштування проєкту",
@@ -11519,33 +11614,82 @@ function clientJs() {
 	    const pricingMatrices = ${JSON.stringify(designConceptPricingMatricesByLang())};
 	    const pageLang = document.documentElement.lang || 'en';
 	    const pricingMatrix = pricingMatrices[pageLang] || pricingMatrices[pageLang.slice(0, 2)] || pricingMatrices.en;
-	    const designConceptUi = {
-	      en: { totalPrice: 'Total first order design price', timing: 'Timing', zoneSingular: '1 zone', zonePlural: 'zones', firstOrderTotal: 'first order total', standardPrice: 'standard design price' },
-	      es: { totalPrice: 'Precio total del primer pedido de diseño', timing: 'Tiempo', zoneSingular: '1 zona', zonePlural: 'zonas', firstOrderTotal: 'total del primer pedido', standardPrice: 'precio estándar de diseño' },
-	      fr: { totalPrice: 'Prix total de la première commande design', timing: 'Délai', zoneSingular: '1 zone', zonePlural: 'zones', firstOrderTotal: 'total première commande', standardPrice: 'prix design standard' },
-	      ru: { totalPrice: 'Итоговая цена первого дизайн-заказа', timing: 'Срок', zoneSingular: '1 зона', zonePlural: 'зон', firstOrderTotal: 'итого за первый дизайн-заказ', standardPrice: 'стандартная цена дизайна' },
-	      uk: { totalPrice: 'Підсумкова ціна першого дизайн-замовлення', timing: 'Термін', zoneSingular: '1 зона', zonePlural: 'зон', firstOrderTotal: 'разом за перше дизайн-замовлення', standardPrice: 'стандартна ціна дизайну' }
-	    };
-	    const conceptUi = designConceptUi[pageLang] || designConceptUi[pageLang.slice(0, 2)] || designConceptUi.en;
-		    const help = {
-		      design_concept: 'One visual design concept for one zone. Photos, dimensions, preferences and budget are collected before design work begins.'
+		    const designConceptUi = {
+		      en: { totalPrice: 'Total first order design price', timing: 'Timing', zoneSingular: '1 zone', zonePlural: 'zones', firstOrderTotal: 'first order total', standardPrice: 'standard design price', help: 'One visual design concept for one zone. Photos, dimensions, preferences and budget are collected before design work begins.', dimensionHelp: 'Share the main zone dimensions or request measurement help so CAS AURUM can clarify the design direction before visual concept work begins.', priceNote: 'The first design order receives 20% off: $792 per zone instead of $990 per zone. If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost.', oversized: 'Uploaded files are too large. Please send fewer photos, use smaller images, or include file links in the project description.' },
+		      es: { totalPrice: 'Precio total del primer pedido de diseño', timing: 'Tiempo', zoneSingular: '1 zona', zonePlural: 'zonas', firstOrderTotal: 'total del primer pedido', standardPrice: 'precio estándar de diseño', help: 'Un concepto visual para una zona. Fotos, dimensiones, preferencias y presupuesto se recopilan antes de iniciar el diseño.', dimensionHelp: 'Comparta las medidas principales de la zona o solicite ayuda para medición para que CAS AURUM pueda aclarar la dirección visual antes del concepto.', priceNote: 'El primer pedido de diseño recibe 20% de descuento: $792 por zona en lugar de $990 por zona. Si el cliente encarga la realización completa con CAS AURUM, la tarifa del proyecto de diseño se acredita al costo final.', oversized: 'Los archivos subidos son demasiado grandes. Envíe menos fotos, use imágenes más pequeñas o incluya enlaces en la descripción del proyecto.' },
+		      fr: { totalPrice: 'Prix total de la première commande design', timing: 'Délai', zoneSingular: '1 zone', zonePlural: 'zones', firstOrderTotal: 'total première commande', standardPrice: 'prix design standard', help: 'Un concept visuel pour une zone. Photos, dimensions, préférences et budget sont recueillis avant le début du design.', dimensionHelp: 'Partagez les dimensions principales de la zone ou demandez une aide de mesure afin que CAS AURUM clarifie la direction visuelle avant le concept.', priceNote: 'La première commande design reçoit 20% de remise: 792 $ par zone au lieu de 990 $ par zone. Si le client commande la réalisation complète avec CAS AURUM, les frais du projet de design sont crédités sur le coût final.', oversized: 'Les fichiers ajoutés sont trop volumineux. Envoyez moins de photos, utilisez des images plus légères ou ajoutez des liens dans la description du projet.' },
+		      ru: { totalPrice: 'Итоговая цена первого дизайн-заказа', timing: 'Срок', zoneSingular: '1 зона', zonePlural: 'зон', firstOrderTotal: 'итого за первый дизайн-заказ', standardPrice: 'стандартная цена дизайна', help: 'Один визуальный дизайн-концепт для одной зоны. Фото, размеры, предпочтения и бюджет собираются до начала дизайн-работы.', dimensionHelp: 'Укажите основные размеры зоны или запросите помощь с замером, чтобы CAS AURUM мог уточнить визуальное направление до создания концепта.', priceNote: 'Первый дизайн-заказ получает скидку 20%: $792 за зону вместо $990 за зону. Если клиент заказывает полную реализацию у CAS AURUM, стоимость дизайн-проекта засчитывается в финальную стоимость проекта.', oversized: 'Загруженные файлы слишком большие. Отправьте меньше фото, используйте изображения меньшего размера или добавьте ссылки в описание проекта.' },
+		      uk: { totalPrice: 'Підсумкова ціна першого дизайн-замовлення', timing: 'Термін', zoneSingular: '1 зона', zonePlural: 'зон', firstOrderTotal: 'разом за перше дизайн-замовлення', standardPrice: 'стандартна ціна дизайну', help: 'Один візуальний дизайн-концепт для однієї зони. Фото, розміри, вподобання та бюджет збираються до початку дизайн-роботи.', dimensionHelp: 'Вкажіть основні розміри зони або запросіть допомогу із заміром, щоб CAS AURUM міг уточнити візуальний напрям до створення концепту.', priceNote: 'Перше дизайн-замовлення отримує знижку 20%: $792 за зону замість $990 за зону. Якщо клієнт замовляє повну реалізацію у CAS AURUM, вартість дизайн-проєкту зараховується у фінальну вартість проєкту.', oversized: 'Завантажені файли завеликі. Надішліть менше фото, використайте менші зображення або додайте посилання в опис проєкту.' }
 		    };
-		    const dimensionHelp = {
-		      design_concept: 'Share the main zone dimensions or request measurement help so CAS AURUM can clarify the design direction before visual concept work begins.'
-		    };
-		    const dimensionLabels = {
-		      media_wall: ['Wall length', 'Wall depth / available depth', 'Wall height / ceiling height'],
-		      fireplace_wall: ['Fireplace wall length', 'Available depth', 'Wall height / ceiling height'],
-		      bed_back_wall: ['Bed back wall length', 'Available depth', 'Wall height / ceiling height'],
-		      foyer_wall: ['Foyer wall length', 'Available depth', 'Wall height / ceiling height'],
-		      bathroom_vanity_wall: ['Vanity wall length', 'Available depth', 'Wall height / ceiling height'],
-		      closet_front: ['Closet front width', 'Available depth', 'Height'],
-		      office_built_in_wall: ['Office wall length', 'Available depth', 'Wall height / ceiling height'],
-		      kitchen_feature_wall: ['Feature wall / under-bar length', 'Available depth', 'Height'],
-		      dining_wall: ['Dining wall length', 'Available depth', 'Wall height / ceiling height'],
-		      hallway_wall_group: ['Hallway wall group length', 'Available depth', 'Wall height / ceiling height'],
-		      other: ['Length', 'Width / depth', 'Height / ceiling height']
-		    };
+		    const conceptUi = designConceptUi[pageLang] || designConceptUi[pageLang.slice(0, 2)] || designConceptUi.en;
+			    const dimensionLabelsByLang = {
+			      en: {
+			        media_wall: ['Wall length', 'Wall depth / available depth', 'Wall height / ceiling height'],
+			        fireplace_wall: ['Fireplace wall length', 'Available depth', 'Wall height / ceiling height'],
+			        bed_back_wall: ['Bed back wall length', 'Available depth', 'Wall height / ceiling height'],
+			        foyer_wall: ['Foyer wall length', 'Available depth', 'Wall height / ceiling height'],
+			        bathroom_vanity_wall: ['Vanity wall length', 'Available depth', 'Wall height / ceiling height'],
+			        closet_front: ['Closet front width', 'Available depth', 'Height'],
+			        office_built_in_wall: ['Office wall length', 'Available depth', 'Wall height / ceiling height'],
+			        kitchen_feature_wall: ['Feature wall / under-bar length', 'Available depth', 'Height'],
+			        dining_wall: ['Dining wall length', 'Available depth', 'Wall height / ceiling height'],
+			        hallway_wall_group: ['Hallway wall group length', 'Available depth', 'Wall height / ceiling height'],
+			        other: ['Length', 'Width / depth', 'Height / ceiling height']
+			      },
+			      es: {
+			        media_wall: ['Largo de pared TV', 'Profundidad disponible', 'Altura de pared / techo'],
+			        fireplace_wall: ['Largo de pared de chimenea', 'Profundidad disponible', 'Altura de pared / techo'],
+			        bed_back_wall: ['Largo de pared detrás de cama', 'Profundidad disponible', 'Altura de pared / techo'],
+			        foyer_wall: ['Largo de pared de foyer', 'Profundidad disponible', 'Altura de pared / techo'],
+			        bathroom_vanity_wall: ['Largo de pared de tocador', 'Profundidad disponible', 'Altura de pared / techo'],
+			        closet_front: ['Ancho del frente de closet', 'Profundidad disponible', 'Altura'],
+			        office_built_in_wall: ['Largo de pared de oficina', 'Profundidad disponible', 'Altura de pared / techo'],
+			        kitchen_feature_wall: ['Largo de pared destacada / bajo barra', 'Profundidad disponible', 'Altura'],
+			        dining_wall: ['Largo de pared de comedor', 'Profundidad disponible', 'Altura de pared / techo'],
+			        hallway_wall_group: ['Largo del grupo de paredes de pasillo', 'Profundidad disponible', 'Altura de pared / techo'],
+			        other: ['Largo', 'Ancho / profundidad', 'Altura / techo']
+			      },
+			      fr: {
+			        media_wall: ['Longueur du mur TV', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        fireplace_wall: ['Longueur du mur cheminée', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        bed_back_wall: ['Longueur du mur derrière le lit', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        foyer_wall: ['Longueur du mur de foyer', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        bathroom_vanity_wall: ['Longueur du mur vasque', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        closet_front: ['Largeur de façade dressing', 'Profondeur disponible', 'Hauteur'],
+			        office_built_in_wall: ['Longueur du mur de bureau', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        kitchen_feature_wall: ['Longueur mur accent / sous bar', 'Profondeur disponible', 'Hauteur'],
+			        dining_wall: ['Longueur du mur salle à manger', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        hallway_wall_group: ['Longueur du groupe de murs couloir', 'Profondeur disponible', 'Hauteur mur / plafond'],
+			        other: ['Longueur', 'Largeur / profondeur', 'Hauteur / plafond']
+			      },
+			      ru: {
+			        media_wall: ['Длина TV-стены', 'Доступная глубина', 'Высота стены / потолка'],
+			        fireplace_wall: ['Длина стены с камином', 'Доступная глубина', 'Высота стены / потолка'],
+			        bed_back_wall: ['Длина стены за кроватью', 'Доступная глубина', 'Высота стены / потолка'],
+			        foyer_wall: ['Длина стены в фойе', 'Доступная глубина', 'Высота стены / потолка'],
+			        bathroom_vanity_wall: ['Длина стены зоны умывальника', 'Доступная глубина', 'Высота стены / потолка'],
+			        closet_front: ['Ширина фасада гардеробной', 'Доступная глубина', 'Высота'],
+			        office_built_in_wall: ['Длина офисной стены', 'Доступная глубина', 'Высота стены / потолка'],
+			        kitchen_feature_wall: ['Длина акцентной стены / зоны под баром', 'Доступная глубина', 'Высота'],
+			        dining_wall: ['Длина стены в столовой', 'Доступная глубина', 'Высота стены / потолка'],
+			        hallway_wall_group: ['Длина группы стен коридора', 'Доступная глубина', 'Высота стены / потолка'],
+			        other: ['Длина', 'Ширина / глубина', 'Высота / потолок']
+			      },
+			      uk: {
+			        media_wall: ['Довжина TV-стіни', 'Доступна глибина', 'Висота стіни / стелі'],
+			        fireplace_wall: ['Довжина стіни з каміном', 'Доступна глибина', 'Висота стіни / стелі'],
+			        bed_back_wall: ['Довжина стіни за ліжком', 'Доступна глибина', 'Висота стіни / стелі'],
+			        foyer_wall: ['Довжина стіни у фоє', 'Доступна глибина', 'Висота стіни / стелі'],
+			        bathroom_vanity_wall: ['Довжина стіни зони умивальника', 'Доступна глибина', 'Висота стіни / стелі'],
+			        closet_front: ['Ширина фасаду гардеробної', 'Доступна глибина', 'Висота'],
+			        office_built_in_wall: ['Довжина офісної стіни', 'Доступна глибина', 'Висота стіни / стелі'],
+			        kitchen_feature_wall: ['Довжина акцентної стіни / зони під баром', 'Доступна глибина', 'Висота'],
+			        dining_wall: ['Довжина стіни в їдальні', 'Доступна глибина', 'Висота стіни / стелі'],
+			        hallway_wall_group: ['Довжина групи стін коридору', 'Доступна глибина', 'Висота стіни / стелі'],
+			        other: ['Довжина', 'Ширина / глибина', 'Висота / стеля']
+			      }
+			    };
+			    const dimensionLabels = dimensionLabelsByLang[pageLang] || dimensionLabelsByLang[pageLang.slice(0, 2)] || dimensionLabelsByLang.en;
 	    function setInputLabel(input, text){
 	      if (!input || !input.parentElement) return;
 	      input.parentElement.firstChild.textContent = text;
@@ -11583,8 +11727,8 @@ function clientJs() {
 	      const zoneLabel = zoneCount === 1 ? conceptUi.zoneSingular : zoneCount + ' ' + conceptUi.zonePlural;
 	      const calculatedMicrocopy = (offer.microcopy || '') + ' ' + zoneLabel + ': ' + conceptUi.firstOrderTotal + ' ' + money(firstOrderTotal) + '; ' + conceptUi.standardPrice + ' ' + standardPrice + '.';
 	      const displayTimeline = offer.timelineLabel || '';
-	      if (packageHelp) packageHelp.textContent = help[packageValue] || help.design_concept;
-	      if (dimensionsHelp) dimensionsHelp.textContent = dimensionHelp[packageValue] || dimensionHelp.design_concept;
+		      if (packageHelp) packageHelp.textContent = conceptUi.help;
+		      if (dimensionsHelp) dimensionsHelp.textContent = conceptUi.dimensionHelp;
 	      [lengthInput, widthDepthInput, heightInput].forEach(input => { if (input) input.required = !needsMeasurement; });
 	      const labels = dimensionLabels[projectValue] || dimensionLabels.other;
 	      setInputLabel(lengthInput, labels[0]);
@@ -11605,7 +11749,7 @@ function clientJs() {
 	      if (selectedPrice) selectedPrice.textContent = displayPrice || '-';
 	      if (selectedTimeline) selectedTimeline.textContent = displayTimeline || '-';
 	      if (estimateMicrocopy) estimateMicrocopy.textContent = calculatedMicrocopy;
-		      if (priceNote) priceNote.textContent = 'The first design order receives 20% off: $792 per zone instead of $990 per zone. If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost.';
+			      if (priceNote) priceNote.textContent = conceptUi.priceNote;
 	      track('design_concept_level_selected', { package_type: packageValue, project_type: projectValue, zone_count: zoneCount, estimated_price_label: displayPrice || '', estimated_timeline_label: displayTimeline || '', needs_measurement: needsMeasurement ? 'yes' : 'no' });
 	    }
 	    if (packageSelect) packageSelect.addEventListener('change', syncPackage);
@@ -11643,7 +11787,14 @@ function clientJs() {
 		        const totalUploadBytes = files.reduce((total, file) => total + Number(file.size || 0), 0);
 		        const oversizedFile = files.find((file) => Number(file.size || 0) > maxUploadBytes);
 		        if (oversizedFile || totalUploadBytes > maxUploadBytes) {
-		          if (status) status.textContent = 'Uploaded files are too large. Please send fewer photos, use smaller images, or include file links in the project description.';
+			          const oversizedMessages = {
+			            en: 'Uploaded files are too large. Please send fewer photos, use smaller images, or include file links in the project description.',
+			            es: 'Los archivos subidos son demasiado grandes. Envíe menos fotos, use imágenes más pequeñas o incluya enlaces en la descripción del proyecto.',
+			            fr: 'Les fichiers ajoutés sont trop volumineux. Envoyez moins de photos, utilisez des images plus légères ou ajoutez des liens dans la description du projet.',
+			            ru: 'Загруженные файлы слишком большие. Отправьте меньше фото, используйте изображения меньшего размера или добавьте ссылки в описание проекта.',
+			            uk: 'Завантажені файли завеликі. Надішліть менше фото, використайте менші зображення або додайте посилання в опис проєкту.'
+			          };
+			          if (status) status.textContent = oversizedMessages[lang] || oversizedMessages[lang.slice(0, 2)] || oversizedMessages.en;
 		          return;
 		        }
 		      }
