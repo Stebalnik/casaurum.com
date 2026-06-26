@@ -1333,7 +1333,7 @@ function applyCustomInteriorPositioning() {
     copy[lang].home.seo = localizedPlain("Cas Aurum designs custom media walls, TV units, kitchens, closets, built-ins, wall panels, fireplace walls, home offices and custom furniture. Homeowners can start by uploading photos and ordering a design concept before moving into drawings, production or installation.", lang);
     copy[lang].collectionsIntro = localizedPlain("Ideas are organized by solution category so you can explore media wall, kitchen, closet, built-in, fireplace wall, wall panel, home office, mudroom and custom furniture directions.", lang);
     copy[lang].about = [localizedPlain("About CAS AURUM", lang), lang === "en" ? "CAS AURUM designs custom media walls, kitchens, closets, built-ins, wall panels and furniture, starting with room photos and a clear design concept." : localizedPlain("CAS AURUM designs custom interior solutions for real homes: media walls, TV units, custom kitchens, closets, built-ins, wall panels, fireplace walls, home offices, mudrooms and custom furniture. The first step can begin with room photos and a clear design concept.", lang)];
-    copy[lang].contact = [localizedPlain("Start a CAS AURUM Project", lang), lang === "en" ? "Send photos, goals, location and budget direction. CAS AURUM will recommend the right next step for design, planning or project review." : localizedPlain("Send photos, goals, location and a budget direction. CAS AURUM will help you choose the right next step: Design Concept, Design + Build Package or Full Realization review.", lang)];
+    copy[lang].contact = [localizedPlain("Start a CAS AURUM Project", lang), lang === "en" ? "Send photos, goals, location and budget direction. CAS AURUM will recommend the right next step for design, planning or project review." : localizedPlain("Send photos, goals, location and budget direction. CAS AURUM will recommend the right next step for design, planning or project review.", lang)];
     copy[lang].services = customServiceContent(lang);
     homepagePositioning[lang] = homePositioningCopy(lang);
   }
@@ -1396,7 +1396,7 @@ function localizedPlain(value, lang) {
       "About CAS AURUM": "Sobre CAS AURUM",
       "CAS AURUM designs custom interior solutions for real homes: media walls, TV units, custom kitchens, closets, built-ins, wall panels, fireplace walls, home offices, mudrooms and custom furniture. The first step can begin with room photos and a clear design concept.": "CAS AURUM diseña soluciones interiores a medida para hogares reales: muros de TV, unidades TV, cocinas, closets, muebles integrados, paneles, muros de chimenea, oficinas, entradas y muebles a medida. El primer paso puede comenzar con fotos del espacio y un concepto claro.",
       "Start a CAS AURUM Project": "Iniciar un proyecto CAS AURUM",
-      "Send photos, goals, location and a budget direction. CAS AURUM will help you choose the right next step: Design Concept, Design + Build Package or Full Realization review.": "Envíe fotos, objetivos, ubicación y una dirección de presupuesto. CAS AURUM le ayudará a elegir el siguiente paso: concepto de diseño, paquete diseño + realización o revisión completa.",
+      "Send photos, goals, location and budget direction. CAS AURUM will recommend the right next step for design, planning or project review.": "Envíe fotos, objetivos, ubicación y presupuesto. CAS AURUM recomendará el siguiente paso para diseño, planificación o revisión del proyecto.",
       "Custom Interior Solutions for Everyday Rooms": "Soluciones interiores a medida para habitaciones reales",
       "Custom media walls, kitchens, closets, built-ins, fireplace walls, wall panels, home offices, mudrooms and furniture designed around your space.": "Muros de TV, cocinas, closets, muebles integrados, muros de chimenea, paneles, oficinas, entradas y muebles diseñados alrededor de su espacio.",
       "CAS AURUM helps homeowners, designers and builders turn rooms into personal, functional spaces with custom cabinetry, built-in furniture, panels, storage, material direction and a clear design-to-build path.": "CAS AURUM ayuda a propietarios, diseñadores y constructores a convertir habitaciones en espacios personales y funcionales con gabinetes a medida, muebles integrados, paneles, almacenamiento, dirección de materiales y un camino claro de diseño a realización.",
@@ -1575,20 +1575,20 @@ function localizedPlain(value, lang) {
       "Tell us what you want": "Расскажите, что хотите изменить",
       "Receive a design concept": "Получите дизайн-концепт",
       "Review budget direction": "Проверьте бюджетный ориентир",
-      "Upgrade to Design + Build Package": "Перейдите к пакету дизайна и реализации",
+      "Move toward realization if approved": "Переходите к реализации после согласования",
       "Build when ready": "Переходите к реализации, когда готовы",
-      "Clear Packages": "Понятные пакеты",
-      "Start small, then move into build when ready": "Начните с малого и переходите к реализации, когда готовы",
+      "Clear Design Project": "Понятный дизайн-проект",
+      "Start with one zone, then move into realization when ready": "Начните с одной зоны и переходите к реализации, когда готовы",
       "Final production and installation pricing depends on dimensions, materials, site conditions and project scope.": "Финальная стоимость производства и монтажа зависит от размеров, материалов, условий объекта и объема проекта.",
       "Design Concept": "Дизайн-концепт",
       "From $490": "От $490",
       "Space analysis": "Анализ пространства",
-      "1-2 concept directions": "1-2 направления концепта",
+      "one visual design concept": "один визуальный дизайн-концепт",
       "style and material direction": "стиль и материалы",
       "layout idea": "идея планировки",
       "preliminary budget direction": "предварительный бюджетный ориентир",
       "next-step recommendation": "рекомендация следующего шага",
-      "Design + Build Package": "Пакет дизайна и реализации",
+      "One Zone Design Project": "Дизайн-проект одной зоны",
       "From $990": "От $990",
       "more detailed visual direction": "более детальное визуальное направление",
       "material and finish notes": "заметки по материалам и отделкам",
@@ -1842,10 +1842,10 @@ Object.assign(faqs, {
   solutions: [
     ["What does CAS AURUM do?", "CAS AURUM designs custom media walls, TV units, kitchens, closets, built-ins, wall panels, fireplace walls, home offices, mudrooms and custom furniture."],
     ["Can I start by uploading photos?", "Yes. The Design Concept flow starts with room photos, goals, budget direction, location and contact details."],
-    ["Do I need to commit to a full build right away?", "No. You can begin with a Design Concept from $490, then upgrade to Design + Build Package or Full Realization when ready."],
+    ["Do I need to commit to a full build right away?", "No. You can begin with a One Zone Design Project at $990 per zone, or $792 per zone for the first design order, before deciding on full realization."],
     ["Where does CAS AURUM work?", "Primary geography is Atlanta and Georgia, with North American project review where scope, logistics and partners make sense."],
     ["Do you work with designers and builders?", "Yes. Designers, builders, architects and contractors can submit drawings, photos, finish notes and project constraints."],
-    ["What is included in a Design + Build Package?", "Refined design, dimensions, elevations, material logic, build-ready direction, preliminary production notes and estimate preparation."],
+    ["What is included in a One Zone Design Project?", "One visual design concept for one defined zone, color palette and texture direction, composition and layout of main visual elements, plus one revision within the approved direction."],
   ],
   mediaWalls: [
     ["Does CAS AURUM build custom media walls?", "Yes. Media walls can include TV units, floating consoles, hidden storage, shelves, cable zones, lighting and wall panels."],
@@ -3537,7 +3537,7 @@ function clearPackagesSection(route) {
     item.cta,
     item.deliverables.split(/,\s*/).map((part) => part.trim()).filter(Boolean),
   ]);
-  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localizedPlain("Clear Packages", lang))}</p><h2>${escapeHtml(localizedPlain("Start small, then move into build when ready", lang))}</h2><p>${escapeHtml(localizedPlain("Final production and installation pricing depends on dimensions, materials, site conditions and project scope.", lang))}</p></section>
+  return `<section class="section-head"><p class="eyebrow">${escapeHtml(localizedPlain("Clear Design Project", lang))}</p><h2>${escapeHtml(localizedPlain("Start with one zone, then move into realization when ready", lang))}</h2><p>${escapeHtml(localizedPlain("Final production and installation pricing depends on dimensions, materials, site conditions and project scope.", lang))}</p></section>
   <section class="package-grid">${packages.map(([title, price, cta, items], index) => `<article class="package-card"><span>0${index + 1}</span><h3>${escapeHtml(localizedPlain(title, lang))}</h3><strong>${escapeHtml(localizedPlain(price, lang))}</strong><ul>${items.map((item) => `<li>${escapeHtml(localizedPlain(item, lang))}</li>`).join("")}</ul><a class="button primary" href="${urlFor(lang, "designConcept")}#start-design-concept">${escapeHtml(localizedPlain(cta, lang))}</a></article>`).join("")}</section>`;
 }
 
@@ -5514,35 +5514,35 @@ function serviceCtaSection(route, label, key = "") {
 
 function designConceptText(lang) {
   const shared = {
-    heroTitle: "Start With Photos and a Clear Design Concept",
-    heroText: "Upload photos of your room, wall, closet, kitchen or built-in area. CAS AURUM will prepare a clear design direction with materials, layout ideas and next-step budget guidance.",
-    packagesTitle: "Choose Your Package",
-    packagesText: "Select the level of detail you need now. You can begin with a visual concept and upgrade to a Design + Build Package or Full Realization review when the scope is ready.",
-    pricingTitle: "Transparent Starting Prices",
-    pricingText: "Final pricing depends on complexity, number of zones, level of detail and whether technical documentation is required.",
+    heroTitle: "One Zone Design Project",
+    heroText: "Upload photos, dimensions, preferences and budget for one defined project area. CAS AURUM will create a focused visual design concept that defines colors, textures, mood, atmosphere, visual direction and composition.",
+    packagesTitle: "One Design Project Price",
+    packagesText: "One Zone Design Project is $990 per zone. First design orders receive 20% off, bringing the first order price to $792 per zone.",
+    pricingTitle: "Design Pricing and Credit",
+    pricingText: "If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost.",
     processTitle: "How It Works",
-    formTitle: "Start Your Design Concept",
-    formIntro: "Choose a package, share the space, upload photos and describe the direction you want CAS AURUM to review.",
+    formTitle: "Start One Zone Design Project",
+    formIntro: "Share the defined zone, photos, dimensions, preferences, budget and atmosphere you want CAS AURUM to review before visual concept work begins.",
     submit: "Submit Project for Review",
     reviewHint: "CAS AURUM reviews the request first. Paid concept work starts only after a conversation and written confirmation.",
   };
   const localizedCopy = {
     en: {
-      heroEyebrow: "Design Concept Packages",
-      heroPrimary: "Start Design Concept",
-      heroSecondary: "Compare Packages",
-      heroCaption: "A concept-first path for media walls, closets, kitchens, built-ins and personal room directions.",
-      positioningEyebrow: "Low-risk beginning",
-      positioningTitle: "Before fabrication, clarify the design direction",
-      positioningText: "Before investing in custom fabrication, cabinetry or installation, start with a clear design direction. Our concept packages help homeowners, designers and builders understand the visual potential, material direction and approximate project path.",
-      packagesEyebrow: "Service levels",
+      heroEyebrow: "One Zone Design Project",
+      heroPrimary: "Start Design Project",
+      heroSecondary: "View Pricing",
+      heroCaption: "A focused visual concept for one defined wall, built-in zone or feature area.",
+      positioningEyebrow: "Concept before realization",
+      positioningTitle: "Clarify the visual direction before exact materials",
+      positioningText: "A One Zone Design Project defines colors, textures, mood, atmosphere, composition and the general design concept for one defined project area. Exact materials, brands, product codes, suppliers, shop drawings, production drawings, engineering and final fabrication estimates are handled later during realization.",
+      packagesEyebrow: "Design scope",
       pricingEyebrow: "Pricing transparency",
       processEyebrow: "Process",
       formEyebrow: "Project intake",
       faqTitle: "Frequently Asked Questions",
       continueTitle: "Continue exploring CAS AURUM",
       formSteps: {
-        package: "Choose your package",
+        package: "Confirm design project",
         project: "Select project type",
         contact: "Contact and location",
         files: "Upload photos",
@@ -5550,28 +5550,24 @@ function designConceptText(lang) {
         details: "Budget, timeline and description",
       },
       fields: designConceptFieldLabels("en"),
-      selectionLabels: { price: "Estimated starting price", timeline: "Estimated timing", estimateDisclaimer: "This is a starting estimate based on package and project type. CAS AURUM reviews photos, dimensions, location and scope before confirming the final price and timeline.", reviewFirst: "No online payment is collected at this step. CAS AURUM first reviews your photos, project type and location. If the request is a fit, we confirm the package, timeline and final starting price, then send a payment link or invoice before design work begins." },
+      selectionLabels: { price: "First order design price", timeline: "Timing", estimateDisclaimer: "One zone means one defined project area, such as a TV wall, fireplace wall, bed back wall, foyer wall, vanity wall, closet front, office built-in wall, kitchen feature wall, dining wall or hallway wall group.", reviewFirst: "The first design order receives 20% off: $792 per zone instead of $990 per zone. If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost." },
       packageHelp: {
-        design_concept: "Photos are required. Add length, width and height, or request a measurement.",
-        design_technical: "Add dimensions, or request a measurement before the technical package is reviewed.",
-        realization_review: "Realization is reviewed individually based on location, scope and availability.",
+        design_concept: "One visual design concept for one zone. Photos, dimensions, preferences and budget are collected before design work begins.",
       },
       dimensionsHint: {
-        design_concept: "Measurements may affect the final package price depending on location, scope and availability. CAS AURUM will confirm any measurement cost before paid work begins.",
-        design_technical: "Enter length, width/depth and height, or select measurement so CAS AURUM can review the next step.",
-        realization_review: "Dimensions are recommended. Select measurement if site dimensions are the next blocker.",
+        design_concept: "Share the main zone dimensions or request measurement help so CAS AURUM can clarify the design direction before visual concept work begins.",
       },
       fileHint: "Project photos are required so CAS AURUM can see the actual wall, room, closet, kitchen or built-in area. Inspiration images are optional.",
       consent: "I agree that CAS AURUM may contact me about this design concept request.",
-      packageOptions: [["design_concept", "Design Concept"], ["design_build_package", "Design + Build Package"], ["full_realization", "Full Realization"], ["not_sure", "Not sure yet"]],
+      packageOptions: [["design_concept", "One Zone Design Project"]],
       projectTypeOptions: designConceptProjectOptions("en"),
       styleOptions: designConceptStyleOptions("en"),
       timelineOptions: designConceptTimelineOptions("en"),
       budgetOptions: designConceptBudgetOptions("en"),
       packages: designConceptPackagesData("en"),
       pricing: designConceptPricingData("en"),
-      steps: ["Upload photos", "Choose your package", "Share dimensions or request measurement", "CAS AURUM reviews your request", "Confirm and begin", "Receive your direction and decide what comes next"],
-      stepText: ["Send photos of the room, wall, closet, kitchen or built-in area from the angles that show proportion, light and existing constraints.", "Start with a Design Concept, request a Design + Build Package, or ask CAS AURUM to review the project for full realization.", "If you have dimensions, add length, width, height and any important details. If measurements are needed, CAS AURUM can help arrange a measurement visit for qualified projects.", "We review your photos, project type, location, timeline and scope. If everything is clear, we confirm the package, final starting price, timeline and next step before paid work begins.", "After confirmation, CAS AURUM sends the payment link or invoice for the selected package. Once approved, we begin preparing your design direction or technical package.", "Review your concept, material direction and next-step recommendations. You can continue into a technical package, planner review or selected full-service realization when appropriate."],
+      steps: ["Collect project inputs", "Clarify direction", "Confirm the one-zone scope", "Create the visual concept", "Review one revision", "Move toward realization if approved"],
+      stepText: ["Before design work begins, CAS AURUM collects photos, dimensions, preferences and budget for the defined zone.", "Style, colors, textures, mood, atmosphere and desired visual direction are clarified with the client.", "CAS AURUM confirms the one-zone design direction before creating the visual design concept.", "The project includes one visual design concept for one defined zone with color palette, texture direction, composition and layout of main visual elements.", "One revision is included within the approved direction, without promising multiple concepts or many design options.", "Exact material selection, brands, suppliers, shop drawings, production drawings, engineering and final fabrication estimate happen later during realization."],
       faq: designConceptFaqData("en"),
     },
     es: {
@@ -5595,7 +5591,7 @@ function designConceptText(lang) {
       dimensionsHint: { design_concept: "Para concepto visual, agregue largo, ancho/profundidad y altura solo si ya los tiene.", design_technical: "Dimensiones y altura de techo son obligatorias para revision tecnica.", realization_review: "Las dimensiones son recomendadas. Ubicacion, presupuesto y plazo son obligatorios." },
       fileHint: "Las fotos del proyecto son obligatorias. Las referencias visuales son opcionales.",
       consent: "Acepto que CAS AURUM me contacte sobre esta solicitud.",
-      packageOptions: [["design_concept", "Concepto de diseño"], ["design_build_package", "Paquete diseño + realización"], ["full_realization", "Realización completa"], ["not_sure", "No estoy seguro todavía"]],
+      packageOptions: [["design_concept", "One Zone Design Project"]],
       projectTypeOptions: designConceptProjectOptions("es"),
       styleOptions: designConceptStyleOptions("es"),
       timelineOptions: designConceptTimelineOptions("es"),
@@ -5627,7 +5623,7 @@ function designConceptText(lang) {
       dimensionsHint: { design_concept: "Pour un concept visuel, ajoutez longueur, largeur/profondeur et hauteur seulement si vous les avez.", design_technical: "Dimensions et hauteur sous plafond sont obligatoires pour la revue technique.", realization_review: "Dimensions recommandees. Lieu, budget et calendrier sont obligatoires." },
       fileHint: "Les photos du projet sont obligatoires. Les images d'inspiration sont optionnelles.",
       consent: "J'accepte que CAS AURUM me contacte au sujet de cette demande.",
-      packageOptions: [["design_concept", "Concept design"], ["design_build_package", "Forfait design + réalisation"], ["full_realization", "Réalisation complète"], ["not_sure", "Je ne sais pas encore"]],
+      packageOptions: [["design_concept", "One Zone Design Project"]],
       projectTypeOptions: designConceptProjectOptions("fr"),
       styleOptions: designConceptStyleOptions("fr"),
       timelineOptions: designConceptTimelineOptions("fr"),
@@ -5659,7 +5655,7 @@ function designConceptText(lang) {
       dimensionsHint: { design_concept: "Для визуального концепта укажите длину, ширину/глубину и высоту только если они уже есть.", design_technical: "Для технического пакета обязательны длина, ширина/глубина и высота/высота потолка.", realization_review: "Размеры рекомендуются. Локация, бюджет и желаемые сроки обязательны." },
       fileHint: "Фото проекта обязательны, чтобы CAS AURUM видел реальную стену, комнату, гардеробную, кухню или встроенную зону. Референсы необязательны.",
       consent: "Я согласен, что CAS AURUM может связаться со мной по этой заявке.",
-      packageOptions: [["design_concept", "Дизайн-концепт"], ["design_build_package", "Пакет дизайн + реализация"], ["full_realization", "Полная реализация"], ["not_sure", "Пока не уверен(а)"]],
+      packageOptions: [["design_concept", "One Zone Design Project"]],
       projectTypeOptions: designConceptProjectOptions("ru"),
       styleOptions: designConceptStyleOptions("ru"),
       timelineOptions: designConceptTimelineOptions("ru"),
@@ -5691,7 +5687,7 @@ function designConceptText(lang) {
       dimensionsHint: { design_concept: "Для візуального концепту вкажіть довжину, ширину/глибину й висоту тільки якщо вони вже є.", design_technical: "Для технічного пакета обов'язкові довжина, ширина/глибина і висота/висота стелі.", realization_review: "Розміри рекомендовані. Локація, бюджет і бажані терміни обов'язкові." },
       fileHint: "Фото проєкту обов'язкові, щоб CAS AURUM бачив реальну стіну, кімнату, гардеробну, кухню або вбудовану зону. Референси необов'язкові.",
       consent: "Я погоджуюся, що CAS AURUM може зв'язатися зі мною щодо цієї заявки.",
-      packageOptions: [["design_concept", "Дизайн-концепт"], ["design_build_package", "Пакет дизайн + реалізація"], ["full_realization", "Повна реалізація"], ["not_sure", "Поки не впевнений(а)"]],
+      packageOptions: [["design_concept", "One Zone Design Project"]],
       projectTypeOptions: designConceptProjectOptions("uk"),
       styleOptions: designConceptStyleOptions("uk"),
       timelineOptions: designConceptTimelineOptions("uk"),
@@ -5773,81 +5769,42 @@ function designConceptFieldLabels(lang) {
 
 function designConceptProjectOptions(lang) {
   const labels = {
-    en: ["Media Wall / TV Unit", "Custom Kitchen", "Closet / Wardrobe", "Built-In Shelving", "Fireplace Wall", "Wall Panels", "Home Office", "Mudroom", "Custom Furniture", "Other / Whole Room"],
-    es: ["Media wall / unidad TV", "Cocina a medida", "Closet / armario", "Estantería integrada", "Muro de chimenea", "Paneles de pared", "Oficina en casa", "Mudroom / entrada", "Mueble a medida", "Otro / habitación completa"],
-    fr: ["Mur média / meuble TV", "Cuisine sur mesure", "Dressing / armoire", "Étagères intégrées", "Mur cheminée", "Panneaux muraux", "Bureau à domicile", "Entrée / mudroom", "Mobilier sur mesure", "Autre / pièce complète"],
-    ru: ["Медиа-стена / TV-модуль", "Кухня на заказ", "Гардеробная / шкаф", "Встроенный стеллаж", "Стена с камином", "Стеновые панели", "Домашний кабинет", "Прихожая / mudroom", "Мебель на заказ", "Другое / вся комната"],
-    uk: ["Медіа-стіна / TV-модуль", "Кухня на замовлення", "Гардеробна / шафа", "Вбудований стелаж", "Стіна з каміном", "Стінові панелі", "Домашній кабінет", "Передпокій / mudroom", "Меблі на замовлення", "Інше / уся кімната"],
+    en: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
+    es: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
+    fr: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
+    ru: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
+    uk: ["TV wall / media wall", "Fireplace wall", "Bed back wall", "Foyer wall", "Bathroom vanity wall", "Closet front", "Office built-in wall", "Kitchen feature wall / under bar", "Dining wall", "Hallway wall group"],
   }[lang] || {};
   const values = [
-    ["media_wall", "Media Wall / TV Unit"],
-    ["custom_kitchen", "Custom Kitchen"],
-    ["closet", "Closet / Wardrobe"],
-    ["built_in_shelving", "Built-In Shelving"],
-    ["fireplace_wall", "Fireplace Wall"],
-    ["wall_panels", "Wall Panels"],
-    ["home_office", "Home Office"],
-    ["mudroom", "Mudroom"],
-    ["custom_furniture", "Custom Furniture"],
-    ["other", "Other / Whole Room"],
+    ["media_wall", "TV wall / media wall"],
+    ["fireplace_wall", "Fireplace wall"],
+    ["bed_back_wall", "Bed back wall"],
+    ["foyer_wall", "Foyer wall"],
+    ["bathroom_vanity_wall", "Bathroom vanity wall"],
+    ["closet_front", "Closet front"],
+    ["office_built_in_wall", "Office built-in wall"],
+    ["kitchen_feature_wall", "Kitchen feature wall / under bar"],
+    ["dining_wall", "Dining wall"],
+    ["hallway_wall_group", "Hallway wall group"],
   ];
   return values.map(([value, label], index) => [value, labels[index] || label]);
 }
 
 function designConceptPricingMatrix() {
-  const notSure = designConceptEstimate("to be confirmed after review", "depends on selected package", "Select a package and project type to see the starting price and estimated timeline. CAS AURUM can also recommend the right next step after reviewing your photos.");
+  const oneZone = designConceptEstimate("$792 per zone first order", "confirmed after intake", "First design orders receive 20% off the standard $990 per zone price. The design project fee is credited toward the final project cost if the client orders full project realization with CAS AURUM.");
   return {
     design_concept: {
-      _fallback: designConceptEstimate("from $490", "3-7 business days", "Select a project type to see the starting price and estimated timeline for a Design Concept."),
-      media_wall: designConceptEstimate("from $490", "3-5 business days", "A focused concept for a TV wall, media wall or entertainment feature."),
-      fireplace_wall: designConceptEstimate("from $590", "3-5 business days", "A concept direction for a fireplace wall, feature wall or combined media/fireplace composition."),
-      wall_panels: designConceptEstimate("from $590", "3-5 business days", "A material and layout direction for an accent wall, panel system or room feature."),
-      closet: designConceptEstimate("from $690", "3-5 business days", "A closet or wardrobe concept based on photos, storage goals and available dimensions."),
-      built_in_shelving: designConceptEstimate("from $790", "4-6 business days", "A concept for shelving, storage, built-ins or room-specific cabinetry."),
-      home_office: designConceptEstimate("from $850", "4-6 business days", "A custom office direction for work surfaces, shelving, storage and room flow."),
-      mudroom: designConceptEstimate("from $850", "4-6 business days", "A concept for entry storage, mudroom organization, benches, hooks and cabinetry."),
-      custom_furniture: designConceptEstimate("from $750", "4-6 business days", "A concept for a custom furniture piece based on inspiration, use case and approximate dimensions."),
-      custom_kitchen: designConceptEstimate("from $1,190", "5-7 business days", "A custom kitchen concept with layout direction, cabinetry ideas and material planning."),
-      other: designConceptEstimate("from $950", "5-7 business days", "A custom concept for a room, zone or project type that needs individual review."),
-    },
-    design_build_package: {
-      _fallback: designConceptEstimate("from $1,490", "7-14 business days", "Select a project type to see the starting price and estimated timeline for a Design + Build Package."),
-      media_wall: designConceptEstimate("from $1,490", "7-10 business days", "A more detailed media wall package for estimating, dimensions, materials and build direction."),
-      fireplace_wall: designConceptEstimate("from $1,690", "7-10 business days", "A more detailed fireplace or feature wall package with layout, materials and build direction."),
-      wall_panels: designConceptEstimate("from $1,290", "7-10 business days", "A panel planning package with dimensions, material logic and preliminary production direction."),
-      closet: designConceptEstimate("from $1,990", "10-14 business days", "A closet planning package with dimensions, storage zones, layout and technical direction."),
-      built_in_shelving: designConceptEstimate("from $1,890", "10-14 business days", "A build package for shelving, storage or built-ins with layout and preliminary production notes."),
-      home_office: designConceptEstimate("from $2,100", "10-14 business days", "A detailed office package for work surfaces, storage, shelving and build direction."),
-      mudroom: designConceptEstimate("from $2,100", "10-14 business days", "A detailed mudroom package for storage, dimensions, cabinetry and build direction."),
-      custom_furniture: designConceptEstimate("from $1,500", "7-10 business days", "A technical direction for a custom furniture piece with proportions, materials and production notes."),
-      custom_kitchen: designConceptEstimate("from $2,490", "10-14 business days", "A kitchen planning package with dimensions, cabinetry direction, material logic and estimate preparation."),
-      other: designConceptEstimate("from $2,500", "10-15 business days", "A more detailed planning package for custom rooms, zones or complex scopes."),
-    },
-    full_realization: {
-      _fallback: designConceptEstimate("custom quote", "reviewed individually", "Full realization is reviewed after CAS AURUM understands the project type, location, scope and timeline."),
-      media_wall: designConceptEstimate("typically from $8k-$25k+", "reviewed individually", "Full media wall realization is reviewed based on wall size, materials, lighting, storage and installation scope."),
-      fireplace_wall: designConceptEstimate("typically from $10k-$30k+", "reviewed individually", "Full fireplace or feature wall realization is reviewed based on materials, structure, lighting and installation complexity."),
-      wall_panels: designConceptEstimate("typically from $6k-$25k+", "reviewed individually", "Wall panel realization depends on wall count, pattern, materials, site conditions and installation scope."),
-      closet: designConceptEstimate("typically from $10k-$40k+", "reviewed individually", "Closet realization depends on size, finish level, accessories, lighting and installation scope."),
-      built_in_shelving: designConceptEstimate("typically from $8k-$35k+", "reviewed individually", "Built-in realization depends on size, material, finish, site conditions and installation details."),
-      home_office: designConceptEstimate("typically from $10k-$40k+", "reviewed individually", "Home office realization depends on cabinetry scope, work surfaces, lighting, hardware and installation."),
-      mudroom: designConceptEstimate("typically from $8k-$30k+", "reviewed individually", "Mudroom realization depends on cabinetry scope, storage needs, finishes and installation conditions."),
-      custom_furniture: designConceptEstimate("typically from $3k-$20k+", "reviewed individually", "Custom furniture realization depends on size, material, finish, detailing and delivery requirements."),
-      custom_kitchen: designConceptEstimate("typically from $25k-$100k+", "reviewed individually", "Kitchen realization depends on cabinetry scope, materials, appliances, site conditions, fabrication and installation."),
-      other: designConceptEstimate("reviewed after scope", "reviewed individually", "Custom realization is reviewed after CAS AURUM understands the project type, location, scope and timeline."),
-    },
-    not_sure: {
-      _fallback: notSure,
-      media_wall: notSure,
-      fireplace_wall: notSure,
-      wall_panels: notSure,
-      closet: notSure,
-      built_in_shelving: notSure,
-      home_office: notSure,
-      mudroom: notSure,
-      custom_furniture: notSure,
-      custom_kitchen: notSure,
-      other: notSure,
+      _fallback: oneZone,
+      media_wall: oneZone,
+      fireplace_wall: oneZone,
+      bed_back_wall: oneZone,
+      foyer_wall: oneZone,
+      bathroom_vanity_wall: oneZone,
+      closet_front: oneZone,
+      office_built_in_wall: oneZone,
+      kitchen_feature_wall: oneZone,
+      dining_wall: oneZone,
+      hallway_wall_group: oneZone,
     },
   };
 }
@@ -6063,53 +6020,11 @@ function designConceptPackagesData(lang) {
       deliverablesTitle: "Deliverables",
       timelineTitle: "Timeline",
       items: [
-        { value: "design_concept", kicker: "Level 1", title: "Design Concept", price: "From $490", bestFor: "For a client who wants to see the idea first.", inputs: "Photos required; inspiration and approximate dimensions optional.", deliverables: "Space review, 1-2 concept directions, style and material direction, layout idea, estimated budget range and next-step recommendation.", timeline: "3-5 business days", cta: "Order Design Concept" },
-        { value: "design_build_package", kicker: "Level 2", title: "Design + Build Package", price: "From $1,490", bestFor: "For a client who wants a project prepared for estimate and realization.", inputs: "Photos, dimensions, ceiling height where relevant, wishes and inspiration.", deliverables: "Design direction, dimensions, elevations, material logic, build-ready notes, preliminary production notes and estimate preparation.", timeline: "7-14 business days", cta: "Request Build Package" },
-        { value: "full_realization", kicker: "Level 3", title: "Full Realization", price: "Custom quote", bestFor: "For production, delivery and installation when the scope is ready.", inputs: "Photos required; dimensions recommended; location, budget and desired fabrication or installation timeline required.", deliverables: "Site measurements, final design, engineering/shop drawings, materials, fabrication, delivery and installation.", timeline: "Reviewed individually", cta: "Request Full Project Review" },
-      ],
-    },
-    es: {
-      inputsTitle: "Datos necesarios",
-      deliverablesTitle: "Entregables",
-      timelineTitle: "Plazo",
-      items: [
-        { value: "design_concept", kicker: "Nivel 1", title: "Concepto de diseño", price: "Desde $490", bestFor: "Para quien quiere ver la idea antes de decidir qué construir.", inputs: "Fotos obligatorias; referencias y medidas aproximadas opcionales.", deliverables: "Revisión del espacio, 1-2 direcciones de concepto, estilo y materiales, idea de distribución, rango preliminar de presupuesto y recomendación del siguiente paso.", timeline: "3-5 días hábiles", cta: "Solicitar concepto" },
-        { value: "design_build_package", kicker: "Nivel 2", title: "Paquete diseño + realización", price: "Desde $1,490", bestFor: "Para preparar el proyecto para estimación, fabricación y realización.", inputs: "Fotos, dimensiones, altura de techo cuando aplique, deseos y referencias.", deliverables: "Diseño refinado, dimensiones, elevaciones, lógica de materiales, dirección para construcción, notas preliminares de producción y preparación de estimación.", timeline: "7-14 días hábiles", cta: "Solicitar paquete" },
-        { value: "full_realization", kicker: "Nivel 3", title: "Realización completa", price: "Cotización personalizada", bestFor: "Para producción, entrega e instalación cuando el alcance está listo.", inputs: "Fotos obligatorias; dimensiones recomendadas; ubicación, presupuesto y plazo deseado requeridos.", deliverables: "Medición en sitio, diseño final, ingeniería/shop drawings, materiales, fabricación, entrega e instalación.", timeline: "Revisión individual", cta: "Solicitar revisión completa" },
-      ],
-    },
-    fr: {
-      inputsTitle: "Éléments requis",
-      deliverablesTitle: "Livrables",
-      timelineTitle: "Délai",
-      items: [
-        { value: "design_concept", kicker: "Niveau 1", title: "Concept design", price: "À partir de 490 $", bestFor: "Pour voir l'idée avant de décider quoi construire.", inputs: "Photos obligatoires; inspirations et dimensions approximatives optionnelles.", deliverables: "Revue de l'espace, 1-2 directions de concept, style et matières, idée d'agencement, fourchette budgétaire préliminaire et recommandation de prochaine étape.", timeline: "3-5 jours ouvrés", cta: "Commander le concept" },
-        { value: "design_build_package", kicker: "Niveau 2", title: "Forfait design + réalisation", price: "À partir de 1 490 $", bestFor: "Pour préparer le projet à l'estimation, la fabrication et la réalisation.", inputs: "Photos, dimensions, hauteur sous plafond si utile, souhaits et inspirations.", deliverables: "Design affiné, dimensions, élévations, logique matières, direction constructible, notes préliminaires de production et préparation d'estimation.", timeline: "7-14 jours ouvrés", cta: "Demander le forfait" },
-        { value: "full_realization", kicker: "Niveau 3", title: "Réalisation complète", price: "Devis personnalisé", bestFor: "Pour production, livraison et installation quand le périmètre est prêt.", inputs: "Photos obligatoires; dimensions recommandées; lieu, budget et délai souhaité requis.", deliverables: "Mesures sur site, design final, ingénierie/shop drawings, matériaux, fabrication, livraison et installation.", timeline: "Examen individuel", cta: "Demander une revue complète" },
-      ],
-    },
-    ru: {
-      inputsTitle: "Что нужно предоставить",
-      deliverablesTitle: "Что вы получите",
-      timelineTitle: "Срок",
-      items: [
-        { value: "design_concept", kicker: "Уровень 1", title: "Дизайн-концепт", price: "От $490", bestFor: "Для клиента, который хочет сначала увидеть идею.", inputs: "Фото обязательны; референсы и примерные размеры опциональны.", deliverables: "Анализ пространства, 1-2 направления концепта, стиль и материалы, идея планировки, предварительный бюджетный диапазон и рекомендация следующего шага.", timeline: "3-5 рабочих дней", cta: "Заказать дизайн-концепт" },
-        { value: "design_build_package", kicker: "Уровень 2", title: "Пакет дизайн + реализация", price: "От $1,490", bestFor: "Для подготовки проекта к расчету, производству и реализации.", inputs: "Фото, размеры, высота потолка где важно, пожелания и референсы.", deliverables: "Уточненный дизайн, размеры, фасады, логика материалов, направление для реализации, предварительные производственные заметки и подготовка расчета.", timeline: "7-14 рабочих дней", cta: "Запросить пакет" },
-        { value: "full_realization", kicker: "Уровень 3", title: "Полная реализация", price: "Индивидуальный расчет", bestFor: "Для производства, доставки и установки, когда объем проекта понятен.", inputs: "Фото обязательны; размеры рекомендуются; локация, бюджет и желаемые сроки обязательны.", deliverables: "Замеры на объекте, финальный дизайн, технические чертежи, материалы, производство, доставка и установка.", timeline: "Индивидуальный разбор", cta: "Запросить полный разбор" },
-      ],
-    },
-    uk: {
-      inputsTitle: "Що потрібно надати",
-      deliverablesTitle: "Що ви отримаєте",
-      timelineTitle: "Термін",
-      items: [
-        { value: "design_concept", kicker: "Рівень 1", title: "Дизайн-концепт", price: "Від $490", bestFor: "Для клієнта, який хоче спочатку побачити ідею.", inputs: "Фото обов'язкові; референси та приблизні розміри опціональні.", deliverables: "Аналіз простору, 1-2 напрями концепту, стиль і матеріали, ідея планування, попередній бюджетний діапазон і рекомендація наступного кроку.", timeline: "3-5 робочих днів", cta: "Замовити дизайн-концепт" },
-        { value: "design_build_package", kicker: "Рівень 2", title: "Пакет дизайн + реалізація", price: "Від $1,490", bestFor: "Для підготовки проєкту до розрахунку, виробництва й реалізації.", inputs: "Фото, розміри, висота стелі де важливо, побажання та референси.", deliverables: "Уточнений дизайн, розміри, фасади, логіка матеріалів, напрям для реалізації, попередні виробничі нотатки й підготовка розрахунку.", timeline: "7-14 робочих днів", cta: "Запросити пакет" },
-        { value: "full_realization", kicker: "Рівень 3", title: "Повна реалізація", price: "Індивідуальний розрахунок", bestFor: "Для виробництва, доставки й монтажу, коли обсяг проєкту зрозумілий.", inputs: "Фото обов'язкові; розміри рекомендовані; локація, бюджет і бажані терміни обов'язкові.", deliverables: "Заміри на об'єкті, фінальний дизайн, технічні креслення, матеріали, виробництво, доставка й монтаж.", timeline: "Індивідуальний розбір", cta: "Запросити повний розбір" },
+        { value: "design_concept", kicker: "One zone", title: "One Zone Design Project", price: "$990 per zone", bestFor: "For one defined project area that needs a clear visual direction before realization.", inputs: "Photos, dimensions, preferences, desired style, colors, textures, atmosphere and budget are collected before design work begins.", deliverables: "One visual design concept for one zone, color palette and texture direction, composition and layout of main visual elements, plus one revision within the approved direction.", timeline: "Confirmed after intake", cta: "Order Design Project" },
       ],
     },
   };
-  const selected = data[lang] || data.en;
+  const selected = data.en;
   return selected.items.map((item) => ({
     ...item,
     inputsTitle: selected.inputsTitle,
@@ -6121,45 +6036,25 @@ function designConceptPackagesData(lang) {
 function designConceptPricingData(lang) {
   const data = {
     en: [
-      { title: "Design Concept", price: "from $490", timeline: "3-5 business days" },
-      { title: "Design + Build Package", price: "from $1,490", timeline: "7-14 business days" },
-      { title: "Full Realization", price: "custom quote", timeline: "reviewed individually" },
-    ],
-    es: [
-      { title: "Concepto de diseño", price: "desde $490", timeline: "3-5 días hábiles" },
-      { title: "Paquete diseño + realización", price: "desde $1,490", timeline: "7-14 días hábiles" },
-      { title: "Realización completa", price: "cotización personalizada", timeline: "revisión individual" },
-    ],
-    fr: [
-      { title: "Concept design", price: "à partir de 490 $", timeline: "3-5 jours ouvrés" },
-      { title: "Forfait design + réalisation", price: "à partir de 1 490 $", timeline: "7-14 jours ouvrés" },
-      { title: "Réalisation complète", price: "devis personnalisé", timeline: "examen individuel" },
-    ],
-    ru: [
-      { title: "Дизайн-концепт", price: "от $490", timeline: "3-5 рабочих дней" },
-      { title: "Пакет дизайн + реализация", price: "от $1,490", timeline: "7-14 рабочих дней" },
-      { title: "Полная реализация", price: "индивидуальный расчет", timeline: "индивидуальный разбор" },
-    ],
-    uk: [
-      { title: "Дизайн-концепт", price: "від $490", timeline: "3-5 робочих днів" },
-      { title: "Пакет дизайн + реалізація", price: "від $1,490", timeline: "7-14 робочих днів" },
-      { title: "Повна реалізація", price: "індивідуальний розрахунок", timeline: "індивідуальний розбір" },
+      { title: "One Zone Design Project", price: "$990 per zone", timeline: "standard design project price" },
+      { title: "First Order Discount", price: "$792 per zone", timeline: "20% off first design order" },
+      { title: "Credit Toward Realization", price: "credited", timeline: "applied toward final project cost if CAS AURUM completes realization" },
     ],
   };
-  return data[lang] || data.en;
+  return data.en;
 }
 
 function designConceptFaqData(lang) {
   const en = [
     ["What photos should I upload?", "Upload wide photos of the full room or wall, closer shots of corners and obstacles, ceiling and floor transitions, existing cabinetry or AV equipment, and any inspiration images that show the feeling you want."],
-    ["Do I need exact measurements?", "For a Level 1 Design Concept, measurements are helpful but not required. For a Design + Technical Package, dimensions and ceiling height are required so the layout and preliminary technical notes can be useful."],
-    ["Can I order only a design concept without fabrication?", "Yes. The Design Concept package is built as a standalone low-risk first step before any fabrication, cabinetry or installation commitment."],
-    ["Can the concept fee be credited toward a larger project?", "For selected larger projects, CAS AURUM may review a concept credit toward a technical package or realization scope. This is confirmed in writing after project review."],
-    ["What is included in the technical package?", "This package may include layout direction, preliminary fabrication notes, material planning and cut-list direction where applicable. It is not a substitute for licensed architectural, structural or code-required engineering documents."],
-    ["Is this a stamped architectural or engineering document?", "No. The technical package is a preliminary technical package for design and fabrication direction. It is not stamped architecture, structural engineering or code-required documentation."],
-    ["Can CAS AURUM fabricate and install the project?", "Design + Realization is available for selected projects in Atlanta and by special arrangement in other locations. Each project is reviewed by location, scope, budget, schedule and availability."],
-    ["How fast will I receive my concept?", "Most Level 1 concepts are prepared in 3-5 business days. Room concepts, kitchens and complex built-ins can take 4-7 business days. Technical packages usually take 7-14 business days."],
-    ["Can designers/builders use this service for their clients?", "Yes. Designers and builders can submit photos, plans, measurements, inspiration and client goals to clarify visual direction or prepare a preliminary technical package."],
+    ["What is one zone?", "One zone means one defined project area: TV wall or media wall, fireplace wall, bed back wall, foyer wall, bathroom vanity wall, closet front, office built-in wall, kitchen feature wall or under bar, dining wall, or hallway wall group."],
+    ["What is included in one design project?", "Each one-zone design project includes one visual design concept, color palette and texture direction, composition and layout of the main visual elements, and one revision within the approved direction."],
+    ["What does the design project not include?", "The design stage does not include exact material selection, brands, product codes, suppliers, shop drawings, production drawings, engineering or a final fabrication estimate."],
+    ["When are exact materials selected?", "Exact material selection happens later during the realization stage. At the design stage, CAS AURUM defines colors, textures, mood, atmosphere, visual direction, composition and the general design concept."],
+    ["Can I order only a design project without fabrication?", "Yes. The one-zone design project is a standalone first step before any fabrication, cabinetry or installation commitment."],
+    ["Can the design fee be credited toward realization?", "Yes. If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost."],
+    ["Do you create multiple concepts or many options?", "No. Each one-zone design project includes one visual design concept and one revision within the approved direction."],
+    ["Can designers/builders use this service for their clients?", "Yes. Designers and builders can submit photos, dimensions, preferences, budget and client goals to clarify visual direction before realization planning."],
   ];
   const localizedFaqs = {
     es: [
@@ -9360,7 +9255,7 @@ function rateLimitSubmission(request, response) {
 }
 
 function normalizeDesignConceptLeadPayload(payload, request) {
-  const packageType = normalizeDesignConceptValue(payload.package_type || payload.packageType, ["design_concept", "design_build_package", "full_realization", "not_sure"]);
+  const packageType = normalizeDesignConceptValue(payload.package_type || payload.packageType, ["design_concept"]);
   const projectType = normalizeDesignConceptProjectType(payload.project_type || payload.projectType || payload.selected_project_type);
   const desiredStyle = normalizeDesignConceptValue(payload.desired_style || payload.desiredStyle, designConceptStyleOptions("en").map(([value]) => value));
   const timelineValue = normalizeDesignConceptValue(payload.timeline || payload.timeline_value, designConceptTimelineOptions("en").map(([value]) => value));
@@ -9397,11 +9292,6 @@ function normalizeDesignConceptLeadPayload(payload, request) {
     if (!dimensionWidthDepth) missing.push("dimension_width_depth");
     if (!dimensionHeight) missing.push("dimension_height");
     if (!dimensionsComplete) missing.push("needs_measurement");
-  }
-  if (packageType === "full_realization") {
-    if (!String(payload.project_location || payload.projectLocation || "").trim()) missing.push("project_location");
-    if (!budgetValue) missing.push("budget_range");
-    if (!timelineValue) missing.push("timeline");
   }
   if (missing.length) return { error: { status: 400, message: "Missing required design concept fields.", missing: [...new Set(missing)] } };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(payload.email || ""))) return { error: { status: 400, message: "Invalid email.", missing: ["email"] } };
@@ -9488,8 +9378,8 @@ function normalizeDesignConceptLeadPayload(payload, request) {
     budget_range: budgetValue,
     budgetRange: budgetLabel,
     serviceNeeded: packageLabel,
-    service: "Interior design concept package",
-    vertical: "Design Concept Packages",
+    service: "One Zone Design Project",
+    vertical: "One Zone Design Project",
     intent: "design_concept_flow",
     objectType: projectTypeLabel,
     material: styleLabel,
@@ -9509,30 +9399,39 @@ function normalizeDesignConceptValue(value, allowed) {
 
 function normalizeDesignConceptProjectType(value) {
   const normalized = String(value || "").trim();
-  const aliased = normalized === "kitchen" ? "custom_kitchen" : normalized;
+  const aliases = {
+    kitchen: "kitchen_feature_wall",
+    custom_kitchen: "kitchen_feature_wall",
+    closet: "closet_front",
+    built_in_shelving: "office_built_in_wall",
+    wall_panels: "media_wall",
+    home_office: "office_built_in_wall",
+    mudroom: "foyer_wall",
+    custom_furniture: "media_wall",
+    other: "media_wall",
+  };
+  const aliased = aliases[normalized] || normalized;
   return normalizeDesignConceptValue(aliased, designConceptProjectOptions("en").map(([optionValue]) => optionValue));
 }
 
 function leadIntentForPackage(packageType) {
   return {
-    design_concept: "Design Concept",
-    design_build_package: "Build Package",
-    full_realization: "Full Realization",
-    not_sure: "General Inquiry",
+    design_concept: "One Zone Design Project",
   }[packageType] || "General Inquiry";
 }
 
 function projectCategoryForDesignConcept(projectType) {
   return {
     media_wall: "Media Wall",
-    custom_kitchen: "Kitchen",
-    closet: "Closet",
-    built_in_shelving: "Built-In",
     fireplace_wall: "Fireplace Wall",
-    wall_panels: "Wall Panels",
-    home_office: "Office",
-    mudroom: "Mudroom",
-    custom_furniture: "Furniture",
+    bed_back_wall: "Bed Back Wall",
+    foyer_wall: "Foyer Wall",
+    bathroom_vanity_wall: "Bathroom Vanity Wall",
+    closet_front: "Closet Front",
+    office_built_in_wall: "Office Built-In Wall",
+    kitchen_feature_wall: "Kitchen Feature Wall",
+    dining_wall: "Dining Wall",
+    hallway_wall_group: "Hallway Wall Group",
     other: "Other",
   }[projectType] || "Other";
 }
@@ -10137,7 +10036,7 @@ function schemaGraph(route, title, description) {
 	    graph.push({
 	      "@type": "Service",
 	      "@id": `${url}#design-concept-service`,
-	      name: "Interior Design Concept Packages",
+	      name: "One Zone Design Project",
 	      provider: { "@id": `${BASE_URL}/#organization` },
 	      areaServed: ["United States", "Canada", "Mexico"],
 	      serviceType: ["interior design concept", "custom media wall concept", "custom TV wall unit concept", "closet design concept", "kitchen cabinetry concept", "custom millwork design package", "design and build package"],
@@ -10493,7 +10392,7 @@ Cas Aurum designs custom media walls, TV units, kitchens, closets, built-ins, wa
 - Custom closets, walk-in closets, wardrobes and dressing rooms
 - Built-in shelving, storage walls, libraries and home offices
 - Fireplace walls, wall panels, bedroom feature walls and entry storage
-- Design Concept from $490, Design + Build Package from $1,490 and Full Realization by custom quote
+- One Zone Design Project at $990 per zone, with a first design order price of $792 per zone
 - Photo-based project start through the Design Concept flow and Millwork Planner
 - Collaboration with homeowners, designers, builders, architects and contractors
 - Premium materials include European oak, American walnut, rift white oak, natural veneers, premium MDF cores and stable substrates
@@ -11575,30 +11474,25 @@ function clientJs() {
 	    const pricingMatrices = ${JSON.stringify(designConceptPricingMatricesByLang())};
 	    const pageLang = document.documentElement.lang || 'en';
 	    const pricingMatrix = pricingMatrices[pageLang] || pricingMatrices[pageLang.slice(0, 2)] || pricingMatrices.en;
-	    const help = {
-	      design_concept: 'Photos are required. Add length, width and height, or request a measurement.',
-	      design_build_package: 'Add dimensions, or request a measurement before the build package is reviewed.',
-	      full_realization: 'Full realization is reviewed individually based on location, scope and availability.',
-	      not_sure: 'Start with photos and CAS AURUM will recommend the right next step.'
-	    };
-	    const dimensionHelp = {
-	      design_concept: 'Measurements may affect the final package price depending on location, scope and availability. CAS AURUM will confirm any measurement cost before paid work begins.',
-	      design_build_package: 'Enter length, width/depth and height, or select measurement so CAS AURUM can review the next step.',
-	      full_realization: 'Dimensions are recommended. Select measurement if site dimensions are the next blocker.',
-	      not_sure: 'Dimensions are helpful but not required for the first review.'
-	    };
-	    const dimensionLabels = {
-	      media_wall: ['Wall length', 'Wall depth / available depth', 'Wall height / ceiling height'],
-	      wall_panels: ['Wall length', 'Wall depth / return depth', 'Wall height / ceiling height'],
-	      closet: ['Closet width', 'Closet depth', 'Closet height'],
-	      custom_kitchen: ['Cabinet run length', 'Room / cabinet depth', 'Ceiling height'],
-	      built_in_shelving: ['Built-in length', 'Built-in depth', 'Built-in height'],
-	      fireplace_wall: ['Fireplace wall length', 'Available depth', 'Wall height / ceiling height'],
-	      home_office: ['Room length', 'Room width', 'Ceiling height'],
-	      mudroom: ['Entry wall length', 'Available depth', 'Ceiling height'],
-	      custom_furniture: ['Main length', 'Width / depth', 'Height'],
-	      other: ['Length', 'Width / depth', 'Height / ceiling height']
-	    };
+		    const help = {
+		      design_concept: 'One visual design concept for one zone. Photos, dimensions, preferences and budget are collected before design work begins.'
+		    };
+		    const dimensionHelp = {
+		      design_concept: 'Share the main zone dimensions or request measurement help so CAS AURUM can clarify the design direction before visual concept work begins.'
+		    };
+		    const dimensionLabels = {
+		      media_wall: ['Wall length', 'Wall depth / available depth', 'Wall height / ceiling height'],
+		      fireplace_wall: ['Fireplace wall length', 'Available depth', 'Wall height / ceiling height'],
+		      bed_back_wall: ['Bed back wall length', 'Available depth', 'Wall height / ceiling height'],
+		      foyer_wall: ['Foyer wall length', 'Available depth', 'Wall height / ceiling height'],
+		      bathroom_vanity_wall: ['Vanity wall length', 'Available depth', 'Wall height / ceiling height'],
+		      closet_front: ['Closet front width', 'Available depth', 'Height'],
+		      office_built_in_wall: ['Office wall length', 'Available depth', 'Wall height / ceiling height'],
+		      kitchen_feature_wall: ['Feature wall / under-bar length', 'Available depth', 'Height'],
+		      dining_wall: ['Dining wall length', 'Available depth', 'Wall height / ceiling height'],
+		      hallway_wall_group: ['Hallway wall group length', 'Available depth', 'Wall height / ceiling height'],
+		      other: ['Length', 'Width / depth', 'Height / ceiling height']
+		    };
 	    function setInputLabel(input, text){
 	      if (!input || !input.parentElement) return;
 	      input.parentElement.firstChild.textContent = text;
@@ -11607,14 +11501,12 @@ function clientJs() {
 	      const packageConfig = pricingMatrix[packageValue] || pricingMatrix.design_concept;
 	      return (projectValue && packageConfig[projectValue]) || packageConfig._fallback || packageConfig.other || pricingMatrix.design_concept._fallback;
 	    }
-	    function priceLabelForPackage(packageValue){
-	      if (packageValue === 'full_realization') return 'Estimated project range';
-	      if (packageValue === 'not_sure') return 'Estimated starting point';
-	      return 'Estimated starting price';
-	    }
-	    function timelineLabelForPackage(packageValue){
-	      return packageValue === 'full_realization' ? 'Review timing' : 'Estimated timing';
-	    }
+		    function priceLabelForPackage(packageValue){
+		      return 'First order design price';
+		    }
+		    function timelineLabelForPackage(packageValue){
+		      return 'Timing';
+		    }
 	    function syncPackage(){
 	      const packageValue = packageSelect ? packageSelect.value : 'design_concept';
 	      const projectValue = projectSelect ? projectSelect.value : '';
@@ -11642,7 +11534,7 @@ function clientJs() {
 	      if (selectedPrice) selectedPrice.textContent = displayPrice || '-';
 	      if (selectedTimeline) selectedTimeline.textContent = displayTimeline || '-';
 	      if (estimateMicrocopy) estimateMicrocopy.textContent = offer.microcopy || '';
-	      if (priceNote) priceNote.textContent = 'No online payment is collected at this step. CAS AURUM first reviews your photos, project type and location. If the request is a fit, we confirm the package, timeline and final starting price, then send a payment link or invoice before design work begins.';
+		      if (priceNote) priceNote.textContent = 'The first design order receives 20% off: $792 per zone instead of $990 per zone. If the client orders full project realization with CAS AURUM, the design project fee is credited toward the final project cost.';
 	      track('design_concept_level_selected', { package_type: packageValue, project_type: projectValue, estimated_price_label: displayPrice || '', estimated_timeline_label: displayTimeline || '', needs_measurement: needsMeasurement ? 'yes' : 'no' });
 	    }
 	    if (packageSelect) packageSelect.addEventListener('change', syncPackage);

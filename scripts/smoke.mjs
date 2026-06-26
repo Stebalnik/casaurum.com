@@ -188,9 +188,11 @@ console.log("homepage navigation and CRM app ok");
 
 const designConceptPage = await read("/design-concept");
 for (const requiredText of [
-  "Start With Photos and a Clear Design Concept",
-  "Design Concept",
-  "Order Design Concept",
+  "One Zone Design Project",
+  "$990 per zone",
+  "$792 per zone",
+  "Order Design Project",
+  "The design stage does not include exact material selection",
   "I need CAS AURUM to help arrange measurement for this project.",
   "Paid concept work starts only after a conversation and written confirmation.",
   "data-design-concept-form",
@@ -232,7 +234,7 @@ if (frenchPage.body.includes("noindex,follow") || frenchPage.body.includes(">FR<
 console.log("French localized hreflang ok");
 
 const plannerPage = await read("/technical-millwork-planner");
-for (const requiredText of ["Quick Project Estimate", "Technical Millwork Planner", "data-lead-form=\"quick_project_estimate\"", "data-lead-form=\"technical_millwork_planner\""]) {
+for (const requiredText of ["Technical Millwork Planner", "data-lead-form=\"technical_millwork_planner\""]) {
   if (!plannerPage.body.includes(requiredText)) {
     server.kill();
     throw new Error(`/technical-millwork-planner missing required planner text: ${requiredText}`);
@@ -342,13 +344,13 @@ const designConceptLeadJson = JSON.parse(designConceptLead.body || "{}");
 const savedDesignConceptLead = getLead(designConceptLeadJson.id);
 if (
   !savedDesignConceptLead?.measurement_requested ||
-  savedDesignConceptLead.exact_price !== "$554" ||
-  savedDesignConceptLead.base_price !== "from $490" ||
-  savedDesignConceptLead.estimated_price_label !== "from $490" ||
-  savedDesignConceptLead.estimated_timeline_label !== "3-5 business days" ||
+  savedDesignConceptLead.exact_price !== "$895" ||
+  savedDesignConceptLead.base_price !== "$792 per zone first order" ||
+  savedDesignConceptLead.estimated_price_label !== "$792 per zone first order" ||
+  savedDesignConceptLead.estimated_timeline_label !== "confirmed after intake" ||
   savedDesignConceptLead.estimate_basis !== "package_type + project_type" ||
   savedDesignConceptLead.measurement_surcharge_rate !== "13%" ||
-  savedDesignConceptLead.measurement_surcharge_amount !== "$64"
+  savedDesignConceptLead.measurement_surcharge_amount !== "$103"
 ) {
   server.kill();
   throw new Error(`/api/design-concept-lead should save internal 13% measurement surcharge, saved ${JSON.stringify(savedDesignConceptLead || {})}`);
@@ -363,7 +365,7 @@ console.log("/api/design-concept-lead ok");
 const invalidTechnicalConceptLead = await postMultipart("/api/design-concept-lead", {
   leadType: "design_concept_flow",
   formType: "design_concept_flow",
-  package_type: "design_build_package",
+  package_type: "design_concept",
   project_type: "media_wall",
   project_stage: "measurements",
   lead_type_classification: "homeowner",
@@ -372,7 +374,7 @@ const invalidTechnicalConceptLead = await postMultipart("/api/design-concept-lea
   email: "smoke-technical@example.com",
   phone: "+1 555 0103",
   project_location: "Atlanta, GA",
-  project_description: "Smoke test technical package without dimensions.",
+  project_description: "Smoke test one-zone design project without dimensions.",
   desired_style: "warm_natural",
   timeline: "planning_only",
   budget_range: "not_sure",
@@ -380,9 +382,9 @@ const invalidTechnicalConceptLead = await postMultipart("/api/design-concept-lea
 }, [{ field: "project_photos", filename: "room.jpg", type: "image/jpeg", content: "fake image bytes" }]);
 if (invalidTechnicalConceptLead.status !== 400 || !invalidTechnicalConceptLead.body.includes("dimension_length")) {
   server.kill();
-  throw new Error(`/api/design-concept-lead technical package without dimensions should return 400 with dimension fields, returned ${invalidTechnicalConceptLead.status}`);
+  throw new Error(`/api/design-concept-lead one-zone design project without dimensions should return 400 with dimension fields, returned ${invalidTechnicalConceptLead.status}`);
 }
-console.log("/api/design-concept-lead technical validation ok");
+console.log("/api/design-concept-lead dimension validation ok");
 
 const invalidDesignConceptLead = await post("/api/design-concept-lead", {
   leadType: "design_concept_flow",
