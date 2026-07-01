@@ -56,6 +56,18 @@ const PORT = Number(process.env.PORT || 4888);
 const BRAND = "CAS AURUM";
 const SITE_HOST = process.env.SITE_HOST || "casaurum.com";
 const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || `https://${SITE_HOST}`).replace(/\/$/, "");
+const SITE_CONTACT = {
+  brandName: BRAND,
+  siteUrl: "https://casaurum.com",
+  phoneDisplay: "+1 (470) 287-8688",
+  phoneE164: "+14702878688",
+  phoneHref: "tel:+14702878688",
+  emailDisplay: "info@casaurum.com",
+  emailHref: "mailto:info@casaurum.com",
+  instagramHandle: "@casaurum.interiors",
+  instagramUrl: "https://www.instagram.com/casaurum.interiors/",
+  sameAs: ["https://www.instagram.com/casaurum.interiors/"],
+};
 const BRAND_LOGO_URL = `${BASE_URL}/brand/logo-full.png`;
 const BRAND_OG_IMAGE_URL = `${BASE_URL}/brand/og-image.png`;
 const BRAND_TWITTER_IMAGE_URL = `${BASE_URL}/brand/twitter-image.png`;
@@ -93,8 +105,8 @@ const navKeys = ["solutions", "designConcept", "projects", "trade", "about", "co
 const solutionPageKeys = ["mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture"];
 const servicePageKeys = ["solutions", ...solutionPageKeys, "millwork", "trade"];
 const contentHubPageKeys = ["materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork"];
-const pageOrder = ["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "collections", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms"];
-const coreSitemapPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "mudrooms", "customFurniture", "millwork", "projects", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "planner", "quickEstimate", "about", "contact", "consultation", "measurement"]);
+const pageOrder = ["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "homeOffices", "mudrooms", "customFurniture", "millwork", "projects", "collections", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "canada", "mexico", "privacy", "terms", "cookiePolicy", "accessibility", "designServiceTerms"];
+const coreSitemapPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "mudrooms", "customFurniture", "millwork", "projects", "trade", "materials", "smartIntegration", "designProcess", "localCustomFurniture", "localArchitecturalMillwork", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "privacy", "terms", "cookiePolicy", "accessibility", "designServiceTerms"]);
 const noindexCorePageKeys = new Set(["collections", "homeOffices", "usa", "canada", "mexico"]);
 const promotedLanguageKeys = ["en", "es", "fr", "ru", "uk", "ar", "zh"];
 const spanishMeaningfulPageKeys = new Set(["home", "solutions", "designConcept", "mediaWalls", "customKitchens", "customClosets", "builtIns", "fireplaceWalls", "wallPanels", "customFurniture", "projects", "trade", "partners", "planner", "quickEstimate", "about", "contact", "consultation", "measurement", "usa", "privacy", "terms"]);
@@ -414,49 +426,49 @@ const slugs = {
 		    designConcept: "design-concept", solutions: "solutions", mediaWalls: "media-walls", customKitchens: "custom-kitchens", builtIns: "built-ins", customClosets: "custom-closets", fireplaceWalls: "fireplace-walls", homeOffices: "home-offices", mudrooms: "mudrooms", collections: "ideas", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", quickEstimate: "quick-project-estimate", projects: "gallery",
     materials: "materials", smartIntegration: "smart-integration", designProcess: "design-process", localCustomFurniture: "local-custom-furniture", localArchitecturalMillwork: "local-architectural-millwork",
     about: "about", contact: "contact", consultation: "request-consultation", measurement: "request-measurement",
-    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use",
+    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use", cookiePolicy: "cookie-policy", accessibility: "accessibility", designServiceTerms: "design-service-terms",
   },
 	  es: {
 	    home: "", wallPanels: "paneles-de-pared-a-medida", customFurniture: "muebles-a-medida", millwork: "carpinteria-arquitectonica",
 		    designConcept: "concepto-de-diseno", solutions: "soluciones", mediaWalls: "muros-media-a-medida", customKitchens: "cocinas-a-medida", builtIns: "muebles-integrados-a-medida", customClosets: "closets-a-medida", fireplaceWalls: "muros-de-chimenea", homeOffices: "oficinas-en-casa", mudrooms: "mudrooms-y-entradas", collections: "ideas", trade: "para-disenadores-y-constructores", partners: "programa-partners", planner: "planificador-de-carpinteria", quickEstimate: "quick-project-estimate", projects: "galeria",
     materials: "materiales", smartIntegration: "integracion-inteligente", designProcess: "proceso-de-diseno", localCustomFurniture: "muebles-locales-a-medida", localArchitecturalMillwork: "carpinteria-arquitectonica-local",
     about: "sobre-nosotros", contact: "contacto", consultation: "solicitar-consulta", measurement: "solicitar-medicion",
-    usa: "estados-unidos", canada: "canada", mexico: "mexico", privacy: "politica-de-privacidad", terms: "terminos-de-uso",
+    usa: "estados-unidos", canada: "canada", mexico: "mexico", privacy: "politica-de-privacidad", terms: "terminos-de-uso", cookiePolicy: "cookie-policy", accessibility: "accessibility", designServiceTerms: "design-service-terms",
   },
 	  fr: {
 	    home: "", wallPanels: "panneaux-muraux-sur-mesure", customFurniture: "meubles-sur-mesure", millwork: "menuiserie-architecturale",
 		    designConcept: "concept-design-interieur", solutions: "solutions", mediaWalls: "murs-media-sur-mesure", customKitchens: "cuisines-sur-mesure", builtIns: "rangements-integres-sur-mesure", customClosets: "dressings-sur-mesure", fireplaceWalls: "murs-cheminee", homeOffices: "bureaux-a-domicile", mudrooms: "entrees-et-mudrooms", collections: "idees", trade: "pour-designers-constructeurs", partners: "programme-partenaires", planner: "planificateur-menuiserie", quickEstimate: "quick-project-estimate", projects: "galerie",
     materials: "materiaux", smartIntegration: "integration-intelligente", designProcess: "processus-design", localCustomFurniture: "mobilier-local-sur-mesure", localArchitecturalMillwork: "menuiserie-architecturale-locale",
     about: "a-propos", contact: "contact", consultation: "demander-consultation", measurement: "demander-mesure",
-    usa: "etats-unis", canada: "canada", mexico: "mexique", privacy: "politique-confidentialite", terms: "conditions-utilisation",
+    usa: "etats-unis", canada: "canada", mexico: "mexique", privacy: "politique-confidentialite", terms: "conditions-utilisation", cookiePolicy: "cookie-policy", accessibility: "accessibility", designServiceTerms: "design-service-terms",
   },
 	  ru: {
 	    home: "", wallPanels: "stenovye-paneli-na-zakaz", customFurniture: "mebel-na-zakaz", millwork: "arhitekturnaya-stolyarka",
 		    designConcept: "dizayn-koncept", solutions: "resheniya", mediaWalls: "media-steny-na-zakaz", customKitchens: "kuhni-na-zakaz", builtIns: "vstroennaya-mebel-na-zakaz", customClosets: "garderobnye-na-zakaz", fireplaceWalls: "steny-s-kaminom", homeOffices: "domashnie-kabinety", mudrooms: "prihozhie-na-zakaz", collections: "idei", trade: "dlya-dizaynerov-i-zastroyschikov", partners: "partnerskaya-programma", planner: "konstruktor-mebeli", quickEstimate: "quick-project-estimate", projects: "galereya",
     materials: "materialy", smartIntegration: "umnaya-integraciya", designProcess: "process-dizayna", localCustomFurniture: "lokalnaya-mebel-na-zakaz", localArchitecturalMillwork: "lokalnaya-arhitekturnaya-stolyarka",
     about: "o-kompanii", contact: "kontakty", consultation: "zaprosit-konsultaciyu", measurement: "zaprosit-zamer",
-    usa: "ssha", canada: "kanada", mexico: "meksika", privacy: "politika-konfidencialnosti", terms: "usloviya-ispolzovaniya",
+    usa: "ssha", canada: "kanada", mexico: "meksika", privacy: "politika-konfidencialnosti", terms: "usloviya-ispolzovaniya", cookiePolicy: "cookie-policy", accessibility: "accessibility", designServiceTerms: "design-service-terms",
   },
   uk: {
     home: "", wallPanels: "stinovi-paneli-na-zamovlennya", customFurniture: "mebli-na-zamovlennya", millwork: "arhitekturna-stolyarka",
     designConcept: "dizayn-kontsept", solutions: "rishennya", mediaWalls: "media-stiny-na-zamovlennya", customKitchens: "kuhni-na-zamovlennya", builtIns: "vbudovani-mebli-na-zamovlennya", customClosets: "garderobni-na-zamovlennya", fireplaceWalls: "stiny-z-kaminom", homeOffices: "domashni-kabineti", mudrooms: "peredpokoyi-na-zamovlennya", collections: "ideyi", trade: "dlya-dyzayneriv-i-zabudovnykiv", partners: "partnerska-programa", planner: "konstruktor-mebliv", quickEstimate: "quick-project-estimate", projects: "galereya",
     materials: "materialy", smartIntegration: "rozumna-integraciya", designProcess: "proces-dyzaynu", localCustomFurniture: "lokalni-mebli-na-zamovlennya", localArchitecturalMillwork: "lokalna-arhitekturna-stolyarka",
     about: "pro-kompaniyu", contact: "kontakty", consultation: "zaprosyty-konsultaciyu", measurement: "zaprosyty-zamir",
-    usa: "ssha", canada: "kanada", mexico: "meksyka", privacy: "polityka-konfidenciynosti", terms: "umovy-korystuvannya",
+    usa: "ssha", canada: "kanada", mexico: "meksyka", privacy: "polityka-konfidenciynosti", terms: "umovy-korystuvannya", cookiePolicy: "cookie-policy", accessibility: "accessibility", designServiceTerms: "design-service-terms",
   },
   ar: {
     home: "", wallPanels: "wall-panels", customFurniture: "custom-furniture", millwork: "architectural-millwork",
     designConcept: "design-concept", solutions: "solutions", mediaWalls: "media-walls", customKitchens: "custom-kitchens", builtIns: "built-ins", customClosets: "custom-closets", fireplaceWalls: "fireplace-walls", homeOffices: "home-offices", mudrooms: "mudrooms", collections: "ideas", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", quickEstimate: "quick-project-estimate", projects: "gallery",
     materials: "materials", smartIntegration: "smart-integration", designProcess: "design-process", localCustomFurniture: "local-custom-furniture", localArchitecturalMillwork: "local-architectural-millwork",
     about: "about", contact: "contact", consultation: "request-consultation", measurement: "request-measurement",
-    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use",
+    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use", cookiePolicy: "cookie-policy", accessibility: "accessibility", designServiceTerms: "design-service-terms",
   },
   zh: {
     home: "", wallPanels: "wall-panels", customFurniture: "custom-furniture", millwork: "architectural-millwork",
     designConcept: "design-concept", solutions: "solutions", mediaWalls: "media-walls", customKitchens: "custom-kitchens", builtIns: "built-ins", customClosets: "custom-closets", fireplaceWalls: "fireplace-walls", homeOffices: "home-offices", mudrooms: "mudrooms", collections: "ideas", trade: "for-designers-builders", partners: "partners", planner: "technical-millwork-planner", quickEstimate: "quick-project-estimate", projects: "gallery",
     materials: "materials", smartIntegration: "smart-integration", designProcess: "design-process", localCustomFurniture: "local-custom-furniture", localArchitecturalMillwork: "local-architectural-millwork",
     about: "about", contact: "contact", consultation: "request-consultation", measurement: "request-measurement",
-    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use",
+    usa: "usa", canada: "canada", mexico: "mexico", privacy: "privacy-policy", terms: "terms-of-use", cookiePolicy: "cookie-policy", accessibility: "accessibility", designServiceTerms: "design-service-terms",
   },
 };
 
@@ -3247,6 +3259,7 @@ function legacyRedirectTarget(path) {
     ["/interior-design-solutions", urlFor("en", "solutions")],
     ["/collections", urlFor("en", "collections")],
     ["/projects", urlFor("en", "projects")],
+    ["/terms-of-service", urlFor("en", "terms")],
     ["/millwork-planner", urlFor("en", "planner")],
     ["/es/paneles-de-pared-de-lujo", urlFor("es", "wallPanels")],
     ["/es/soluciones-de-diseno-interior", urlFor("es", "solutions")],
@@ -3364,8 +3377,9 @@ function renderPage(route) {
     const page = legalContent(route.lang, "privacy");
     return layout(route, `${page.title} | ${BRAND}`, page.description, legalPage(route, page));
   }
-  if (key === "terms") {
-    const page = legalContent(route.lang, "terms");
+  if (["terms", "cookiePolicy", "accessibility", "designServiceTerms"].includes(key)) {
+    const type = { cookiePolicy: "cookie", accessibility: "accessibility", designServiceTerms: "designServiceTerms" }[key] || "terms";
+    const page = legalContent(route.lang, type);
     return layout(route, `${page.title} | ${BRAND}`, page.description, legalPage(route, page));
   }
 }
@@ -3402,6 +3416,7 @@ function home(route) {
       ${localProjectHighlights(route.lang)}
       ${homeIdeasGallery(route)}
       ${homeCompletedProjects(route)}
+      ${instagramBlock(route)}
     ${whySection(route)}
     ${tradeBand(route)}
     <section class="seo-copy"><h2>${escapeHtml(localizedPlain("Custom furniture, custom cabinetry and interior solutions in Atlanta and Georgia", route.lang))}</h2><p>${escapeHtml(copy[route.lang].home.seo)}</p></section>
@@ -5272,8 +5287,27 @@ function contactPage(route) {
   const t = copy[route.lang];
   return `
     ${pageHero(route.lang, t.contact[0], t.contact[1], "measurement-consultation-process")}
+    ${contactDetailsBlock(route)}
     <section class="form-shell"><div class="panel"><p class="eyebrow">${escapeHtml(localized("Have a question?", route.lang))}</p><h2>${escapeHtml(localized("Ask CAS AURUM", route.lang))}</h2><p>${escapeHtml(localized("Send a short project note and the team will help you choose the right next step: design discussion, estimate review, measurement request or trade project intake.", route.lang))}</p>${leadForm(route, "contact_question")}</div></section>
+    ${instagramBlock(route)}
   `;
+}
+
+function contactDetailsBlock(route) {
+  return `<section class="contact-details" aria-label="CAS AURUM contact details">
+    <article><span>${escapeHtml(localized("Phone", route.lang))}</span><a class="track" data-event="phone_clicked" href="${SITE_CONTACT.phoneHref}">${escapeHtml(SITE_CONTACT.phoneDisplay)}</a></article>
+    <article><span>Email</span><a class="track" data-event="email_clicked" href="${SITE_CONTACT.emailHref}">${escapeHtml(SITE_CONTACT.emailDisplay)}</a></article>
+    <article><span>Instagram</span><a class="track" data-event="instagram_clicked" href="${SITE_CONTACT.instagramUrl}" target="_blank" rel="noopener">${escapeHtml(SITE_CONTACT.instagramHandle)}</a></article>
+  </section>`;
+}
+
+function instagramBlock(route) {
+  return `<section class="cta instagram-cta">
+    <p class="eyebrow">Instagram</p>
+    <h2>Follow our latest design ideas</h2>
+    <p>Explore current CAS AURUM concepts, material palettes, feature wall ideas, room inspiration, and behind-the-scenes design details.</p>
+    <div class="actions"><a class="button primary track" data-event="instagram_clicked" href="${SITE_CONTACT.instagramUrl}" target="_blank" rel="noopener">View on Instagram</a><span class="social-handle">${escapeHtml(SITE_CONTACT.instagramHandle)}</span></div>
+  </section>`;
 }
 
 function formPage(route, type) {
@@ -5318,6 +5352,7 @@ function designConceptPage(route) {
       ${designConceptFormSection(route, t)}
       ${designConceptFaq(route, t)}
       ${designConceptInternalLinks(route, t)}
+      ${instagramBlock(route)}
     </div>
   `;
 }
@@ -5765,11 +5800,11 @@ function designConceptText(lang) {
 
 function designConceptFieldLabels(lang) {
   const labels = {
-    en: { packageType: "Design package", projectType: "Element type", clientName: "Name", email: "Email", phone: "Phone (optional)", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height", needsMeasurement: "Field measurement is handled later during realization." },
-    es: { packageType: "Paquete de diseño", projectType: "Tipo de elemento", clientName: "Nombre", email: "Correo electrónico", phone: "Teléfono (opcional)", location: "Ubicación del proyecto", description: "Descripción del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imágenes de inspiración (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo", needsMeasurement: "La medición en sitio se coordina después durante la realización." },
-    fr: { packageType: "Forfait design", projectType: "Type d'élément", clientName: "Nom", email: "Courriel", phone: "Téléphone (optionnel)", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaité", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond", needsMeasurement: "Les mesures sur site sont coordonnées plus tard pendant la réalisation." },
-    ru: { packageType: "Пакет дизайна", projectType: "Тип элемента", clientName: "Имя", email: "Эл. почта", phone: "Телефон (необязательно)", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (необязательно)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка", needsMeasurement: "Выездной замер координируется позже на этапе реализации." },
-    uk: { packageType: "Пакет дизайну", projectType: "Тип елемента", clientName: "Ім'я", email: "Ел. пошта", phone: "Телефон (необов'язково)", location: "Локація проєкту", description: "Опис проєкту", desiredStyle: "Бажаний стиль", timeline: "Терміни", budget: "Бюджет", photos: "Обов'язкові фото проєкту", inspiration: "Референси (необов'язково)", length: "Довжина", widthDepth: "Ширина / глибина", height: "Висота / висота стелі", needsMeasurement: "Виїзний замір координується пізніше на етапі реалізації." },
+    en: { packageType: "Design package", projectType: "Element type", clientName: "Name", email: "Email", phone: "Phone", location: "Project location", description: "Project description", desiredStyle: "Desired style", timeline: "Timeline", budget: "Budget range", photos: "Required project photos", inspiration: "Inspiration images (optional)", length: "Length", widthDepth: "Width / depth", height: "Height / ceiling height", needsMeasurement: "Field measurement is handled later during realization." },
+    es: { packageType: "Paquete de diseño", projectType: "Tipo de elemento", clientName: "Nombre", email: "Correo electrónico", phone: "Teléfono", location: "Ubicación del proyecto", description: "Descripción del proyecto", desiredStyle: "Estilo deseado", timeline: "Plazo", budget: "Rango de presupuesto", photos: "Fotos obligatorias del proyecto", inspiration: "Imágenes de inspiración (opcional)", length: "Largo", widthDepth: "Ancho / profundidad", height: "Altura / altura de techo", needsMeasurement: "La medición en sitio se coordina después durante la realización." },
+    fr: { packageType: "Forfait design", projectType: "Type d'élément", clientName: "Nom", email: "Courriel", phone: "Téléphone", location: "Lieu du projet", description: "Description du projet", desiredStyle: "Style souhaité", timeline: "Calendrier", budget: "Budget", photos: "Photos obligatoires du projet", inspiration: "Images d'inspiration (optionnel)", length: "Longueur", widthDepth: "Largeur / profondeur", height: "Hauteur / plafond", needsMeasurement: "Les mesures sur site sont coordonnées plus tard pendant la réalisation." },
+    ru: { packageType: "Пакет дизайна", projectType: "Тип элемента", clientName: "Имя", email: "Эл. почта", phone: "Телефон", location: "Локация проекта", description: "Описание проекта", desiredStyle: "Желаемый стиль", timeline: "Сроки", budget: "Бюджет", photos: "Обязательные фото проекта", inspiration: "Референсы (необязательно)", length: "Длина", widthDepth: "Ширина / глубина", height: "Высота / высота потолка", needsMeasurement: "Выездной замер координируется позже на этапе реализации." },
+    uk: { packageType: "Пакет дизайну", projectType: "Тип елемента", clientName: "Ім'я", email: "Ел. пошта", phone: "Телефон", location: "Локація проєкту", description: "Опис проєкту", desiredStyle: "Бажаний стиль", timeline: "Терміни", budget: "Бюджет", photos: "Обов'язкові фото проєкту", inspiration: "Референси (необов'язково)", length: "Довжина", widthDepth: "Ширина / глибина", height: "Висота / висота стелі", needsMeasurement: "Виїзний замір координується пізніше на етапі реалізації." },
   };
   return labels[lang] || labels.en;
 }
@@ -7559,6 +7594,7 @@ function projectsPage(route) {
     ${projectCategoryChips(route, gallery)}
     <section class="concept-grid" id="selected-work">${completedProjectItems.map((project, index) => projectGalleryCard(route, project, index, gallery)).join("")}</section>
 	    <section class="cta"><p class="eyebrow">${escapeHtml(localized("Private consultation", route.lang))}</p><h2>${escapeHtml(gallery.requestTitle)}</h2><p>${escapeHtml(gallery.requestText)}</p><div class="actions"><a class="button primary track" data-event="design_concept_gallery_cta_clicked" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(localized("Start with a Design Concept", route.lang))}</a><a class="button secondary track" data-event="cta_clicked" href="${consultationFormUrl(route.lang)}">${escapeHtml(gallery.primaryCta)}</a></div></section>
+    ${instagramBlock(route)}
     ${projectsInternalLinks(route, gallery)}
     ${projectsFaqBlock(route, gallery)}
   `;
@@ -7688,8 +7724,9 @@ function legalContent(lang, type) {
         sections: [
           ["Overview", "This page summarizes how CAS AURUM handles information submitted through this website, including project inquiries, consultation requests and partner applications. For questions about privacy or data handling, contact CAS AURUM directly through the contact page.", "This policy is intended for website inquiries and project communications across the United States, Canada and Mexico. It does not create a client relationship or replace any written project agreement."],
           ["Information We Collect", "When you submit a form, we may collect your name, email address, phone number, ZIP or postal code, project type, service needed, budget range, timeline, message and any file names, links or references you include for inspiration images, drawings or plans.", "We also collect technical context that helps us respond and understand inquiry source, including source URL, language, referrer, timestamp and UTM parameters. Basic server logs may include IP address, browser type and device information."],
+          ["Project Photos, Uploads and Contact Details", "Project photos, inspiration images, dimensions, uploaded files, city, state, ZIP code, budget range, timeline and design preferences may be stored with your inquiry so CAS AURUM can review the project and follow up appropriately.", `If you provide a phone number or email address, CAS AURUM may contact you by phone, email or text/SMS about your inquiry. You can also contact us at ${SITE_CONTACT.emailDisplay} or ${SITE_CONTACT.phoneDisplay}.`],
           ["How We Use Information", "We use submitted information to respond to inquiries, evaluate project fit, understand location and scope, prepare follow-up communication, schedule consultations or measurement discussions, improve the website and maintain lead and CRM records.", "We do not sell personal information. We do not use submitted drawings, plans, links or inspiration references as public portfolio work without separate permission."],
-          ["Sharing and Service Providers", "We may share information with service providers who help operate the website, email, analytics, CRM, hosting, security, form processing or lead notifications. These providers are expected to use information only for the services they provide to CAS AURUM.", "If a project requires coordination outside our immediate service area, we may discuss limited project information with appropriate production, measurement, design or installation partners after the scope is reviewed."],
+          ["CRM, Sharing and Service Providers", "We may store inquiry data in our local CRM and use service providers that help operate the website, email, analytics, CRM, hosting, security, form processing, social links or lead notifications. These providers are expected to use information only for the services they provide to CAS AURUM.", "If a project requires coordination outside our immediate service area, we may discuss limited project information with appropriate production, measurement, design or installation partners after the scope is reviewed."],
           ["Cookies and Analytics", "The website may use cookies, analytics tags or similar technologies to understand traffic, measure campaign performance, improve pages and track form interactions. Analytics tools may collect device, browser, page and event information.", "You can control cookies through your browser settings. Some website features may work differently if cookies are disabled."],
           ["Data Security and Retention", "We use reasonable administrative, technical and organizational measures to protect inquiry data. No internet transmission or storage system can be guaranteed to be completely secure.", "We keep lead and project inquiry information for as long as reasonably needed to respond, manage follow-up, maintain business records, resolve disputes and comply with legal obligations. You may request deletion or correction where applicable."],
           ["Your Choices", "You may ask to access, correct, update or delete personal information you submitted, subject to reasonable identity verification and legal or business record requirements.", "You may also ask us to stop contacting you about an inquiry. Transactional or administrative messages may still be sent when necessary."],
@@ -7710,6 +7747,46 @@ function legalContent(lang, type) {
           ["Submitted Materials", "If you include drawings, plans, inspiration images, file names, links or other references, you confirm that you have the right to share them with CAS AURUM for review. You grant CAS AURUM permission to use submitted materials internally to evaluate and respond to your inquiry.", "Do not submit confidential, unlawful or third-party materials you are not authorized to share."],
           ["Limitation of Liability", "The website is provided on an as-is and as-available basis. To the fullest extent permitted by law, CAS AURUM is not liable for indirect, incidental, consequential or special damages arising from website use or reliance on website content."],
           ["Changes", "CAS AURUM may update the website and these Terms of Use from time to time. Continued use of the website after updates means you accept the revised terms."],
+        ],
+      },
+      cookie: {
+        title: "Cookie Policy",
+        description: "How CAS AURUM may use essential cookies, analytics, marketing pixels and browser controls on this website.",
+        updated: "Last updated: June 30, 2026",
+        sections: [
+          ["Overview", "This Cookie Policy explains how casaurum.com may use cookies, analytics tags, pixels and similar technologies. It should be read together with the Privacy Policy."],
+          ["Essential Cookies", "Some cookies or local browser storage may be needed for basic website operation, form behavior, security, spam prevention, session handling, CRM access or remembering temporary interface state."],
+          ["Analytics Cookies", "CAS AURUM may use analytics tools to understand page visits, referral sources, form interactions and performance. These tools can collect device, browser, page URL, event and approximate location information."],
+          ["Marketing Pixels", "Marketing or advertising pixels may be added later to measure campaigns or improve relevance. If added, they may help understand visits after ads, social links or referral campaigns."],
+          ["Embedded and Social Links", `The website may link to external social platforms such as Instagram at ${SITE_CONTACT.instagramUrl}. Visiting those services is governed by their own cookie and privacy practices.`],
+          ["Browser Controls", "You can control or block cookies through your browser settings. Some website features may work differently if cookies or local storage are disabled."],
+          ["Contact", `Questions about cookies can be sent to ${SITE_CONTACT.emailDisplay} or by calling ${SITE_CONTACT.phoneDisplay}.`],
+        ],
+      },
+      accessibility: {
+        title: "Accessibility Statement",
+        description: "CAS AURUM's accessibility commitment, ongoing improvements and contact path for accessibility issues.",
+        updated: "Last updated: June 30, 2026",
+        sections: [
+          ["Commitment", "CAS AURUM aims to make casaurum.com usable by as many people as possible, including people using assistive technologies, keyboard navigation, screen readers, zoom and other browser tools."],
+          ["Ongoing Improvements", "Accessibility is an ongoing process. We review structure, headings, links, form labels, contrast, responsive behavior, alt text and interaction patterns as the website evolves."],
+          ["Known Limitations", "Some generated visual content, older uploaded imagery or third-party scripts may not always provide the same level of accessibility as core website content. We aim to improve these areas over time."],
+          ["Feedback", `If you experience an accessibility issue, contact CAS AURUM at ${SITE_CONTACT.emailDisplay} or ${SITE_CONTACT.phoneDisplay}. Please include the page URL, device/browser and a short description of the issue so we can review it.`],
+        ],
+      },
+      designServiceTerms: {
+        title: "Design Service Terms",
+        description: "Terms for CAS AURUM design concepts, project inputs, revisions, realization review and design-service limitations.",
+        updated: "Last updated: June 30, 2026",
+        sections: [
+          ["Design Inputs", "Design concepts are based on client-provided photos, rough dimensions, inspiration references, budget direction, timeline, project location and written notes. Better inputs help CAS AURUM prepare more useful recommendations."],
+          ["Creative Recommendations", "Design concepts are creative and professional recommendations. They are not construction documents, permit drawings, engineering documents, shop drawings or installation instructions unless a written agreement explicitly says otherwise."],
+          ["Measurements and Site Conditions", "Measurements, wall conditions, ceiling heights, utilities, access, humidity, existing finishes, structural conditions and site constraints can affect any realization path. Field verification may be required before fabrication or installation decisions."],
+          ["Fabrication and Installation", "Fabrication, installation, contractor coordination, engineering, material procurement, delivery and site work are quoted separately unless included in a written project scope."],
+          ["Revisions", "Revision scope depends on the selected design package. Extra revisions, additional rooms, new directions or major scope changes may require a separate fee or written approval."],
+          ["Client Responsibility", "The client is responsible for the accuracy of provided measurements, photos, site information, ownership rights to submitted materials and timely feedback."],
+          ["Material Availability", "CAS AURUM may recommend materials, colors, textures and design directions, but exact material availability, supplier inventory, finish matching and pricing can change before realization."],
+          ["Contact", `Questions about design services can be sent to ${SITE_CONTACT.emailDisplay} or by calling ${SITE_CONTACT.phoneDisplay}.`],
         ],
       },
     },
@@ -7906,7 +7983,6 @@ function layout(route, title, description, body) {
 }
 
 function header(route) {
-  const t = copy[route.lang];
   const nav = seoHeaderLinks(route.lang);
   const ctaHref = `${urlFor(route.lang, "designConcept")}#start-design-concept`;
   const ctaLabel = route.lang === "uk" ? "Надіслати запит" : (solutionLabels[route.lang] || solutionLabels.en).startProject;
@@ -7914,25 +7990,74 @@ function header(route) {
     <a class="brand track" data-event="cta_clicked" href="${urlFor(route.lang, "home")}" aria-label="CAS AURUM home"><img class="brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a>
     <button class="menu-button" type="button" aria-controls="nav" aria-expanded="false">${escapeHtml(localized("Menu", route.lang))}</button>
     <nav id="nav" aria-label="Primary">${nav.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}</nav>
-    <a class="header-cta track" data-event="start_project_clicked" href="${ctaHref}">${escapeHtml(ctaLabel)}</a>
+    <div class="header-actions">
+      <a class="header-contact track" data-event="phone_clicked" href="${SITE_CONTACT.phoneHref}">${escapeHtml(SITE_CONTACT.phoneDisplay)}</a>
+      <a class="header-social track" data-event="instagram_clicked" href="${SITE_CONTACT.instagramUrl}" target="_blank" rel="noopener">${escapeHtml(SITE_CONTACT.instagramHandle)}</a>
+      <a class="header-cta track" data-event="start_project_clicked" href="${ctaHref}">${escapeHtml(ctaLabel)}</a>
+    </div>
   </header>`;
 }
 
 function footer(route) {
-  const t = copy[route.lang];
-  if (route.lang === "uk") {
-    return `<footer class="site-footer">
-      <div><a class="brand" href="${urlFor("uk", "home")}"><img class="brand-lockup footer-brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a><p>Індивідуальні інтер'єрні рішення, дизайн-концепти, TV-стіни, кухні, меблі та стінові панелі.</p></div>
-      <div><h3>Почати</h3><a href="${urlFor("uk", "designConcept")}#start-design-concept">Надіслати запит</a><a href="${urlFor("uk", "quickEstimate")}">Швидка оцінка проєкту</a><a href="${urlFor("uk", "mediaWalls")}">Медіа-стіни</a></div>
-      <div><h3>Юридична інформація</h3><a href="${urlFor("uk", "privacy")}">Політика конфіденційності</a><a href="${urlFor("uk", "terms")}">Умови використання</a></div>
-    </footer>`;
-  }
-  const seo = seoFooterColumns(route.lang, route);
+  const lang = route.lang;
+  const columns = [
+    { title: "Contact", links: [
+      { href: SITE_CONTACT.phoneHref, label: SITE_CONTACT.phoneDisplay, event: "phone_clicked" },
+      { href: SITE_CONTACT.emailHref, label: SITE_CONTACT.emailDisplay, event: "email_clicked" },
+      { href: SITE_CONTACT.instagramUrl, label: `Instagram: ${SITE_CONTACT.instagramHandle}`, event: "instagram_clicked", external: true },
+    ] },
+    { title: "Services", links: [
+      { href: localizedContentHref(lang, "mediaWalls"), label: pageLabel("mediaWalls", lang) },
+      { href: localizedContentHref(lang, "wallPanels"), label: pageLabel("wallPanels", lang) },
+      { href: localizedContentHref(lang, "fireplaceWalls"), label: pageLabel("fireplaceWalls", lang) },
+      { href: localizedContentHref(lang, "builtIns"), label: pageLabel("builtIns", lang) },
+      { href: localizedContentHref(lang, "customKitchens"), label: pageLabel("customKitchens", lang) },
+      { href: localizedContentHref(lang, "customClosets"), label: pageLabel("customClosets", lang) },
+      { href: localizedContentHref(lang, "customFurniture"), label: pageLabel("customFurniture", lang) },
+      { href: localizedContentHref(lang, "millwork"), label: pageLabel("millwork", lang) },
+    ] },
+    { title: "Start", links: [
+      { href: localizedContentHref(lang, "designConcept"), label: pageLabel("designConcept", lang) },
+      { href: localizedContentHref(lang, "quickEstimate"), label: pageLabel("quickEstimate", lang) },
+      { href: localizedContentHref(lang, "contact"), label: pageLabel("contact", lang) },
+      { href: consultationFormUrl(lang), label: pageLabel("consultation", lang) },
+      { href: localizedContentHref(lang, "measurement"), label: pageLabel("measurement", lang) },
+    ] },
+    { title: "Explore", links: [
+      { href: localizedContentHref(lang, "projects"), label: projectsGalleryText(lang).title },
+      { href: localizedContentHref(lang, "materials"), label: pageLabel("materials", lang) },
+      { href: localizedContentHref(lang, "smartIntegration"), label: pageLabel("smartIntegration", lang) },
+      { href: localizedContentHref(lang, "designProcess"), label: pageLabel("designProcess", lang) },
+      { href: localizedContentHref(lang, "trade"), label: pageLabel("trade", lang) },
+    ] },
+    { title: "Service Areas", links: [
+      { href: "/georgia", label: "Georgia" },
+      { href: "/atlanta", label: "Atlanta" },
+      { href: "/miami", label: "Miami" },
+      { href: "/new-york", label: "New York" },
+      { href: "/los-angeles", label: "Los Angeles" },
+      { href: "/dallas", label: "Dallas" },
+      { href: "/chicago", label: "Chicago" },
+    ] },
+    { title: "Legal", links: [
+      { href: urlFor(lang, "privacy"), label: copy[lang].legal.privacy[0] },
+      { href: urlFor(lang, "terms"), label: copy[lang].legal.terms[0] },
+      { href: urlFor("en", "cookiePolicy"), label: "Cookie Policy" },
+      { href: urlFor("en", "accessibility"), label: "Accessibility Statement" },
+      { href: urlFor("en", "designServiceTerms"), label: "Design Service Terms" },
+    ] },
+  ];
   return `<footer class="site-footer">
-    <div><a class="brand" href="${urlFor(route.lang, "home")}"><img class="brand-lockup footer-brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a><p>${escapeHtml(t.home.hero)}</p></div>
-    ${seo.map((column) => `<div><h3>${escapeHtml(column.title)}</h3>${column.links.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}</div>`).join("")}
-    <div><h3>${escapeHtml(localized("Legal", route.lang))}</h3><a href="${urlFor(route.lang, "privacy")}">${escapeHtml(copy[route.lang].legal.privacy[0])}</a><a href="${urlFor(route.lang, "terms")}">${escapeHtml(copy[route.lang].legal.terms[0])}</a></div>
+    <div><a class="brand" href="${urlFor(lang, "home")}"><img class="brand-lockup footer-brand-lockup" src="/brand/logo-lockup-small.webp" width="156" height="125" alt="CAS AURUM"></a><p>Custom interiors, feature walls, built-ins and design concepts for homes across the U.S.</p></div>
+    ${columns.map((column) => `<div><h3>${escapeHtml(column.title)}</h3>${column.links.map(footerLink).join("")}</div>`).join("")}
   </footer>`;
+}
+
+function footerLink(item) {
+  const classes = item.event ? ` class="track"` : "";
+  const event = item.event ? ` data-event="${escapeHtml(item.event)}"` : "";
+  const external = item.external ? ` target="_blank" rel="noopener"` : "";
+  return `<a${classes}${event} href="${escapeHtml(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
 }
 
 function seoHeaderLinks(lang) {
@@ -7951,17 +8076,17 @@ function seoHeaderLinks(lang) {
       { href: urlFor("ru", "solutions"), label: "Решения" },
       { href: urlFor("ru", "designConcept"), label: "Дизайн-концепт" },
       { href: urlFor("ru", "quickEstimate"), label: "Быстрая оценка" },
-      { href: urlFor("ru", "projects"), label: "Галерея" },
+      { href: urlFor("ru", "projects"), label: "Выполненные проекты" },
       { href: urlFor("ru", "contact"), label: "Контакты" },
       { href: `${urlFor("ru", "designConcept")}#start-design-concept`, label: "Начать проект" },
     ];
   }
   const labels = {
-    en: ["Solutions", "Design Concept", "Gallery", "How It Works", "For Designers & Builders", "About", "Start Project"],
-    es: ["Soluciones", "Concepto", "Galeria", "Como funciona", "Para disenadores y constructores", "Sobre nosotros", "Iniciar proyecto"],
-    fr: ["Solutions", "Concept", "Galerie", "Processus", "Pour designers et constructeurs", "A propos", "Demarrer"],
-    ru: ["Решения", "Дизайн-концепт", "Галерея", "Как это работает", "Для дизайнеров и строителей", "О нас", "Начать проект"],
-    uk: ["Рішення", "Дизайн-концепт", "Галерея", "Як це працює", "Для дизайнерів і будівельників", "Про нас", "Почати проєкт"],
+    en: ["Solutions", "Design Concept", "Completed Projects", "How It Works", "For Designers & Builders", "About", "Start Project"],
+    es: ["Soluciones", "Concepto", "Proyectos realizados", "Como funciona", "Para disenadores y constructores", "Sobre nosotros", "Iniciar proyecto"],
+    fr: ["Solutions", "Concept", "Projets realises", "Processus", "Pour designers et constructeurs", "A propos", "Demarrer"],
+    ru: ["Решения", "Дизайн-концепт", "Выполненные проекты", "Как это работает", "Для дизайнеров и строителей", "О нас", "Начать проект"],
+    uk: ["Рішення", "Дизайн-концепт", "Виконані проєкти", "Як це працює", "Для дизайнерів і будівельників", "Про нас", "Почати проєкт"],
   }[lang] || {};
   return [
     { href: urlFor(lang, "solutions"), label: labels[0] },
@@ -9083,6 +9208,7 @@ async function handleLead(request, response) {
   const storage = await persistLead(lead);
   const plannerProject = savePlannerProjectFromLead(lead);
   await deliverLeadEmail(lead);
+  await forwardLeadToExternalCrm(normalizeExternalCrmLead(lead, { storage, plannerProject: publicPlannerProjectPayload(plannerProject) }));
   if (!storage.localDbOk && process.env.LOCAL_CRM_REQUIRED !== "false") {
     return json(response, { ok: false, message: "Lead saved to fallback, but encrypted CRM insert failed.", id: lead.id, storage }, 502);
   }
@@ -9249,6 +9375,7 @@ async function handleDesignConceptLead(request, response) {
   }
   const storage = await persistLead(lead);
   await deliverLeadEmail(lead);
+  await forwardLeadToExternalCrm(normalizeExternalCrmLead(lead, { storage }));
   console.log(JSON.stringify({
     event: "design_concept_lead_submitted",
     leadId: lead.id,
@@ -9711,6 +9838,22 @@ async function handlePartnerApplication(request, response) {
   });
   console.log(`Partner application received: ${partner.id} ${partner.email || ""} ${partner.displayName || ""}`);
   notifyPartnerApplication(partner).catch((error) => console.error(`Partner application Telegram notify failed: ${partner.id} ${error.message}`));
+  forwardLeadToExternalCrm(normalizeExternalCrmLead({
+    ...payload,
+    id: partner.id,
+    timestamp: new Date().toISOString(),
+    formType: "partner_application",
+    leadType: "partner_application",
+    fullName,
+    email,
+    phone,
+    projectType: "Partner application",
+    serviceNeeded: role,
+    city: payload.market || "",
+    message: payload.notes || "",
+    sourceUrl: payload.sourceUrl || "/partners",
+    consent: "yes",
+  }, { partner: { id: partner.id, status: partner.status } })).catch(() => {});
   return json(response, { ok: true, partner: { id: partner.id, status: partner.status } });
 }
 
@@ -9887,6 +10030,92 @@ async function persistLead(lead) {
   await saveLeadFallback(lead);
   storage.fallbackOk = true;
   return storage;
+}
+
+function externalCrmEnabled() {
+  return process.env.WEBSITE_LEADS_EXTERNAL_CRM_ENABLED === "true" && Boolean(process.env.WEBSITE_LEADS_EXTERNAL_CRM_URL);
+}
+
+function normalizeExternalCrmLead(lead, context = {}) {
+  const raw = sanitizeExternalCrmRawPayload(lead);
+  const name = lead.fullName || lead.client_name || [lead.firstName, lead.lastName].filter(Boolean).join(" ") || lead.name || "";
+  const uploadedFiles = normalizeExternalCrmFiles(lead.uploadedFiles || lead.files || []);
+  return {
+    source: "casaurum.com",
+    formType: lead.formType || lead.leadType || lead.lead_type || "",
+    pageUrl: lead.sourceUrl || lead.source_page || lead.sourcePage || "",
+    submittedAt: lead.timestamp || lead.createdAt || new Date().toISOString(),
+    name,
+    phone: lead.phone || "",
+    email: lead.email || "",
+    city: lead.city || lead.project_location || lead.projectLocation || lead.project_location_city || "",
+    state: lead.state || lead.service_area || lead.serviceArea || "",
+    zip: lead.zipCode || lead.zip || lead.project_location || "",
+    projectType: lead.projectType || lead.project_type || lead.projectTypeLabel || "",
+    service: lead.serviceNeeded || lead.service || lead.vertical || "",
+    budget: lead.budget || lead.budget_range || lead.budgetRange || "",
+    timeline: lead.timeline || lead.quoted_timeline || "",
+    message: lead.message || lead.project_description || lead.project_notes || lead.notes || "",
+    consent: normalizeConsent(lead.consent),
+    uploadedFiles,
+    context,
+    raw,
+  };
+}
+
+function normalizeExternalCrmFiles(files) {
+  const list = Array.isArray(files) ? files : [];
+  return list.map((file) => ({
+    filename: file.storedName || file.name || file.filename || "",
+    originalName: file.name || file.filename || "",
+    field: file.field || "",
+    mimeType: file.type || file.mimeType || "",
+    size: Number(file.size || 0),
+    localPath: file.path || "",
+    publicUrl: file.url || "",
+  })).filter((file) => file.filename || file.originalName || file.publicUrl);
+}
+
+function normalizeConsent(value) {
+  if (typeof value === "boolean") return value;
+  const text = String(value || "").toLowerCase();
+  return ["true", "yes", "on", "1", "agree", "agreed"].includes(text);
+}
+
+function sanitizeExternalCrmRawPayload(lead) {
+  const omitted = new Set(["website", "token", "password", "pass", "secret", "apiKey", "api_key"]);
+  return Object.fromEntries(Object.entries(lead || {}).filter(([key, value]) => !omitted.has(key) && typeof value !== "function" && !Buffer.isBuffer(value)));
+}
+
+async function forwardLeadToExternalCrm(normalizedLead) {
+  if (!externalCrmEnabled()) return { skipped: true };
+  const url = process.env.WEBSITE_LEADS_EXTERNAL_CRM_URL;
+  const token = process.env.WEBSITE_LEADS_EXTERNAL_CRM_TOKEN || "";
+  const timeoutMs = Number(process.env.WEBSITE_LEADS_EXTERNAL_CRM_TIMEOUT_MS || 5000);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const headers = { "content-type": "application/json" };
+    if (token) headers.authorization = `Bearer ${token}`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(normalizedLead),
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`External CRM returned ${response.status}`);
+    return { ok: true };
+  } catch (error) {
+    console.warn(`External CRM lead forwarding failed: ${safeExternalCrmError(error)}`);
+    return { ok: false, error: error.message };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function safeExternalCrmError(error) {
+  if (error?.name === "AbortError") return "request timed out";
+  return String(error?.message || "unknown error").replace(process.env.WEBSITE_LEADS_EXTERNAL_CRM_TOKEN || "__NO_TOKEN__", "[redacted]");
 }
 
 async function deliverLeadEmail(lead) {
@@ -10092,8 +10321,26 @@ function formCopy(lang) {
 function schemaGraph(route, title, description) {
   const url = `${BASE_URL}${routeUrlFor(route.lang, route)}`;
   const graph = [
-    { "@type": "Organization", "@id": `${BASE_URL}/#organization`, name: BRAND, url: BASE_URL, description: "Custom interior and millwork solutions for Georgia homes, with design concepts and technical planning available for selected projects across the United States.", logo: BRAND_LOGO_URL },
-    { "@type": "ProfessionalService", "@id": `${BASE_URL}/#service-business`, name: BRAND, url: BASE_URL, areaServed: ["Georgia", "Atlanta", "United States"], serviceType: ["Custom Media Walls", "Custom TV Wall Units", "Custom Kitchens", "Custom Closets", "Built-In Furniture", "Custom Wall Panels", "Custom Furniture", "Architectural Millwork", "Interior Design Solutions"] },
+    {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: SITE_CONTACT.brandName,
+      url: BASE_URL,
+      description: "Custom interior and millwork solutions for Georgia homes, with design concepts and technical planning available for selected projects across the United States.",
+      logo: BRAND_LOGO_URL,
+      telephone: SITE_CONTACT.phoneE164,
+      email: SITE_CONTACT.emailDisplay,
+      sameAs: SITE_CONTACT.sameAs,
+      contactPoint: [{
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: SITE_CONTACT.phoneE164,
+        email: SITE_CONTACT.emailDisplay,
+        areaServed: "US",
+        availableLanguage: ["English", "Russian", "Ukrainian", "Spanish"],
+      }],
+    },
+    { "@type": "ProfessionalService", "@id": `${BASE_URL}/#service-business`, name: SITE_CONTACT.brandName, url: BASE_URL, telephone: SITE_CONTACT.phoneE164, email: SITE_CONTACT.emailDisplay, sameAs: SITE_CONTACT.sameAs, areaServed: ["Georgia", "Atlanta", "United States"], serviceType: ["Custom Media Walls", "Custom TV Wall Units", "Custom Kitchens", "Custom Closets", "Built-In Furniture", "Custom Wall Panels", "Custom Furniture", "Architectural Millwork", "Interior Design Solutions"] },
     { "@type": "WebSite", "@id": `${BASE_URL}/#website`, name: BRAND, url: BASE_URL, inLanguage: route.lang },
     { "@type": "WebPage", "@id": `${url}#webpage`, url, name: title, description, inLanguage: route.lang, isPartOf: { "@id": `${BASE_URL}/#website` } },
     { "@type": "BreadcrumbList", itemListElement: breadcrumbs(route).map((b, i) => ({ "@type": "ListItem", position: i + 1, name: b.name, item: `${BASE_URL}${b.url}` })) },
@@ -10501,6 +10748,7 @@ function llmsTxt() {
     ["/gallery", "Completed work and custom interior ideas"],
     ["/for-designers-builders", "Designer, builder and architect collaboration"],
   ];
+  const discoverySitemaps = sitemapFiles().map((file) => `- ${file.name.replace(".xml", "").replaceAll("-", " ")} sitemap: ${BASE_URL}/sitemaps/${file.name}`).join("\n");
   return `# CAS AURUM
 
 CAS AURUM is a custom interior solutions studio helping homeowners transform everyday spaces into beautiful, functional, personal rooms designed around the way they live.
@@ -10531,11 +10779,7 @@ ${priorityPages.map(([url, label]) => `- ${BASE_URL}${url} - ${label}`).join("\n
 ## Discovery
 
 - Sitemap: ${BASE_URL}/sitemap.xml
-- Core sitemap: ${BASE_URL}/sitemaps/core.xml
-- Collections sitemap: ${BASE_URL}/sitemaps/collections.xml
-- CAS AURUM hub sitemap: ${BASE_URL}/sitemaps/casaurum-hubs.xml
-- CAS AURUM entity sitemap: ${BASE_URL}/sitemaps/casaurum-entities.xml
-- CAS AURUM city sitemap: ${BASE_URL}/sitemaps/casaurum-cities.xml
+${discoverySitemaps}
 
 ## Citation Guidance
 
@@ -13722,16 +13966,16 @@ function css() {
   :root{--ivory:#f6f0e7;--warm:#e4d8c8;--charcoal:#15120e;--soft:#afa28e;--line:rgba(246,240,231,.18);--gold:#c4a15f;--walnut:#6e5138;--oak:#b79b74;--stone:#d4c8b8;--black:#090807;--green:#26352f;color-scheme:dark;font-family:Inter,Avenir Next,Segoe UI,sans-serif}
   *{box-sizing:border-box}body{margin:0;background:var(--charcoal);color:var(--ivory);line-height:1.55}a{color:inherit}img{display:block;width:100%;height:100%;object-fit:cover}[hidden]{display:none!important}.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:99;background:var(--ivory);color:var(--charcoal);padding:10px}
   .site-header{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:16px clamp(18px,4vw,64px);background:rgba(21,18,14,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-  .brand{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap}.brand-lockup{width:118px;height:auto;object-fit:contain;flex:0 0 auto}.footer-brand-lockup{width:150px}nav{display:flex;justify-content:center;gap:18px;font-size:13px;color:var(--warm)}nav a,.site-footer a{text-decoration:none}.header-cta,.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border:1px solid var(--gold);text-decoration:none;font-weight:700;font-size:13px}.header-cta,.button.primary{background:var(--gold);color:var(--black)}.button.secondary{background:transparent;color:var(--ivory);border-color:var(--line)}.menu-button{display:none}
+  .brand{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap}.brand-lockup{width:118px;height:auto;object-fit:contain;flex:0 0 auto}.footer-brand-lockup{width:150px}nav{display:flex;justify-content:center;gap:18px;font-size:13px;color:var(--warm)}nav a,.site-footer a{text-decoration:none}.header-actions{display:flex;gap:10px;align-items:center;justify-content:end}.header-contact,.header-social{color:var(--warm);font-size:12px;text-decoration:none;white-space:nowrap}.header-contact:hover,.header-social:hover{color:var(--gold)}.header-cta,.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border:1px solid var(--gold);text-decoration:none;font-weight:700;font-size:13px}.header-cta,.button.primary{background:var(--gold);color:var(--black)}.button.secondary{background:transparent;color:var(--ivory);border-color:var(--line)}.menu-button{display:none}
   section{padding:clamp(42px,7vw,92px) clamp(18px,5vw,72px)}.hero{width:auto;max-width:none;min-height:auto;margin:clamp(18px,3vw,42px) clamp(18px,4vw,72px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.85fr);align-items:stretch;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#100e0b}.hero-media{height:clamp(390px,43vw,560px);min-width:0;min-height:0;margin:0}.hero-video{position:relative;overflow:hidden;background:#080706}.hero-video video{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:cover}.hero-video img{height:100%;min-width:0;min-height:0}.hero-copy{min-width:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4.8vw,68px);background:linear-gradient(135deg,#1a1712,#24342c)}.hero h1{font-size:clamp(38px,5.2vw,74px)}.hero h2{font-size:clamp(26px,3vw,42px)}.eyebrow{margin:0 0 14px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}h1,h2,h3{font-family:Georgia,Times New Roman,serif;font-weight:500;line-height:1.06;margin:0}h1{font-size:clamp(42px,7vw,92px)}h2{font-size:clamp(28px,4vw,52px)}h3{font-size:23px}p{color:var(--warm)}.lede{font-size:clamp(18px,2vw,22px);max-width:760px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-  .trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:20px;color:var(--stone);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.intro,.section-head,.seo-copy{max-width:980px}.seo-copy.wide{max-width:1120px}.intro p,.seo-copy p{font-size:18px}.legal-copy{max-width:1040px;margin:auto}.legal-copy article{border-top:1px solid var(--line);padding:24px 0}.legal-copy h2{font-size:clamp(24px,3vw,34px);margin-bottom:12px}.legal-copy p{max-width:900px;font-size:16px;color:var(--warm)}.stealth-admin-link{color:inherit;text-decoration:none;cursor:inherit}.stealth-admin-link:visited,.stealth-admin-link:hover,.stealth-admin-link:focus{color:inherit;text-decoration:none}.seo-hero{display:grid;grid-template-columns:1fr .9fr;gap:clamp(28px,5vw,72px);align-items:center;min-height:72vh}.seo-hero figure{margin:0}.seo-hero img{min-height:460px;border-radius:8px}.seo-direct{max-width:1040px}.seo-direct h2{font-size:clamp(28px,4vw,48px)}.seo-sections{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding-top:0}.seo-sections article,.seo-related div{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:24px}.seo-sections h2{font-size:28px}.seo-related{display:grid;grid-template-columns:1fr;gap:16px}.seo-related div{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.seo-related h2{width:100%;font-size:34px}.seo-related a{border:1px solid var(--line);padding:11px 14px;text-decoration:none;color:var(--warm)}.cards,.answer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.card,.panel,.lead-card,.answer-grid article,.why article,.process article,.programmatic-meta div{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:24px;border-radius:8px}.programmatic-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:24px;padding-bottom:24px}.programmatic-meta span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.programmatic-meta strong{display:block;margin-top:6px;font-family:Georgia,serif;font-size:22px;font-weight:500}.card{text-decoration:none;min-height:260px;transition:transform .2s,border-color .2s}.answer-grid article{min-height:0}.answer-grid h3{font-size:22px;margin-bottom:8px}.answer-grid p{font-size:15px;color:var(--warm)}.card:hover,.lead-card:hover{transform:translateY(-3px);border-color:rgba(196,161,95,.8)}.card span,.process span{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.split-band,.page-hero,.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center}.split-band img,.page-hero img{min-height:420px;border-radius:8px}.reverse{grid-template-columns:.9fr 1.1fr}.why{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}.why-grid,.process>div{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.lead-paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}.lead-card{text-decoration:none}.region-city-panel div{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.region-city-panel a{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none}.region-city-panel a:hover{border-color:var(--gold);color:var(--ivory)}.chip-row{display:flex;gap:10px;flex-wrap:wrap;padding-top:0;padding-bottom:22px}.chip{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none;font-size:13px}.chip:hover,.chip:focus-visible{border-color:var(--gold);color:var(--ivory)}.loyalty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.loyalty-card,.portal-preview{border:1px solid rgba(196,161,95,.28);background:linear-gradient(180deg,rgba(196,161,95,.09),rgba(255,255,255,.035));border-radius:8px;padding:24px}.loyalty-card span,.portal-preview-head span,.portal-metrics span{display:block;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.loyalty-card strong{display:block;margin:12px 0;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.loyalty-card p{color:var(--warm);font-size:15px}.loyalty-card ul{margin:18px 0 0;padding-left:18px;color:var(--soft)}.loyalty-card li{margin:8px 0}.partner-portal{display:grid;grid-template-columns:1fr .9fr;gap:clamp(24px,5vw,72px);align-items:center}.portal-features{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.portal-features span{border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--warm);font-size:13px}.portal-preview{background:#0f0d0a}.portal-preview-head{display:flex;justify-content:space-between;gap:14px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:16px}.portal-preview-head strong{color:var(--ivory);font-size:18px}.portal-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}.portal-metrics div{border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.035);padding:12px}.portal-metrics strong{display:block;margin-top:6px;color:var(--ivory);font-size:24px}.portal-timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}.portal-timeline li{display:grid;gap:4px;border-left:2px solid var(--gold);padding:4px 0 4px 12px}.portal-timeline b{color:var(--ivory)}.portal-timeline span{color:var(--soft);font-size:14px}.gallery,.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gallery figure,.page-hero figure,.concept-media{margin:0}.gallery img{aspect-ratio:4/3;border-radius:8px}.concept-card{display:block;color:inherit;text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;overflow:hidden}.concept-card img{width:100%;aspect-ratio:4/3;object-fit:cover}.concept-card div{padding:18px}.concept-card span{display:block;color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.concept-card .status-pill,.project-caption .status-pill{display:inline-flex;width:max-content;align-items:center;border:1px solid rgba(196,161,95,.42);border-radius:999px;padding:5px 9px;background:rgba(196,161,95,.08);color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card h3{font-size:24px;margin:8px 0}.concept-card p{font-size:15px;color:var(--warm)}.concept-card .card-cta{width:100%;margin-top:12px}.project-caption{display:grid;gap:6px;padding:12px 14px 14px;background:#100e0b;border-bottom:1px solid var(--line);font-size:13px;color:var(--soft)}.project-caption strong{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.project-caption span{color:var(--warm);font-size:13px;letter-spacing:0;text-transform:none}.project-caption .status-pill{color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card .inspired{color:var(--soft);font-size:13px;border-top:1px solid var(--line);margin-top:14px;padding-top:12px}figcaption{font-size:13px;color:var(--soft);padding-top:10px}.concept-card .project-caption{padding-top:12px}.internal{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.internal h2{width:100%;font-size:34px}.internal a,.internal span{border:1px solid var(--line);padding:11px 14px;text-decoration:none}.faq{max-width:980px}.faq details{border-top:1px solid var(--line);padding:18px 0}.faq summary{cursor:pointer;color:var(--ivory);font-size:19px}.cta{margin:clamp(20px,5vw,72px);background:var(--green);border:1px solid var(--line);border-radius:8px}.planner-hero{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:end;padding-top:clamp(34px,5vw,72px);padding-bottom:24px}.planner-hero h1{font-size:clamp(38px,5vw,72px)}.planner-preset-label{display:inline-flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;border:1px solid rgba(196,161,95,.34);border-radius:999px;padding:8px 12px;background:rgba(196,161,95,.08);color:var(--warm);font-size:13px}.planner-preset-label a{color:var(--gold)}.planner-estimate{border:1px solid var(--line);background:#100e0b;border-radius:8px;padding:22px}.planner-estimate span,.planner-stats span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.planner-estimate strong{display:block;margin-top:8px;color:var(--gold);font-family:Georgia,serif;font-size:32px;font-weight:500}.planner-shell{padding-top:0}.planner-toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}.planner-preset-panel,.planner-service-block{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:14px;align-items:start;border:1px solid rgba(196,161,95,.24);background:rgba(196,161,95,.055);border-radius:8px;padding:16px;margin-bottom:14px}.planner-preset-panel h2,.planner-service-block h2{font-size:24px}.planner-preset-panel h3{font-size:17px;margin-bottom:8px}.planner-preset-panel ul{margin:0;padding-left:18px;color:var(--soft);font-size:14px}.planner-preset-panel li{margin:5px 0}.planner-service-block{grid-template-columns:minmax(0,1fr) auto;align-items:center;margin:clamp(20px,5vw,72px)}.planner-service-block p{max-width:820px}.planner-surface{display:grid;grid-template-columns:minmax(220px,1fr) 220px;gap:14px;align-items:start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px;margin-bottom:14px}.planner-surface h2{font-size:24px}.planner-surface p{margin:8px 0 0}.surface-fields{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.surface-fields fieldset{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center;margin:0;border:1px solid var(--line);border-radius:6px;padding:10px}.surface-fields legend{padding:0 5px;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.surface-fields span{color:var(--soft);font-size:12px}.planner-workspace{display:grid;grid-template-columns:250px minmax(360px,1fr) 300px;gap:14px;align-items:stretch}.planner-palette,.planner-stage,.planner-inspector,.planner-summary,.planner-lead{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px}.planner-palette h2,.planner-inspector h2,.planner-summary h2,.planner-lead h2{font-size:24px;margin-bottom:12px}.planner-module-button{width:100%;display:grid;gap:4px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:8px;cursor:pointer}.planner-module-button span{font-weight:800}.planner-module-button small{color:var(--soft);line-height:1.35}.planner-canvas-wrap{height:560px;min-height:360px;background:#080706;border:1px solid rgba(196,161,95,.24);border-radius:6px;overflow:hidden;cursor:grab}.planner-canvas-wrap:active{cursor:grabbing}.planner-canvas-wrap canvas{display:block;width:100%;height:100%}.planner-stage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.planner-inspector-fields{display:grid;gap:10px}.planner-inspector-fields label{font-size:13px}.planner-inspector-fields small{color:var(--soft);font-size:11px}.planner-check{display:flex;grid-template-columns:auto 1fr;gap:8px;align-items:center}.planner-check input{width:auto;min-height:0}.planner-output{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:14px;margin-top:14px}.planner-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.planner-stats div{border:1px solid var(--line);border-radius:6px;padding:12px;background:#0f0d0a}.planner-stats strong{display:block;margin-top:5px;color:var(--gold);font-family:Georgia,serif;font-size:24px}.planner-summary ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}.planner-summary button{width:100%;display:grid;gap:3px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:10px;cursor:pointer}.planner-summary button.active{border-color:var(--gold)}.planner-summary span{color:var(--soft);font-size:13px}.form-shell{max-width:980px}.lead-form{display:grid;gap:16px}.planner-form{gap:14px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}label{display:grid;gap:7px;color:var(--warm);font-size:14px}input,select,textarea{width:100%;border:1px solid var(--line);background:#0f0d0a;color:var(--ivory);min-height:44px;padding:10px;border-radius:4px}textarea{min-height:130px}.consent{grid-template-columns:auto 1fr;align-items:start}.hp{position:absolute;left:-9999px}.form-status{min-height:24px;color:var(--gold)}:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.site-footer{display:grid;grid-template-columns:1.35fr repeat(9,minmax(112px,1fr));gap:20px;padding:42px clamp(18px,5vw,72px);border-top:1px solid var(--line);background:#100e0b}.site-footer div{display:grid;align-content:start;gap:9px}.site-footer h3{font-size:20px}
+  .trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:20px;color:var(--stone);font-size:13px;letter-spacing:.08em;text-transform:uppercase}.intro,.section-head,.seo-copy{max-width:980px}.seo-copy.wide{max-width:1120px}.intro p,.seo-copy p{font-size:18px}.legal-copy{max-width:1040px;margin:auto}.legal-copy article{border-top:1px solid var(--line);padding:24px 0}.legal-copy h2{font-size:clamp(24px,3vw,34px);margin-bottom:12px}.legal-copy p{max-width:900px;font-size:16px;color:var(--warm)}.stealth-admin-link{color:inherit;text-decoration:none;cursor:inherit}.stealth-admin-link:visited,.stealth-admin-link:hover,.stealth-admin-link:focus{color:inherit;text-decoration:none}.seo-hero{display:grid;grid-template-columns:1fr .9fr;gap:clamp(28px,5vw,72px);align-items:center;min-height:72vh}.seo-hero figure{margin:0}.seo-hero img{min-height:460px;border-radius:8px}.seo-direct{max-width:1040px}.seo-direct h2{font-size:clamp(28px,4vw,48px)}.seo-sections{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding-top:0}.seo-sections article,.seo-related div{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:24px}.seo-sections h2{font-size:28px}.seo-related{display:grid;grid-template-columns:1fr;gap:16px}.seo-related div{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.seo-related h2{width:100%;font-size:34px}.seo-related a{border:1px solid var(--line);padding:11px 14px;text-decoration:none;color:var(--warm)}.cards,.answer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.card,.panel,.lead-card,.answer-grid article,.why article,.process article,.programmatic-meta div,.contact-details article{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:24px;border-radius:8px}.contact-details{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.contact-details span{display:block;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.contact-details a{display:block;margin-top:8px;color:var(--ivory);font-size:20px;text-decoration:none}.social-handle{display:inline-flex;align-items:center;color:var(--gold);font-weight:800}.programmatic-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:24px;padding-bottom:24px}.programmatic-meta span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.programmatic-meta strong{display:block;margin-top:6px;font-family:Georgia,serif;font-size:22px;font-weight:500}.card{text-decoration:none;min-height:260px;transition:transform .2s,border-color .2s}.answer-grid article{min-height:0}.answer-grid h3{font-size:22px;margin-bottom:8px}.answer-grid p{font-size:15px;color:var(--warm)}.card:hover,.lead-card:hover{transform:translateY(-3px);border-color:rgba(196,161,95,.8)}.card span,.process span{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.split-band,.page-hero,.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center}.split-band img,.page-hero img{min-height:420px;border-radius:8px}.reverse{grid-template-columns:.9fr 1.1fr}.why{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}.why-grid,.process>div{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.lead-paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}.lead-card{text-decoration:none}.region-city-panel div{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.region-city-panel a{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none}.region-city-panel a:hover{border-color:var(--gold);color:var(--ivory)}.chip-row{display:flex;gap:10px;flex-wrap:wrap;padding-top:0;padding-bottom:22px}.chip{border:1px solid var(--line);border-radius:999px;color:var(--warm);padding:9px 12px;text-decoration:none;font-size:13px}.chip:hover,.chip:focus-visible{border-color:var(--gold);color:var(--ivory)}.loyalty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.loyalty-card,.portal-preview{border:1px solid rgba(196,161,95,.28);background:linear-gradient(180deg,rgba(196,161,95,.09),rgba(255,255,255,.035));border-radius:8px;padding:24px}.loyalty-card span,.portal-preview-head span,.portal-metrics span{display:block;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.loyalty-card strong{display:block;margin:12px 0;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.loyalty-card p{color:var(--warm);font-size:15px}.loyalty-card ul{margin:18px 0 0;padding-left:18px;color:var(--soft)}.loyalty-card li{margin:8px 0}.partner-portal{display:grid;grid-template-columns:1fr .9fr;gap:clamp(24px,5vw,72px);align-items:center}.portal-features{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.portal-features span{border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--warm);font-size:13px}.portal-preview{background:#0f0d0a}.portal-preview-head{display:flex;justify-content:space-between;gap:14px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:16px}.portal-preview-head strong{color:var(--ivory);font-size:18px}.portal-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}.portal-metrics div{border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.035);padding:12px}.portal-metrics strong{display:block;margin-top:6px;color:var(--ivory);font-size:24px}.portal-timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}.portal-timeline li{display:grid;gap:4px;border-left:2px solid var(--gold);padding:4px 0 4px 12px}.portal-timeline b{color:var(--ivory)}.portal-timeline span{color:var(--soft);font-size:14px}.gallery,.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gallery figure,.page-hero figure,.concept-media{margin:0}.gallery img{aspect-ratio:4/3;border-radius:8px}.concept-card{display:block;color:inherit;text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;overflow:hidden}.concept-card img{width:100%;aspect-ratio:4/3;object-fit:cover}.concept-card div{padding:18px}.concept-card span{display:block;color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.concept-card .status-pill,.project-caption .status-pill{display:inline-flex;width:max-content;align-items:center;border:1px solid rgba(196,161,95,.42);border-radius:999px;padding:5px 9px;background:rgba(196,161,95,.08);color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card h3{font-size:24px;margin:8px 0}.concept-card p{font-size:15px;color:var(--warm)}.concept-card .card-cta{width:100%;margin-top:12px}.project-caption{display:grid;gap:6px;padding:12px 14px 14px;background:#100e0b;border-bottom:1px solid var(--line);font-size:13px;color:var(--soft)}.project-caption strong{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.project-caption span{color:var(--warm);font-size:13px;letter-spacing:0;text-transform:none}.project-caption .status-pill{color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}.concept-card .inspired{color:var(--soft);font-size:13px;border-top:1px solid var(--line);margin-top:14px;padding-top:12px}figcaption{font-size:13px;color:var(--soft);padding-top:10px}.concept-card .project-caption{padding-top:12px}.internal{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.internal h2{width:100%;font-size:34px}.internal a,.internal span{border:1px solid var(--line);padding:11px 14px;text-decoration:none}.faq{max-width:980px}.faq details{border-top:1px solid var(--line);padding:18px 0}.faq summary{cursor:pointer;color:var(--ivory);font-size:19px}.cta{margin:clamp(20px,5vw,72px);background:var(--green);border:1px solid var(--line);border-radius:8px}.planner-hero{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:end;padding-top:clamp(34px,5vw,72px);padding-bottom:24px}.planner-hero h1{font-size:clamp(38px,5vw,72px)}.planner-preset-label{display:inline-flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;border:1px solid rgba(196,161,95,.34);border-radius:999px;padding:8px 12px;background:rgba(196,161,95,.08);color:var(--warm);font-size:13px}.planner-preset-label a{color:var(--gold)}.planner-estimate{border:1px solid var(--line);background:#100e0b;border-radius:8px;padding:22px}.planner-estimate span,.planner-stats span{display:block;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.planner-estimate strong{display:block;margin-top:8px;color:var(--gold);font-family:Georgia,serif;font-size:32px;font-weight:500}.planner-shell{padding-top:0}.planner-toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}.planner-preset-panel,.planner-service-block{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:14px;align-items:start;border:1px solid rgba(196,161,95,.24);background:rgba(196,161,95,.055);border-radius:8px;padding:16px;margin-bottom:14px}.planner-preset-panel h2,.planner-service-block h2{font-size:24px}.planner-preset-panel h3{font-size:17px;margin-bottom:8px}.planner-preset-panel ul{margin:0;padding-left:18px;color:var(--soft);font-size:14px}.planner-preset-panel li{margin:5px 0}.planner-service-block{grid-template-columns:minmax(0,1fr) auto;align-items:center;margin:clamp(20px,5vw,72px)}.planner-service-block p{max-width:820px}.planner-surface{display:grid;grid-template-columns:minmax(220px,1fr) 220px;gap:14px;align-items:start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px;margin-bottom:14px}.planner-surface h2{font-size:24px}.planner-surface p{margin:8px 0 0}.surface-fields{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.surface-fields fieldset{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center;margin:0;border:1px solid var(--line);border-radius:6px;padding:10px}.surface-fields legend{padding:0 5px;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.surface-fields span{color:var(--soft);font-size:12px}.planner-workspace{display:grid;grid-template-columns:250px minmax(360px,1fr) 300px;gap:14px;align-items:stretch}.planner-palette,.planner-stage,.planner-inspector,.planner-summary,.planner-lead{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:8px;padding:16px}.planner-palette h2,.planner-inspector h2,.planner-summary h2,.planner-lead h2{font-size:24px;margin-bottom:12px}.planner-module-button{width:100%;display:grid;gap:4px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:8px;cursor:pointer}.planner-module-button span{font-weight:800}.planner-module-button small{color:var(--soft);line-height:1.35}.planner-canvas-wrap{height:560px;min-height:360px;background:#080706;border:1px solid rgba(196,161,95,.24);border-radius:6px;overflow:hidden;cursor:grab}.planner-canvas-wrap:active{cursor:grabbing}.planner-canvas-wrap canvas{display:block;width:100%;height:100%}.planner-stage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.planner-inspector-fields{display:grid;gap:10px}.planner-inspector-fields label{font-size:13px}.planner-inspector-fields small{color:var(--soft);font-size:11px}.planner-check{display:flex;grid-template-columns:auto 1fr;gap:8px;align-items:center}.planner-check input{width:auto;min-height:0}.planner-output{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:14px;margin-top:14px}.planner-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.planner-stats div{border:1px solid var(--line);border-radius:6px;padding:12px;background:#0f0d0a}.planner-stats strong{display:block;margin-top:5px;color:var(--gold);font-family:Georgia,serif;font-size:24px}.planner-summary ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}.planner-summary button{width:100%;display:grid;gap:3px;text-align:left;background:#0f0d0a;color:var(--ivory);border:1px solid var(--line);border-radius:6px;padding:10px;cursor:pointer}.planner-summary button.active{border-color:var(--gold)}.planner-summary span{color:var(--soft);font-size:13px}.form-shell{max-width:980px}.lead-form{display:grid;gap:16px}.planner-form{gap:14px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}label{display:grid;gap:7px;color:var(--warm);font-size:14px}input,select,textarea{width:100%;border:1px solid var(--line);background:#0f0d0a;color:var(--ivory);min-height:44px;padding:10px;border-radius:4px}textarea{min-height:130px}.consent{grid-template-columns:auto 1fr;align-items:start}.hp{position:absolute;left:-9999px}.form-status{min-height:24px;color:var(--gold)}:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.site-footer{display:grid;grid-template-columns:1.35fr repeat(6,minmax(132px,1fr));gap:20px;padding:42px clamp(18px,5vw,72px);border-top:1px solid var(--line);background:#100e0b}.site-footer div{display:grid;align-content:start;gap:9px}.site-footer h3{font-size:20px}
 	  .planner-paths{display:grid;grid-template-columns:1.08fr .92fr;gap:16px;padding-top:0;padding-bottom:24px}.planner-path-card{display:grid;align-content:start;gap:12px;border:1px solid var(--line);border-radius:8px;padding:24px;background:#100e0b}.planner-path-card.quick{border-color:rgba(196,161,95,.5);background:linear-gradient(180deg,rgba(196,161,95,.12),rgba(255,255,255,.035))}.planner-path-card h2{font-size:30px}.planner-path-card p{margin:0}.planner-path-card .button{justify-self:start;margin-top:8px}.quick-estimate{position:relative;padding-top:28px}.quick-estimate-head{max-width:860px;margin-bottom:18px}.quick-estimate-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}.quick-estimate-form,.quick-summary{border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.035);padding:18px}.quick-progress{display:grid;gap:8px}.quick-progress span{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.quick-progress div{height:7px;border-radius:999px;background:#0f0d0a;overflow:hidden}.quick-progress i{display:block;width:16.6%;height:100%;background:var(--gold)}.quick-step{display:grid;gap:14px;margin:0;border:0;padding:0}.quick-step legend{margin-bottom:10px;color:var(--ivory);font-family:Georgia,serif;font-size:26px}.quick-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.quick-choice-grid.compact{grid-template-columns:repeat(4,minmax(0,1fr))}.quick-choice{position:relative;min-height:78px;border:1px solid var(--line);border-radius:8px;background:#0f0d0a;padding:12px;cursor:pointer}.quick-choice input{position:absolute;inset:0;opacity:0;cursor:pointer}.quick-choice span{position:relative;z-index:1;color:var(--ivory);font-weight:800;line-height:1.25}.quick-choice:has(input:checked){border-color:var(--gold);background:rgba(196,161,95,.13)}.quick-segment{display:flex;gap:8px;flex-wrap:wrap}.quick-segment button{min-height:40px;border:1px solid var(--line);border-radius:6px;background:#0f0d0a;color:var(--warm);padding:8px 12px;cursor:pointer}.quick-segment button.active{border-color:var(--gold);color:var(--black);background:var(--gold)}.quick-result-card{border:1px solid rgba(196,161,95,.36);border-radius:8px;background:#100e0b;padding:16px}.quick-result-card span,.quick-summary>span{display:block;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.quick-result-card strong,.quick-summary strong{display:block;margin-top:6px;color:var(--gold);font-family:Georgia,serif;font-size:32px;font-weight:500}.quick-included h3{font-size:20px}.quick-included ul{margin:8px 0 0;padding-left:18px;color:var(--warm)}.quick-nav,.quick-final-actions{display:flex;gap:10px;flex-wrap:wrap}.quick-summary{position:sticky;top:92px}.quick-summary dl{display:grid;gap:10px;margin:18px 0}.quick-summary dl div{border-top:1px solid var(--line);padding-top:10px}.quick-summary dt{color:var(--soft);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.quick-summary dd{margin:3px 0 0;color:var(--ivory);font-weight:800}.quick-mobile-summary{display:none}.technical-planner-anchor{padding-top:26px;padding-bottom:18px}.quick-seo-hero h1{font-size:clamp(38px,5vw,70px)}
 	  .collection-card-link{display:block;color:inherit;text-decoration:none}
 		  .concept-card .chip{display:inline-flex;width:max-content;margin-top:4px}
 		  .design-concept-hero h1{font-size:clamp(40px,5.6vw,78px)}.design-concept-positioning{padding-bottom:24px}.concept-keywords{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.concept-keywords span{border:1px solid rgba(196,161,95,.32);border-radius:999px;padding:8px 11px;color:var(--stone);font-size:12px}.package-grid,.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.package-card,.pricing-grid article,.form-step{border:1px solid rgba(196,161,95,.24);background:linear-gradient(180deg,rgba(196,161,95,.08),rgba(255,255,255,.035));border-radius:8px;padding:24px}.package-card{display:grid;gap:14px;align-content:start;min-height:520px}.package-card>span,.pricing-grid span,.form-step>span{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.package-card strong{display:block;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.package-card p{margin:0}.package-card dl{display:grid;gap:10px;margin:0}.package-card dt{color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.package-card dd{margin:0;color:var(--warm);font-size:14px}.package-card .button{margin-top:auto}.pricing-grid article{min-height:170px}.pricing-grid h3{margin:10px 0 6px;font-size:24px}.pricing-grid p{margin:0;color:var(--soft)}.design-concept-form-shell{max-width:1120px}.design-concept-form .form-step{display:grid;gap:14px;background:rgba(255,255,255,.035)}.design-concept-form .form-step h3{font-size:26px}.selection-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:center;border:1px solid rgba(196,161,95,.24);background:#0f0d0a;border-radius:8px;padding:14px}.selection-summary div{display:grid;gap:4px}.selection-summary span{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.selection-summary strong{font-family:Georgia,serif;font-size:26px;font-weight:500}.selection-summary .button{grid-column:auto}.selection-summary p{grid-column:1/-1}.form-hint{margin:0;color:var(--soft);font-size:14px}.design-concept-bridge .actions,.cta .actions{margin-top:18px}
 	  .measurement-choice{grid-template-columns:auto 1fr;align-items:start}.measurement-choice input{width:auto;min-height:0;margin-top:2px}.design-concept-form .consent input{width:auto;min-height:0;margin-top:2px}
 	  @media(max-width:920px){.planner-paths,.quick-estimate-grid{grid-template-columns:1fr}.quick-summary{position:static}.quick-choice-grid,.quick-choice-grid.compact{grid-template-columns:repeat(2,minmax(0,1fr))}.quick-mobile-summary{position:sticky;bottom:0;z-index:12;display:flex;justify-content:space-between;gap:12px;margin:0 -18px -42px;padding:12px 18px;border-top:1px solid var(--line);background:rgba(15,13,10,.96);backdrop-filter:blur(12px)}.quick-mobile-summary b{color:var(--ivory)}.quick-mobile-summary span{color:var(--gold);font-weight:800}}@media(max-width:560px){.quick-choice-grid,.quick-choice-grid.compact{grid-template-columns:1fr}.quick-result-card strong,.quick-summary strong{font-size:26px}.quick-nav .button,.quick-final-actions .button{width:100%}}
-  @media(max-width:1050px){.site-header{grid-template-columns:auto auto 1fr}.menu-button{display:inline-flex;justify-self:end;background:transparent;color:var(--ivory);border:1px solid var(--line);padding:10px}nav{display:none;grid-column:1/-1;justify-content:start;flex-direction:column}.open{display:flex}.header-cta{display:none}}
+  @media(max-width:1050px){.site-header{grid-template-columns:auto auto 1fr}.menu-button{display:inline-flex;justify-self:end;background:transparent;color:var(--ivory);border:1px solid var(--line);padding:10px}nav{display:none;grid-column:1/-1;justify-content:start;flex-direction:column}.open{display:flex}.header-contact,.header-social,.header-cta{display:none}}
   @media(max-width:1200px){.site-footer{grid-template-columns:repeat(3,1fr)}}
   .planner-toolbar{grid-template-columns:repeat(4,1fr)}.planner-stage{margin-bottom:14px}.planner-workspace{grid-template-columns:minmax(0,1fr) 320px}.planner-palette{display:grid;grid-template-columns:1fr;gap:14px}.planner-palette>h2{margin-bottom:0}.planner-module-group{border:1px solid var(--line);border-radius:8px;background:#0f0d0a;padding:12px}.planner-module-group h3{font-size:20px;margin-bottom:10px}.planner-module-group .planner-module-button{background:#15120e}.planner-wall-picker{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.planner-wall-picker .button{min-height:38px}.planner-wall-picker .active{border-color:#b8f2c4;color:#07120b;background:#b8f2c4}.planner-canvas-wrap{position:relative;overscroll-behavior:contain}.planner-canvas-wrap canvas{touch-action:pan-y}.planner-nudge{position:absolute;left:14px;bottom:14px;z-index:3;display:grid;grid-template-columns:repeat(3,42px);grid-template-areas:". up ." "left . right" ". down .";gap:6px;padding:10px;border:1px solid var(--line);border-radius:8px;background:rgba(15,13,10,.82);backdrop-filter:blur(10px)}.planner-nudge[hidden]{display:none}.planner-nudge button,.planner-zoom button{min-width:42px;min-height:42px;padding-inline:0;font-size:18px}.planner-nudge [data-planner-nudge-dir="up"]{grid-area:up}.planner-nudge [data-planner-nudge-dir="left"]{grid-area:left}.planner-nudge [data-planner-nudge-dir="right"]{grid-area:right}.planner-nudge [data-planner-nudge-dir="down"]{grid-area:down}.planner-zoom{position:absolute;right:14px;top:14px;z-index:3;display:grid;gap:6px;padding:8px;border:1px solid var(--line);border-radius:8px;background:rgba(15,13,10,.82);backdrop-filter:blur(10px)}.surface-fields label{border:1px solid var(--line);border-radius:6px;background:#0f0d0a;padding:10px}.surface-fields small{color:var(--soft);font-size:11px}
   @media(max-width:1050px){.hero{grid-template-columns:1fr}.hero-media{height:clamp(280px,48vw,420px)}.hero-copy{padding:clamp(28px,5vw,48px)}.package-grid,.pricing-grid{grid-template-columns:1fr 1fr}}@media(max-width:820px){.split-band,.page-hero,.seo-hero,.two-col,.why,.lead-paths,.site-footer,.planner-hero,.planner-toolbar,.planner-surface,.planner-workspace,.planner-output,.planner-preset-panel,.planner-service-block,.partner-portal{grid-template-columns:1fr}.cards,.answer-grid,.gallery,.concept-grid,.why-grid,.process>div,.form-grid,.programmatic-meta,.seo-sections,.planner-stats,.surface-fields,.loyalty-grid,.package-grid,.pricing-grid{grid-template-columns:1fr}.planner-canvas-wrap{height:390px}.hero{margin:18px}.hero-media{height:clamp(280px,68vw,390px)}.hero-copy{padding:30px 24px}.hero-video video,.hero-video img{min-height:0}.reverse{grid-template-columns:1fr}.cta,.planner-service-block{margin-inline:18px}.portal-metrics{grid-template-columns:1fr 1fr}.package-card{min-height:0}section{padding-inline:18px}}
