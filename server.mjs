@@ -5296,7 +5296,7 @@ function contactPage(route) {
 function contactDetailsBlock(route) {
   return `<section class="contact-details" aria-label="CAS AURUM contact details">
     <article><span>${escapeHtml(localized("Phone", route.lang))}</span><a class="track" data-event="phone_clicked" href="${SITE_CONTACT.phoneHref}">${escapeHtml(SITE_CONTACT.phoneDisplay)}</a></article>
-    <article><span>Email</span><a class="track" data-event="email_clicked" href="${SITE_CONTACT.emailHref}" data-cfemail="false">${escapeHtml(SITE_CONTACT.emailDisplay)}</a></article>
+    <article><span>Email</span><!--email_off--><a class="track" data-event="email_clicked" href="${SITE_CONTACT.emailHref}">${escapeHtml(SITE_CONTACT.emailDisplay)}</a><!--/email_off--></article>
     <article><span>Instagram</span><a class="track" data-event="instagram_clicked" href="${SITE_CONTACT.instagramUrl}" target="_blank" rel="noopener">${escapeHtml(SITE_CONTACT.instagramHandle)}</a></article>
   </section>`;
 }
@@ -7988,7 +7988,7 @@ function topContactBar() {
     <span class="top-contact-message">Custom interiors &amp; feature walls across the U.S.</span>
     <div class="top-contact-links">
       <a class="top-contact-link top-contact-phone track" data-event="phone_clicked" href="${SITE_CONTACT.phoneHref}">${escapeHtml(SITE_CONTACT.phoneDisplay)}</a>
-      <a class="top-contact-link track" data-event="email_clicked" href="${SITE_CONTACT.emailHref}" data-cfemail="false">${escapeHtml(SITE_CONTACT.emailDisplay)}</a>
+      <!--email_off--><a class="top-contact-link track" data-event="email_clicked" href="${SITE_CONTACT.emailHref}">${escapeHtml(SITE_CONTACT.emailDisplay)}</a><!--/email_off-->
       <a class="top-contact-link track" data-event="instagram_clicked" href="${SITE_CONTACT.instagramUrl}" target="_blank" rel="noopener">${escapeHtml(SITE_CONTACT.instagramHandle)}</a>
     </div>
   </aside>`;
@@ -8067,8 +8067,8 @@ function footerLink(item) {
   const classes = item.event ? ` class="track"` : "";
   const event = item.event ? ` data-event="${escapeHtml(item.event)}"` : "";
   const external = item.external ? ` target="_blank" rel="noopener"` : "";
-  const cfEmail = String(item.href || "").startsWith("mailto:") ? ` data-cfemail="false"` : "";
-  return `<a${classes}${event} href="${escapeHtml(item.href)}"${external}${cfEmail}>${escapeHtml(item.label)}</a>`;
+  const link = `<a${classes}${event} href="${escapeHtml(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
+  return String(item.href || "").startsWith("mailto:") ? `<!--email_off-->${link}<!--/email_off-->` : link;
 }
 
 function seoHeaderLinks(lang) {
