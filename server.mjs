@@ -76,6 +76,7 @@ const DEFAULT_CONTACT_EMAIL = "teodorleo622@gmail.com";
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 const TELEGRAM_CRM_APP_URL = (process.env.TELEGRAM_CRM_APP_URL || `${BASE_URL}/crm-app`).replace(/\/$/, "");
+const CRM_INTERNAL_API_BASE_URL = (process.env.CRM_INTERNAL_API_BASE_URL || "https://crm-staging.casaurum.com").replace(/\/$/, "");
 const PUBLIC_DIR = "/var/www/casaurum.com/public";
 const COMPLETED_PROJECT_MANIFEST_PATH = "/var/www/casaurum.com/data/casaurum-premium-gallery-seo-manifest.json";
 const SEO_PERFORMANCE_CACHE_PATH = "/var/www/casaurum.com/data/seo-performance-cache.json";
@@ -8456,7 +8457,7 @@ function crmMiniAppPage() {
   <style>
     :root{--bg:#11100d;--panel:#191611;--soft:#e8dccb;--muted:#a89a87;--line:rgba(232,220,203,.16);--gold:#c4a15f;--bad:#d86b62;--ok:#7eb68a;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color-scheme:dark}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--soft);font-size:15px}.app{min-height:100vh;padding:14px;display:grid;gap:12px}.top{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,var(--bg),rgba(17,16,13,.9));padding-bottom:8px}.brand{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.brand h1{font-family:Georgia,serif;font-size:25px;font-weight:500;margin:0}.brand span{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.filters{display:grid;grid-template-columns:1fr auto;gap:8px}.filters input,.filters select,.note input,.note select,.note textarea,.reminder input{min-height:42px;border:1px solid var(--line);border-radius:8px;background:#0c0b09;color:var(--soft);padding:10px}.tabs{display:flex;gap:7px;overflow:auto;padding-top:8px}.tab,.btn{border:1px solid var(--line);background:var(--panel);color:var(--soft);border-radius:8px;padding:10px 12px;font-weight:700}.tab.active,.btn.primary{background:var(--gold);border-color:var(--gold);color:#090807}.grid{display:grid;gap:10px}.lead{display:grid;gap:7px;text-align:left;border:1px solid var(--line);background:var(--panel);color:var(--soft);border-radius:10px;padding:13px}.lead strong{font-size:17px}.meta{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:12px}.pill{border:1px solid var(--line);border-radius:999px;padding:3px 8px}.pill.hot{border-color:var(--gold);color:var(--gold)}.detail{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px;display:none}.detail.open{display:grid;gap:12px}.detail h2{font-family:Georgia,serif;font-weight:500;margin:0;font-size:24px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.actions .wide{grid-column:1/-1}.btn.bad{border-color:rgba(216,107,98,.8);color:#ffd6d2}.btn.ok{border-color:rgba(126,182,138,.8);color:#d8ffe0}.kv{display:grid;grid-template-columns:110px 1fr;gap:7px;border-top:1px solid var(--line);padding-top:10px}.kv span{color:var(--muted)}.message,.history{white-space:pre-wrap;color:var(--soft);background:#0c0b09;border:1px solid var(--line);border-radius:8px;padding:10px}.history{display:grid;gap:8px}.note,.reminder{display:grid;gap:8px}.status{min-height:22px;color:var(--gold)}.empty{color:var(--muted);text-align:center;padding:28px 12px}@media(min-width:780px){.app{grid-template-columns:390px 1fr;align-items:start}.top{grid-column:1/-1}.grid{max-height:calc(100vh - 150px);overflow:auto}.detail{position:sticky;top:112px}}
-    .main-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:10px}.main-tab.active{background:var(--gold);border-color:var(--gold);color:#090807}.ops-view{display:none;gap:12px}.ops-view.active{display:grid}.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi,.ops-row{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:13px}.kpi span,.ops-row span{display:block;color:var(--muted);font-size:12px}.kpi strong{display:block;margin-top:6px;color:var(--gold);font-family:Georgia,serif;font-size:28px;font-weight:500}.ops-list{display:grid;gap:9px}.ops-view h2{font-family:Georgia,serif;font-weight:500;margin:0;font-size:24px}.ok-dot{color:var(--ok)}.bad-dot{color:var(--bad)}.login{min-height:100vh;display:none;align-items:center;justify-content:center;padding:22px}.login.open{display:flex}.login-card{width:min(420px,100%);border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:22px;display:grid;gap:12px}.login-card h1{font-family:Georgia,serif;font-size:30px;font-weight:500;margin:0}.login-card input,.login-card select{min-height:44px;border:1px solid var(--line);border-radius:8px;background:#0c0b09;color:var(--soft);padding:10px}.app.locked{display:none}@media(min-width:780px){.kpi-grid{grid-template-columns:repeat(4,1fr)}}
+    .main-tabs{display:flex;gap:7px;margin-bottom:10px;overflow:auto}.main-tab{white-space:nowrap}.main-tab.active{background:var(--gold);border-color:var(--gold);color:#090807}.ops-view{display:none;gap:12px}.ops-view.active{display:grid}.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi,.ops-row{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:13px}.kpi span,.ops-row span{display:block;color:var(--muted);font-size:12px}.kpi strong{display:block;margin-top:6px;color:var(--gold);font-family:Georgia,serif;font-size:28px;font-weight:500}.ops-list{display:grid;gap:9px}.ops-view h2{font-family:Georgia,serif;font-weight:500;margin:0;font-size:24px}.comm-layout{display:grid;gap:12px}.comm-detail{display:grid;gap:10px}.thread{display:grid;gap:8px}.sms-msg{max-width:88%;border:1px solid var(--line);border-radius:10px;padding:10px;background:#0c0b09}.sms-msg.outbound{margin-left:auto;border-color:rgba(196,161,95,.55)}.sms-msg span{display:block;margin-top:5px;color:var(--muted);font-size:11px}.preview{color:var(--muted);line-height:1.35}.danger{border-color:rgba(216,107,98,.75);color:#ffd6d2}.ok-dot{color:var(--ok)}.bad-dot{color:var(--bad)}.login{min-height:100vh;display:none;align-items:center;justify-content:center;padding:22px}.login.open{display:flex}.login-card{width:min(420px,100%);border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:22px;display:grid;gap:12px}.login-card h1{font-family:Georgia,serif;font-size:30px;font-weight:500;margin:0}.login-card input,.login-card select{min-height:44px;border:1px solid var(--line);border-radius:8px;background:#0c0b09;color:var(--soft);padding:10px}.app.locked{display:none}@media(min-width:780px){.ops-view.active{grid-column:1/-1}.kpi-grid{grid-template-columns:repeat(4,1fr)}.comm-layout{grid-template-columns:390px 1fr;align-items:start}.comm-detail{position:sticky;top:112px}}
   </style>
 </head>
 <body>
@@ -8473,12 +8474,14 @@ function crmMiniAppPage() {
   <main class="app">
     <section class="top">
       <div class="brand"><div><span>CAS AURUM</span><h1>CRM Mini App</h1></div><div class="actions"><button class="btn" id="refreshBtn">Обновить</button><button class="btn" id="logoutBtn">Выйти</button></div></div>
-      <div class="main-tabs"><button class="tab main-tab active" data-view="crm">CRM</button><button class="tab main-tab" data-view="partners">Partners</button><button class="tab main-tab" data-view="kpi">KPI</button><button class="tab main-tab" data-view="access">Access</button><button class="tab main-tab" data-view="ops">Status</button></div>
+      <div class="main-tabs"><button class="tab main-tab active" data-view="crm">Leads</button><button class="tab main-tab" data-view="sms">SMS</button><button class="tab main-tab" data-view="calls">Calls</button><button class="tab main-tab" data-view="kpi">Stats</button><button class="tab main-tab" data-view="partners">Partners</button><button class="tab main-tab" data-view="access">Access</button><button class="tab main-tab" data-view="ops">Status</button></div>
       <div class="filters"><input id="searchInput" placeholder="Поиск: имя, телефон, email, ZIP"><select id="statusSelect"><option value="active">Активные</option><option value="new">Новые</option><option value="notified">Уведомлены</option><option value="contacted">Связался</option><option value="crm_created">CRM</option><option value="not_fit">Не подходит</option><option value="all">Все</option></select></div>
       <div class="tabs"><button class="tab active" data-status="active">Активные</button><button class="tab" data-status="new">Новые</button><button class="tab" data-status="contacted">Связался</button><button class="tab" data-status="not_fit">Не подходит</button><button class="tab" data-status="all">Все</button></div>
     </section>
     <section class="grid" id="leadList"><div class="empty">Загрузка CRM...</div></section>
     <section class="detail" id="leadDetail"><div class="empty">Выбери заявку слева</div></section>
+    <section class="ops-view" id="smsView"><div class="empty">Загрузка SMS...</div></section>
+    <section class="ops-view" id="callsView"><div class="empty">Загрузка звонков...</div></section>
     <section class="ops-view" id="partnersView"><div class="empty">Загрузка партнеров...</div></section>
     <section class="ops-view" id="kpiView"><div class="empty">Загрузка KPI...</div></section>
     <section class="ops-view" id="accessView"><div class="empty">Загрузка доступов...</div></section>
@@ -8489,8 +8492,8 @@ function crmMiniAppPage() {
     tg?.ready();
     tg?.expand();
     const initData = tg?.initData || "";
-    const state = { leads: [], partners: [], selectedId: "", status: "active", search: "", view: "crm", partnerStatus: "all", user: null };
-    const els = { login: document.getElementById("loginView"), loginForm: document.getElementById("loginForm"), loginStatus: document.getElementById("loginStatus"), app: document.querySelector(".app"), list: document.getElementById("leadList"), detail: document.getElementById("leadDetail"), search: document.getElementById("searchInput"), status: document.getElementById("statusSelect"), refresh: document.getElementById("refreshBtn"), logout: document.getElementById("logoutBtn"), filters: document.querySelector(".filters"), crmTabs: document.querySelector(".tabs"), partners: document.getElementById("partnersView"), kpi: document.getElementById("kpiView"), access: document.getElementById("accessView"), ops: document.getElementById("opsView") };
+    const state = { leads: [], partners: [], sms: [], calls: [], selectedId: "", selectedContactId: "", status: "active", search: "", view: "crm", partnerStatus: "all", user: null };
+    const els = { login: document.getElementById("loginView"), loginForm: document.getElementById("loginForm"), loginStatus: document.getElementById("loginStatus"), app: document.querySelector(".app"), list: document.getElementById("leadList"), detail: document.getElementById("leadDetail"), search: document.getElementById("searchInput"), status: document.getElementById("statusSelect"), refresh: document.getElementById("refreshBtn"), logout: document.getElementById("logoutBtn"), filters: document.querySelector(".filters"), crmTabs: document.querySelector(".tabs"), sms: document.getElementById("smsView"), calls: document.getElementById("callsView"), partners: document.getElementById("partnersView"), kpi: document.getElementById("kpiView"), access: document.getElementById("accessView"), ops: document.getElementById("opsView") };
     const api = (path, options = {}) => fetch(path, { ...options, credentials: "same-origin", headers: { "content-type": "application/json", "x-telegram-init-data": initData, ...(options.headers || {}) } }).then(async (r) => { const data = await r.json().catch(() => ({})); if (!r.ok || data.ok === false) throw new Error(data.message || "Request failed"); return data; });
     const esc = (v) => String(v ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
     const fmt = (v) => v ? new Date(v).toLocaleString() : "-";
@@ -8535,6 +8538,100 @@ function crmMiniAppPage() {
         renderList();
         if (state.selectedId) loadDetail(state.selectedId).catch(() => {});
       } catch (error) { if (!initData) return showLogin(error.message); els.list.innerHTML = '<div class="empty">Нет доступа. Открой CRM внутри Telegram через бота.</div>'; }
+    }
+    function rowsFrom(data, keys){
+      if (Array.isArray(data)) return data;
+      for (const key of keys) if (Array.isArray(data?.[key])) return data[key];
+      if (Array.isArray(data?.data)) return data.data;
+      if (Array.isArray(data?.items)) return data.items;
+      if (Array.isArray(data?.rows)) return data.rows;
+      if (Array.isArray(data?.results)) return data.results;
+      return [];
+    }
+    function contactOf(row){ return row.contact || row.client || {}; }
+    function contactIdOf(row){ return row.contactId || row.contact_id || contactOf(row).id || row.clientId || row.client_id || ""; }
+    function contactName(row){
+      const contact = contactOf(row);
+      return row.contactName || row.name || contact.name || contact.fullName || row.phone || contact.phone || "Unknown contact";
+    }
+    function companyOf(row){ const contact = contactOf(row); return row.company || contact.company || contact.companyName || ""; }
+    function phoneOf(row){ const contact = contactOf(row); return row.phone || row.to || row.from || contact.phone || contact.mobile || ""; }
+    function dateOf(row){ return row.lastMessageAt || row.createdAt || row.sentAt || row.receivedAt || row.startedAt || row.timestamp || row.date || ""; }
+    function previewOf(row){ return row.preview || row.lastMessagePreview || row.lastMessage || row.body || row.message || row.text || row.content || ""; }
+    function blockedSms(row, thread = {}) {
+      const contact = thread.contact || contactOf(row);
+      return Boolean(row.smsOptOut || row.doNotContact || contact.smsOptOut || contact.doNotContact || thread.smsOptOut || thread.doNotContact);
+    }
+    async function loadSms(){
+      els.sms.innerHTML = '<div class="empty">Loading SMS...</div>';
+      try {
+        const data = await api('/api/crm-app/sms?limit=80');
+        state.sms = rowsFrom(data, ["sms", "messages", "records", "communications"]);
+        renderSms();
+      } catch (error) { els.sms.innerHTML = '<div class="empty">'+esc(error.message)+'</div>'; }
+    }
+    function renderSms(){
+      const list = state.sms.length ? state.sms.map((row, index) => {
+        const id = contactIdOf(row);
+        const blocked = blockedSms(row);
+        return '<button class="lead" data-sms-index="'+index+'" '+(id ? 'data-contact-id="'+esc(id)+'"' : '')+'><strong>'+esc(contactName(row))+'</strong><div class="meta"><span class="pill">'+esc(row.direction || "-")+'</span><span class="pill '+(blocked ? "danger" : "")+'">'+esc(blocked ? "opt-out" : (row.status || "open"))+'</span><span class="pill">'+esc(fmt(dateOf(row)))+'</span></div>'+(companyOf(row) ? '<div>'+esc(companyOf(row))+'</div>' : '')+'<div class="preview">'+esc(previewOf(row) || phoneOf(row) || "No preview")+'</div></button>';
+      }).join("") : '<div class="empty">No recent SMS found.</div>';
+      els.sms.innerHTML = '<h2>SMS</h2><div class="comm-layout"><div class="ops-list" id="smsList">'+list+'</div><div class="comm-detail" id="smsThread"><div class="empty">Select a conversation</div></div></div>';
+      [...els.sms.querySelectorAll("[data-sms-index]")].forEach((button) => button.addEventListener("click", () => loadSmsThread(button.dataset.contactId, Number(button.dataset.smsIndex))));
+    }
+    async function loadSmsThread(contactId, index = 0){
+      const target = document.getElementById("smsThread");
+      const row = state.sms[index] || {};
+      if (!contactId) { target.innerHTML = '<div class="empty">This SMS record has no contact id.</div>'; return; }
+      target.innerHTML = '<div class="empty">Loading thread...</div>';
+      try {
+        const data = await api('/api/crm-app/contacts/' + encodeURIComponent(contactId) + '/thread');
+        const messages = rowsFrom(data, ["messages", "sms", "communications", "thread"]).sort((a, b) => new Date(dateOf(a)) - new Date(dateOf(b)));
+        const blocked = blockedSms(row, data);
+        target.innerHTML = '<h2>'+esc(data.contact?.name || contactName(row))+'</h2><div class="meta">'+esc([companyOf(row), phoneOf(row)].filter(Boolean).join(" · "))+'</div>'+(blocked ? '<div class="message danger">SMS disabled: opt-out or do-not-contact is set.</div>' : '')+'<div class="thread">'+(messages.length ? messages.map(renderThreadMessage).join("") : '<div class="empty">No messages yet.</div>')+'</div><div class="note"><textarea id="smsReplyText" placeholder="Type SMS reply" '+(blocked ? "disabled" : "")+'></textarea><button class="btn primary wide" id="sendSmsBtn" '+(blocked ? "disabled" : "")+'>Send SMS</button><div class="status" id="smsReplyStatus"></div></div>';
+        document.getElementById("sendSmsBtn")?.addEventListener("click", () => sendSmsReply(contactId));
+      } catch (error) { target.innerHTML = '<div class="empty">'+esc(error.message)+'</div>'; }
+    }
+    function renderThreadMessage(message){
+      const outbound = String(message.direction || "").toLowerCase() === "outbound";
+      return '<div class="sms-msg '+(outbound ? "outbound" : "inbound")+'">'+esc(previewOf(message) || "No message text")+'<span>'+esc([message.direction, message.status, fmt(dateOf(message))].filter(Boolean).join(" · "))+'</span></div>';
+    }
+    async function sendSmsReply(contactId){
+      const text = document.getElementById("smsReplyText")?.value || "";
+      const status = document.getElementById("smsReplyStatus");
+      if (!text.trim()) { status.textContent = "Message body required."; return; }
+      status.textContent = "Sending...";
+      try {
+        await api('/api/crm-app/contacts/' + encodeURIComponent(contactId) + '/send-sms', { method: 'POST', body: JSON.stringify({ body: text }) });
+        status.textContent = "Sent.";
+        document.getElementById("smsReplyText").value = "";
+        await loadSmsThread(contactId, state.sms.findIndex((row) => contactIdOf(row) === contactId));
+      } catch (error) { status.textContent = error.message; }
+    }
+    async function loadCalls(){
+      els.calls.innerHTML = '<div class="empty">Loading calls...</div>';
+      try {
+        const data = await api('/api/crm-app/calls?limit=80');
+        state.calls = rowsFrom(data, ["calls", "records", "communications"]);
+        renderCalls();
+      } catch (error) { els.calls.innerHTML = '<div class="empty">'+esc(error.message)+'</div>'; }
+    }
+    function renderCalls(){
+      const rows = state.calls.length ? state.calls.map((row, index) => {
+        const failed = ["missed", "failed", "no_answer", "busy"].includes(String(row.status || "").toLowerCase());
+        const id = contactIdOf(row);
+        return '<div class="ops-row"><b class="'+(failed ? "bad-dot" : "")+'">'+esc(contactName(row))+'</b><span>'+esc([companyOf(row), phoneOf(row)].filter(Boolean).join(" · ") || "No phone")+'</span><div class="meta"><span class="pill">'+esc(row.direction || "-")+'</span><span class="pill '+(failed ? "danger" : "")+'">'+esc(row.status || "-")+'</span><span class="pill">'+esc(row.duration || row.durationSeconds || "0")+'s</span><span class="pill">'+esc(fmt(dateOf(row)))+'</span></div>'+(id ? '<button class="btn primary wide" data-call-index="'+index+'" data-contact-id="'+esc(id)+'">Call / Callback</button>' : '')+'<div class="status" id="callStatus'+index+'"></div></div>';
+      }).join("") : '<div class="empty">No recent calls found.</div>';
+      els.calls.innerHTML = '<h2>Calls</h2><div class="ops-list">'+rows+'</div>';
+      [...els.calls.querySelectorAll("[data-call-index]")].forEach((button) => button.addEventListener("click", () => startCall(button.dataset.contactId, button.dataset.callIndex)));
+    }
+    async function startCall(contactId, index){
+      const status = document.getElementById("callStatus"+index);
+      status.textContent = "Starting call...";
+      try {
+        await api('/api/crm-app/contacts/' + encodeURIComponent(contactId) + '/start-call', { method: 'POST' });
+        status.textContent = "Calling your forwarding phone first, then connecting the client.";
+      } catch (error) { status.textContent = error.message; }
     }
     function partnerLabel(partnerId){
       if (!partnerId) return "-";
@@ -8607,10 +8704,28 @@ function crmMiniAppPage() {
     async function loadKpi(refresh = true){
       els.kpi.innerHTML = '<div class="empty">Загрузка KPI...</div>';
       const data = await api('/api/crm-app/kpi' + (refresh ? '?refresh=1' : ''));
+      let comm = {};
+      let commError = "";
+      try { comm = await api('/api/crm-app/communications-summary'); }
+      catch (error) { commError = error.message; }
       const c = data.performance?.summary?.current || {};
       const seo = data.seo || {};
       const leads = data.leads || {};
-      els.kpi.innerHTML = '<h2>SEO / GA4 KPI</h2><div class="kpi-grid"><div class="kpi"><span>GSC Clicks</span><strong>'+num(c.clicks)+'</strong></div><div class="kpi"><span>GSC Impressions</span><strong>'+num(c.impressions)+'</strong></div><div class="kpi"><span>CTR</span><strong>'+pct(c.ctr)+'</strong></div><div class="kpi"><span>Position</span><strong>'+Number(c.position || 0).toFixed(1)+'</strong></div><div class="kpi"><span>GA Sessions</span><strong>'+num(c.sessions)+'</strong></div><div class="kpi"><span>Active Users</span><strong>'+num(c.activeUsers)+'</strong></div><div class="kpi"><span>SEO Indexable</span><strong>'+num(seo.indexable)+'</strong></div><div class="kpi"><span>Active Leads</span><strong>'+num(leads.active)+'</strong></div></div><div class="message">Updated: '+esc(data.performance?.updatedAt || "not loaded yet")+'\\nGSC: '+esc(data.performance?.gscSiteUrl || "-")+'\\nGA4: '+esc(data.performance?.ga4PropertyId || "-")+'</div>';
+      els.kpi.innerHTML = '<h2>Stats</h2><div class="kpi-grid"><div class="kpi"><span>Recent SMS</span><strong>'+num(summaryCount(comm, ["recentSmsCount","smsCount","recentSms","sms"]))+'</strong></div><div class="kpi"><span>Missed Calls</span><strong>'+num(summaryCount(comm, ["missedCallsCount","missedCalls"]))+'</strong></div><div class="kpi"><span>Open Callbacks</span><strong>'+num(summaryCount(comm, ["openCallbackTasks","openCallbacks","callbackTasks"]))+'</strong></div><div class="kpi"><span>Active Leads</span><strong>'+num(leads.active)+'</strong></div><div class="kpi"><span>GSC Clicks</span><strong>'+num(c.clicks)+'</strong></div><div class="kpi"><span>GSC Impressions</span><strong>'+num(c.impressions)+'</strong></div><div class="kpi"><span>CTR</span><strong>'+pct(c.ctr)+'</strong></div><div class="kpi"><span>SEO Indexable</span><strong>'+num(seo.indexable)+'</strong></div></div>'+renderLatestCommunications(comm)+(commError ? '<div class="message danger">Communications summary unavailable: '+esc(commError)+'</div>' : '')+'<div class="message">Updated: '+esc(data.performance?.updatedAt || "not loaded yet")+'\\nGSC: '+esc(data.performance?.gscSiteUrl || "-")+'\\nGA4: '+esc(data.performance?.ga4PropertyId || "-")+'</div>';
+    }
+    function summaryCount(summary, keys){
+      for (const key of keys) {
+        const value = summary?.[key] ?? summary?.summary?.[key] ?? summary?.counts?.[key];
+        if (Array.isArray(value)) return value.length;
+        if (value && typeof value === "object") return value.count ?? value.total ?? value.open ?? 0;
+        if (value !== undefined && value !== null) return value;
+      }
+      return 0;
+    }
+    function renderLatestCommunications(summary){
+      const latest = rowsFrom(summary, ["latestCommunications", "latest", "recent", "communications"]).slice(0, 6);
+      if (!latest.length) return '';
+      return '<h2>Latest communications</h2><div class="ops-list">'+latest.map((row) => '<div class="ops-row"><b>'+esc(contactName(row))+'</b><span>'+esc([row.type || row.channel || "communication", row.direction, row.status, fmt(dateOf(row))].filter(Boolean).join(" · "))+'</span><div class="preview">'+esc(previewOf(row) || phoneOf(row))+'</div></div>').join("")+'</div>';
     }
     async function loadAccess(){
       els.access.innerHTML = '<div class="empty">Загрузка доступов...</div>';
@@ -8667,6 +8782,8 @@ function crmMiniAppPage() {
       els.crmTabs.style.display = view === "crm" ? "flex" : "none";
       document.querySelectorAll(".ops-view").forEach((v) => v.classList.toggle("active", v.id === view + "View"));
       if (view === "crm") loadLeads();
+      if (view === "sms") loadSms();
+      if (view === "calls") loadCalls();
       if (view === "partners") loadPartners();
       if (view === "kpi") loadKpi(true);
       if (view === "access") loadAccess();
@@ -8674,6 +8791,8 @@ function crmMiniAppPage() {
     }
     function refreshCurrentView(){
       if (state.view === "crm") return loadLeads();
+      if (state.view === "sms") return loadSms();
+      if (state.view === "calls") return loadCalls();
       if (state.view === "partners") return loadPartners();
       if (state.view === "kpi") return loadKpi(true);
       if (state.view === "access") return loadAccess();
@@ -8719,6 +8838,41 @@ function crmMiniAppPage() {
 async function handleCrmAppApi(request, response, url, path) {
   const auth = authenticateCrmAppRequest(request);
   if (!auth.ok) return json(response, { ok: false, message: auth.message || "Unauthorized" }, 401);
+  if (request.method === "GET" && path === "/api/crm-app/communications") {
+    return crmInternalJson(response, await callCrmInternalApi(crmInternalPathWithQuery("/api/internal/telegram/communications", url, ["limit", "type", "direction", "status", "contactId"])));
+  }
+  if (request.method === "GET" && path === "/api/crm-app/sms") {
+    return crmInternalJson(response, await callCrmInternalApi(crmInternalPathWithQuery("/api/internal/telegram/sms", url, ["limit", "direction", "status", "contactId"])));
+  }
+  if (request.method === "GET" && path === "/api/crm-app/calls") {
+    return crmInternalJson(response, await callCrmInternalApi(crmInternalPathWithQuery("/api/internal/telegram/calls", url, ["limit", "direction", "status", "contactId"])));
+  }
+  if (request.method === "GET" && path === "/api/crm-app/communications-summary") {
+    return crmInternalJson(response, await callCrmInternalApi("/api/internal/telegram/summary"));
+  }
+  const threadMatch = path.match(/^\/api\/crm-app\/contacts\/([^/]+)\/thread$/);
+  if (request.method === "GET" && threadMatch) {
+    const contactId = decodeURIComponent(threadMatch[1]);
+    return crmInternalJson(response, await callCrmInternalApi(`/api/internal/telegram/contacts/${encodeURIComponent(contactId)}/thread`));
+  }
+  const sendSmsMatch = path.match(/^\/api\/crm-app\/contacts\/([^/]+)\/send-sms$/);
+  if (request.method === "POST" && sendSmsMatch) {
+    const contactId = decodeURIComponent(sendSmsMatch[1]);
+    const payload = await readJsonBody(request);
+    const body = String(payload.body || "").trim();
+    if (!body) return json(response, { ok: false, message: "SMS body required" }, 400);
+    return crmInternalJson(response, await callCrmInternalApi(`/api/internal/telegram/contacts/${encodeURIComponent(contactId)}/send-sms`, {
+      method: "POST",
+      body: { body },
+    }));
+  }
+  const startCallMatch = path.match(/^\/api\/crm-app\/contacts\/([^/]+)\/start-call$/);
+  if (request.method === "POST" && startCallMatch) {
+    const contactId = decodeURIComponent(startCallMatch[1]);
+    return crmInternalJson(response, await callCrmInternalApi(`/api/internal/telegram/contacts/${encodeURIComponent(contactId)}/start-call`, {
+      method: "POST",
+    }));
+  }
   if (request.method === "GET" && path === "/api/crm-app/leads") {
     return json(response, { ok: true, leads: listCrmLeads({ status: url.searchParams.get("status") || "active", search: url.searchParams.get("search") || "", limit: url.searchParams.get("limit") || 80 }) });
   }
@@ -8794,6 +8948,65 @@ async function handleCrmAppApi(request, response, url, path) {
     return json(response, { ok: true, lead: summarizeCrmLead(getCrmSummary(leadId)) });
   }
   return json(response, { ok: false, message: "Not found" }, 404);
+}
+
+function crmInternalPathWithQuery(pathname, url, allowedParams = []) {
+  const query = new URLSearchParams();
+  for (const key of allowedParams) {
+    const value = url.searchParams.get(key);
+    if (value !== null && value !== "") query.set(key, value);
+  }
+  const suffix = query.toString();
+  return suffix ? `${pathname}?${suffix}` : pathname;
+}
+
+async function callCrmInternalApi(apiPath, options = {}) {
+  const token = process.env.CRM_INTERNAL_API_TOKEN || "";
+  if (!token) {
+    return { status: 500, body: { ok: false, message: "CRM internal API token is not configured" } };
+  }
+  let target;
+  try {
+    target = new URL(apiPath, `${CRM_INTERNAL_API_BASE_URL}/`);
+  } catch {
+    return { status: 500, body: { ok: false, message: "CRM internal API URL is invalid" } };
+  }
+  const method = options.method || "GET";
+  const headers = {
+    accept: "application/json",
+    authorization: `Bearer ${token}`,
+  };
+  const requestOptions = { method, headers };
+  if (options.body !== undefined) {
+    headers["content-type"] = "application/json";
+    requestOptions.body = JSON.stringify(options.body);
+  }
+  try {
+    const upstream = await fetch(target, requestOptions);
+    const text = await upstream.text();
+    let payload = {};
+    if (text) {
+      try { payload = JSON.parse(text); }
+      catch { payload = { message: text.slice(0, 500) }; }
+    }
+    if (!upstream.ok) {
+      return {
+        status: upstream.status,
+        body: {
+          ok: false,
+          message: payload.message || payload.error || `CRM internal API returned ${upstream.status}`,
+        },
+      };
+    }
+    return { status: upstream.status, body: typeof payload === "object" && payload !== null ? payload : { ok: true, data: payload } };
+  } catch (error) {
+    return { status: 502, body: { ok: false, message: `CRM internal API unavailable: ${error.message}` } };
+  }
+}
+
+function crmInternalJson(response, result) {
+  const body = result.body && typeof result.body === "object" ? result.body : { ok: true, data: result.body };
+  return json(response, body, result.status || 200);
 }
 
 async function handleCrmWebLogin(request, response) {

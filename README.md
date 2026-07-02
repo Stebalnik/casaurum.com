@@ -50,6 +50,8 @@ Important variables:
 - `BOT_POLL_INTERVAL_MS`
 - `BOT_REMINDER_AFTER_MINUTES`
 - `BOT_ESCALATE_AFTER_HOURS`
+- `CRM_INTERNAL_API_BASE_URL`
+- `CRM_INTERNAL_API_TOKEN`
 - `SMTP_HOST`
 - `SMTP_PORT`
 - `SMTP_USER`
@@ -221,6 +223,31 @@ Run with PM2 after env values are filled in `ecosystem.config.cjs`:
 ```bash
 pm2 start ecosystem.config.cjs --only casaurum-lead-bot --update-env
 ```
+
+The existing Telegram bot remains the single polling consumer for `@Casaurum_crm_bot`. Do not run another Telegram `getUpdates` loop and do not set a Telegram webhook for this bot unless the polling architecture is intentionally changed.
+
+## Telegram Mini App Communications
+
+The existing Mini App at `/crm-app` proxies communication data from the CRM staging app through the local server. The frontend must call only `/api/crm-app/*`; `server.mjs` verifies the existing Mini App access/session before forwarding requests to `CRM_INTERNAL_API_BASE_URL` with `CRM_INTERNAL_API_TOKEN`.
+
+Required staging env:
+
+```bash
+CRM_INTERNAL_API_BASE_URL=https://crm-staging.casaurum.com
+CRM_INTERNAL_API_TOKEN=...
+```
+
+Supported proxied Mini App routes include SMS, calls, communication summary, contact thread, one-to-one SMS reply and one-to-one callback/click-to-call. Do not expose Telnyx secrets to this repository or the browser, and do not add bulk SMS or bulk call behavior.
+
+Staging test checklist:
+
+- Open `/crm-app` from the existing bot menu or `/crm` command.
+- Confirm Leads, Partners, Access, Status and existing KPI data still load.
+- Confirm the SMS tab loads recent records and opens a contact thread.
+- Confirm SMS reply is disabled when `smsOptOut` or `doNotContact` is returned.
+- Confirm one-to-one SMS reply posts through `/api/crm-app/contacts/:id/send-sms`.
+- Confirm the Calls tab highlights missed/failed calls and starts a callback through `/api/crm-app/contacts/:id/start-call`.
+- Confirm Stats shows communications summary counts when staging is configured.
 
 To get `TELEGRAM_CHAT_ID`, message the bot once, then run:
 
