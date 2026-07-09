@@ -68,6 +68,23 @@ const SITE_CONTACT = {
   instagramUrl: "https://www.instagram.com/casaurum.interiors/",
   sameAs: ["https://www.instagram.com/casaurum.interiors/"],
 };
+
+function smsConsentText(lang) {
+  return {
+    en: "I agree to receive SMS messages from CAS AURUM about my inquiry, project updates, and related services. Message and data rates may apply. Message frequency may vary. Reply STOP to opt out and HELP for help. SMS consent is not shared with third parties for marketing or promotional purposes.",
+    es: "Acepto recibir mensajes SMS de CAS AURUM sobre mi consulta, actualizaciones del proyecto y servicios relacionados. Pueden aplicarse tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Responda STOP para darse de baja y HELP para obtener ayuda. El consentimiento para SMS no se comparte con terceros con fines de marketing o promoción.",
+    ru: "Я соглашаюсь получать SMS-сообщения от CAS AURUM по поводу моего запроса, обновлений по проекту и связанных услуг. Могут применяться тарифы оператора на сообщения и передачу данных. Частота сообщений может варьироваться. Ответьте STOP, чтобы отказаться от SMS, и HELP, чтобы получить помощь. Согласие на SMS не передается третьим лицам для маркетинговых или рекламных целей.",
+    uk: "Я погоджуюся отримувати SMS-повідомлення від CAS AURUM щодо мого запиту, оновлень проєкту та пов’язаних послуг. Можуть застосовуватися тарифи оператора на повідомлення та передачу даних. Частота повідомлень може змінюватися. Відповідайте STOP, щоб відмовитися від SMS, і HELP, щоб отримати допомогу. Згода на SMS не передається третім особам для маркетингових або рекламних цілей.",
+    fr: "J’accepte de recevoir des SMS de CAS AURUM concernant ma demande, les mises à jour du projet et les services associés. Des frais de messagerie et de données peuvent s’appliquer. La fréquence des messages peut varier. Répondez STOP pour vous désinscrire et HELP pour obtenir de l’aide. Le consentement aux SMS n’est pas partagé avec des tiers à des fins marketing ou promotionnelles.",
+    ar: "أوافق على تلقي رسائل SMS من CAS AURUM بخصوص استفساري وتحديثات المشروع والخدمات ذات الصلة. قد تُطبق رسوم الرسائل والبيانات. قد يختلف معدل تكرار الرسائل. أرسل STOP لإلغاء الاشتراك و HELP للحصول على المساعدة. لا تتم مشاركة الموافقة على رسائل SMS مع أطراف ثالثة لأغراض التسويق أو الترويج.",
+    zh: "我同意接收 CAS AURUM 发送的短信，内容包括我的咨询、项目更新及相关服务。可能会产生短信和数据费用。短信频率可能会有所不同。回复 STOP 可取消订阅，回复 HELP 可获得帮助。短信同意信息不会出于营销或促销目的与第三方共享。",
+  }[lang] || smsConsentText("en");
+}
+
+function smsConsentCheckbox(lang) {
+  return `<label class="consent sms-consent"><input type="checkbox" name="smsConsent" value="yes"> ${escapeHtml(smsConsentText(lang))}</label>`;
+}
+
 const BRAND_LOGO_URL = `${BASE_URL}/brand/logo-full.png`;
 const BRAND_OG_IMAGE_URL = `${BASE_URL}/brand/og-image.png`;
 const BRAND_TWITTER_IMAGE_URL = `${BASE_URL}/brand/twitter-image.png`;
@@ -4860,6 +4877,7 @@ function partnerApplicationForm(route) {
     </div>
     <label>${escapeHtml(t.fields.notes)} <textarea name="notes" placeholder="${escapeHtml(t.notesPlaceholder)}"></textarea></label>
     <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(t.consent)}</label>
+    ${smsConsentCheckbox(route.lang)}
     <button class="button primary" type="submit">${escapeHtml(t.submit)}</button>
     <p class="form-status" role="status" aria-live="polite"></p>
   </form>`;
@@ -5523,6 +5541,7 @@ function designConceptLeadForm(route, t) {
       <p class="form-hint">${escapeHtml(t.reviewHint)}</p>
     </div>
     <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(t.consent)}</label>
+    ${smsConsentCheckbox(route.lang)}
     <button class="button primary" type="submit">${escapeHtml(t.submit)}</button>
     <p class="form-status" role="status" aria-live="polite"></p>
   </form>`;
@@ -6741,6 +6760,7 @@ function quickEstimateWizard(route, sourcePage = "/technical-millwork-planner") 
             <label>${escapeHtml(q.fields.notes)}<textarea name="project_notes" placeholder="${escapeHtml(q.notesPlaceholder)}"></textarea></label>
             <label>${escapeHtml(q.fields.upload)}<input type="file" name="project_photos" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
             <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(copy[route.lang].form.consent)}</label>
+            ${smsConsentCheckbox(route.lang)}
             <div class="quick-final-actions">
               <button class="button primary" type="submit">${escapeHtml(q.send)}</button>
               <a class="button secondary" href="${urlFor(route.lang, "designConcept")}">${escapeHtml(q.designConcept)}</a>
@@ -7023,6 +7043,7 @@ function technicalPlannerPage(route) {
             <label>${escapeHtml(localized("Project notes", lang))}<textarea name="designerNotes" placeholder="${escapeHtml(localized("Room, client goals, drawings available, material direction to review.", lang))}"></textarea></label>
             <label>${escapeHtml(localized("Helpful files", lang))}<input type="file" name="project_files" data-planner-files multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"><small data-planner-file-help>${escapeHtml(preset?.uploadGuidance || localized("Attach photos, drawings or references when available.", lang))}</small></label>
             <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(copy[lang].form.consent)}</label>
+            ${smsConsentCheckbox(lang)}
             <button class="button primary" type="submit" data-planner-cta>${escapeHtml(preset?.ctaLabel || localized("Send Project Scope", lang))}</button>
             <p class="form-status" role="status" aria-live="polite"></p>
           </form>
@@ -7715,6 +7736,49 @@ function legalParagraph(route, heading, text) {
   return escaped;
 }
 
+function smsLegalUpdatedAt(lang, fallback) {
+  return {
+    en: "Last updated: July 4, 2026",
+    es: "Última actualización: 4 de julio de 2026",
+    fr: "Dernière mise à jour : 4 juillet 2026",
+    ru: "Последнее обновление: 4 июля 2026",
+    uk: "Останнє оновлення: 4 липня 2026",
+    ar: "آخر تحديث: 4 يوليو 2026",
+    zh: "最后更新：2026 年 7 月 4 日",
+  }[lang] || fallback;
+}
+
+function smsLegalSection(lang, type) {
+  const sections = {
+    privacy: {
+      en: ["SMS Communications and Consent", "If you provide your phone number and choose to opt in to SMS communications, CAS AURUM may send text messages related to your inquiry, project updates, appointment coordination, design concept communication, estimates, and related services.", "Message and data rates may apply. Message frequency may vary. You may opt out at any time by replying STOP. You may reply HELP for assistance.", "SMS consent is not shared with third parties or affiliates for marketing or promotional purposes.", "We may use service providers to help deliver SMS communications, but they are only permitted to use your information to provide services to CAS AURUM and not for their own marketing purposes."],
+      es: ["Comunicaciones SMS y consentimiento", "Si proporciona su número de teléfono y decide aceptar comunicaciones por SMS, CAS AURUM puede enviarle mensajes de texto relacionados con su consulta, actualizaciones del proyecto, coordinación de citas, comunicación sobre el concepto de diseño, estimaciones y servicios relacionados.", "Pueden aplicarse tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Puede cancelar la suscripción en cualquier momento respondiendo STOP. Puede responder HELP para recibir ayuda.", "El consentimiento para SMS no se comparte con terceros ni afiliados con fines de marketing o promoción.", "Podemos utilizar proveedores de servicios para ayudar a enviar comunicaciones SMS, pero solo pueden usar su información para prestar servicios a CAS AURUM y no para sus propios fines de marketing."],
+      ru: ["SMS-сообщения и согласие", "Если вы предоставляете свой номер телефона и соглашаетесь получать SMS-сообщения, CAS AURUM может отправлять вам текстовые сообщения, связанные с вашим запросом, обновлениями по проекту, согласованием встреч, коммуникацией по дизайн-концепции, предварительными оценками и связанными услугами.", "Могут применяться тарифы оператора на сообщения и передачу данных. Частота сообщений может варьироваться. Вы можете отказаться от SMS в любое время, ответив STOP. Для получения помощи ответьте HELP.", "Согласие на SMS не передается третьим лицам или аффилированным лицам для маркетинговых или рекламных целей.", "Мы можем использовать сервисных провайдеров для доставки SMS-сообщений, но они имеют право использовать вашу информацию только для предоставления услуг CAS AURUM и не для собственных маркетинговых целей."],
+      uk: ["SMS-повідомлення та згода", "Якщо ви надаєте свій номер телефону та погоджуєтеся отримувати SMS-повідомлення, CAS AURUM може надсилати вам текстові повідомлення, пов’язані з вашим запитом, оновленнями проєкту, узгодженням зустрічей, комунікацією щодо дизайн-концепції, попередніми оцінками та пов’язаними послугами.", "Можуть застосовуватися тарифи оператора на повідомлення та передачу даних. Частота повідомлень може змінюватися. Ви можете відмовитися від SMS у будь-який час, відповівши STOP. Щоб отримати допомогу, відповідайте HELP.", "Згода на SMS не передається третім особам або афілійованим особам для маркетингових чи рекламних цілей.", "Ми можемо використовувати постачальників послуг для доставки SMS-повідомлень, але вони можуть використовувати вашу інформацію лише для надання послуг CAS AURUM, а не для власних маркетингових цілей."],
+      fr: ["Communications SMS et consentement", "Si vous fournissez votre numéro de téléphone et choisissez d’accepter les communications par SMS, CAS AURUM peut vous envoyer des messages texte liés à votre demande, aux mises à jour du projet, à la coordination des rendez-vous, à la communication autour du concept de design, aux estimations et aux services associés.", "Des frais de messagerie et de données peuvent s’appliquer. La fréquence des messages peut varier. Vous pouvez vous désinscrire à tout moment en répondant STOP. Vous pouvez répondre HELP pour obtenir de l’aide.", "Le consentement aux SMS n’est pas partagé avec des tiers ou des sociétés affiliées à des fins marketing ou promotionnelles.", "Nous pouvons utiliser des prestataires de services pour nous aider à envoyer des communications SMS, mais ils ne sont autorisés à utiliser vos informations que pour fournir des services à CAS AURUM et non à leurs propres fins marketing."],
+      ar: ["اتصالات الرسائل النصية والموافقة", "إذا قدمت رقم هاتفك واخترت الموافقة على تلقي رسائل SMS، فقد ترسل CAS AURUM رسائل نصية تتعلق باستفسارك وتحديثات المشروع وتنسيق المواعيد والتواصل بشأن مفهوم التصميم والتقديرات والخدمات ذات الصلة.", "قد تُطبق رسوم الرسائل والبيانات. قد يختلف معدل تكرار الرسائل. يمكنك إلغاء الاشتراك في أي وقت بالرد بكلمة STOP. ويمكنك الرد بكلمة HELP للحصول على المساعدة.", "لا تتم مشاركة الموافقة على رسائل SMS مع أطراف ثالثة أو جهات تابعة لأغراض التسويق أو الترويج.", "قد نستخدم مزودي خدمات للمساعدة في إرسال رسائل SMS، لكن يُسمح لهم باستخدام معلوماتك فقط لتقديم الخدمات إلى CAS AURUM وليس لأغراضهم التسويقية الخاصة."],
+      zh: ["短信通信与同意", "如果您提供电话号码并选择同意接收短信通信，CAS AURUM 可能会向您发送与您的咨询、项目更新、预约协调、设计概念沟通、估算及相关服务有关的短信。", "可能会产生短信和数据费用。短信频率可能会有所不同。您可以随时回复 STOP 取消订阅。您可以回复 HELP 获取帮助。", "短信同意信息不会与第三方或关联方共享用于营销或促销目的。", "我们可能会使用服务提供商来帮助发送短信通信，但他们只能为 CAS AURUM 提供服务而使用您的信息，不能用于其自身的营销目的。"],
+    },
+    terms: {
+      en: ["SMS Terms", "By opting in to SMS communications, you agree to receive text messages from CAS AURUM related to your inquiry, project updates, appointment coordination, design concept communication, estimates, and related services.", `Message and data rates may apply. Message frequency may vary. You can opt out at any time by replying STOP. For assistance, reply HELP or contact us at ${SITE_CONTACT.emailDisplay} or ${SITE_CONTACT.phoneDisplay}.`, "Your consent to receive SMS messages is not a condition of purchase. SMS consent is not shared with third parties for marketing or promotional purposes."],
+      es: ["Términos de SMS", "Al aceptar comunicaciones por SMS, usted acepta recibir mensajes de texto de CAS AURUM relacionados con su consulta, actualizaciones del proyecto, coordinación de citas, comunicación sobre el concepto de diseño, estimaciones y servicios relacionados.", `Pueden aplicarse tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Puede cancelar la suscripción en cualquier momento respondiendo STOP. Para obtener ayuda, responda HELP o contáctenos en ${SITE_CONTACT.emailDisplay} o ${SITE_CONTACT.phoneDisplay}.`, "Su consentimiento para recibir SMS no es una condición de compra. El consentimiento para SMS no se comparte con terceros con fines de marketing o promoción."],
+      ru: ["Условия SMS", "Соглашаясь получать SMS-сообщения, вы соглашаетесь получать текстовые сообщения от CAS AURUM, связанные с вашим запросом, обновлениями по проекту, согласованием встреч, коммуникацией по дизайн-концепции, предварительными оценками и связанными услугами.", `Могут применяться тарифы оператора на сообщения и передачу данных. Частота сообщений может варьироваться. Вы можете отказаться от SMS в любое время, ответив STOP. Для получения помощи ответьте HELP или свяжитесь с нами по ${SITE_CONTACT.emailDisplay} или ${SITE_CONTACT.phoneDisplay}.`, "Ваше согласие на получение SMS не является условием покупки. Согласие на SMS не передается третьим лицам для маркетинговых или рекламных целей."],
+      uk: ["Умови SMS", "Погоджуючись отримувати SMS-повідомлення, ви погоджуєтеся отримувати текстові повідомлення від CAS AURUM, пов’язані з вашим запитом, оновленнями проєкту, узгодженням зустрічей, комунікацією щодо дизайн-концепції, попередніми оцінками та пов’язаними послугами.", `Можуть застосовуватися тарифи оператора на повідомлення та передачу даних. Частота повідомлень може змінюватися. Ви можете відмовитися від SMS у будь-який час, відповівши STOP. Щоб отримати допомогу, відповідайте HELP або зв’яжіться з нами за адресою ${SITE_CONTACT.emailDisplay} чи телефоном ${SITE_CONTACT.phoneDisplay}.`, "Ваша згода на отримання SMS не є умовою покупки. Згода на SMS не передається третім особам для маркетингових або рекламних цілей."],
+      fr: ["Conditions SMS", "En acceptant les communications par SMS, vous acceptez de recevoir des messages texte de CAS AURUM liés à votre demande, aux mises à jour du projet, à la coordination des rendez-vous, à la communication autour du concept de design, aux estimations et aux services associés.", `Des frais de messagerie et de données peuvent s’appliquer. La fréquence des messages peut varier. Vous pouvez vous désinscrire à tout moment en répondant STOP. Pour obtenir de l’aide, répondez HELP ou contactez-nous à ${SITE_CONTACT.emailDisplay} ou au ${SITE_CONTACT.phoneDisplay}.`, "Votre consentement à recevoir des SMS n’est pas une condition d’achat. Le consentement aux SMS n’est pas partagé avec des tiers à des fins marketing ou promotionnelles."],
+      ar: ["شروط الرسائل النصية", "بموافقتك على اتصالات SMS، فإنك توافق على تلقي رسائل نصية من CAS AURUM تتعلق باستفسارك وتحديثات المشروع وتنسيق المواعيد والتواصل بشأن مفهوم التصميم والتقديرات والخدمات ذات الصلة.", `قد تُطبق رسوم الرسائل والبيانات. قد يختلف معدل تكرار الرسائل. يمكنك إلغاء الاشتراك في أي وقت بالرد بكلمة STOP. للحصول على المساعدة، أرسل HELP أو تواصل معنا عبر ${SITE_CONTACT.emailDisplay} أو ${SITE_CONTACT.phoneDisplay}.`, "موافقتك على تلقي رسائل SMS ليست شرطًا للشراء. لا تتم مشاركة الموافقة على رسائل SMS مع أطراف ثالثة لأغراض التسويق أو الترويج."],
+      zh: ["短信条款", "选择接收短信通信即表示您同意接收 CAS AURUM 发送的与您的咨询、项目更新、预约协调、设计概念沟通、估算及相关服务有关的短信。", `可能会产生短信和数据费用。短信频率可能会有所不同。您可以随时回复 STOP 取消订阅。如需帮助，请回复 HELP，或通过 ${SITE_CONTACT.emailDisplay} 或 ${SITE_CONTACT.phoneDisplay} 联系我们。`, "您同意接收短信并不是购买条件。短信同意信息不会出于营销或促销目的与第三方共享。"],
+    },
+  };
+  return sections[type]?.[lang] || sections[type]?.en || null;
+}
+
+function withSmsLegalSection(page, lang, type) {
+  const section = smsLegalSection(lang, type);
+  if (!section) return page;
+  const sections = page.sections.some(([heading]) => heading === section[0]) ? page.sections : [...page.sections, section];
+  return { ...page, updated: smsLegalUpdatedAt(lang, page.updated), sections };
+}
+
 function legalContent(lang, type) {
   const pages = {
     en: {
@@ -7924,7 +7988,8 @@ function legalContent(lang, type) {
       },
     },
   };
-  return pages[lang]?.[type] || pages.en[type];
+  const page = pages[lang]?.[type] || pages.en[type];
+  return withSmsLegalSection(page, lang, type);
 }
 
 function layout(route, title, description, body) {
@@ -9259,6 +9324,7 @@ function leadForm(route, type) {
     <label>${escapeHtml(localized("What would you like to discuss?", route.lang))}<textarea name="message" required></textarea></label>
     <label>${escapeHtml(f.upload)}<input type="file" name="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
     <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(f.consent)}</label>
+    ${smsConsentCheckbox(route.lang)}
     <button class="button primary" type="submit">${escapeHtml(label)}</button>
     <p class="form-status" role="status" aria-live="polite"></p>
   </form>`;
@@ -9273,6 +9339,7 @@ function leadForm(route, type) {
     ${tierNotice}
     <div class="form-grid">${input(localized("Name", route.lang), "fullName", true)}${input(f.phone, "phone", true, "tel")}${input(f.email, "email", true, "email")}</div>
     <label>${escapeHtml(f.message)}<textarea name="message" required></textarea></label>
+    ${smsConsentCheckbox(route.lang)}
     <button class="button primary" type="submit">${escapeHtml(label)}</button>
     <p class="form-status" role="status" aria-live="polite"></p>
   </form>`;
@@ -9286,6 +9353,7 @@ function leadForm(route, type) {
     <label>${escapeHtml(f.message)}<textarea name="message" required></textarea></label>
     <label>${escapeHtml(f.upload)}<input type="file" name="attachments" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic"></label>
     <label class="consent"><input type="checkbox" name="consent" required> ${escapeHtml(f.consent)}</label>
+    ${smsConsentCheckbox(route.lang)}
     <button class="button primary" type="submit">${escapeHtml(label)}</button>
     <p class="form-status" role="status" aria-live="polite"></p>
   </form>`;
@@ -9402,6 +9470,7 @@ async function handleLead(request, response) {
   const formType = String(payload.formType || payload.leadType || "");
   if (formType === "technical_millwork_planner") normalizePlannerLeadPayload(payload);
   if (formType === "quick_project_estimate") normalizeQuickEstimateLeadPayload(payload);
+  payload.smsConsent = normalizeConsent(payload.smsConsent ?? payload.sms_consent);
   const isConsultationRequest = formType === "consultation";
   const isShortRequest = isShortLeadForm(formType);
   if (isConsultationRequest) {
@@ -9850,6 +9919,7 @@ function normalizeDesignConceptLeadPayload(payload, request) {
     intent: "design_concept",
     objectType: projectTypeLabel,
     material: styleLabel,
+    smsConsent: normalizeConsent(payload.smsConsent ?? payload.sms_consent),
     referrer: payload.referrer || "",
     userAgent: request.headers["user-agent"] || "",
     ip: request.socket.remoteAddress || "unknown",
@@ -10059,6 +10129,7 @@ async function handlePartnerApplication(request, response) {
     role,
     email,
     phone,
+    smsConsent: normalizeConsent(payload.smsConsent ?? payload.sms_consent),
     market: payload.market || "",
     source: payload.sourceUrl || "/partners",
     notes: payload.notes || "",
@@ -10083,6 +10154,7 @@ async function handlePartnerApplication(request, response) {
     message: payload.notes || "",
     sourceUrl: payload.sourceUrl || "/partners",
     consent: "yes",
+    smsConsent: normalizeConsent(payload.smsConsent ?? payload.sms_consent),
   }, { partner: { id: partner.id, status: partner.status } })).catch(() => {});
   return json(response, { ok: true, partner: { id: partner.id, status: partner.status } });
 }
@@ -10287,6 +10359,7 @@ function normalizeExternalCrmLead(lead, context = {}) {
     timeline: lead.timeline || lead.quoted_timeline || "",
     message: lead.message || lead.project_description || lead.project_notes || lead.notes || "",
     consent: normalizeConsent(lead.consent),
+    smsConsent: normalizeConsent(lead.smsConsent ?? lead.sms_consent),
     uploadedFiles,
     context,
     raw,
@@ -14208,7 +14281,7 @@ function css() {
 	  .collection-card-link{display:block;color:inherit;text-decoration:none}
 		  .concept-card .chip{display:inline-flex;width:max-content;margin-top:4px}
 		  .design-concept-hero h1{font-size:clamp(40px,5.6vw,78px)}.design-concept-positioning{padding-bottom:24px}.concept-keywords{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.concept-keywords span{border:1px solid rgba(196,161,95,.32);border-radius:999px;padding:8px 11px;color:var(--stone);font-size:12px}.package-grid,.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:0}.package-card,.pricing-grid article,.form-step{border:1px solid rgba(196,161,95,.24);background:linear-gradient(180deg,rgba(196,161,95,.08),rgba(255,255,255,.035));border-radius:8px;padding:24px}.package-card{display:grid;gap:14px;align-content:start;min-height:520px}.package-card>span,.pricing-grid span,.form-step>span{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.package-card strong{display:block;color:var(--ivory);font-family:Georgia,serif;font-size:34px;font-weight:500}.package-card p{margin:0}.package-card dl{display:grid;gap:10px;margin:0}.package-card dt{color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase}.package-card dd{margin:0;color:var(--warm);font-size:14px}.package-card .button{margin-top:auto}.pricing-grid article{min-height:170px}.pricing-grid h3{margin:10px 0 6px;font-size:24px}.pricing-grid p{margin:0;color:var(--soft)}.design-concept-form-shell{max-width:1120px}.design-concept-form .form-step{display:grid;gap:14px;background:rgba(255,255,255,.035)}.design-concept-form .form-step h3{font-size:26px}.selection-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:center;border:1px solid rgba(196,161,95,.24);background:#0f0d0a;border-radius:8px;padding:14px}.selection-summary div{display:grid;gap:4px}.selection-summary span{color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.selection-summary strong{font-family:Georgia,serif;font-size:26px;font-weight:500}.selection-summary .button{grid-column:auto}.selection-summary p{grid-column:1/-1}.form-hint{margin:0;color:var(--soft);font-size:14px}.design-concept-bridge .actions,.cta .actions{margin-top:18px}
-	  .measurement-choice{grid-template-columns:auto 1fr;align-items:start}.measurement-choice input{width:auto;min-height:0;margin-top:2px}.design-concept-form .consent input{width:auto;min-height:0;margin-top:2px}
+	  .measurement-choice{grid-template-columns:auto 1fr;align-items:start}.measurement-choice input{width:auto;min-height:0;margin-top:2px}.design-concept-form .consent input{width:auto;min-height:0;margin-top:2px}.consent input{width:auto;min-height:0;margin-top:2px}
 	  @media(max-width:920px){.planner-paths,.quick-estimate-grid{grid-template-columns:1fr}.quick-summary{position:static}.quick-choice-grid,.quick-choice-grid.compact{grid-template-columns:repeat(2,minmax(0,1fr))}.quick-mobile-summary{position:sticky;bottom:0;z-index:12;display:flex;justify-content:space-between;gap:12px;margin:0 -18px -42px;padding:12px 18px;border-top:1px solid var(--line);background:rgba(15,13,10,.96);backdrop-filter:blur(12px)}.quick-mobile-summary b{color:var(--ivory)}.quick-mobile-summary span{color:var(--gold);font-weight:800}}@media(max-width:560px){.quick-choice-grid,.quick-choice-grid.compact{grid-template-columns:1fr}.quick-result-card strong,.quick-summary strong{font-size:26px}.quick-nav .button,.quick-final-actions .button{width:100%}}
   @media(max-width:1050px){.site-header{grid-template-columns:auto auto 1fr}.menu-button{display:inline-flex;justify-self:end;background:transparent;color:var(--ivory);border:1px solid var(--line);padding:10px}nav{display:none;grid-column:1/-1;justify-content:start;flex-direction:column}.open{display:flex}.header-cta{display:none}.top-contact-inner{align-items:flex-start;gap:5px;padding-block:6px;flex-direction:column}.top-contact-message{font-size:11px;white-space:normal;text-align:left}.top-contact-links{justify-content:flex-start;gap:6px 10px}.top-contact-link{min-height:28px;max-width:100%;overflow-wrap:anywhere}.top-contact-phone{font-size:13px}.top-contact-icon{width:30px;flex:0 0 30px}}
   @media(max-width:1200px){.site-footer{grid-template-columns:repeat(3,1fr)}}

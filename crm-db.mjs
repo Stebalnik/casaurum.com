@@ -351,6 +351,7 @@ export function upsertPartner(partner) {
     manager: partner.manager || "",
     source: partner.source || "",
     notes: partner.notes || "",
+    smsConsent: Boolean(partner.smsConsent),
   };
   const previousPayload = existing ? decryptJson(existing.encrypted_payload) : {};
   const portalToken = partner.portalToken || previousPayload.portalToken || randomToken();
