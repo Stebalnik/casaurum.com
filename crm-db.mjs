@@ -664,6 +664,76 @@ export function savePlannerProjectFromLead(lead) {
   });
 }
 
+export function createEstimateSnapshotFromLead(lead, context = {}) {
+  if (!["quick_project_estimate", "technical_millwork_planner"].includes(lead.formType)) return null;
+  const database = initCrmDb();
+  const existing = database.prepare("select * from estimate_snapshots where lead_id = ? limit 1").get(lead.id);
+  if (existing) return summarizeEstimateSnapshot(existing, { includeSnapshot: true });
+  let crm = null;
+  try {
+    crm = ensureCrmForLead(lead.id);
+  } catch {}
+  const source = lead.formType === "technical_millwork_planner" ? "technical_millwork_planner" : "quick_project_estimate";
+  const estimate = source === "technical_millwork_planner"
+    ? parseJsonObject(lead.plannerConfig)?.estimateJson || parseJsonObject(lead.internal_estimate_json)
+    : parseJsonObject(lead.estimate_json || lead.internal_estimate_json);
+  const publicId = randomToken();
+  const offerCreatedAt = lead.offer_created_at || estimate.offerCreatedAt || new Date().toISOString();
+  const offerExpiresAt = lead.offer_expires_at || estimate.offerExpiresAt || new Date(new Date(offerCreatedAt).getTime() + 24 * 60 * 60 * 1000).toISOString();
+  const payload = {
+    publicId,
+    leadId: lead.id,
+    contactId: crm?.contact?.id || "",
+    dealId: crm?.deal?.id || "",
+    source,
+    clientName: lead.fullName || [lead.firstName, lead.lastName].filter(Boolean).join(" "),
+    email: lead.email || "",
+    phone: lead.phone || "",
+    projectLocation: lead.project_location || lead.zipCode || lead.zip || "",
+    projectType: lead.projectType || lead.project_type || estimate.projectType || "",
+    createdAt: lead.timestamp || new Date().toISOString(),
+    estimate,
+    lead: publicLeadSnapshot(lead),
+    uploadedFiles: lead.uploadedFiles || lead.files || [],
+    plannerProject: context.plannerProject || null,
+    offerCreatedAt,
+    offerExpiresAt,
+    offerStatus: lead.offer_status || estimate.offerStatus || "active",
+    status: "New Estimate Lead",
+  };
+  database.prepare(`
+    insert into estimate_snapshots (
+      id, public_id, lead_id, contact_id, deal_id, source, status, offer_status,
+      offer_created_at, offer_expires_at, encrypted_payload
+    ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(cryptoId(), publicId, lead.id, crm?.contact?.id || null, crm?.deal?.id || null, source, "New Estimate Lead", payload.offerStatus, offerCreatedAt, offerExpiresAt, encryptJson(payload));
+  insertActivity({
+    leadId: lead.id,
+    contactId: crm?.contact?.id,
+    dealId: crm?.deal?.id,
+    type: source === "technical_millwork_planner" ? "technical_planner_submitted" : "quick_estimate_completed",
+    status: "completed",
+    completedAt: new Date().toISOString(),
+    notes: source === "technical_millwork_planner" ? "Client submitted Technical Millwork Planner." : "Client completed Quick Project Estimate.",
+    payload: { publicId, source, estimatedTotal: estimate.estimatedTotal || estimate.publicEstimateTotal || estimate.finalTotalMax || 0 },
+  });
+  return getEstimateSnapshotByPublicId(publicId);
+}
+
+export function getEstimateSnapshotByPublicId(publicId) {
+  const row = initCrmDb().prepare("select * from estimate_snapshots where public_id = ? limit 1").get(String(publicId || ""));
+  return row ? summarizeEstimateSnapshot(row, { includeSnapshot: true }) : null;
+}
+
+export function listEstimateSnapshots({ limit = 80, source = "" } = {}) {
+  const cappedLimit = Math.min(Math.max(Number(limit) || 80, 1), 200);
+  const rows = initCrmDb().prepare("select * from estimate_snapshots order by created_at desc limit ?").all(cappedLimit * 2);
+  return rows
+    .filter((row) => !source || row.source === source)
+    .slice(0, cappedLimit)
+    .map((row) => summarizeEstimateSnapshot(row));
+}
+
 export function closeActivity(id, status = "closed") {
   initCrmDb().prepare("update activities set status = ?, completed_at = datetime('now') where id = ?").run(status, id);
 }
@@ -1137,6 +1207,49 @@ function summarizePlannerProject(row, { includeSnapshot = false, includeToken = 
   };
 }
 
+function summarizeEstimateSnapshot(row, { includeSnapshot = false } = {}) {
+  const payload = decryptJson(row.encrypted_payload);
+  const estimate = payload.estimate || {};
+  return {
+    id: row.id,
+    publicId: row.public_id,
+    leadId: row.lead_id || payload.leadId || "",
+    contactId: row.contact_id || payload.contactId || "",
+    dealId: row.deal_id || payload.dealId || "",
+    source: row.source || payload.source || "",
+    status: row.status || payload.status || "",
+    offerStatus: row.offer_status || payload.offerStatus || "",
+    offerCreatedAt: row.offer_created_at || payload.offerCreatedAt || "",
+    offerExpiresAt: row.offer_expires_at || payload.offerExpiresAt || "",
+    createdAt: row.created_at || payload.createdAt || "",
+    clientName: payload.clientName || "",
+    projectLocation: payload.projectLocation || "",
+    projectType: payload.projectType || estimate.projectType || "",
+    estimatedTotal: estimate.estimatedTotal || estimate.publicEstimateTotal || 0,
+    rangeLow: estimate.rangeLow || estimate.finalTotalMin || estimate.calculatedTotalMin || 0,
+    rangeHigh: estimate.rangeHigh || estimate.finalTotalMax || estimate.calculatedTotalMax || 0,
+    discountedTotal: estimate.discountedTotal || 0,
+    depositAmount: estimate.depositAmount || 0,
+    confidence: estimate.confidence || "",
+    snapshot: includeSnapshot ? payload : undefined,
+  };
+}
+
+function publicLeadSnapshot(lead) {
+  return {
+    id: lead.id,
+    fullName: lead.fullName || [lead.firstName, lead.lastName].filter(Boolean).join(" "),
+    email: lead.email || "",
+    phone: lead.phone || "",
+    zipCode: lead.zipCode || lead.zip || "",
+    timeline: lead.timeline || "",
+    budget: lead.budget || lead.budget_range || "",
+    notes: lead.project_notes || lead.designerNotes || lead.notes || "",
+    consent: Boolean(lead.consent),
+    smsConsent: Boolean(lead.smsConsent),
+  };
+}
+
 function normalizePlannerSnapshot(snapshot) {
   const value = snapshot && typeof snapshot === "object" ? snapshot : {};
   return {
@@ -1338,6 +1451,25 @@ function schemaSql() {
       encrypted_snapshot text not null
     );
     create index if not exists planner_project_versions_project_idx on planner_project_versions(project_id, version_no);
+
+    create table if not exists estimate_snapshots (
+      id text primary key,
+      public_id text not null unique,
+      created_at text not null default (datetime('now')),
+      updated_at text not null default (datetime('now')),
+      lead_id text,
+      contact_id text,
+      deal_id text,
+      source text,
+      status text not null default 'New Estimate Lead',
+      offer_status text not null default 'active',
+      offer_created_at text,
+      offer_expires_at text,
+      encrypted_payload text not null
+    );
+    create index if not exists estimate_snapshots_public_idx on estimate_snapshots(public_id);
+    create index if not exists estimate_snapshots_lead_idx on estimate_snapshots(lead_id);
+    create index if not exists estimate_snapshots_source_idx on estimate_snapshots(source, created_at);
 
     create table if not exists activities (
       id text primary key,

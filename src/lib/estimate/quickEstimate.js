@@ -1,19 +1,29 @@
-import { calculateEstimate } from "./calculationEngine.js";
+import {
+  calculateCabinetryLineItem,
+  calculateFixedLineItem,
+  calculateMirrorLineItems,
+  calculateWallPanelLineItem,
+  createOffer,
+  pricingRules,
+  serviceLineItem,
+  summarizePricing,
+} from "./pricingRules.js";
 
 export const quickEstimateConfig = {
-  projectTypes: ["TV Wall / Media Wall", "Wall Panels", "Foyer / Entry Wall", "Bedroom Feature Wall", "Bathroom Vanity Wall", "Closet Doors / Closet Reface", "Office Built-In", "Kitchen Wall / Under Bar", "Full Custom Project"],
+  projectTypes: ["TV Wall / Media Wall", "Wall Panels", "Fireplace Wall", "Foyer / Entry Wall", "Bedroom Feature Wall", "Bathroom Vanity Wall", "Closet Doors / Closet Reface", "Office Built-In", "Kitchen Wall / Under Bar", "Full Custom Project"],
   rooms: ["Living Room", "Bedroom", "Foyer", "Hallway", "Kitchen", "Bathroom", "Closet", "Office", "Dining Area", "Den Room", "Other"],
   approximateSizes: {
-    small: { label: "Small wall, up to 8 ft wide", widthMin: 6, widthMax: 8, heightMin: 8, heightMax: 10 },
-    medium: { label: "Medium wall, 8-14 ft wide", widthMin: 8, widthMax: 14, heightMin: 8, heightMax: 10 },
-    large: { label: "Large wall, 14-22 ft wide", widthMin: 14, widthMax: 22, heightMin: 9, heightMax: 11 },
-    multiple: { label: "Multiple walls / full room", widthMin: 14, widthMax: 22, heightMin: 9, heightMax: 11, multiplierMin: 2, multiplierMax: 4 },
-    double_height: { label: "Double-height area", widthMin: 10, widthMax: 18, heightMin: 14, heightMax: 22 },
-    not_sure: { label: "Not sure", widthMin: 8, widthMax: 16, heightMin: 8, heightMax: 11 },
+    small: { label: "Small wall, up to 8 ft wide", widthMin: 8, widthMax: 8, heightMin: 9, heightMax: 9, placeholderSqFt: 72 },
+    medium: { label: "Medium wall, 8-14 ft wide", widthMin: 12, widthMax: 12, heightMin: 9, heightMax: 9, placeholderSqFt: 108 },
+    large: { label: "Large wall, 14-22 ft wide", widthMin: 18, widthMax: 18, heightMin: 9, heightMax: 9, placeholderSqFt: 162 },
+    multiple: { label: "Multiple walls / full room", widthMin: 20, widthMax: 20, heightMin: 16, heightMax: 16, placeholderSqFt: 320 },
+    double_height: { label: "Double-height area", widthMin: 18, widthMax: 18, heightMin: 18, heightMax: 18, placeholderSqFt: 324 },
+    not_sure: { label: "Not sure", widthMin: 12, widthMax: 12, heightMin: 9, heightMax: 9, placeholderSqFt: 108 },
   },
   layouts: {
     "TV Wall / Media Wall": ["Simple TV panel", "TV wall with lower cabinet", "TV wall with tall side cabinets", "Full media wall with shelves", "TV wall with hidden door", "Premium TV wall with stone / mirror / LED"],
     "Wall Panels": ["Flat panels", "Fluted panels", "Mixed wood panels", "Stone-look accent", "Panels with LED", "Full hallway / full room panels"],
+    "Fireplace Wall": ["Fireplace surround", "Fireplace wall with panels", "Fireplace wall with stone-look panels", "Fireplace wall with LED", "Full fireplace feature wall"],
     "Foyer / Entry Wall": ["Single accent wall", "Double-height foyer", "Wall with hidden door", "Wall with mirror", "Wall with ceiling panels", "Full foyer package"],
     "Bedroom Feature Wall": ["Bed back wall", "Bed wall with LED", "Bed wall with panels and nightstands", "TV wall", "Full bedroom feature package"],
     "Bathroom Vanity Wall": ["Vanity wall panels", "Mirror and LED", "Floating cabinet", "Double vanity", "Stone-look panels", "Full vanity feature wall"],
@@ -26,14 +36,16 @@ export const quickEstimateConfig = {
 
 export function buildQuickEstimate(input = {}) {
   const createdAt = input.createdAt || new Date().toISOString();
+  const rules = input.pricingRules || pricingRules;
   const projectType = input.projectType || "TV Wall / Media Wall";
   const roomType = input.roomType || "";
   const size = resolveSize(input);
   const selectedFeatures = selectedFeaturesFromInput(input);
   const layout = input.selectedLayout || defaultLayout(projectType);
-  const lineItems = buildLineItems(projectType, layout, input, size);
+  const lineItems = buildLineItems(projectType, layout, input, size, rules);
   const confidence = estimateConfidence(input);
-  const buffer = confidence === "high" ? 1.08 : confidence === "medium" ? 1.18 : 1.32;
+  const pricingSummary = summarizePricing(lineItems, { confidence, rules });
+  const offer = createOffer({ now: createdAt, rules });
   const section = {
     id: "quick-main-section",
     name: "Main area",
@@ -46,9 +58,11 @@ export function buildQuickEstimate(input = {}) {
     options: [],
     notes: input.notes || "",
   };
-  const estimate = calculateEstimate({
+  const estimate = {
     id: input.id || `quick-${Date.now()}`,
+    publicId: input.publicId || "",
     mode: "quick_estimate",
+    source: "quick_project_estimate",
     projectType,
     roomType,
     clientName: input.clientName || input.fullName || "",
@@ -74,58 +88,65 @@ export function buildQuickEstimate(input = {}) {
     sizeMode: input.sizeMode || "unknown",
     sizeBucket: input.sizeBucket || "",
     confidence,
+    pricingRulesUsed: "cas_aurum_public_pricing_rules_v1",
+    settings: rules.settings,
+    ...pricingSummary,
+    ...offer,
     sourcePage: input.sourcePage || "/technical-millwork-planner",
     createdAt,
     status: input.status || "draft",
     recommendedNextAction: recommendedNextAction(input, confidence),
-  });
-  estimate.calculatedTotalMin = roundToHundreds(estimate.calculatedTotalMin * buffer);
-  estimate.calculatedTotalMax = roundToHundreds(estimate.calculatedTotalMax * (buffer + 0.08));
-  estimate.finalTotalMin = estimate.calculatedTotalMin;
-  estimate.finalTotalMax = estimate.calculatedTotalMax;
+  };
+  estimate.calculatedTotalMin = estimate.rangeLow;
+  estimate.calculatedTotalMax = estimate.rangeHigh;
+  estimate.finalTotalMin = estimate.rangeLow;
+  estimate.finalTotalMax = estimate.rangeHigh;
   estimate.adjustmentAmountMin = 0;
   estimate.adjustmentAmountMax = 0;
-  estimate.clientNote = "Final pricing may change after field measurements, material selection, engineering details and installation review.";
+  estimate.clientNote = rules.disclaimers.preliminary;
+  estimate.warnings = smartWarnings(projectType, layout, input);
   return estimate;
 }
 
-function buildLineItems(projectType, layout, input, size) {
+function buildLineItems(projectType, layout, input, size, rules = pricingRules) {
   const items = [];
-  const areaMin = size.areaMin;
-  const areaMax = size.areaMax;
-  const widthMin = size.widthMin;
   const widthMax = size.widthMax;
+  const area = size.areaMax;
   const cabinet = input.cabinets || "";
   const led = input.led || "";
   const shelves = input.shelves || "";
   const material = input.material || "";
   const hiddenDoors = input.hiddenDoors || "";
+  const wallCountLabel = input.wallCountLabel || "";
 
-  const add = (catalogId, name, unit, qtyMin, qtyMax, extra = {}) => items.push({ id: `${catalogId}-${items.length + 1}`, catalogId, materialCode: catalogId, category: extra.category || "", name, unit, qtyMin, qtyMax, clientVisible: extra.clientVisible ?? true, included: true, excluded: false, description: extra.description || "" });
-  const panelCatalog = /stone/i.test(layout) || /Stone/.test(material) ? "stone_look_panels" : /Premium|full media|Full/.test(layout) ? "panels_premium" : "panels_standard";
-  const panelName = panelCatalog === "stone_look_panels" ? "Stone-look panels" : "Wall panels";
+  const add = (item) => {
+    if (!item) return;
+    items.push(legacyLineItem(item, items.length + 1));
+  };
+  const panelAddOns = panelAddOnsFor({ projectType, layout, material, led, wallCountLabel });
+  const panelName = /stone/i.test(layout) || /Stone-look|Both/i.test(material) ? "Stone-look wall panels" : "Wall panels";
 
-  if (!/Closet/.test(projectType) || /walk-in/i.test(layout)) add(panelCatalog, panelName, "sq_ft", areaMin, areaMax, { category: "panels" });
-  if (/Under Bar/.test(projectType) || /under bar/i.test(layout)) add("under_bar_panels", "Under bar panels", "sq_ft", Math.max(24, areaMin * 0.35), Math.max(42, areaMax * 0.45));
-  if (/lower|Both/i.test(cabinet) || /lower cabinet|Full media|Floating cabinet|Double vanity/i.test(layout)) add("cabinet_short", "Lower cabinet", "linear_ft", widthMin * 0.55, widthMax * 0.85);
-  if (/Tall|Both/i.test(cabinet) || /tall side|Tall cabinet|Full media/i.test(layout)) add("cabinet_tall", "Tall side cabinets", "linear_ft", 2, Math.min(8, Math.max(4, widthMax * 0.35)));
-  if (/TV Wall|Media Wall|TV wall/i.test(projectType + layout)) add("tv_mount", "TV mounting preparation", "fixed", 1, 1);
-  if (/Simple lighting/i.test(led)) add("led", "Simple LED lighting allowance", "fixed", 1, 1);
-  if (/Premium lighting/i.test(led) || /LED/i.test(layout)) add("led", "Premium LED lighting allowance", "fixed", 1, 2);
-  if (/Few shelves/i.test(shelves) || /shelves|Shelving/i.test(layout)) add("shelves", "Shelves", "pcs", 2, 5);
-  if (/Many shelves/i.test(shelves) || /Full media|Full office/i.test(layout)) add("shelves", "Shelves", "pcs", 4, 10);
-  if (/Mirror|Both/i.test(material) || /mirror/i.test(layout)) add(/bronze/i.test(material) ? "mirror_bronze" : "mirror_standard", "Mirror feature", "sq_ft", 15, 28);
-  if (/Stone-look|Both/i.test(material) && panelCatalog !== "stone_look_panels") add("stone_look_panels", "Stone-look accent material", "sq_ft", areaMin * 0.25, areaMax * 0.55);
+  if (!/Closet Doors/.test(projectType) || /walk-in/i.test(layout)) add(calculateWallPanelLineItem({ squareFeet: area, addOns: panelAddOns, name: panelName }, rules));
+  if (/Under Bar/.test(projectType) || /under bar/i.test(layout)) add(calculateWallPanelLineItem({ squareFeet: Math.max(42, area * 0.45), addOns: ["premium_material_egger_lioher"], name: "Kitchen wall / under bar panels" }, rules));
+  if (/lower|Both/i.test(cabinet) || /lower cabinet|Full media|Floating cabinet/i.test(layout)) add(calculateCabinetryLineItem({ rateId: /Vanity|Bathroom/.test(projectType) ? "vanity" : "tv_stand", linearFeet: Math.max(4, widthMax * 0.75), name: /Vanity|Bathroom/.test(projectType) ? "Vanity cabinetry" : "Lower media cabinet" }, rules));
+  if (/Tall|Both/i.test(cabinet) || /tall side|Tall cabinet|Full media/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "built_in_cabinetry", linearFeet: Math.min(10, Math.max(4, widthMax * 0.45)), name: "Tall side built-ins" }, rules));
+  if (/Office Built-In/i.test(projectType) || /Shelving|office/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "built_in_cabinetry", linearFeet: Math.max(6, widthMax * 0.85), name: "Office built-in cabinetry" }, rules));
+  if (/Closet/.test(projectType) || /Walk-in closet/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "wardrobe_closet", linearFeet: Math.max(6, widthMax), name: "Closet / wardrobe system" }, rules));
+  if (/Kitchen/.test(projectType) && !/Under Bar/.test(layout)) add(calculateCabinetryLineItem({ rateId: "kitchen_cabinetry", linearFeet: Math.max(6, widthMax * 0.75), name: "Kitchen cabinetry allowance" }, rules));
+  if (/Entry|Foyer/.test(projectType)) add(calculateCabinetryLineItem({ rateId: "entry_console_nightstands", linearFeet: Math.max(3, widthMax * 0.35), name: "Entry console allowance" }, rules));
+  if (/Premium lighting/i.test(led)) add(serviceLineItem({ serviceId: "electrician_services", quantity: 1, overrideInternalPrice: 650 }, rules));
+  if (/Few shelves/i.test(shelves) || /shelves|Shelving/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "built_in_cabinetry", linearFeet: Math.max(2, widthMax * 0.22), name: "Open shelving allowance" }, rules));
+  if (/Many shelves/i.test(shelves) || /Full media|Full office/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "built_in_cabinetry", linearFeet: Math.max(4, widthMax * 0.4), name: "Expanded shelving allowance" }, rules));
+  if (/Mirror|Both/i.test(material) || /mirror/i.test(layout)) calculateMirrorLineItems({ squareFeet: Math.max(18, Math.min(area * 0.45, 70)), includeInstall: true }, rules).forEach(add);
   const doorCount = hiddenDoors.match(/\d+/)?.[0] ? Number(hiddenDoors.match(/\d+/)[0]) : /hidden door/i.test(layout) ? 1 : 0;
-  if (doorCount) add(doorCount > 1 ? "custom_hidden_door" : "hidden_door", "Hidden door allowance", "pcs", doorCount, doorCount);
-  if (/Sliding doors|Mirror doors/i.test(layout)) add("sliding_doors", "Sliding closet doors", "linear_ft", widthMin, widthMax);
-  if (/Closet reface|Full closet front/i.test(layout)) add("closet_reface", "Closet reface pieces", "pcs", 2, 6);
-  if (/Murphy bed/i.test(layout)) add("murphy_bed", "Murphy bed wall allowance", "fixed", 1, 1);
-  if (/Desk wall/i.test(layout)) add("desk", "Built-in desk allowance", "fixed", 1, 1);
-  if (/nightstands/i.test(layout)) add("nightstand", "Integrated nightstands", "pcs", 1, 2);
-  if (/ceiling/i.test(layout)) add("panels_ceiling", "Ceiling panels", "sq_ft", areaMin * 0.35, areaMax * 0.65);
-  if (/lamp/i.test(layout)) add("lamp", "Wall lights", "pcs", 1, 2);
-  if (/Bathroom Vanity/.test(projectType)) items.push({ id: "excluded-countertop", category: "exclusion", name: "Countertop, sink and plumbing", description: "Excluded unless selected after review.", unit: "manual", totalMin: 0, totalMax: 0, clientVisible: true, included: false, excluded: true, formulaText: "excluded" });
+  if (doorCount) add(calculateFixedLineItem({ id: doorCount > 1 ? "tall_hidden_door" : "hidden_door", category: "doors", name: doorCount > 1 ? "Tall hidden door" : "Hidden door", quantity: doorCount, internalPrice: doorCount > 1 ? rules.wallPanels.fixedAddOns.tall_hidden_door.internalPrice : rules.wallPanels.fixedAddOns.hidden_door.internalPrice }, rules));
+  if (/Sliding doors|Mirror doors/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "wardrobe_closet", linearFeet: widthMax, name: "Closet doors / reface allowance" }, rules));
+  if (/Murphy bed/i.test(layout)) add(calculateFixedLineItem({ id: "murphy_bed", category: "office", name: "Murphy bed wall allowance", quantity: 1, internalPrice: 9600 }, rules));
+  if (/Desk wall/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "built_in_cabinetry", linearFeet: Math.max(4, widthMax * 0.55), name: "Built-in desk allowance" }, rules));
+  if (/nightstands/i.test(layout)) add(calculateCabinetryLineItem({ rateId: "entry_console_nightstands", linearFeet: 4, name: "Integrated nightstands" }, rules));
+  if (/ceiling/i.test(layout)) add(calculateWallPanelLineItem({ squareFeet: area * 0.55, addOns: ["premium_material_stone"], name: "Ceiling panels" }, rules));
+  add(serviceLineItem({ serviceId: "delivery", quantity: 1 }, rules));
+  if (/Bathroom Vanity/.test(projectType)) items.push({ id: "excluded-countertop", category: "exclusion", name: "Countertop, sink and plumbing", description: "Excluded unless selected after review.", unit: "manual", totalMin: 0, totalMax: 0, publicTotal: 0, clientVisible: true, included: false, excluded: true, formulaText: "excluded" });
   return items;
 }
 
@@ -139,15 +160,16 @@ function resolveSize(input) {
     return { widthMin: width, widthMax: width, heightMin: height, heightMax: height, areaMin: area, areaMax: area };
   }
   const bucket = quickEstimateConfig.approximateSizes[input.sizeBucket] || quickEstimateConfig.approximateSizes.not_sure;
-  const minMultiplier = bucket.multiplierMin || walls;
-  const maxMultiplier = bucket.multiplierMax || walls;
+  const mappedWalls = wallMultiplier(input.wallCountLabel || input.quick_wall_count || "");
+  const multiplier = mappedWalls || walls;
+  const area = Number(bucket.placeholderSqFt || bucket.widthMax * bucket.heightMax) * multiplier;
   return {
     widthMin: bucket.widthMin,
     widthMax: bucket.widthMax,
     heightMin: bucket.heightMin,
     heightMax: bucket.heightMax,
-    areaMin: bucket.widthMin * bucket.heightMin * minMultiplier,
-    areaMax: bucket.widthMax * bucket.heightMax * maxMultiplier,
+    areaMin: area,
+    areaMax: area,
   };
 }
 
@@ -181,4 +203,54 @@ function clamp(value, min, max) {
 
 function slug(value) {
   return String(value || "zone").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function legacyLineItem(item, index) {
+  return {
+    ...item,
+    id: `${item.id || "line"}-${index}`,
+    catalogId: item.id,
+    materialCode: item.id,
+    unit: item.unit,
+    qty: item.quantity,
+    qtyMin: item.quantity,
+    qtyMax: item.quantity,
+    unitPrice: item.publicUnitPrice,
+    unitPriceMin: item.publicUnitPrice,
+    unitPriceMax: item.publicUnitPrice,
+    total: item.publicTotal,
+    totalMin: item.publicTotal,
+    totalMax: item.publicTotal,
+    formulaText: `${item.quantity} ${item.unit} x public project rate`,
+    included: true,
+    excluded: false,
+  };
+}
+
+function panelAddOnsFor({ projectType, layout, material, led, wallCountLabel }) {
+  const text = `${projectType} ${layout} ${material} ${led} ${wallCountLabel}`;
+  return [
+    /Simple lighting|Premium lighting|LED/i.test(text) ? "led_lighting" : "",
+    /Premium lighting|recessed/i.test(text) ? "recessed_lighting" : "",
+    /Stone-look|travertine|marble|granite|metal|Both/i.test(text) ? "premium_material_stone" : "",
+    /Fluted|3D|relief/i.test(text) ? "three_d_panels" : "",
+    /Full|Premium/i.test(text) ? "multidimensional_design" : "",
+    /Double-height|stair/i.test(text) ? "staircase_installation" : "",
+  ].filter(Boolean);
+}
+
+function wallMultiplier(label) {
+  if (/Two walls/i.test(label)) return 2;
+  if (/Full room/i.test(label)) return 3;
+  return 0;
+}
+
+function smartWarnings(projectType, layout, input) {
+  return [
+    /Not sure|^$/i.test(input.material || "") ? "Material not specified - pricing may be understated." : "",
+    /lighting|LED/i.test(`${input.led || ""} ${layout}`) ? "Electrical work may be required for LED lighting." : "",
+    /hidden door/i.test(`${input.hiddenDoors || ""} ${layout}`) ? "Hidden doors require field review and may affect hardware, framing and installation." : "",
+    /Double-height|stair/i.test(`${input.wallCountLabel || ""} ${layout}`) ? "Double-height and staircase installations may require additional access, safety planning and installation review." : "",
+    /Full Custom Project/i.test(projectType) ? "A detailed review is needed for custom scope. This estimate is a starting point only." : "",
+  ].filter(Boolean);
 }

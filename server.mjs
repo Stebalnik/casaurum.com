@@ -7,6 +7,7 @@ import {
   addLeadNote,
   authenticateWebUser,
   createWebSession,
+  createEstimateSnapshotFromLead,
   deleteLeadFromCrm,
   ensureCrmForLead,
   ensureEnvWebAdmin,
@@ -15,6 +16,7 @@ import {
   getPartnerByPortalToken,
   getPartnerSummary,
   getCrmSummary,
+  getEstimateSnapshotByPublicId,
   getWebSession,
   insertLead as insertLeadIntoLocalCrm,
   isTelegramUserAuthorized,
@@ -25,6 +27,7 @@ import {
   listTelegramAccessUsers,
   listWebUsers,
   listCrmLeads,
+  listEstimateSnapshots,
   markLeadContacted,
   markLeadNotFit,
   revokeWebSession,
@@ -40,6 +43,7 @@ import { casaurumSeoPages, casaurumSeoPagesByPath, casaurumSeoStats } from "./sr
 import { priceCatalog } from "./src/lib/estimate/priceCatalog.js";
 import { estimateTemplates } from "./src/lib/estimate/estimateTemplates.js";
 import { buildQuickEstimate, quickEstimateConfig } from "./src/lib/estimate/quickEstimate.js";
+import { pricingRules } from "./src/lib/estimate/pricingRules.js";
 import {
   getSeoMarketPageByPath,
   seoMarketPages,
@@ -95,6 +99,7 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 const TELEGRAM_CRM_APP_URL = (process.env.TELEGRAM_CRM_APP_URL || `${BASE_URL}/crm-app`).replace(/\/$/, "");
 const CRM_INTERNAL_API_BASE_URL = (process.env.CRM_INTERNAL_API_BASE_URL || "https://crm-staging.casaurum.com").replace(/\/$/, "");
 const PUBLIC_DIR = "/var/www/casaurum.com/public";
+const DATA_DIR = "/var/www/casaurum.com/data";
 const COMPLETED_PROJECT_MANIFEST_PATH = "/var/www/casaurum.com/data/casaurum-premium-gallery-seo-manifest.json";
 const SEO_PERFORMANCE_CACHE_PATH = "/var/www/casaurum.com/data/seo-performance-cache.json";
 const SEO_PERFORMANCE_CACHE_TTL_MS = Number(process.env.SEO_PERFORMANCE_CACHE_TTL_MS || 6 * 60 * 60 * 1000);
@@ -106,6 +111,17 @@ const STATIC_ASSET_VERSION = "20260701b";
 const SITE_CSS_PATH = `/site-${STATIC_ASSET_VERSION}.css`;
 const CLIENT_JS_PATH = `/client-${STATIC_ASSET_VERSION}.js`;
 const PLANNER_JS_PATH = `/planner-${STATIC_ASSET_VERSION}.js`;
+const PRICING_RULES_PATH = path.join(DATA_DIR, "pricing-rules.json");
+
+function activePricingRules() {
+  try {
+    if (!existsSync(PRICING_RULES_PATH)) return pricingRules;
+    const overrides = JSON.parse(readFileSync(PRICING_RULES_PATH, "utf8"));
+    return mergeDeep(mergeDeep({}, pricingRules), overrides);
+  } catch {
+    return pricingRules;
+  }
+}
 
 ensureEnvWebAdmin();
 
@@ -3039,10 +3055,24 @@ const server = http.createServer(async (request, response) => {
 	    if ((request.method === "GET" || request.method === "HEAD") && isPublicAssetPath(path)) return servePublicAsset(path, response, request.method);
 	    if (request.method === "GET" && path === "/start-design-concept") return redirect(response, "/design-concept#start-design-concept");
 	    if (request.method === "POST" && path === "/api/lead") return await handleLead(request, response, url);
+	    if (path.startsWith("/api/estimate-tools/")) return await handleEstimateToolsApi(request, response, url, path);
 	    if (request.method === "POST" && path === "/api/design-concept-lead") return await handleDesignConceptLead(request, response);
 	    if (request.method === "POST" && path === "/api/partner-application") return await handlePartnerApplication(request, response);
     if (path.startsWith("/api/planner-projects")) return await handlePlannerProjectApi(request, response, url, path);
     if (path === "/admin") return redirect(response, "/crm-app");
+    if (path === "/admin/estimates") {
+      if (!requireCrmWebAuth(request, response)) return;
+      return noStoreHtml(response, adminEstimatesPage());
+    }
+    if (path.match(/^\/admin\/estimates\/[^/]+$/)) {
+      if (!requireCrmWebAuth(request, response)) return;
+      return noStoreHtml(response, adminEstimateDetailPage(decodeURIComponent(path.split("/").pop() || "")));
+    }
+    if (path === "/admin/pricing-rules") {
+      if (!requireCrmWebAuth(request, response)) return;
+      return noStoreHtml(response, adminPricingRulesPage());
+    }
+    if (path.match(/^\/estimate-result\/[^/]+$/)) return noStoreHtml(response, estimateResultPage(decodeURIComponent(path.split("/").pop() || "")));
     if (path === "/partner-portal") return noStoreHtml(response, partnerPortalPage(url));
     if (path === "/robots.txt") return robots(response, robotsTxt());
     if (path === "/llms.txt") return robots(response, llmsTxt());
@@ -3071,6 +3101,7 @@ const server = http.createServer(async (request, response) => {
     if (path === "/api/crm-auth/login" && request.method === "POST") return await handleCrmWebLogin(request, response);
     if (path === "/api/crm-auth/logout" && request.method === "POST") return handleCrmWebLogout(request, response);
     if (path === "/api/crm-auth/me" && request.method === "GET") return handleCrmWebMe(request, response);
+    if (path === "/api/admin/pricing-rules" && request.method === "POST") return await handleAdminPricingRulesSave(request, response);
     if (path.startsWith("/api/crm-app/")) return await handleCrmAppApi(request, response, url, path);
     if (path === "/health") return json(response, { status: "ok", brand: BRAND });
     const autoLocaleTarget = autoLocaleRedirectTarget(request, path);
@@ -6404,7 +6435,7 @@ function servicePlannerBlock(route, key) {
 }
 
 function quickEstimateDataScript(sourcePage = "/technical-millwork-planner", lang = "en") {
-  return `<script type="application/json" id="quick-estimate-data">${escapeHtml(JSON.stringify({ config: quickEstimateConfig, i18n: quickEstimateI18n(lang), sourcePage }))}</script>`;
+  return `<script type="application/json" id="quick-estimate-data">${escapeHtml(JSON.stringify({ config: quickEstimateConfig, pricingRules: activePricingRules(), i18n: quickEstimateI18n(lang), sourcePage }))}</script>`;
 }
 
 function quickEstimateI18n(lang) {
@@ -6692,6 +6723,12 @@ function quickEstimateWizard(route, sourcePage = "/technical-millwork-planner") 
           <input type="hidden" name="size_bucket" data-quick-field="sizeBucket" value="medium">
           <input type="hidden" name="selected_features" data-quick-field="selectedFeatures" value="">
           <input type="hidden" name="preliminary_range" data-quick-field="preliminaryRange" value="">
+          <input type="hidden" name="estimated_total" data-quick-field="estimatedTotal" value="">
+          <input type="hidden" name="discounted_total" data-quick-field="discountedTotal" value="">
+          <input type="hidden" name="deposit_amount" data-quick-field="depositAmount" value="">
+          <input type="hidden" name="offer_created_at" data-quick-field="offerCreatedAt" value="">
+          <input type="hidden" name="offer_expires_at" data-quick-field="offerExpiresAt" value="">
+          <input type="hidden" name="offer_status" data-quick-field="offerStatus" value="active">
           <input type="hidden" name="confidence" data-quick-field="confidence" value="medium">
           <input type="hidden" name="estimate_json" data-quick-field="estimateJson" value="">
           <input type="hidden" name="message" data-quick-field="message" value="">
@@ -6743,7 +6780,24 @@ function quickEstimateWizard(route, sourcePage = "/technical-millwork-planner") 
             <div class="quick-result-card">
               <span>${escapeHtml(q.preliminaryRange)}</span>
               <strong data-quick-range>$0 - $0</strong>
+              <dl class="quick-offer-metrics">
+                <div><dt>Estimated Total</dt><dd data-quick-total>$0</dd></div>
+                <div><dt>Discounted Total</dt><dd data-quick-discounted>$0</dd></div>
+                <div><dt>50% Deposit to Reserve</dt><dd data-quick-deposit>$0</dd></div>
+                <div><dt>Confidence</dt><dd data-quick-confidence-label>Medium</dd></div>
+              </dl>
               <p>${escapeHtml(q.resultNote)}</p>
+            </div>
+            <div class="quick-offer-block">
+              <p class="eyebrow">Limited 24-Hour Offer</p>
+              <h3>Reserve your project within the next 24 hours and receive 15% off your estimate when you place a 50% deposit.</h3>
+              <p>This offer is available for qualified projects and is applied after Cas Aurum reviews your project details, photos and final scope.</p>
+              <strong data-quick-countdown>24:00:00 remaining</strong>
+              <div class="actions">
+                <button class="button primary" type="submit" name="intent" value="reserve_discount">Reserve My 15% Discount</button>
+                <a class="button secondary" href="${urlFor(route.lang, "consultation")}">Book a Design Consultation</a>
+                <button class="button secondary" type="submit" name="intent" value="final_quote">Request Final Quote</button>
+              </div>
             </div>
             <div class="quick-included">
               <h3>${escapeHtml(q.includedTitle)}</h3>
@@ -6886,9 +6940,17 @@ function technicalPlannerPage(route) {
       ["wallCabinet", "Wall cabinet", "Upper / hanging cabinet for storage, open shelves, glass display or lift-up doors.", "all"],
       ["wallPanel", "Wall panel", "Back panel, decorative side, filler panel or appliance wall surface.", "all"],
       ["freestandingCabinet", "Freestanding cabinet", "Tall, island or separate cabinet block placed in the room, not tied to a wall.", "room"],
+      ["tallCabinet", "Tall cabinet", "Tall storage, appliance tower, wardrobe or side cabinet zone.", "all"],
+      ["openShelving", "Open shelving", "Open shelf zone with material, lighting and hardware review.", "all"],
+      ["tvPanel", "TV panel", "Media wall panel zone with optional base cabinets and lighting.", "all"],
+      ["fireplaceSurround", "Fireplace surround", "Fireplace feature surround or panel package.", "all"],
+      ["mirrorPanel", "Mirror panel", "Mirror feature wall or vanity mirror zone.", "all"],
+      ["decorativePanel", "Decorative panel", "Feature wall panel, fluted, relief or multidimensional surface.", "all"],
+      ["customFurnitureBlock", "Custom furniture block", "Custom furniture massing block for scope review.", "room"],
     ]],
   ];
   return `
+    <script type="application/json" id="planner-pricing-rules">${escapeHtml(JSON.stringify(activePricingRules()))}</script>
     <section class="planner-hero">
       <div>
         <p class="eyebrow">${escapeHtml(localized("Plan My Space", lang))}</p>
@@ -6990,7 +7052,7 @@ function technicalPlannerPage(route) {
             <label>${escapeHtml(localized("Depth", lang))} <small>in</small><input type="number" min="8" max="48" step="1" data-field="depth"></label>
             <label>${escapeHtml(localized("Gap before", lang))} <small>in</small><input type="number" min="0" max="120" step="1" data-field="gapBefore"></label>
             <label>${escapeHtml(localized("Wall", lang))}<select data-field="wall"><option value="front">Front wall</option><option value="back">Back wall</option><option value="left">Left wall</option><option value="right">Right wall</option><option value="free">Not wall-bound</option></select></label>
-            <label>${escapeHtml(localized("Module type", lang))}<select data-field="moduleRole"><option>Base cabinet</option><option>Wall cabinet</option><option>Wall panel</option><option>Freestanding cabinet</option></select></label>
+            <label>${escapeHtml(localized("Module type", lang))}<select data-field="moduleRole"><option>Base cabinet</option><option>Wall cabinet</option><option>Wall panel</option><option>Freestanding cabinet</option><option>Tall cabinet</option><option>Open shelving</option><option>TV panel</option><option>Fireplace surround</option><option>Mirror panel</option><option>Decorative panel</option><option>Custom furniture block</option></select></label>
             <label>${escapeHtml(localized("Front type", lang))}<select data-field="front"><option>Solid doors</option><option>Drawers</option><option>Glass doors</option><option>Open shelf</option><option>Appliance opening</option><option>Feature panel</option></select></label>
             <label>${escapeHtml(localized("Opening", lang))}<select data-field="opening"><option>Left hinged</option><option>Right hinged</option><option>Pair doors</option><option>Drawer slides</option><option>Lift-up door</option><option>Pocket / retractable</option><option>Open</option><option>Fixed</option></select></label>
             <label>${escapeHtml(localized("Shelves", lang))}<input type="number" min="0" max="12" step="1" data-field="shelves"></label>
@@ -6998,6 +7060,7 @@ function technicalPlannerPage(route) {
             <label class="planner-check"><input type="checkbox" data-field="glass"> ${escapeHtml(localized("Glass fronts / inserts", lang))}</label>
             <label class="planner-check"><input type="checkbox" data-field="handles"> ${escapeHtml(localized("Visible external handles", lang))}</label>
             <label class="planner-check"><input type="checkbox" data-field="lighting"> ${escapeHtml(localized("Integrated LED lighting", lang))}</label>
+            <label class="planner-check"><input type="checkbox" data-field="premiumMaterial"> ${escapeHtml(localized("Premium material direction", lang))}</label>
           </div>
         </aside>
       </div>
@@ -7007,8 +7070,15 @@ function technicalPlannerPage(route) {
           <div class="planner-stats">
             <div><span>${escapeHtml(localized("Modules", lang))}</span><strong data-stat="modules">0</strong></div>
             <div><span>${escapeHtml(localized("Linear ft", lang))}</span><strong data-stat="linear">0</strong></div>
+            <div><span>${escapeHtml(localized("Square ft", lang))}</span><strong data-stat="square">0</strong></div>
             <div><span>${escapeHtml(localized("Glass", lang))}</span><strong data-stat="glass">0</strong></div>
             <div><span>${escapeHtml(localized("Lighting", lang))}</span><strong data-stat="lighting">0</strong></div>
+          </div>
+          <div class="planner-budget-summary">
+            <div><span>Estimated range</span><strong data-planner-budget-range-display>$0 - $0</strong></div>
+            <div><span>Estimated total</span><strong data-planner-total>$0</strong></div>
+            <div><span>15% offer</span><strong data-planner-discounted>$0</strong></div>
+            <div><span>50% deposit</span><strong data-planner-deposit>$0</strong></div>
           </div>
           <ul data-planner-list></ul>
         </section>
@@ -7032,6 +7102,12 @@ function technicalPlannerPage(route) {
             <input type="hidden" name="projectType" data-planner-project-type-label value="${escapeHtml(preset?.label || "Millwork Planner")}">
             <input type="hidden" name="serviceNeeded" data-planner-service-needed value="${escapeHtml(preset?.label || "Millwork Planner")}">
             <input type="hidden" name="budget_range" data-planner-budget-range value="">
+            <input type="hidden" name="estimated_total" data-planner-estimated-total value="">
+            <input type="hidden" name="discounted_total" data-planner-discounted-total value="">
+            <input type="hidden" name="deposit_amount" data-planner-deposit-amount value="">
+            <input type="hidden" name="offer_created_at" data-planner-offer-created value="">
+            <input type="hidden" name="offer_expires_at" data-planner-offer-expires value="">
+            <input type="hidden" name="offer_status" data-planner-offer-status value="active">
             <input type="hidden" name="dimensions_status" data-planner-dimensions-status value="">
             <input type="hidden" name="plannerConfig" data-planner-config>
             <input type="hidden" name="plannerEstimate" data-planner-estimate>
@@ -9506,12 +9582,13 @@ async function handleLead(request, response) {
   };
   const storage = await persistLead(lead);
   const plannerProject = savePlannerProjectFromLead(lead);
+  const estimateSnapshot = createEstimateSnapshotFromLead(lead, { plannerProject: publicPlannerProjectPayload(plannerProject) });
   await deliverLeadEmail(lead);
-  await forwardLeadToExternalCrm(normalizeExternalCrmLead(lead, { storage, plannerProject: publicPlannerProjectPayload(plannerProject) }));
+  await forwardLeadToExternalCrm(normalizeExternalCrmLead(lead, { storage, plannerProject: publicPlannerProjectPayload(plannerProject), estimateSnapshot }));
   if (!storage.localDbOk && process.env.LOCAL_CRM_REQUIRED !== "false") {
     return json(response, { ok: false, message: "Lead saved to fallback, but encrypted CRM insert failed.", id: lead.id, storage }, 502);
   }
-  return json(response, { ok: true, id: lead.id, storage, plannerProject: publicPlannerProjectPayload(plannerProject) });
+  return json(response, { ok: true, id: lead.id, storage, plannerProject: publicPlannerProjectPayload(plannerProject), estimateSnapshot, resultUrl: estimateSnapshot?.publicId ? `/estimate-result/${encodeURIComponent(estimateSnapshot.publicId)}` : "" });
 }
 
 function normalizePlannerLeadPayload(payload) {
@@ -9534,6 +9611,14 @@ function normalizePlannerLeadPayload(payload) {
   payload.source_page = payload.source_page || payload.sourcePage || payload.sourceUrl || "";
   payload.dimensions_status = normalizeDimensionsStatus(payload.dimensions_status || payload.dimensionsStatus || plannerConfigDimensionsStatus(payload.plannerConfig));
   payload.internal_estimate_json = payload.internal_estimate_json || JSON.stringify(safeJson(payload.plannerConfig)?.estimateJson || {});
+  const plannerEstimateJson = safeJson(payload.internal_estimate_json);
+  payload.estimated_total = payload.estimated_total || plannerEstimateJson.estimatedTotal || plannerEstimateJson.publicEstimateTotal || 0;
+  payload.discounted_total = payload.discounted_total || plannerEstimateJson.discountedTotal || 0;
+  payload.deposit_amount = payload.deposit_amount || plannerEstimateJson.depositAmount || 0;
+  payload.offer_created_at = payload.offer_created_at || plannerEstimateJson.offerCreatedAt || new Date().toISOString();
+  payload.offer_expires_at = payload.offer_expires_at || plannerEstimateJson.offerExpiresAt || "";
+  payload.offer_status = payload.offer_status || plannerEstimateJson.offerStatus || "active";
+  payload.confidence = payload.confidence || plannerEstimateJson.confidence || "";
   payload.priority_labels = plannerPriorityLabels(payload);
 }
 
@@ -9549,6 +9634,7 @@ function normalizeQuickEstimateLeadPayload(payload) {
     shelves: payload.quick_shelves,
     material: payload.quick_material,
     hiddenDoors: payload.quick_hidden_doors,
+    wallCountLabel: payload.quick_wall_count,
     widthFt: payload.widthFt,
     heightFt: payload.heightFt,
     wallCount: payload.wallCount,
@@ -9561,6 +9647,7 @@ function normalizeQuickEstimateLeadPayload(payload) {
     budgetRange: payload.budget,
     notes: payload.project_notes || payload.notes,
     files: payload.files || payload.uploadedFiles || [],
+    pricingRules: activePricingRules(),
   });
   const range = payload.preliminary_range || payload.preliminaryRange || (estimate.calculatedTotalMin ? `$${Number(estimate.calculatedTotalMin).toLocaleString("en-US")} - $${Number(estimate.calculatedTotalMax).toLocaleString("en-US")}` : "");
   payload.formType = "quick_project_estimate";
@@ -9582,6 +9669,12 @@ function normalizeQuickEstimateLeadPayload(payload) {
   payload.selected_features = payload.selected_features || (Array.isArray(estimate.selectedFeatures) ? estimate.selectedFeatures.join(", ") : "");
   payload.dimensions_status = payload.size_mode === "exact" || estimate.sizeMode === "exact" ? "provided" : payload.size_bucket || estimate.sizeBucket ? "partial" : "missing";
   payload.preliminary_range = range;
+  payload.estimated_total = payload.estimated_total || estimate.estimatedTotal || estimate.publicEstimateTotal || 0;
+  payload.discounted_total = payload.discounted_total || estimate.discountedTotal || 0;
+  payload.deposit_amount = payload.deposit_amount || estimate.depositAmount || 0;
+  payload.offer_created_at = payload.offer_created_at || estimate.offerCreatedAt || new Date().toISOString();
+  payload.offer_expires_at = payload.offer_expires_at || estimate.offerExpiresAt || "";
+  payload.offer_status = payload.offer_status || estimate.offerStatus || "active";
   payload.confidence = payload.confidence || estimate.confidence || "low";
   payload.estimate_json = JSON.stringify(estimate || {});
   payload.internal_estimate_json = payload.estimate_json;
@@ -10269,6 +10362,149 @@ function publicPlannerProjectPayload(project) {
     restoreUrl: accessToken ? `${BASE_URL}/millwork-planner?project=${encodeURIComponent(project.id)}&token=${encodeURIComponent(accessToken)}` : "",
     snapshot: project.snapshot,
   };
+}
+
+async function handleEstimateToolsApi(request, response, url, requestPath) {
+  const pdfMatch = requestPath.match(/^\/api\/estimate-tools\/([^/]+)\/pdf$/);
+  if (request.method === "GET" && pdfMatch) {
+    const estimate = getEstimateSnapshotByPublicId(decodeURIComponent(pdfMatch[1]));
+    if (!estimate) return json(response, { ok: false, message: "Estimate not found" }, 404);
+    const buffer = createSimplePdf(estimatePdfLines(estimate));
+    response.writeHead(200, {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `attachment; filename="cas-aurum-estimate-${estimate.publicId}.pdf"`,
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    });
+    return response.end(buffer);
+  }
+  if (request.method === "POST" && requestPath === "/api/estimate-tools/quick") {
+    const payload = await readJsonBody(request);
+    return json(response, { ok: true, estimate: buildQuickEstimate({ ...payload, pricingRules: activePricingRules() }) });
+  }
+  if (request.method === "POST" && requestPath === "/api/estimate-tools/planner") {
+    const payload = await readJsonBody(request);
+    return json(response, { ok: true, estimate: safeJson(payload.plannerConfig)?.estimateJson || {} });
+  }
+  return json(response, { ok: false, message: "Not found" }, 404);
+}
+
+function estimateResultPage(publicId) {
+  const row = getEstimateSnapshotByPublicId(publicId);
+  if (!row) return `<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Estimate not found | ${BRAND}</title><style>${portalCss()}</style></head><body><main class="portal"><section class="panel"><p class="eyebrow">${BRAND}</p><h1>Estimate not found</h1><p>This estimate link may be invalid or expired.</p><a class="button primary" href="/quick-project-estimate">Request Updated Quote</a></section></main></body></html>`;
+  const rules = activePricingRules();
+  const estimate = row.snapshot?.estimate || {};
+  const expiresAt = row.offerExpiresAt || estimate.offerExpiresAt || "";
+  return `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Your estimate is ready | ${BRAND}</title><style>${portalCss()}${estimateResultCss()}</style></head>
+<body><main class="portal estimate-result">
+  <section class="panel estimate-hero">
+    <p class="eyebrow">${BRAND}</p>
+    <h1>Your estimate is ready.</h1>
+    <p>Based on the details you entered, your preliminary project total is ${moneyHtml(estimate.estimatedTotal || row.estimatedTotal)}.</p>
+    <div class="estimate-metrics">
+      <div><span>Estimated Project Range</span><strong>${moneyHtml(row.rangeLow)} - ${moneyHtml(row.rangeHigh)}</strong></div>
+      <div><span>Estimated Total</span><strong>${moneyHtml(estimate.estimatedTotal || row.estimatedTotal)}</strong></div>
+      <div><span>Discounted Total</span><strong>${moneyHtml(estimate.discountedTotal || row.discountedTotal)}</strong></div>
+      <div><span>Deposit to Reserve</span><strong>${moneyHtml(estimate.depositAmount || row.depositAmount)}</strong></div>
+    </div>
+    <div class="estimate-offer" data-result-offer data-expires="${escapeHtml(expiresAt)}">
+      <p class="eyebrow">Limited 24-Hour Offer</p>
+      <h2>Reserve your project with a 15% discount when you place a 50% deposit.</h2>
+      <strong data-result-countdown>Calculating time remaining...</strong>
+      <p>After reservation, Cas Aurum will review your project details, confirm measurements, finalize materials and prepare the next step for production or installation.</p>
+    </div>
+    <div class="actions">
+      <a class="button primary" href="/api/estimate-tools/${encodeURIComponent(row.publicId)}/pdf">Download Estimate PDF</a>
+      <a class="button secondary" href="/consultation">Reserve My 15% Discount</a>
+      <a class="button secondary" href="/consultation">Book a Design Consultation</a>
+      <a class="button secondary" href="/contact">Request Final Quote</a>
+    </div>
+    <p class="note">${escapeHtml(rules.disclaimers?.preliminary || pricingRules.disclaimers.preliminary)}</p>
+  </section>
+</main><script>${estimateResultScript()}</script></body></html>`;
+}
+
+function adminEstimatesPage() {
+  const rows = listEstimateSnapshots({ limit: 120 });
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Estimates | ${BRAND}</title><style>${portalCss()}${estimateResultCss()}</style></head><body><main class="portal"><section class="panel"><p class="eyebrow">${BRAND} Admin</p><h1>Submitted Estimates</h1><div class="ops-list">${rows.map((row) => `<a class="ops-row" href="/admin/estimates/${encodeURIComponent(row.publicId)}"><b>${escapeHtml(row.clientName || "Estimate")}</b><span>${escapeHtml(row.source)} · ${escapeHtml(row.projectType || "-")} · ${moneyHtml(row.estimatedTotal)}</span><span>${escapeHtml(row.createdAt || "")}</span></a>`).join("") || "<p>No estimates yet.</p>"}</div></section></main></body></html>`;
+}
+
+function adminEstimateDetailPage(publicId) {
+  const row = getEstimateSnapshotByPublicId(publicId);
+  if (!row) return `<!doctype html><html><head><meta charset="utf-8"><title>Not found</title><style>${portalCss()}</style></head><body><main class="portal"><section class="panel"><h1>Estimate not found</h1></section></main></body></html>`;
+  const snapshot = row.snapshot || {};
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Estimate ${escapeHtml(row.publicId)} | ${BRAND}</title><style>${portalCss()}${estimateResultCss()}</style></head><body><main class="portal"><section class="panel"><p class="eyebrow">${BRAND} Admin</p><h1>${escapeHtml(row.projectType || "Estimate")}</h1><div class="estimate-metrics"><div><span>Total</span><strong>${moneyHtml(row.estimatedTotal)}</strong></div><div><span>Range</span><strong>${moneyHtml(row.rangeLow)} - ${moneyHtml(row.rangeHigh)}</strong></div><div><span>Discounted</span><strong>${moneyHtml(row.discountedTotal)}</strong></div><div><span>Deposit</span><strong>${moneyHtml(row.depositAmount)}</strong></div></div><p><b>Client:</b> ${escapeHtml(row.clientName || "-")} · ${escapeHtml(snapshot.lead?.email || "")} · ${escapeHtml(snapshot.lead?.phone || "")}</p><p><b>Public result:</b> <a href="/estimate-result/${encodeURIComponent(row.publicId)}">/estimate-result/${escapeHtml(row.publicId)}</a></p><pre>${escapeHtml(JSON.stringify(snapshot.estimate || {}, null, 2))}</pre></section></main></body></html>`;
+}
+
+function adminPricingRulesPage() {
+  const rules = activePricingRules();
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Pricing Rules | ${BRAND}</title><style>${portalCss()}${estimateResultCss()}</style></head><body><main class="portal"><section class="panel"><p class="eyebrow">${BRAND} Admin</p><h1>Pricing Rules</h1><p>Current centralized rule engine. Public tools apply the public multiplier automatically and do not expose internal pricing.</p><textarea id="pricingRulesEditor" style="width:100%;min-height:520px;background:#0d0b08;color:#f6f0e7;border:1px solid rgba(196,161,95,.25);border-radius:8px;padding:14px">${escapeHtml(JSON.stringify(rules, null, 2))}</textarea><div class="actions"><button class="button primary" id="savePricingRules">Save Pricing Rules</button><a class="button secondary" href="/admin/estimates">View Estimates</a></div><p class="form-status" id="pricingRulesStatus"></p></section></main><script>document.getElementById('savePricingRules')?.addEventListener('click', async () => { const status = document.getElementById('pricingRulesStatus'); try { const rules = JSON.parse(document.getElementById('pricingRulesEditor').value); const res = await fetch('/api/admin/pricing-rules', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ rules }) }); const out = await res.json().catch(() => ({})); if (!res.ok || out.ok === false) throw new Error(out.message || 'Save failed'); status.textContent = 'Saved.'; } catch (error) { status.textContent = error.message || 'Save failed.'; } });</script></body></html>`;
+}
+
+function requireCrmWebAuth(request, response) {
+  const session = getWebSession(cookieValue(request, "casaurum_crm"));
+  if (session?.user) return true;
+  redirect(response, "/crm-app");
+  return false;
+}
+
+async function handleAdminPricingRulesSave(request, response) {
+  const session = getWebSession(cookieValue(request, "casaurum_crm"));
+  if (!session?.user) return json(response, { ok: false, message: "Login required" }, 401);
+  const payload = await readJsonBody(request);
+  const rules = payload.rules && typeof payload.rules === "object" ? payload.rules : null;
+  if (!rules) return json(response, { ok: false, message: "rules object required" }, 400);
+  await mkdir(DATA_DIR, { recursive: true });
+  await writeFile(PRICING_RULES_PATH, JSON.stringify(rules, null, 2));
+  return json(response, { ok: true, pricingRules: activePricingRules() });
+}
+
+function estimatePdfLines(row) {
+  const rules = activePricingRules();
+  const snapshot = row.snapshot || {};
+  const estimate = snapshot.estimate || {};
+  const lineItems = estimate.zones?.flatMap((zone) => zone.sections?.flatMap((section) => section.lineItems || []) || []) || [];
+  return [
+    "CAS AURUM Preliminary Estimate",
+    `Estimate ID: ${row.publicId}`,
+    `Date: ${row.createdAt || new Date().toISOString()}`,
+    `Source: ${row.source === "technical_millwork_planner" ? "Technical Planner" : "Quick Estimate"}`,
+    `Client: ${row.clientName || "-"}`,
+    `Project location: ${row.projectLocation || snapshot.projectLocation || "-"}`,
+    `Project type: ${row.projectType || "-"}`,
+    `Estimated range: ${moneyText(row.rangeLow)} - ${moneyText(row.rangeHigh)}`,
+    `Estimated total: ${moneyText(row.estimatedTotal)}`,
+    `15% promotional discount: ${moneyText(estimate.discountAmount || 0)}`,
+    `Discounted total: ${moneyText(row.discountedTotal)}`,
+    `50% deposit amount: ${moneyText(row.depositAmount)}`,
+    `Offer expiration: ${row.offerExpiresAt || "-"}`,
+    "",
+    "Selected scope",
+    ...lineItems.filter((item) => item.clientVisible !== false && !item.excluded).slice(0, 24).map((item) => `${item.name || item.category}: ${item.qty || item.quantity || ""} ${item.unit || ""} - ${moneyText(item.publicTotal || item.total || item.totalMax || 0)}`),
+    "",
+    "Next steps",
+    "1. Cas Aurum reviews submitted details, photos and final scope.",
+    "2. Measurements, materials, site conditions and installation details are confirmed.",
+    "3. A final quote or design consultation path is prepared.",
+    "",
+    rules.disclaimers?.preliminary || pricingRules.disclaimers.preliminary,
+  ];
+}
+
+function estimateResultScript() {
+  return `(() => { const el = document.querySelector('[data-result-countdown]'); const wrap = document.querySelector('[data-result-offer]'); if (!el || !wrap) return; const expires = new Date(wrap.dataset.expires || '').getTime(); function tick(){ const ms = expires - Date.now(); if (!Number.isFinite(expires) || ms <= 0) { el.textContent = 'This 24-hour offer has expired. You can still request a final quote from Cas Aurum.'; return; } const total = Math.floor(ms / 1000); const h = String(Math.floor(total / 3600)).padStart(2, '0'); const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0'); const s = String(total % 60).padStart(2, '0'); el.textContent = h + ':' + m + ':' + s + ' remaining'; } tick(); setInterval(tick, 1000); })();`;
+}
+
+function estimateResultCss() {
+  return `.estimate-result .panel{max-width:980px}.estimate-metrics,.planner-budget-summary,.quick-offer-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}.estimate-metrics div,.planner-budget-summary div,.quick-offer-metrics div{border:1px solid rgba(196,161,95,.25);border-radius:8px;padding:14px;background:rgba(255,255,255,.04)}.estimate-metrics span,.planner-budget-summary span,.quick-offer-metrics dt{display:block;color:#c4a15f;font-size:11px;text-transform:uppercase;letter-spacing:.08em}.estimate-metrics strong,.planner-budget-summary strong,.quick-offer-metrics dd{display:block;margin:6px 0 0;color:#fff;font-size:22px}.estimate-offer,.quick-offer-block{border:1px solid rgba(196,161,95,.35);border-radius:8px;padding:18px;background:rgba(196,161,95,.08);margin:18px 0}.estimate-offer strong,.quick-offer-block strong{color:#f6c76c;font-size:24px}pre{white-space:pre-wrap;overflow:auto;background:#0d0b08;border:1px solid rgba(196,161,95,.22);border-radius:8px;padding:16px}.note{color:#cfc2ad}@media(max-width:760px){.estimate-metrics,.planner-budget-summary,.quick-offer-metrics{grid-template-columns:1fr 1fr}}@media(max-width:520px){.estimate-metrics,.planner-budget-summary,.quick-offer-metrics{grid-template-columns:1fr}}`;
+}
+
+function moneyText(value) {
+  return `$${Number(value || 0).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
+}
+
+function moneyHtml(value) {
+  return escapeHtml(moneyText(value));
 }
 
 function partnerPortalPage(url) {
@@ -12366,6 +12602,7 @@ function clientJs() {
 		        track(form.dataset.leadForm + '_form_submitted', { language: lang });
 		        if (form.dataset.leadForm === 'design_concept') track('design_concept_form_submit', { language: lang, package_type: data.package_type || '', project_type: data.project_type || '', files_count: files.length });
 		        if (isPlanner) track('planner_form_submit', { language: lang, preset: data.planner_preset || '', project_type: data.project_type || '', source_page: data.source_page || '', recommended_package: data.recommended_package || '', files_count: files.length });
+		        if ((form.dataset.leadForm === 'quick_project_estimate' || isPlanner) && dataOut.resultUrl) location.href = dataOut.resultUrl;
 		      } catch (error) { if (status) status.textContent = error?.message || msg[lang].error; }
 		    });
 	    form.addEventListener('focusin', () => {
@@ -12436,6 +12673,7 @@ function plannerJs() {
     let boot = {};
     try { boot = JSON.parse(dataEl?.textContent || '{}'); } catch {}
     const config = boot.config || { layouts: {}, approximateSizes: {} };
+    const rules = boot.pricingRules || { settings: { publicPriceMultiplier: 1.1, promotionalDiscountPercent: 15, requiredDepositPercent: 50, offerDurationHours: 24 }, wallPanels: { baseRates: [], sfAddOns: {}, fixedAddOns: {} }, cabinetry: { rates: {}, glassDoors: {} }, mirrors: { internalRatePerSqFt: 80, internalInstallationFee: 1000 }, services: {} };
     const i18n = boot.i18n || {};
     const catalog = {};
     const form = root.querySelector('form[data-lead-form="quick_project_estimate"]');
@@ -12447,6 +12685,11 @@ function plannerJs() {
     const approxWrap = root.querySelector('[data-approx-size]');
     const rangeEls = [...root.querySelectorAll('[data-quick-range], [data-quick-summary-range], [data-quick-mobile-range]')];
     const includedList = root.querySelector('[data-quick-included-list]');
+    const totalEl = root.querySelector('[data-quick-total]');
+    const discountedEl = root.querySelector('[data-quick-discounted]');
+    const depositEl = root.querySelector('[data-quick-deposit]');
+    const confidenceLabelEl = root.querySelector('[data-quick-confidence-label]');
+    const countdownEl = root.querySelector('[data-quick-countdown]');
     const summary = {
       project: root.querySelector('[data-quick-summary-project]'),
       room: root.querySelector('[data-quick-summary-room]'),
@@ -12473,8 +12716,10 @@ function plannerJs() {
       hiddenDoors: '',
       wallCountLabel: '',
       drawings: '',
-      photoCount: 0
+      photoCount: 0,
+      offerCreatedAt: new Date().toISOString()
     };
+    const offerExpiresAt = new Date(new Date(state.offerCreatedAt).getTime() + Number(rules.settings?.offerDurationHours || 24) * 60 * 60 * 1000).toISOString();
     root.querySelector('[data-quick-next]')?.addEventListener('click', () => setStep(Math.min(6, state.step + 1)));
     root.querySelector('[data-quick-back]')?.addEventListener('click', () => setStep(Math.max(1, state.step - 1)));
     root.querySelector('[data-quick-reset]')?.addEventListener('click', resetQuick);
@@ -12500,6 +12745,7 @@ function plannerJs() {
     syncLayouts();
     setStep(1);
     renderQuick();
+    setInterval(() => renderOfferCountdown(offerExpiresAt), 1000);
 
     function setStep(step){
       state.step = step;
@@ -12546,6 +12792,11 @@ function plannerJs() {
       const estimate = buildEstimate();
       const range = money(estimate.calculatedTotalMin) + ' - ' + money(estimate.calculatedTotalMax);
       rangeEls.forEach(el => { if (el) el.textContent = range; });
+      if (totalEl) totalEl.textContent = money(estimate.estimatedTotal);
+      if (discountedEl) discountedEl.textContent = money(estimate.discountedTotal);
+      if (depositEl) depositEl.textContent = money(estimate.depositAmount);
+      if (confidenceLabelEl) confidenceLabelEl.textContent = i18n.confidence?.[estimate.confidence] || titleCase(estimate.confidence);
+      renderOfferCountdown(estimate.offerExpiresAt);
       if (summary.project) summary.project.textContent = quickUiLabel('projectTypes', state.projectType);
       if (summary.room) summary.room.textContent = quickUiLabel('rooms', state.roomType);
       if (summary.layout) summary.layout.textContent = quickUiLabel('layouts', state.selectedLayout);
@@ -12559,6 +12810,12 @@ function plannerJs() {
       setHidden('sizeBucket', state.sizeBucket);
       setHidden('selectedFeatures', estimate.selectedFeatures.join(', '));
       setHidden('preliminaryRange', range);
+      setHidden('estimatedTotal', estimate.estimatedTotal);
+      setHidden('discountedTotal', estimate.discountedTotal);
+      setHidden('depositAmount', estimate.depositAmount);
+      setHidden('offerCreatedAt', estimate.offerCreatedAt);
+      setHidden('offerExpiresAt', estimate.offerExpiresAt);
+      setHidden('offerStatus', estimate.offerStatus);
       setHidden('confidence', estimate.confidence);
       setHidden('estimateJson', JSON.stringify(estimate));
       const msg = 'New Quick Estimate Lead\\n\\nProject type: ' + state.projectType + '\\nRoom: ' + state.roomType + '\\nSize: ' + sizeLabel() + '\\nSelected features:\\n- ' + (estimate.selectedFeatures.join('\\n- ') || 'Not sure') + '\\n\\nPreliminary range: ' + range + '\\nConfidence: ' + titleCase(estimate.confidence) + '\\nPhotos uploaded: ' + (state.photoCount ? 'Yes' : 'No') + '\\n\\nRecommended next action:\\n' + estimate.recommendedNextAction;
@@ -12581,11 +12838,10 @@ function plannerJs() {
     function buildEstimate(){
       const size = resolveSize();
       const lines = quickLineItems(size);
-      const calculated = publicRange(size, lines);
       const confidence = confidenceValue();
-      const buffer = confidence === 'high' ? 1.08 : confidence === 'medium' ? 1.18 : 1.32;
-      const min = roundHundreds(calculated.min * buffer);
-      const max = roundHundreds(calculated.max * (buffer + 0.08));
+      const calculated = pricingSummary(lines, confidence);
+      const min = calculated.rangeLow;
+      const max = calculated.rangeHigh;
       return {
         id: 'quick-' + Date.now(),
         mode: 'quick_estimate',
@@ -12608,6 +12864,21 @@ function plannerJs() {
         calculatedTotalMax: max,
         finalTotalMin: min,
         finalTotalMax: max,
+        internalSubtotal: calculated.internalSubtotal,
+        publicMultiplierUsed: Number(rules.settings?.publicPriceMultiplier || 1),
+        publicEstimateTotal: calculated.estimatedTotal,
+        estimatedTotal: calculated.estimatedTotal,
+        rangeLow: min,
+        rangeHigh: max,
+        discountPercent: calculated.discountPercent,
+        discountAmount: calculated.discountAmount,
+        discountedTotal: calculated.discountedTotal,
+        depositPercent: calculated.depositPercent,
+        depositAmount: calculated.depositAmount,
+        offerCreatedAt: state.offerCreatedAt,
+        offerExpiresAt,
+        offerStatus: Date.now() > new Date(offerExpiresAt).getTime() ? 'expired' : 'active',
+        pricingRulesUsed: 'cas_aurum_public_pricing_rules_v1',
         adjustmentAmountMin: 0,
         adjustmentAmountMax: 0,
         adjustmentReason: '',
@@ -12620,56 +12891,50 @@ function plannerJs() {
     }
     function quickLineItems(size){
       const lines = [];
-      const add = (id, name, unit, qtyMin, qtyMax, clientVisible = true, excluded = false) => {
-        lines.push({ id: id + '-' + (lines.length + 1), catalogId: id, category: '', name, description: '', materialCode: id, unit, qtyMin, qtyMax, totalMin: 0, totalMax: 0, formulaText: 'public quick-estimate placeholder', clientVisible, internalNote: '', included: !excluded, excluded });
+      const add = (item, clientVisible = true, excluded = false) => {
+        if (!item) return;
+        lines.push({ ...item, id: item.id + '-' + (lines.length + 1), catalogId: item.id, materialCode: item.id, qty: item.quantity, qtyMin: item.quantity, qtyMax: item.quantity, unitPrice: item.publicUnitPrice, unitPriceMin: item.publicUnitPrice, unitPriceMax: item.publicUnitPrice, total: item.publicTotal, totalMin: item.publicTotal, totalMax: item.publicTotal, formulaText: item.quantity + ' ' + item.unit + ' x public project rate', clientVisible, internalNote: '', included: !excluded, excluded });
       };
       const text = [state.projectType, state.selectedLayout, state.material].join(' ');
-      const panelId = /stone/i.test(text) ? 'stone_look_panels' : /Premium|Full|full media/i.test(text) ? 'panels_premium' : 'panels_standard';
-      if (!/Closet Doors/.test(state.projectType) || /Walk-in/i.test(state.selectedLayout)) add(panelId, panelId === 'stone_look_panels' ? 'Stone-look panels' : 'Wall panels', 'sq_ft', size.areaMin, size.areaMax);
-      if (/under bar/i.test(text)) add('under_bar_panels', 'Under bar panels', 'sq_ft', Math.max(24, size.areaMin * 0.35), Math.max(42, size.areaMax * 0.45));
-      if (/lower|Both/i.test(state.cabinets) || /lower cabinet|Floating cabinet|Double vanity|Full media/i.test(state.selectedLayout)) add('cabinet_short', 'Lower cabinet', 'linear_ft', size.widthMin * 0.55, size.widthMax * 0.85);
-      if (/Tall|Both/i.test(state.cabinets) || /tall side|Tall cabinet|Full media/i.test(state.selectedLayout)) add('cabinet_tall', 'Tall side cabinets', 'linear_ft', 2, Math.min(8, Math.max(4, size.widthMax * 0.35)));
-      if (/TV Wall|Media Wall|TV wall/i.test(text)) add('tv_mount', 'TV mounting preparation', 'fixed', 1, 1);
-      if (/Simple lighting/i.test(state.led)) add('led', 'Simple LED lighting allowance', 'fixed', 1, 1);
-      if (/Premium lighting/i.test(state.led) || /LED/i.test(state.selectedLayout)) add('led', 'Premium LED lighting allowance', 'fixed', 1, 2);
-      if (/Few shelves/i.test(state.shelves) || /shelves|Shelving/i.test(state.selectedLayout)) add('shelves', 'Shelves', 'pcs', 2, 5);
-      if (/Many shelves/i.test(state.shelves) || /Full media|Full office/i.test(state.selectedLayout)) add('shelves', 'Shelves', 'pcs', 4, 10);
-      if (/Mirror|Both/i.test(state.material) || /mirror/i.test(state.selectedLayout)) add('mirror_standard', 'Mirror feature', 'sq_ft', 15, 28);
-      if (/Stone-look|Both/i.test(state.material) && panelId !== 'stone_look_panels') add('stone_look_panels', 'Stone-look accent material', 'sq_ft', size.areaMin * 0.25, size.areaMax * 0.55);
+      const panelAddOns = panelAddOnsFor(text + ' ' + state.led + ' ' + state.wallCountLabel);
+      if (!/Closet Doors/.test(state.projectType) || /Walk-in/i.test(state.selectedLayout)) add(wallPanelItem(/stone/i.test(text) ? 'Stone-look wall panels' : 'Wall panels', size.areaMax, panelAddOns));
+      if (/under bar/i.test(text)) add(wallPanelItem('Kitchen wall / under bar panels', Math.max(42, size.areaMax * 0.45), ['premium_material_egger_lioher']));
+      if (/lower|Both/i.test(state.cabinets) || /lower cabinet|Floating cabinet|Double vanity|Full media/i.test(state.selectedLayout)) add(cabinetryItem(/Vanity|Bathroom/.test(state.projectType) ? 'vanity' : 'tv_stand', Math.max(4, size.widthMax * 0.75), /Vanity|Bathroom/.test(state.projectType) ? 'Vanity cabinetry' : 'Lower media cabinet'));
+      if (/Tall|Both/i.test(state.cabinets) || /tall side|Tall cabinet|Full media/i.test(state.selectedLayout)) add(cabinetryItem('built_in_cabinetry', Math.min(10, Math.max(4, size.widthMax * 0.45)), 'Tall side built-ins'));
+      if (/Office Built-In/i.test(state.projectType) || /Shelving|office/i.test(state.selectedLayout)) add(cabinetryItem('built_in_cabinetry', Math.max(6, size.widthMax * 0.85), 'Office built-in cabinetry'));
+      if (/Closet/.test(state.projectType) || /Walk-in closet/i.test(state.selectedLayout)) add(cabinetryItem('wardrobe_closet', Math.max(6, size.widthMax), 'Closet / wardrobe system'));
+      if (/Kitchen/.test(state.projectType) && !/Under Bar/.test(state.selectedLayout)) add(cabinetryItem('kitchen_cabinetry', Math.max(6, size.widthMax * 0.75), 'Kitchen cabinetry allowance'));
+      if (/Entry|Foyer/.test(state.projectType)) add(cabinetryItem('entry_console_nightstands', Math.max(3, size.widthMax * 0.35), 'Entry console allowance'));
+      if (/Premium lighting/i.test(state.led)) add(fixedItem('electrician_services', 'services', 'Electrician services allowance', 1, 650));
+      if (/Few shelves/i.test(state.shelves) || /shelves|Shelving/i.test(state.selectedLayout)) add(cabinetryItem('built_in_cabinetry', Math.max(2, size.widthMax * 0.22), 'Open shelving allowance'));
+      if (/Many shelves/i.test(state.shelves) || /Full media|Full office/i.test(state.selectedLayout)) add(cabinetryItem('built_in_cabinetry', Math.max(4, size.widthMax * 0.4), 'Expanded shelving allowance'));
+      if (/Mirror|Both/i.test(state.material) || /mirror/i.test(state.selectedLayout)) {
+        add(unitItem('mirror_area', 'mirror', 'Mirror feature area', 'SF', Math.max(18, Math.min(size.areaMax * 0.45, 70)), rules.mirrors?.internalRatePerSqFt || 80));
+        add(fixedItem('mirror_installation', 'mirror', 'Mirror installation fee', 1, rules.mirrors?.internalInstallationFee || 1000));
+      }
       const doors = state.hiddenDoors.match(/\\d+/)?.[0] ? Number(state.hiddenDoors.match(/\\d+/)[0]) : /hidden door/i.test(state.selectedLayout) ? 1 : 0;
-      if (doors) add(doors > 1 ? 'custom_hidden_door' : 'hidden_door', 'Hidden door allowance', 'pcs', doors, doors);
-      if (/Sliding doors|Mirror doors/i.test(state.selectedLayout)) add('sliding_doors', 'Sliding closet doors', 'linear_ft', size.widthMin, size.widthMax);
-      if (/Closet reface|Full closet front/i.test(state.selectedLayout)) add('closet_reface', 'Closet reface pieces', 'pcs', 2, 6);
-      if (/Murphy bed/i.test(state.selectedLayout)) add('murphy_bed', 'Murphy bed wall allowance', 'fixed', 1, 1);
-      if (/Desk wall/i.test(state.selectedLayout)) add('desk', 'Built-in desk allowance', 'fixed', 1, 1);
-      if (/nightstands/i.test(state.selectedLayout)) add('nightstand', 'Integrated nightstands', 'pcs', 1, 2);
-      if (/ceiling/i.test(state.selectedLayout)) add('panels_ceiling', 'Ceiling panels', 'sq_ft', size.areaMin * 0.35, size.areaMax * 0.65);
-      if (/Bathroom Vanity/.test(state.projectType)) add('manual_excluded', 'Countertop, sink and plumbing', 'manual', 0, 0, true, true);
+      if (doors) {
+        const door = doors > 1 ? rules.wallPanels?.fixedAddOns?.tall_hidden_door : rules.wallPanels?.fixedAddOns?.hidden_door;
+        add(fixedItem(doors > 1 ? 'tall_hidden_door' : 'hidden_door', 'doors', doors > 1 ? 'Tall hidden door' : 'Hidden door', doors, door?.internalPrice || (doors > 1 ? 3250 : 2500)));
+      }
+      if (/Sliding doors|Mirror doors/i.test(state.selectedLayout)) add(cabinetryItem('wardrobe_closet', size.widthMax, 'Closet doors / reface allowance'));
+      if (/Murphy bed/i.test(state.selectedLayout)) add(fixedItem('murphy_bed', 'office', 'Murphy bed wall allowance', 1, 9600));
+      if (/Desk wall/i.test(state.selectedLayout)) add(cabinetryItem('built_in_cabinetry', Math.max(4, size.widthMax * 0.55), 'Built-in desk allowance'));
+      if (/nightstands/i.test(state.selectedLayout)) add(cabinetryItem('entry_console_nightstands', 4, 'Integrated nightstands'));
+      if (/ceiling/i.test(state.selectedLayout)) add(wallPanelItem('Ceiling panels', size.areaMax * 0.55, ['premium_material_stone']));
+      add(fixedItem('delivery', 'services', 'Delivery', 1, rules.services?.delivery?.defaultInternalPrice || 650));
+      if (/Bathroom Vanity/.test(state.projectType)) add({ id: 'manual_excluded', category: 'exclusion', name: 'Countertop, sink and plumbing', unit: 'manual', quantity: 0, internalUnitPrice: 0, publicUnitPrice: 0, internalTotal: 0, publicTotal: 0 }, true, true);
       return lines;
     }
-    function publicRange(size, lines){
-      const baseByProject = {
-        'TV Wall / Media Wall': [9000, 18000],
-        'Wall Panels': [4500, 11000],
-        'Foyer / Entry Wall': [6500, 16000],
-        'Bedroom Feature Wall': [5500, 14000],
-        'Bathroom Vanity Wall': [6500, 18000],
-        'Closet Doors / Closet Reface': [5000, 16000],
-        'Office Built-In': [9000, 24000],
-        'Kitchen Wall / Under Bar': [4500, 14000],
-        'Full Custom Project': [14000, 36000]
-      };
-      const base = baseByProject[state.projectType] || baseByProject['Full Custom Project'];
-      const areaFactor = Math.max(0.72, Math.min(2.8, Number(size.areaMax || 100) / 140));
-      let featureFactor = 1;
-      if (/lower|Tall|Both/i.test(state.cabinets)) featureFactor += /Both/i.test(state.cabinets) ? 0.55 : 0.28;
-      if (/lighting|LED/i.test(state.led + ' ' + state.selectedLayout)) featureFactor += /Premium/i.test(state.led) ? 0.18 : 0.1;
-      if (/shelves|Shelving/i.test(state.shelves + ' ' + state.selectedLayout)) featureFactor += /Many|Full/i.test(state.shelves + ' ' + state.selectedLayout) ? 0.2 : 0.1;
-      if (/Mirror|Stone|Both/i.test(state.material + ' ' + state.selectedLayout)) featureFactor += 0.18;
-      if (/hidden door/i.test(state.hiddenDoors + ' ' + state.selectedLayout)) featureFactor += 0.18;
-      if (/Full|Premium|Multiple|Double-height/i.test(state.selectedLayout + ' ' + sizeLabel())) featureFactor += 0.2;
-      const lineFactor = Math.max(1, Math.min(1.35, lines.filter(item => !item.excluded).length / 4));
-      return { min: base[0] * areaFactor * featureFactor * lineFactor, max: base[1] * areaFactor * (featureFactor + 0.12) * lineFactor };
+    function pricingSummary(lines, confidence){
+      const internalSubtotal = roundMoney(lines.reduce((sum, item) => sum + Number(item.internalTotal || 0), 0));
+      const estimatedTotal = roundMoney(lines.reduce((sum, item) => sum + Number(item.publicTotal || 0), 0));
+      const spread = confidence === 'high' ? 9 : confidence === 'low' ? 22 : Number(rules.settings?.rangeSpreadPercent || 12);
+      const discountPercent = Number(rules.settings?.promotionalDiscountPercent || 15);
+      const discountAmount = roundMoney(estimatedTotal * discountPercent / 100);
+      const discountedTotal = roundMoney(estimatedTotal - discountAmount);
+      const depositPercent = Number(rules.settings?.requiredDepositPercent || 50);
+      return { internalSubtotal, estimatedTotal, rangeLow: roundHundreds(estimatedTotal * (1 - spread / 100)), rangeHigh: roundHundreds(estimatedTotal * (1 + spread / 100)), discountPercent, discountAmount, discountedTotal, depositPercent, depositAmount: roundMoney(discountedTotal * depositPercent / 100) };
     }
     function resolveSize(){
       if (state.sizeMode === 'exact' && state.widthFt && state.heightFt) {
@@ -12678,10 +12943,51 @@ function plannerJs() {
         return { widthMin: state.widthFt, widthMax: state.widthFt, heightMin: state.heightFt, heightMax: state.heightFt, areaMin: area, areaMax: area };
       }
       const bucket = config.approximateSizes?.[state.sizeMode === 'unknown' ? 'not_sure' : state.sizeBucket] || { widthMin: 8, widthMax: 14, heightMin: 8, heightMax: 10 };
-      let minMult = bucket.multiplierMin || 1, maxMult = bucket.multiplierMax || 1;
-      if (/Two walls/i.test(state.wallCountLabel)) { minMult = Math.max(minMult, 1.6); maxMult = Math.max(maxMult, 2.2); }
-      if (/Full room/i.test(state.wallCountLabel)) { minMult = Math.max(minMult, 2.4); maxMult = Math.max(maxMult, 4); }
-      return { widthMin: bucket.widthMin, widthMax: bucket.widthMax, heightMin: bucket.heightMin, heightMax: bucket.heightMax, areaMin: bucket.widthMin * bucket.heightMin * minMult, areaMax: bucket.widthMax * bucket.heightMax * maxMult };
+      let mult = 1;
+      if (/Two walls/i.test(state.wallCountLabel)) mult = 2;
+      if (/Full room/i.test(state.wallCountLabel)) mult = 3;
+      const area = Number(bucket.placeholderSqFt || bucket.widthMax * bucket.heightMax) * mult;
+      return { widthMin: bucket.widthMin, widthMax: bucket.widthMax, heightMin: bucket.heightMin, heightMax: bucket.heightMax, areaMin: area, areaMax: area };
+    }
+    function wallPanelItem(name, squareFeet, addOns){
+      const base = wallPanelBase(squareFeet);
+      const addOnRate = addOns.reduce((sum, id) => sum + Number(rules.wallPanels?.sfAddOns?.[id]?.internalRate || 0), 0);
+      return unitItem('wall_panels', 'panels', name, 'SF', squareFeet, Number(base.internalRate || 60) + addOnRate);
+    }
+    function wallPanelBase(squareFeet){
+      const area = Number(squareFeet || 0);
+      return (rules.wallPanels?.baseRates || []).find(tier => (tier.minSqFt == null || area >= tier.minSqFt) && (tier.maxSqFt == null || area <= tier.maxSqFt)) || { internalRate: 60 };
+    }
+    function cabinetryItem(rateId, linearFeet, name){
+      const rate = rules.cabinetry?.rates?.[rateId] || rules.cabinetry?.rates?.built_in_cabinetry || { name: 'Built-in cabinetry', internalRate: 1200 };
+      return unitItem(rateId, 'cabinetry', name || rate.name, 'LF', linearFeet, rate.internalRate);
+    }
+    function fixedItem(id, category, name, quantity, internalPrice){ return unitItem(id, category, name, 'EA', quantity, internalPrice); }
+    function unitItem(id, category, name, unit, quantity, internalUnitPrice){
+      const qty = Math.round(Number(quantity || 0) * 100) / 100;
+      const internalPrice = roundMoney(internalUnitPrice);
+      const publicUnitPrice = roundMoney(internalPrice * Number(rules.settings?.publicPriceMultiplier || 1.1));
+      return { id, category, name, unit, quantity: qty, internalUnitPrice: internalPrice, publicUnitPrice, internalTotal: roundMoney(qty * internalPrice), publicTotal: roundMoney(qty * publicUnitPrice), clientVisible: true };
+    }
+    function panelAddOnsFor(text){
+      return [
+        /Simple lighting|Premium lighting|LED/i.test(text) ? 'led_lighting' : '',
+        /Premium lighting|recessed/i.test(text) ? 'recessed_lighting' : '',
+        /Stone-look|travertine|marble|granite|metal|Both/i.test(text) ? 'premium_material_stone' : '',
+        /Fluted|3D|relief/i.test(text) ? 'three_d_panels' : '',
+        /Full|Premium/i.test(text) ? 'multidimensional_design' : '',
+        /Double-height|stair/i.test(text) ? 'staircase_installation' : ''
+      ].filter(Boolean);
+    }
+    function renderOfferCountdown(expiresAt){
+      if (!countdownEl) return;
+      const ms = new Date(expiresAt).getTime() - Date.now();
+      if (ms <= 0) { countdownEl.textContent = 'This 24-hour offer has expired. You can still request a final quote from Cas Aurum.'; return; }
+      const total = Math.floor(ms / 1000);
+      const h = String(Math.floor(total / 3600)).padStart(2, '0');
+      const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+      const s = String(total % 60).padStart(2, '0');
+      countdownEl.textContent = h + ':' + m + ':' + s + ' remaining';
     }
     function selectedFeatures(){ return [state.cabinets, state.led, state.shelves, state.material, state.hiddenDoors, state.wallCountLabel, state.drawings].filter(Boolean); }
     function totalLines(lines){ return lines.reduce((sum, item) => ({ min: sum.min + Number(item.totalMin || 0), max: sum.max + Number(item.totalMax || 0) }), { min: 0, max: 0 }); }
@@ -12691,6 +12997,7 @@ function plannerJs() {
     function quickUiLabel(group, value){ return i18n?.[group]?.[value] || value; }
     function sizeLabel(){ return state.sizeMode === 'exact' ? ((state.widthFt || '?') + ' ft x ' + (state.heightFt || '?') + ' ft') : (config.approximateSizes?.[state.sizeBucket]?.label || 'Not sure'); }
     function roundHundreds(value){ return Math.max(0, Math.round(Number(value || 0) / 100) * 100); }
+    function roundMoney(value){ return Math.round(Number(value || 0) * 100) / 100; }
     function money(value){ return '$' + Number(value || 0).toLocaleString('en-US'); }
     function titleCase(value){ return String(value || '').replace(/^./, c => c.toUpperCase()); }
     function slug(value){ return String(value || 'zone').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
@@ -12701,6 +13008,12 @@ function plannerJs() {
   function initTechnicalPlanner(){
     const root = document.querySelector('[data-planner]');
     if (!root) return;
+    let rules = {};
+    try { rules = JSON.parse(document.getElementById('planner-pricing-rules')?.textContent || '{}'); } catch { rules = {}; }
+    rules.settings ||= { publicPriceMultiplier: 1.1, promotionalDiscountPercent: 15, requiredDepositPercent: 50, offerDurationHours: 24, rangeSpreadPercent: 12 };
+    rules.wallPanels ||= { baseRates: [], sfAddOns: {}, fixedAddOns: {} };
+    rules.cabinetry ||= { rates: {}, glassDoors: {} };
+    rules.mirrors ||= { internalRatePerSqFt: 80, internalInstallationFee: 1000 };
     const canvas = root.querySelector('[data-planner-canvas]');
     const rangeEl = document.querySelector('[data-planner-range]');
     const confidenceEl = document.querySelector('[data-planner-confidence]');
@@ -12716,6 +13029,10 @@ function plannerJs() {
     const fieldsEl = root.querySelector('[data-planner-fields]');
     const configInput = root.querySelector('[data-planner-config]');
     const estimateInput = root.querySelector('[data-planner-estimate]');
+    const budgetRangeDisplay = root.querySelector('[data-planner-budget-range-display]');
+    const totalDisplay = root.querySelector('[data-planner-total]');
+    const discountedDisplay = root.querySelector('[data-planner-discounted]');
+    const depositDisplay = root.querySelector('[data-planner-deposit]');
     const projectIdInput = root.querySelector('[data-planner-project-id]');
     const projectTokenInput = root.querySelector('[data-planner-project-token]');
     const messageInput = root.querySelector('[data-planner-message]');
@@ -12754,13 +13071,28 @@ function plannerJs() {
       serviceNeeded: root.querySelector('[data-planner-service-needed]'),
       sourcePage: root.querySelector('[data-planner-source-page]'),
       budgetRange: root.querySelector('[data-planner-budget-range]'),
+      estimatedTotal: root.querySelector('[data-planner-estimated-total]'),
+      discountedTotal: root.querySelector('[data-planner-discounted-total]'),
+      depositAmount: root.querySelector('[data-planner-deposit-amount]'),
+      offerCreated: root.querySelector('[data-planner-offer-created]'),
+      offerExpires: root.querySelector('[data-planner-offer-expires]'),
+      offerStatus: root.querySelector('[data-planner-offer-status]'),
       dimensionsStatus: root.querySelector('[data-planner-dimensions-status]')
     };
+    const plannerOfferCreatedAt = new Date().toISOString();
+    const plannerOfferExpiresAt = new Date(new Date(plannerOfferCreatedAt).getTime() + Number(rules.settings.offerDurationHours || 24) * 60 * 60 * 1000).toISOString();
     const moduleDefaults = {
       baseCabinet: { label: 'Base cabinet', moduleRole: 'Base cabinet', width: 30, height: 34, depth: 24, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Solid doors', opening: 'Pair doors', shelves: 1, hardware: 'Concealed hinges', glass: false, handles: false, lighting: false, rate: 720 },
       wallCabinet: { label: 'Wall cabinet', moduleRole: 'Wall cabinet', width: 30, height: 36, depth: 14, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Solid doors', opening: 'Pair doors', shelves: 2, hardware: 'Concealed hinges', glass: false, handles: false, lighting: false, rate: 620 },
       wallPanel: { label: 'Wall panel', moduleRole: 'Wall panel', width: 48, height: 96, depth: 1, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Feature panel', opening: 'Fixed', shelves: 0, hardware: 'Panel mounting review', glass: false, handles: false, lighting: false, rate: 360 },
       freestandingCabinet: { label: 'Freestanding cabinet', moduleRole: 'Freestanding cabinet', width: 72, height: 84, depth: 24, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Solid doors', opening: 'Pair doors', shelves: 4, hardware: 'Specialty hardware review', glass: false, handles: false, lighting: false, rate: 930 },
+      tallCabinet: { label: 'Tall cabinet', moduleRole: 'Tall cabinet', width: 36, height: 96, depth: 24, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Solid doors', opening: 'Pair doors', shelves: 4, hardware: 'Concealed hinges', glass: false, handles: false, lighting: false, premiumMaterial: false, rate: 1200 },
+      openShelving: { label: 'Open shelving', moduleRole: 'Open shelving', width: 48, height: 72, depth: 14, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Open shelf', opening: 'Open', shelves: 4, hardware: 'Panel mounting review', glass: false, handles: false, lighting: false, premiumMaterial: false, rate: 1200 },
+      tvPanel: { label: 'TV panel', moduleRole: 'TV panel', width: 96, height: 96, depth: 2, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Feature panel', opening: 'Fixed', shelves: 0, hardware: 'Panel mounting review', glass: false, handles: false, lighting: false, premiumMaterial: false, rate: 60 },
+      fireplaceSurround: { label: 'Fireplace surround', moduleRole: 'Fireplace surround', width: 84, height: 96, depth: 2, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Feature panel', opening: 'Fixed', shelves: 0, hardware: 'Panel mounting review', glass: false, handles: false, lighting: false, premiumMaterial: true, rate: 60 },
+      mirrorPanel: { label: 'Mirror panel', moduleRole: 'Mirror panel', width: 48, height: 84, depth: 1, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Feature panel', opening: 'Fixed', shelves: 0, hardware: 'Panel mounting review', glass: false, handles: false, lighting: false, premiumMaterial: false, rate: 80 },
+      decorativePanel: { label: 'Decorative panel', moduleRole: 'Decorative panel', width: 48, height: 96, depth: 1, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Feature panel', opening: 'Fixed', shelves: 0, hardware: 'Panel mounting review', glass: false, handles: false, lighting: false, premiumMaterial: true, rate: 60 },
+      customFurnitureBlock: { label: 'Custom furniture block', moduleRole: 'Custom furniture block', width: 60, height: 36, depth: 24, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Solid doors', opening: 'Fixed', shelves: 1, hardware: 'Specialty hardware review', glass: false, handles: false, lighting: false, premiumMaterial: false, rate: 1400 },
       base: { label: 'Base cabinet', moduleRole: 'Base cabinet', width: 30, height: 34, depth: 24, gapBefore: 0, offsetAlong: 0, offsetVertical: 0, offsetDepth: 0, front: 'Solid doors', opening: 'Pair doors', shelves: 1, hardware: 'Concealed hinges', glass: false, handles: false, lighting: false, rate: 720 }
     };
     const state = { modules: [], selectedId: null, view: 'iso', zoom: 1, activeWall: 'front', orbit: { theta: 0.58, phi: 0.62 }, surface: { kind: 'plane', widthIn: 144, heightIn: 108, lengthIn: 1 } };
@@ -12955,6 +13287,13 @@ function plannerJs() {
       if (role === 'Wall cabinet') { module.label = 'Wall cabinet'; module.type = 'wallCabinet'; if (module.wall === 'free') module.wall = 'front'; module.height = Math.min(Math.max(module.height, 24), 60); module.depth = Math.min(module.depth, 18); module.shelves = Math.max(module.shelves || 0, 1); module.rate = 620; }
       if (role === 'Wall panel') { module.label = 'Wall panel'; module.type = 'wallPanel'; if (module.wall === 'free') module.wall = 'front'; module.height = Math.max(module.height, 84); module.depth = Math.min(module.depth, 4); module.front = module.front === 'Feature panel' ? module.front : 'Feature panel'; module.opening = 'Fixed'; module.shelves = 0; module.hardware = 'Panel mounting review'; module.rate = 360; }
       if (role === 'Freestanding cabinet') { module.label = 'Freestanding cabinet'; module.type = 'freestandingCabinet'; module.wall = 'free'; module.width = Math.max(module.width, 36); module.height = Math.max(module.height, 34); module.depth = Math.max(module.depth, 20); module.shelves = Math.max(module.shelves || 0, 2); module.hardware = module.hardware === 'Concealed hinges' ? 'Specialty hardware review' : module.hardware; module.rate = 930; }
+      if (role === 'Tall cabinet') { module.label = 'Tall cabinet'; module.type = 'tallCabinet'; if (module.wall === 'free') module.wall = 'front'; module.height = Math.max(module.height, 84); module.depth = Math.max(module.depth, 20); module.shelves = Math.max(module.shelves || 0, 3); module.rate = 1200; }
+      if (role === 'Open shelving') { module.label = 'Open shelving'; module.type = 'openShelving'; if (module.wall === 'free') module.wall = 'front'; module.front = 'Open shelf'; module.opening = 'Open'; module.shelves = Math.max(module.shelves || 0, 3); module.depth = Math.min(Math.max(module.depth, 10), 18); module.rate = 1200; }
+      if (role === 'TV panel') { module.label = 'TV panel'; module.type = 'tvPanel'; if (module.wall === 'free') module.wall = 'front'; module.front = 'Feature panel'; module.opening = 'Fixed'; module.shelves = 0; module.depth = Math.min(module.depth, 4); module.rate = 60; }
+      if (role === 'Fireplace surround') { module.label = 'Fireplace surround'; module.type = 'fireplaceSurround'; if (module.wall === 'free') module.wall = 'front'; module.front = 'Feature panel'; module.opening = 'Fixed'; module.shelves = 0; module.depth = Math.min(module.depth, 6); module.premiumMaterial = true; module.rate = 60; }
+      if (role === 'Mirror panel') { module.label = 'Mirror panel'; module.type = 'mirrorPanel'; if (module.wall === 'free') module.wall = 'front'; module.front = 'Feature panel'; module.opening = 'Fixed'; module.shelves = 0; module.depth = Math.min(module.depth, 3); module.rate = 80; }
+      if (role === 'Decorative panel') { module.label = 'Decorative panel'; module.type = 'decorativePanel'; if (module.wall === 'free') module.wall = 'front'; module.front = 'Feature panel'; module.opening = 'Fixed'; module.shelves = 0; module.depth = Math.min(module.depth, 4); module.premiumMaterial = true; module.rate = 60; }
+      if (role === 'Custom furniture block') { module.label = 'Custom furniture block'; module.type = 'customFurnitureBlock'; module.wall = state.surface.kind === 'room' ? 'free' : 'front'; module.height = Math.max(module.height, 30); module.depth = Math.max(module.depth, 18); module.hardware = 'Specialty hardware review'; module.rate = 1400; }
     }
     function updateSurfaceFromInputs(shouldClamp = true){
       const previousKind = state.surface.kind;
@@ -13208,7 +13547,7 @@ function plannerJs() {
       }
       if (fieldInputs.moduleRole) {
         [...fieldInputs.moduleRole.options].forEach(option => {
-          option.disabled = option.value === 'Freestanding cabinet' && state.surface.kind !== 'room';
+          option.disabled = ['Freestanding cabinet','Custom furniture block'].includes(option.value) && state.surface.kind !== 'room';
         });
       }
       renderNudgeControls(module);
@@ -13236,14 +13575,26 @@ function plannerJs() {
     function renderEstimate(){
       const estimate = calculateEstimate();
       rangeEl.textContent = money(estimate.low) + ' - ' + money(estimate.high);
-      confidenceEl.textContent = estimate.confidence;
+      if (budgetRangeDisplay) budgetRangeDisplay.textContent = rangeEl.textContent;
+      if (totalDisplay) totalDisplay.textContent = money(estimate.estimatedTotal);
+      if (discountedDisplay) discountedDisplay.textContent = money(estimate.discountedTotal);
+      if (depositDisplay) depositDisplay.textContent = money(estimate.depositAmount);
+      confidenceEl.textContent = estimate.confidenceLabel || estimate.confidence;
       stats.modules.textContent = String(state.modules.length);
       stats.linear.textContent = String(estimate.linearFt);
+      if (stats.square) stats.square.textContent = String(estimate.squareFt);
       stats.glass.textContent = String(estimate.glass);
       stats.lighting.textContent = String(estimate.lighting);
       const payload = currentPlannerPayload(estimate);
       configInput.value = JSON.stringify(payload);
       estimateInput.value = rangeEl.textContent;
+      if (plannerHidden.budgetRange) plannerHidden.budgetRange.value = rangeEl.textContent;
+      if (plannerHidden.estimatedTotal) plannerHidden.estimatedTotal.value = estimate.estimatedTotal;
+      if (plannerHidden.discountedTotal) plannerHidden.discountedTotal.value = estimate.discountedTotal;
+      if (plannerHidden.depositAmount) plannerHidden.depositAmount.value = estimate.depositAmount;
+      if (plannerHidden.offerCreated) plannerHidden.offerCreated.value = plannerOfferCreatedAt;
+      if (plannerHidden.offerExpires) plannerHidden.offerExpires.value = plannerOfferExpiresAt;
+      if (plannerHidden.offerStatus) plannerHidden.offerStatus.value = Date.now() > new Date(plannerOfferExpiresAt).getTime() ? 'expired' : 'active';
       messageInput.value = buildLeadMessage(payload);
     }
     function currentPlannerPayload(estimate = calculateEstimate()){
@@ -13275,12 +13626,7 @@ function plannerJs() {
         calculatedAreaSqFt: Math.round((state.surface.widthIn / 12) * (state.surface.heightIn / 12) * 100) / 100,
         billableAreaSqFt: Math.round((state.surface.widthIn / 12) * (state.surface.heightIn / 12) * 100) / 100,
         allowAreaOverride: false,
-        lineItems: state.modules.map((module, index) => {
-          const qty = Math.round((Number(module.width || 0) / 12) * 100) / 100;
-          const low = Math.round(Number(module.rate || 0) * qty * 0.82);
-          const high = Math.round(Number(module.rate || 0) * qty * 1.32 + (module.lighting ? 650 : 0) + (module.glass ? 950 : 0));
-          return { id: module.id || ('module-' + (index + 1)), category: module.moduleRole || 'module', name: module.label || module.moduleRole || 'Module', description: [module.front, module.opening, module.lighting ? 'LED' : '', module.glass ? 'glass' : ''].filter(Boolean).join(', '), unit: 'linear_ft', qty, qtyMin: qty, qtyMax: qty, unitPriceMin: Math.round(Number(module.rate || 0) * 0.82), unitPriceMax: Math.round(Number(module.rate || 0) * 1.32), totalMin: low, totalMax: high, formulaText: qty + ' linear_ft x module rate range', clientVisible: true, internalNote: 'Generated from Technical Millwork Planner module.', included: true, excluded: false };
-        }),
+        lineItems: estimate.lineItems || [],
         options: [],
         notes: ''
       };
@@ -13307,6 +13653,21 @@ function plannerJs() {
         calculatedTotalMax: estimate.high,
         finalTotalMin: estimate.low,
         finalTotalMax: estimate.high,
+        internalSubtotal: estimate.internalSubtotal,
+        publicMultiplierUsed: Number(rules.settings.publicPriceMultiplier || 1),
+        publicEstimateTotal: estimate.estimatedTotal,
+        estimatedTotal: estimate.estimatedTotal,
+        rangeLow: estimate.low,
+        rangeHigh: estimate.high,
+        discountPercent: estimate.discountPercent,
+        discountAmount: estimate.discountAmount,
+        discountedTotal: estimate.discountedTotal,
+        depositPercent: estimate.depositPercent,
+        depositAmount: estimate.depositAmount,
+        offerCreatedAt: plannerOfferCreatedAt,
+        offerExpiresAt: plannerOfferExpiresAt,
+        offerStatus: Date.now() > new Date(plannerOfferExpiresAt).getTime() ? 'expired' : 'active',
+        pricingRulesUsed: 'cas_aurum_public_pricing_rules_v1',
         adjustmentAmountMin: 0,
         adjustmentAmountMax: 0,
         adjustmentReason: '',
@@ -13402,31 +13763,93 @@ function plannerJs() {
     function calculateEstimate(){
       const regionFactor = { USA: 1, Canada: 1.08, Mexico: 0.96, 'Other / review': 1.12 }[regionEl?.value] || 1;
       const complexity = Number(complexityEl?.value || 1);
-      let subtotal = 0, glass = 0, lighting = 0, linear = 0;
+      let glass = 0, lighting = 0, linear = 0, square = 0;
+      const lineItems = [];
+      let mirrorInstallAdded = false;
       state.modules.forEach(module => {
-        const linearFt = module.width / 12;
-        const heightFactor = Math.max(0.85, module.height / 48);
-        const depthFactor = Math.max(0.8, module.depth / 24);
-        let moduleCost = module.rate * linearFt * heightFactor * depthFactor;
-        if (module.front === 'Glass doors' || module.glass) { moduleCost += 950; glass++; }
-        if (module.lighting) { moduleCost += 650; lighting++; }
-        if (Number(module.shelves || 0) > 0) moduleCost += Number(module.shelves || 0) * 85 * linearFt;
-        if (module.handles) moduleCost += 180 * linearFt;
-        if (module.opening === 'Lift-up door') moduleCost += 420;
-        if (module.opening === 'Pocket / retractable') moduleCost += 900;
-        if (module.hardware.includes('Push')) moduleCost += 280;
-        if (module.hardware.includes('Specialty')) moduleCost += 650;
-        subtotal += moduleCost;
-        linear += linearFt;
+        const moduleLines = moduleLineItems(module, { complexity, regionFactor, includeMirrorInstall: !mirrorInstallAdded });
+        if (module.moduleRole === 'Mirror panel') mirrorInstallAdded = true;
+        lineItems.push(...moduleLines);
+        const linearFt = roundQty(Number(module.width || 0) / 12);
+        const squareFt = roundQty((Number(module.width || 0) * Number(module.height || 0)) / 144);
+        if (isCabinetModule(module)) linear += linearFt;
+        if (isPanelModule(module) || module.moduleRole === 'Mirror panel') square += squareFt;
+        if (module.front === 'Glass doors' || module.glass) glass++;
+        if (module.lighting) lighting++;
       });
-      const adjusted = subtotal * complexity * regionFactor;
-      const low = Math.round((adjusted * 0.82) / 500) * 500;
-      const high = Math.round((adjusted * 1.32 + 4500) / 500) * 500;
-      const confidence = state.modules.length < 3 ? 'Low confidence until more modules are added.' : state.modules.length > 9 ? 'Medium confidence. Final review needed for drawings, finishes and installation.' : 'Medium confidence for preliminary scope review.';
-      return { low, high, linearFt: Math.round(linear * 10) / 10, glass, lighting, confidence };
+      const internalSubtotal = roundMoney(lineItems.reduce((sum, item) => sum + Number(item.internalTotal || 0), 0));
+      const estimatedTotal = roundMoney(lineItems.reduce((sum, item) => sum + Number(item.publicTotal || 0), 0));
+      const confidenceKey = state.modules.length > 5 && plannerHidden.dimensionsStatus?.value === 'provided' ? 'high' : state.modules.length < 2 ? 'low' : 'medium';
+      const spread = confidenceKey === 'high' ? 9 : confidenceKey === 'low' ? 22 : Number(rules.settings.rangeSpreadPercent || 12);
+      const low = roundHundreds(estimatedTotal * (1 - spread / 100));
+      const high = roundHundreds(estimatedTotal * (1 + spread / 100));
+      const discountPercent = Number(rules.settings.promotionalDiscountPercent || 15);
+      const discountAmount = roundMoney(estimatedTotal * discountPercent / 100);
+      const discountedTotal = roundMoney(estimatedTotal - discountAmount);
+      const depositPercent = Number(rules.settings.requiredDepositPercent || 50);
+      const confidence = confidenceKey === 'low' ? 'Low confidence until more modules, photos or drawings are added.' : confidenceKey === 'high' ? 'High preliminary confidence. Final review still required.' : 'Medium confidence for preliminary scope review.';
+      return { low, high, estimatedTotal, internalSubtotal, discountPercent, discountAmount, discountedTotal, depositPercent, depositAmount: roundMoney(discountedTotal * depositPercent / 100), linearFt: roundQty(linear), squareFt: roundQty(square), glass, lighting, confidence: confidenceKey, confidenceLabel: confidence, lineItems };
     }
+    function moduleLineItems(module, context){
+      const lines = [];
+      const role = module.moduleRole || 'Base cabinet';
+      const linearFt = roundQty(Number(module.width || 0) / 12);
+      const squareFt = roundQty((Number(module.width || 0) * Number(module.height || 0)) / 144);
+      if (isPanelModule(module)) lines.push(panelLine(module, squareFt, context));
+      else if (role === 'Mirror panel') {
+        lines.push(unitLine(module.id + '-mirror', 'mirror', module.label || 'Mirror panel', 'SF', squareFt, rules.mirrors.internalRatePerSqFt || 80, context, 'Mirror SF'));
+        if (context.includeMirrorInstall) lines.push(unitLine(module.id + '-mirror-install', 'mirror', 'Mirror installation fee', 'EA', 1, rules.mirrors.internalInstallationFee || 1000, context, 'Mirror installation once per project'));
+      } else {
+        lines.push(cabinetLine(module, linearFt, context));
+      }
+      if (module.front === 'Glass doors' || module.glass) lines.push(glassLine(module, Number(module.height || 0) > 60 ? 'large' : 'standard', 1, context));
+      if (module.lighting) lines.push(unitLine(module.id + '-led', 'lighting', 'LED lighting', squareFt || linearFt, squareFt ? 'SF' : 'LF', 5, context, 'LED lighting add-on'));
+      if (module.handles) lines.push(unitLine(module.id + '-hardware', 'hardware', 'Visible hardware allowance', 'LF', linearFt, 180, context, 'Hardware allowance'));
+      if (module.opening === 'Lift-up door') lines.push(unitLine(module.id + '-lift', 'hardware', 'Lift-up hardware allowance', 'EA', 1, 420, context, 'Hardware allowance'));
+      if (module.opening === 'Pocket / retractable') lines.push(unitLine(module.id + '-pocket', 'hardware', 'Pocket / retractable hardware allowance', 'EA', 1, 900, context, 'Hardware allowance'));
+      if (String(module.hardware || '').includes('Push')) lines.push(unitLine(module.id + '-push', 'hardware', 'Push-to-open hardware allowance', 'EA', 1, 280, context, 'Hardware allowance'));
+      if (String(module.hardware || '').includes('Specialty')) lines.push(unitLine(module.id + '-specialty', 'hardware', 'Specialty hardware review allowance', 'EA', 1, 650, context, 'Hardware allowance'));
+      return lines;
+    }
+    function cabinetLine(module, linearFt, context){
+      const role = module.moduleRole || 'Base cabinet';
+      const rateId = role === 'Custom furniture block' ? 'entry_console_nightstands' : projectEl?.value === 'kitchen' ? 'kitchen_cabinetry' : 'built_in_cabinetry';
+      const rate = rules.cabinetry?.rates?.[rateId] || { internalRate: 1200, name: 'Built-in cabinetry' };
+      const heightFactor = Math.max(1, Number(module.height || 0) / 48);
+      const depthFactor = Math.max(0.85, Number(module.depth || 0) / 24);
+      return unitLine(module.id + '-cabinetry', 'cabinetry', module.label || role, 'LF', linearFt, Number(rate.internalRate || 1200) * heightFactor * depthFactor, context, rate.name || role);
+    }
+    function panelLine(module, squareFt, context){
+      const addOns = [];
+      if (module.lighting) addOns.push('led_lighting');
+      if (module.premiumMaterial || module.moduleRole === 'Fireplace surround') addOns.push('premium_material_stone');
+      if (module.moduleRole === 'Decorative panel') addOns.push('three_d_panels', 'multidimensional_design');
+      const base = wallPanelBase(squareFt);
+      const addOnRate = addOns.reduce((sum, id) => sum + Number(rules.wallPanels?.sfAddOns?.[id]?.internalRate || 0), 0);
+      return unitLine(module.id + '-panel', 'panels', module.label || module.moduleRole || 'Wall panel', 'SF', squareFt, Number(base.internalRate || 60) + addOnRate, context, base.label || 'Wall panel tier');
+    }
+    function glassLine(module, size, quantity, context){
+      const door = size === 'large' ? rules.cabinetry?.glassDoors?.large_glass_door : rules.cabinetry?.glassDoors?.standard_glass_door;
+      return unitLine(module.id + '-glass', 'glass', door?.name || 'Glass door', 'EA', quantity, door?.internalPrice || (size === 'large' ? 1250 : 650), context, 'Glass doors');
+    }
+    function unitLine(id, category, name, unit, quantity, internalUnitPrice, context, basis){
+      const qty = roundQty(quantity);
+      const adjustedInternal = roundMoney(Number(internalUnitPrice || 0) * Number(context.complexity || 1) * Number(context.regionFactor || 1));
+      const publicUnit = roundMoney(adjustedInternal * Number(rules.settings.publicPriceMultiplier || 1.1));
+      const publicTotal = roundMoney(qty * publicUnit);
+      return { id, category, name, unit, qty, qtyMin: qty, qtyMax: qty, quantity: qty, internalUnitPrice: adjustedInternal, publicUnitPrice: publicUnit, unitPrice: publicUnit, unitPriceMin: publicUnit, unitPriceMax: publicUnit, internalTotal: roundMoney(qty * adjustedInternal), publicTotal, total: publicTotal, totalMin: publicTotal, totalMax: publicTotal, formulaText: qty + ' ' + unit + ' x public project rate', pricingBasis: basis || '', clientVisible: true, internalNote: 'Generated from Technical Millwork Planner module.', included: true, excluded: false };
+    }
+    function wallPanelBase(squareFeet){
+      const area = Number(squareFeet || 0);
+      return (rules.wallPanels?.baseRates || []).find(tier => (tier.minSqFt == null || area >= tier.minSqFt) && (tier.maxSqFt == null || area <= tier.maxSqFt)) || { internalRate: 60, label: 'Under 100 SF' };
+    }
+    function isPanelModule(module){ return ['Wall panel','TV panel','Fireplace surround','Decorative panel'].includes(module.moduleRole); }
+    function isCabinetModule(module){ return !isPanelModule(module) && module.moduleRole !== 'Mirror panel'; }
+    function roundQty(value){ return Math.round(Number(value || 0) * 100) / 100; }
+    function roundMoney(value){ return Math.round(Number(value || 0) * 100) / 100; }
+    function roundHundreds(value){ return Math.max(0, Math.round(Number(value || 0) / 100) * 100); }
     function buildLeadMessage(payload){
-      return 'Millwork Planner submission\\nPlanner mode: ' + (payload.plannerMode || 'clean') + '\\nPreset: ' + (payload.plannerPresetLabel || payload.plannerPreset || '-') + '\\nProject name: ' + (payload.projectName || 'Not specified') + '\\nProject type: ' + payload.projectType + '\\nRecommended package: ' + (payload.recommendedPackage || '-') + '\\nRegion: ' + payload.region + '\\nComplexity: ' + payload.complexity + '\\nSurface: ' + payload.surface.label + '\\nEstimate: ' + money(payload.estimate.low) + ' - ' + money(payload.estimate.high) + '\\nModules: ' + payload.modules.length + '\\nLinear ft: ' + payload.estimate.linearFt + '\\nGlass modules: ' + payload.estimate.glass + '\\nLighting modules: ' + payload.estimate.lighting + '\\nConfiguration JSON is included in plannerConfig.';
+      return 'Millwork Planner submission\\nPlanner mode: ' + (payload.plannerMode || 'clean') + '\\nPreset: ' + (payload.plannerPresetLabel || payload.plannerPreset || '-') + '\\nProject name: ' + (payload.projectName || 'Not specified') + '\\nProject type: ' + payload.projectType + '\\nRecommended package: ' + (payload.recommendedPackage || '-') + '\\nRegion: ' + payload.region + '\\nComplexity: ' + payload.complexity + '\\nSurface: ' + payload.surface.label + '\\nEstimate: ' + money(payload.estimate.low) + ' - ' + money(payload.estimate.high) + '\\nEstimated total: ' + money(payload.estimate.estimatedTotal) + '\\nDiscounted total: ' + money(payload.estimate.discountedTotal) + '\\nDeposit: ' + money(payload.estimate.depositAmount) + '\\nModules: ' + payload.modules.length + '\\nLinear ft: ' + payload.estimate.linearFt + '\\nSquare ft: ' + payload.estimate.squareFt + '\\nGlass modules: ' + payload.estimate.glass + '\\nLighting modules: ' + payload.estimate.lighting + '\\nConfiguration JSON is included in plannerConfig.';
     }
     function money(value){ return '$' + Number(value || 0).toLocaleString('en-US'); }
     function surfaceWidth(){ return state.surface.widthIn / 12; }
@@ -13550,9 +13973,9 @@ function plannerJs() {
       return (Number(module.gapBefore || 0) + Number(module.width || 0)) / 12;
     }
     function moduleLane(module){
-      if (module.moduleRole === 'Freestanding cabinet') return 'free';
-      if (module.moduleRole === 'Wall cabinet') return 'wall';
-      if (module.moduleRole === 'Wall panel') return 'panel';
+      if (module.moduleRole === 'Freestanding cabinet' || module.moduleRole === 'Custom furniture block') return 'free';
+      if (module.moduleRole === 'Wall cabinet' || module.moduleRole === 'Open shelving') return 'wall';
+      if (['Wall panel','TV panel','Fireplace surround','Mirror panel','Decorative panel'].includes(module.moduleRole)) return 'panel';
       return 'base';
     }
     function moduleWall(module){
